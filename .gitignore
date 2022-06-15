@@ -50,6 +50,5 @@ config/database.php
 config/generales.php
 config/views.php
 vendor
-frontend
-views
+
 

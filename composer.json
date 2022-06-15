@@ -18,7 +18,9 @@
             "orm\\": "orm/base",
             "models\\": "orm",
             "validacion\\": "validacion/",
-            "tests\\": "tests/"
+            "tests\\": "tests/",
+            "links\\": "links/",
+            "directivas\\": "directivas/"
 
         }
     },
