@@ -49,12 +49,7 @@ composer.lock
 config/database.php
 config/generales.php
 config/views.php
-icons
-img
-js
-node_modules
 vendor
 frontend
-templates
 views
 
