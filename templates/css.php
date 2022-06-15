@@ -24,3 +24,4 @@
 <!-- Start custom template style  -->
 <link rel="stylesheet" href="<?php echo (new generales())->url_base; ?>assets/css/custom_template_style.css" />
 <!-- End custom template style   -->
+<link rel="stylesheet" href="<?php echo (new generales())->url_base; ?>assets/libraries/footable-jquery/css/footable.bootstrap.min.css" />

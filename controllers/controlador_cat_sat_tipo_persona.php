@@ -40,6 +40,7 @@ class controlador_cat_sat_tipo_persona extends controlador_base {
         $this->registros = $cat_sat_tipos_persona;
         $this->titulo_lista = 'Tipos persona';
 
+
         return $this->registros;
     }
 

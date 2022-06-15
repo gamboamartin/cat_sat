@@ -30,6 +30,10 @@
 <!-- Start custom template style  -->
 <script src="<?php echo (new generales())->url_base; ?>assets/js/custom_template_style.js" type="text/javascript"></script>
 <!-- End custom template style   -->
+
+<script src="<?php echo (new generales())->url_base; ?>assets/libraries/footable-jquery/js/footable.js"></script>
+<script src="<?php echo (new generales())->url_base; ?>assets/js/footable_init.js"></script>
+
 <script src="<?php echo (new generales())->url_base; ?>assets/js/dpejes/dpe.js"></script>
 <script src="<?php echo (new generales())->url_base; ?>assets/js/dpejes_custom.js"></script>
 <script src="<?php echo (new generales())->url_base; ?>assets/js/facebook.js" type="text/javascript"></script>
