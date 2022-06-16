@@ -1,5 +1,4 @@
 <?php /** @var controllers\controlador_cat_sat_tipo_persona $controlador */ ?>
-<?php use links\links_menu; ?>
 <main class="main section-color-primary">
     <div class="container">
         <div class="row">

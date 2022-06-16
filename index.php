@@ -23,6 +23,7 @@ if(errores::$error){
     die('Error');
 }
 
+
 $controlador = $data->controlador;
 
 $link = $data->link;

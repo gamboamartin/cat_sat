@@ -8,7 +8,7 @@ $path_base_template = (new generales())->path_base.'templates/';
 <html lang="es">
 <head>
     <meta charset="UTF-8" />
-    <title>Inmobiliaria Tique</title>
+    <title>Catalogos SAT</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <?php include $path_base_template.'css.php'; ?>

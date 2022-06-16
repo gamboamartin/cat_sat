@@ -25,3 +25,6 @@
 <link rel="stylesheet" href="<?php echo (new generales())->url_base; ?>assets/css/custom_template_style.css" />
 <!-- End custom template style   -->
 <link rel="stylesheet" href="<?php echo (new generales())->url_base; ?>assets/libraries/footable-jquery/css/footable.bootstrap.min.css" />
+<!-- Inicio template proyecto local  -->
+<link rel="stylesheet" href="<?php echo (new generales())->url_base; ?>assets/css/proyecto.css" />
+<!-- End template proyecto local   -->
