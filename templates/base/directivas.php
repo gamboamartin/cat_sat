@@ -11,23 +11,44 @@ class directivas{
         $this->error = new errores();
     }
 
-    private function button_href(string $accion, string $etiqueta, string $name, int $registro_id,
-                                 string $seccion): array|string
+    /**
+     * @param string $accion Accion a ejecutar
+     * @param string $etiqueta Etiqueta de boton
+     * @param string $name Nombre para ser aplicado a for
+     * @param string $place_holder Etiqueta a mostrar
+     * @param int $registro_id Registro a mandar transaccion
+     * @param string $seccion Seccion a ejecutar
+     * @param string $style Estilo del boton info,danger,warning etc
+     * @return array|string
+     */
+    private function button_href(string $accion, string $etiqueta, string $name, string $place_holder, int $registro_id,
+                                 string $seccion, string $style): array|string
     {
-        $label = $this->html->label(id_css: $name, place_holder: $etiqueta);
+        $label = $this->html->label(id_css: $name, place_holder: $place_holder);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar label', data: $label);
         }
-        $html= $this->html->button_href(accion: $accion,etiqueta:  $etiqueta, registro_id: $registro_id,seccion:  $seccion);
+        $html= $this->html->button_href(accion: $accion,etiqueta:  $etiqueta, registro_id: $registro_id,
+            seccion:  $seccion, style: $style);
 
         return $label."<div class='controls'>$html</div>";
 
     }
 
+    /**
+     * Genera un boton de tipo link para transaccionar status
+     * @param controlador_base $controler Controlador en ejecucion
+     * @param string $seccion Seccion a ejecutar
+     * @return array|string
+     */
     public function button_href_status(controlador_base $controler, string $seccion): array|string
     {
-        $html = $this->button_href(accion: 'status',etiqueta: 'Status'
-            ,name: 'status',registro_id: $controler->registro_id,seccion: $seccion);
+        $style = 'danger';
+        if($controler->row_upd->status === 'activo'){
+            $style = 'info';
+        }
+        $html = $this->button_href(accion: 'status',etiqueta: $controler->row_upd->status,name: 'status',
+            place_holder: 'Status',registro_id: $controler->registro_id,seccion: $seccion, style: $style);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar label', data: $html);
         }
@@ -36,8 +57,15 @@ class directivas{
 
     public function button_href_valida_persona_fisica(controlador_base $controler): array|string
     {
-        $html = $this->button_href(accion: 'valida_persona_fisica',etiqueta: 'Valida Persona Fisica'
-            ,name: 'valida_persona_fisica',registro_id: $controler->registro_id,seccion: 'cat_sat_tipo_persona');
+
+        $style = 'danger';
+        if($controler->row_upd->valida_persona_fisica === 'activo'){
+            $style = 'info';
+        }
+
+        $html = $this->button_href(accion: 'valida_persona_fisica',etiqueta: $controler->row_upd->valida_persona_fisica
+            ,name: 'valida_persona_fisica', place_holder: 'Valida persona fisica',registro_id: $controler->registro_id,
+            seccion: 'cat_sat_tipo_persona', style: $style);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar label', data: $html);
         }

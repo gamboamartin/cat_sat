@@ -13,6 +13,7 @@ use gamboamartin\errores\errores;
 use html\directivas;
 use html\directivas\cat_sat_tipo_persona_html;
 use html\html;
+use JsonException;
 use models\cat_sat_tipo_persona;
 use PDO;
 use stdClass;
@@ -112,6 +113,29 @@ class controlador_cat_sat_tipo_persona extends controlador_base {
     }
 
     public function opciones(bool $header, bool $ws){
+
+    }
+
+    /**
+     * @throws JsonException
+     */
+    public function valida_persona_fisica(bool $header, bool $ws){
+        $upd = $this->modelo->status('valida_persona_fisica', $this->registro_id);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al modificar registro', data: $upd,header:  $header, ws: $ws);
+        }
+
+        if($header){
+            $retorno = $_SERVER['HTTP_REFERER'];
+            header('Location:'.$retorno);
+            exit;
+        }
+        if($ws){
+            header('Content-Type: application/json');
+            echo json_encode($upd, JSON_THROW_ON_ERROR);
+            exit;
+        }
+        return $upd;
 
     }
 
