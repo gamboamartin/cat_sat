@@ -11,6 +11,39 @@ class directivas{
         $this->error = new errores();
     }
 
+    private function button_href(string $accion, string $etiqueta, string $name, int $registro_id,
+                                 string $seccion): array|string
+    {
+        $label = $this->html->label(id_css: $name, place_holder: $etiqueta);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar label', data: $label);
+        }
+        $html= $this->html->button_href(accion: $accion,etiqueta:  $etiqueta, registro_id: $registro_id,seccion:  $seccion);
+
+        return $label."<div class='controls'>$html</div>";
+
+    }
+
+    public function button_href_status(controlador_base $controler, string $seccion): array|string
+    {
+        $html = $this->button_href(accion: 'status',etiqueta: 'Status'
+            ,name: 'status',registro_id: $controler->registro_id,seccion: $seccion);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar label', data: $html);
+        }
+        return $html;
+    }
+
+    public function button_href_valida_persona_fisica(controlador_base $controler): array|string
+    {
+        $html = $this->button_href(accion: 'valida_persona_fisica',etiqueta: 'Valida Persona Fisica'
+            ,name: 'valida_persona_fisica',registro_id: $controler->registro_id,seccion: 'cat_sat_tipo_persona');
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar label', data: $html);
+        }
+        return $html;
+    }
+
     public function input_alias(controlador_base $controler): array|string
     {
         $html =$this->input_text_required(controler: $controler,disable: false,name: 'alias',

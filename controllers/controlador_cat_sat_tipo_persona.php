@@ -10,7 +10,9 @@ namespace controllers;
 
 use base\controller\controlador_base;
 use gamboamartin\errores\errores;
+use html\directivas;
 use html\directivas\cat_sat_tipo_persona_html;
+use html\html;
 use models\cat_sat_tipo_persona;
 use PDO;
 use stdClass;
@@ -67,6 +69,22 @@ class controlador_cat_sat_tipo_persona extends controlador_base {
             return $this->retorno_error(mensaje: 'Error al generar inputs', data: $inputs,
                 header:  $header, ws: $ws);
         }
+
+        $button_valida_persona_fisica = (new directivas())->button_href_valida_persona_fisica(controler:$this);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar boton', data: $button_valida_persona_fisica,
+                header:  $header, ws: $ws);
+        }
+        $this->inputs->valida_persona_fisica = $button_valida_persona_fisica;
+
+        $button_status = (new directivas())->button_href_status(controler:$this,seccion: 'cat_sat_tipo_persona');
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar boton', data: $button_valida_persona_fisica,
+                header:  $header, ws: $ws);
+        }
+
+
+        $this->inputs->status = $button_status;
 
 
         return $r_modifica;
