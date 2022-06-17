@@ -20,7 +20,8 @@
             "validacion\\": "validacion/",
             "tests\\": "tests/",
             "links\\": "links/",
-            "directivas\\": "directivas/"
+            "directivas\\": "directivas/",
+            "html\\": "templates/base/"
 
         }
     },
