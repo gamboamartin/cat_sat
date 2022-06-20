@@ -33,6 +33,21 @@ class htmlTest extends test {
         errores::$error = false;
     }
 
+    public function test_alert_warning(): void
+    {
+        errores::$error = false;
+        $html = new html();
+        //$inicializacion = new liberator($inicializacion);
+
+
+        $mensaje = 'a';
+        $resultado = $html->alert_warning($mensaje);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals("<div class='alert alert-warning' role='alert' ><strong>Advertencia!</strong> a.</div>", $resultado);
+        errores::$error = false;
+    }
+
 
     public function test_label(): void
     {

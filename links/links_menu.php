@@ -42,9 +42,9 @@ class links_menu{
         return "./index.php?seccion=$seccion&accion=alta_bd";
     }
 
-    private function elimina_bd(string $seccion): string
+    private function elimina_bd(int $registro_id, string $seccion): string
     {
-        return "./index.php?seccion=$seccion&accion=elimina_bd";
+        return "./index.php?seccion=$seccion&accion=elimina_bd&registro_id=$registro_id";
     }
 
     private function link_alta(string $seccion): array|string
@@ -69,9 +69,9 @@ class links_menu{
         return $alta_bd;
     }
 
-    private function link_elimina_bd(string $seccion): array|string
+    private function link_elimina_bd(int $registro_id, string $seccion): array|string
     {
-        $elimina = $this->elimina_bd(seccion: $seccion);
+        $elimina = $this->elimina_bd(registro_id: $registro_id, seccion: $seccion);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener link de elimina', data: $elimina);
         }
@@ -148,7 +148,7 @@ class links_menu{
         $this->links->cat_sat_tipo_persona->modifica_bd =  $modifica_bd_cstp;
 
 
-        $elimina_cstp = $this->link_elimina_bd(seccion: 'cat_sat_tipo_persona');
+        $elimina_cstp = $this->link_elimina_bd(registro_id: $registro_id, seccion: 'cat_sat_tipo_persona');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener link de elimina', data: $elimina_cstp);
         }

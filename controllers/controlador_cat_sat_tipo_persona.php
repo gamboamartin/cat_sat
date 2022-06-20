@@ -14,7 +14,6 @@ use gamboamartin\errores\errores;
 use html\directivas;
 use html\directivas\cat_sat_tipo_persona_html;
 use JsonException;
-use links\links_menu;
 use models\cat_sat_tipo_persona;
 use PDO;
 use stdClass;

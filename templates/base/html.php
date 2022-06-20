@@ -24,6 +24,13 @@ class html{
         }
         return "<div class='alert alert-success' role='alert' ><strong>Muy bien!</strong> $mensaje.</div>";
     }
+
+    /**
+     * Genera un alert de tipo warning
+     * @version 1.17.1
+     * @param string $mensaje Mensaje a mostrar en el warning
+     * @return string|array
+     */
     public function alert_warning(string $mensaje): string|array
     {
         $mensaje = trim($mensaje);
