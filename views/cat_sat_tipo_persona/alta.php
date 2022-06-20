@@ -22,7 +22,7 @@ include "init.php"; ?>
                 <div class="widget  widget-box box-container form-main widget-form-cart" id="form">
 
                     <div class="widget-header">
-                        <h2>Modifica</h2>
+                        <h2>Alta</h2>
                     </div>
                     <?php  echo $controlador->mensaje_exito; ?>
                     <?php  echo $controlador->mensaje_warning; ?>
@@ -34,7 +34,7 @@ include "init.php"; ?>
                         <?php include "templates/inputs/alta/descripcion.php"; ?>
                         <?php include "templates/inputs/alta/alias.php"; ?>
                         <?php include "templates/inputs/alta/descripcion_select.php"; ?>
-                        <?php include "templates/botons/submit/alta_bd.php"; ?>
+                        <?php include "templates/botons/submit/alta_bd_otro.php"; ?>
 
                     </form>
                 </div>

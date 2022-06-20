@@ -9,10 +9,12 @@
 namespace controllers;
 
 use base\controller\controlador_base;
+use controllers\base\actions;
 use gamboamartin\errores\errores;
 use html\directivas;
 use html\directivas\cat_sat_tipo_persona_html;
 use JsonException;
+use links\links_menu;
 use models\cat_sat_tipo_persona;
 use PDO;
 use stdClass;
@@ -52,6 +54,40 @@ class controlador_cat_sat_tipo_persona extends controlador_base {
         }
 
         return $r_alta;
+    }
+
+    public function alta_bd(bool $header, bool $ws = false): array|stdClass
+    {
+
+        $siguiente_view = (new actions())->init_alta_bd();
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener siguiente view', data: $siguiente_view,
+                header:  $header, ws: $ws);
+        }
+
+        $r_alta_bd = parent::alta_bd(header: false,ws: false);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al dar de alta registro', data: $r_alta_bd, header:  $header,
+                ws: $ws);
+        }
+
+        if($header){
+            $retorno = (new actions())->retorno_alta_bd(registro_id: $r_alta_bd->registro_id,
+                siguiente_view: $siguiente_view);
+            if(errores::$error){
+                return $this->retorno_error(mensaje: 'Error al dar de alta registro', data: $r_alta_bd, header:  true,
+                    ws: $ws);
+            }
+            header('Location:'.$retorno);
+            exit;
+        }
+        if($ws){
+            header('Content-Type: application/json');
+            echo json_encode($r_alta_bd, JSON_THROW_ON_ERROR);
+            exit;
+        }
+
+        return $r_alta_bd;
     }
 
     /**
