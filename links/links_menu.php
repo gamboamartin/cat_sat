@@ -37,6 +37,11 @@ class links_menu{
         return "./index.php?seccion=$seccion&accion=alta";
     }
 
+    private function alta_bd(string $seccion): string
+    {
+        return "./index.php?seccion=$seccion&accion=alta_bd";
+    }
+
     private function elimina_bd(string $seccion): string
     {
         return "./index.php?seccion=$seccion&accion=elimina_bd";
@@ -51,6 +56,17 @@ class links_menu{
 
         $alta.="&session_id=$this->session_id";
         return $alta;
+    }
+
+    private function link_alta_bd(string $seccion): array|string
+    {
+        $alta_bd = $this->alta_bd(seccion: $seccion);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener link de alta_bd', data: $alta_bd);
+        }
+
+        $alta_bd.="&session_id=$this->session_id";
+        return $alta_bd;
     }
 
     private function link_elimina_bd(string $seccion): array|string
@@ -117,6 +133,12 @@ class links_menu{
             return $this->error->error(mensaje: 'Error al obtener link de alta', data: $alta_cstp);
         }
         $this->links->cat_sat_tipo_persona->alta =  $alta_cstp;
+
+        $alta_bd_cstp = $this->link_alta_bd(seccion: 'cat_sat_tipo_persona');
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener link de alta_bd', data: $alta_bd_cstp);
+        }
+        $this->links->cat_sat_tipo_persona->alta_bd =  $alta_bd_cstp;
 
 
         $modifica_bd_cstp = $this->link_modifica_bd(registro_id: $registro_id, seccion: 'cat_sat_tipo_persona');

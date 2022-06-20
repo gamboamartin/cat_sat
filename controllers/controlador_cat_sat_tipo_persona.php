@@ -40,6 +40,20 @@ class controlador_cat_sat_tipo_persona extends controlador_base {
 
     }
 
+    public function alta(bool $header, bool $ws = false): array|string
+    {
+        $r_alta =  array();
+        $this->inputs = new stdClass();
+
+        $inputs = (new cat_sat_tipo_persona_html($this))->alta();
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar inputs', data: $inputs,
+                header:  $header, ws: $ws);
+        }
+
+        return $r_alta;
+    }
+
     /**
      * Genera la lista mostrable en la accion de cat_sat_tipo_persona / lista
      * @version 0.5.0
