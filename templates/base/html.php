@@ -24,6 +24,14 @@ class html{
         }
         return "<div class='alert alert-success' role='alert' ><strong>Muy bien!</strong> $mensaje.</div>";
     }
+    public function alert_warning(string $mensaje): string|array
+    {
+        $mensaje = trim($mensaje);
+        if($mensaje === ''){
+            return $this->error->error(mensaje: 'Error mensaje esta vacio', data: $mensaje);
+        }
+        return "<div class='alert alert-warning' role='alert' ><strong>Advertencia!</strong> $mensaje.</div>";
+    }
 
     public function button(string $etiqueta): string
     {

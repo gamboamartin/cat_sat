@@ -25,6 +25,7 @@ include "init.php"; ?>
                         <h2>Modifica</h2>
                     </div>
                     <?php  echo $controlador->mensaje_exito; ?>
+                    <?php  echo $controlador->mensaje_warning; ?>
                     <form method="post" action="<?php echo (new links_menu($controlador->registro_id))->links->cat_sat_tipo_persona->modifica_bd ?>" class="form-additional">
 
                         <?php include "templates/inputs/modifica/id.php"; ?>

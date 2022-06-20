@@ -31,6 +31,13 @@ class controlador_cat_sat_tipo_persona extends controlador_base {
             die('Error');
         }
 
+        $mensaje_warning = (new directivas())->mensaje_warning(controler: $this);
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al generar alerta', data: $mensaje_warning);
+            var_dump($error);
+            die('Error');
+        }
+
     }
 
     /**

@@ -161,7 +161,9 @@ class directivas{
     }
 
     /**
-     * @param controlador_base $controler
+     * Genera un mensaje de exito
+     * @param controlador_base $controler Controlador en ejecucion
+     * @version 0.13.0
      * @return array|string
      */
     public function mensaje_exito(controlador_base $controler): array|string
@@ -174,5 +176,17 @@ class directivas{
             $controler->mensaje_exito = $alert_exito;
         }
         return $controler->mensaje_exito;
+    }
+
+    public function mensaje_warning(controlador_base $controler): array|string
+    {
+        if($controler->mensaje_warning!==''){
+            $alert_warning = $this->html->alert_warning(mensaje: $controler->mensaje_warning);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al generar alerta', data: $alert_warning);
+            }
+            $controler->mensaje_warning = $alert_warning;
+        }
+        return $controler->mensaje_warning;
     }
 }
