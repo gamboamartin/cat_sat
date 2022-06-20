@@ -105,7 +105,7 @@ class controlador_cat_sat_tipo_persona extends controlador_base {
             return $this->retorno_error(mensaje: 'Error al modificar registro', data: $r_modifica_bd,header:  $header, ws: $ws);
         }
         $this->link->commit();
-        $_SESSION['exito'][]['mensaje'] = 'Se modifico el registro de manera correcta con el id '.$this->registro_id;
+        $_SESSION[$r_modifica_bd->salida][]['mensaje'] = $r_modifica_bd->mensaje.' del id '.$this->registro_id;
         $this->header_out(result: $r_modifica_bd, header: $header,ws:  $ws);
 
         return $r_modifica_bd;
