@@ -6,6 +6,7 @@
                 <section class="top-title">
                     <ul class="breadcrumb">
                         <?php include "templates/breadcrumb/adm_session/inicio.php"; ?>
+                        <?php include "templates/breadcrumb/cat_sat_tipo_persona/alta.php"; ?>
                         <li class="item"> Lista </li>
                     </ul>
                     <h1 class="h-side-title page-title page-title-big text-color-primary">TIPO PERSONA</h1>

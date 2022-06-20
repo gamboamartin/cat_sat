@@ -22,9 +22,35 @@ class links_menu{
 
     }
 
+    /**
+     * Genera un link de alta
+     * @version 0.14.0
+     * @param string $seccion Seccion en ejecucion
+     * @return string|array
+     */
+    PUBLIC function alta(string $seccion): string|array
+    {
+        $seccion = trim($seccion);
+        if($seccion === ''){
+            return $this->error->error(mensaje: 'Error seccion esta vacia', data:$seccion);
+        }
+        return "./index.php?seccion=$seccion&accion=alta";
+    }
+
     private function elimina_bd(string $seccion): string
     {
         return "./index.php?seccion=$seccion&accion=elimina_bd";
+    }
+
+    private function link_alta(string $seccion): array|string
+    {
+        $alta = $this->alta( seccion: $seccion);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener link de alta', data: $alta);
+        }
+
+        $alta.="&session_id=$this->session_id";
+        return $alta;
     }
 
     private function link_elimina_bd(string $seccion): array|string
@@ -84,6 +110,13 @@ class links_menu{
             return $this->error->error(mensaje: 'Error al obtener link de modifica', data: $modifica_cstp);
         }
         $this->links->cat_sat_tipo_persona->modifica =  $modifica_cstp;
+
+
+        $alta_cstp = $this->link_alta( seccion: 'cat_sat_tipo_persona');
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener link de alta', data: $alta_cstp);
+        }
+        $this->links->cat_sat_tipo_persona->alta =  $alta_cstp;
 
 
         $modifica_bd_cstp = $this->link_modifica_bd(registro_id: $registro_id, seccion: 'cat_sat_tipo_persona');
