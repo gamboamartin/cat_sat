@@ -105,6 +105,9 @@ class links_menu{
         $this->links->adm_session->inicio = "./index.php?seccion=adm_session&accion=inicio";
         $this->links->adm_session->inicio.="&session_id=$this->session_id";
 
+        $this->links->adm_session->logout = "./index.php?seccion=adm_session&accion=logout";
+        $this->links->adm_session->logout.="&session_id=$this->session_id";
+
         return $this->links;
     }
 

@@ -24,6 +24,8 @@ if(errores::$error){
 }
 
 
+
+
 $controlador = $data->controlador;
 
 $link = $data->link;

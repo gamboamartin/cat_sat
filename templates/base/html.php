@@ -10,6 +10,21 @@ class html{
         $this->error = new errores();
     }
 
+    /**
+     * Genera un alert html boostrap con un mensaje incluido
+     * @version 0.11.0
+     * @param string $mensaje Mensaje a mostrar
+     * @return string|array Resultado en un html
+     */
+    public function alert_success(string $mensaje): string|array
+    {
+        $mensaje = trim($mensaje);
+        if($mensaje === ''){
+            return $this->error->error(mensaje: 'Error mensaje esta vacio', data: $mensaje);
+        }
+        return "<div class='alert alert-success' role='alert' ><strong>Muy bien!</strong> $mensaje.</div>";
+    }
+
     public function button(string $etiqueta): string
     {
         return "<button type='button' class='btn btn-info col-sm-12'>$etiqueta</button>";

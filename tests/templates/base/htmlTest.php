@@ -16,15 +16,24 @@ class htmlTest extends test {
     {
         parent::__construct($name, $data, $dataName);
         $this->errores = new errores();
-        $this->paths_conf = new stdClass();
-        $this->paths_conf->generales = '/var/www/html/cat_sat/config/generales.php';
-        $this->paths_conf->database = '/var/www/html/cat_sat/config/database.php';
-        $this->paths_conf->views = '/var/www/html/cat_sat/config/views.php';
+
     }
 
-    /**
-     * @throws JsonException
-     */
+    public function test_alert_success(): void
+    {
+        errores::$error = false;
+        $html = new html();
+        //$inicializacion = new liberator($inicializacion);
+
+        $mensaje = 'a';
+        $resultado = $html->alert_success($mensaje);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals("<div class='alert alert-success' role='alert' ><strong>Muy bien!</strong> a.</div>", $resultado);
+        errores::$error = false;
+    }
+
+
     public function test_label(): void
     {
         errores::$error = false;

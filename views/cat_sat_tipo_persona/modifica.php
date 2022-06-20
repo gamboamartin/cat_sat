@@ -3,10 +3,15 @@
 include "init.php"; ?>
 <?php /** @var controllers\controlador_cat_sat_tipo_persona $controlador */ ?>
 <main class="main section-color-primary">
+
     <div class="container">
+
         <div class="row">
+
             <div class="col-lg-12">
+
                 <section class="top-title">
+
                     <ul class="breadcrumb">
                         <?php include "templates/breadcrumb/adm_session/inicio.php"; ?>
                         <?php include "templates/breadcrumb/cat_sat_tipo_persona/lista.php"; ?>
@@ -15,9 +20,11 @@ include "init.php"; ?>
                     <h1 class="h-side-title page-title page-title-big text-color-primary">TIPO PERSONA</h1>
                 </section> <!-- /. content-header -->
                 <div class="widget  widget-box box-container form-main widget-form-cart" id="form">
+
                     <div class="widget-header">
                         <h2>Modifica</h2>
                     </div>
+                    <?php  echo $controlador->mensaje_exito; ?>
                     <form method="post" action="<?php echo (new links_menu($controlador->registro_id))->links->cat_sat_tipo_persona->modifica_bd ?>" class="form-additional">
 
                         <?php include "templates/inputs/modifica/id.php"; ?>

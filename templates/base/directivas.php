@@ -159,4 +159,20 @@ class directivas{
         return $label."<div class='controls'>$html</div>";
 
     }
+
+    /**
+     * @param controlador_base $controler
+     * @return array|string
+     */
+    public function mensaje_exito(controlador_base $controler): array|string
+    {
+        if($controler->mensaje_exito!==''){
+            $alert_exito = $this->html->alert_success(mensaje: $controler->mensaje_exito);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al generar alerta', data: $alert_exito);
+            }
+            $controler->mensaje_exito = $alert_exito;
+        }
+        return $controler->mensaje_exito;
+    }
 }
