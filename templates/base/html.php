@@ -76,9 +76,34 @@ class html{
         return "<label class='control-label' for='$id_css'>$place_holder</label>";
     }
 
+    /**
+     * Genera um input text basado en los parametros enviados
+     * @param bool $disabled Si disabled retorna text disabled
+     * @param string $id_css Identificador css
+     * @param string $name Name input html
+     * @param string $place_holder Muestra elemento en input
+     * @param bool $required indica si es requerido o no
+     * @param mixed $value Valor en caso de que exista
+     * @return string|array Html en forma de input text
+     * @version 0.15.1
+     */
     public function text(bool $disabled, string $id_css, string $name, string $place_holder, bool $required,
                          mixed $value): string|array
     {
+
+        $name = trim($name);
+        if($name === ''){
+            return $this->error->error(mensaje: 'Error name es necesario', data: $name);
+        }
+        $id_css = trim($id_css);
+        if($id_css === ''){
+            return $this->error->error(mensaje: 'Error $id_css es necesario', data: $id_css);
+        }
+        $place_holder = trim($place_holder);
+        if($place_holder === ''){
+            return $this->error->error(mensaje: 'Error $place_holder es necesario', data: $place_holder);
+        }
+
         $disabled_html = (new params_inputs())->disabled_html(disabled:$disabled);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar $disabled_html', data: $disabled_html);

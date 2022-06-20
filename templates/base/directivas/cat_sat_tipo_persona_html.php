@@ -20,31 +20,41 @@ class cat_sat_tipo_persona_html{
         $this->controler->inputs = new stdClass();
 
 
-        $html_codigo = $this->directivas->input_codigo(controler: $this->controler, value_vacio: true);
+        $inputs_base = $this->inputs_base(value_vacio: true);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar inputs', data: $inputs_base);
+        }
+
+        return $this->controler->inputs;
+    }
+
+    private function inputs_base(bool $value_vacio): array|stdClass
+    {
+        $html_codigo = $this->directivas->input_codigo(controler: $this->controler,value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html_codigo);
         }
         $this->controler->inputs->codigo = $html_codigo;
 
-        $html_codigo_bis = $this->directivas->input_codigo_bis(controler: $this->controler, value_vacio: true);
+        $html_codigo_bis = $this->directivas->input_codigo_bis(controler: $this->controler,value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html_codigo);
         }
         $this->controler->inputs->codigo_bis = $html_codigo_bis;
 
-        $html_descripcion = $this->directivas->input_descripcion(controler: $this->controler, value_vacio: true);
+        $html_descripcion = $this->directivas->input_descripcion(controler: $this->controler,value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html_descripcion);
         }
         $this->controler->inputs->descripcion = $html_descripcion;
 
-        $html_alias = $this->directivas->input_alias(controler: $this->controler, value_vacio: true);
+        $html_alias = $this->directivas->input_alias(controler: $this->controler,value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html_alias);
         }
         $this->controler->inputs->alias = $html_alias;
 
-        $html_descripcion_select = $this->directivas->input_descripcion_select(controler: $this->controler, value_vacio: true);
+        $html_descripcion_select = $this->directivas->input_descripcion_select(controler: $this->controler,value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html_descripcion_select);
         }
@@ -63,35 +73,12 @@ class cat_sat_tipo_persona_html{
         }
         $this->controler->inputs->id = $html_id;
 
-        $html_codigo = $this->directivas->input_codigo(controler: $this->controler,value_vacio: false);
+        $inputs_base = $this->inputs_base(value_vacio: false);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input', data: $html_codigo);
+            return $this->error->error(mensaje: 'Error al generar inputs', data: $inputs_base);
         }
-        $this->controler->inputs->codigo = $html_codigo;
 
-        $html_codigo_bis = $this->directivas->input_codigo_bis(controler: $this->controler,value_vacio: false);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input', data: $html_codigo);
-        }
-        $this->controler->inputs->codigo_bis = $html_codigo_bis;
 
-        $html_descripcion = $this->directivas->input_descripcion(controler: $this->controler,value_vacio: false);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input', data: $html_descripcion);
-        }
-        $this->controler->inputs->descripcion = $html_descripcion;
-
-        $html_alias = $this->directivas->input_alias(controler: $this->controler,value_vacio: false);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input', data: $html_alias);
-        }
-        $this->controler->inputs->alias = $html_alias;
-
-        $html_descripcion_select = $this->directivas->input_descripcion_select(controler: $this->controler,value_vacio: false);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input', data: $html_descripcion_select);
-        }
-        $this->controler->inputs->descripcion_select = $html_descripcion_select;
 
         return $this->controler->inputs;
     }

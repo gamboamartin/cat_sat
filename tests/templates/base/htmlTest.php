@@ -53,6 +53,40 @@ class htmlTest extends test {
         errores::$error = false;
     }
 
+    public function test_text(): void
+    {
+        errores::$error = false;
+        $html = new html();
+        //$inicializacion = new liberator($inicializacion);
+
+        $disabled = false;
+        $required = false;
+        $id_css = 'b';
+        $name = 'a';
+        $place_holder = 'c';
+        $value = '';
+        $resultado = $html->text($disabled, $id_css, $name, $place_holder, $required, $value);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals("<input type='text' name='a' value='' class='form-control'   id='b' placeholder='c' />", $resultado);
+
+        errores::$error = false;
+
+
+        $disabled = true;
+        $required = true;
+        $id_css = 'b';
+        $name = 'a';
+        $place_holder = 'c';
+        $value = '';
+        $resultado = $html->text($disabled, $id_css, $name, $place_holder, $required, $value);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals("<input type='text' name='a' value='' class='form-control' disabled required id='b' placeholder='c' />", $resultado);
+        errores::$error = false;
+
+    }
+
 
 
 
