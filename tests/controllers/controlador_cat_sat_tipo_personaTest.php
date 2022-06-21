@@ -27,10 +27,15 @@ class controlador_cat_sat_tipo_personaTest extends test {
     public function test_lista(): void
     {
         errores::$error = false;
+
+        $_GET['seccion'] = 'cat_sat_tipo_persona';
+        $_GET['accion'] = 'lista';
+        $_SESSION['grupo_id'] = 1;
+        $_GET['session_id'] = '1';
         $controler = new controlador_cat_sat_tipo_persona(link: $this->link, paths_conf: $this->paths_conf);
         //$inicializacion = new liberator($inicializacion);
 
-        $resultado = $controler->lista(false);
+        $resultado = $controler->lista(header: false, ws: false);
 
         $this->assertIsArray($resultado);
         $this->assertNotTrue(errores::$error);

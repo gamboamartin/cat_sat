@@ -50,6 +50,7 @@ class links_menuTest extends test {
         errores::$error = false;
         $_GET['session_id'] = 1;
         $html = new links_menu(-1);
+        $html = new liberator($html);
 
 
         $seccion = 'a';

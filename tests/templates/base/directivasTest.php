@@ -57,6 +57,27 @@ class directivasTest extends test {
         errores::$error = false;
     }
 
+    /**
+     * @throws JsonException
+     */
+    #[NoReturn] public function test_mensaje_warning(): void
+    {
+        errores::$error = false;
+        $html = new directivas();
+        $_GET['session_id'] = 1;
+        $_GET['seccion'] = 'cat_sat_tipo_persona';
+        $_GET['accion'] = 'lista';
+        $_SESSION['grupo_id'] = 1;
+        $_SESSION['warning'][]['mensaje'] = 'a';
+        $controler = new controlador_cat_sat_tipo_persona(link: $this->link, paths_conf: $this->paths_conf);
+
+        $resultado = $html->mensaje_warning($controler);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertStringContainsStringIgnoringCase("<div class='alert alert-warning' role='alert' ><strong>Advertencia!</strong> <div class='alert alert-warning' role='alert' ><strong>Advertencia!</strong> a.</div>.</div>", $resultado);
+        errores::$error = false;
+    }
+
 
 }
 

@@ -190,6 +190,12 @@ class directivas{
         return $controler->mensaje_exito;
     }
 
+    /**
+     * Genera un mensaje de tipo warning
+     * @param controlador_base $controler Controlador en ejecucion
+     * @version 0.19.1
+     * @return array|string
+     */
     public function mensaje_warning(controlador_base $controler): array|string
     {
         if($controler->mensaje_warning!==''){
