@@ -9,6 +9,7 @@
         <div class="collapse navbar-collapse" id="main-menu">
             <ul class="nav navbar-nav clearfix">
                 <?php include (new generales())->path_base.'templates/head/nav/links/_tipo_persona.php'?>
+                <?php include (new generales())->path_base.'templates/head/nav/links/_tipo_de_comprobante.php'?>
             </ul>
         </div>
     </nav>

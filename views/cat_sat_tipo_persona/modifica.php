@@ -14,6 +14,7 @@ include "init.php"; ?>
 
                     <ul class="breadcrumb">
                         <?php include "templates/breadcrumb/adm_session/inicio.php"; ?>
+                        <?php include "templates/breadcrumb/cat_sat_tipo_persona/alta.php"; ?>
                         <?php include "templates/breadcrumb/cat_sat_tipo_persona/lista.php"; ?>
                         <li class="item"> Modifica </li>
                     </ul>

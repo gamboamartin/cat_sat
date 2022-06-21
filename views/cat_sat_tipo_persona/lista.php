@@ -11,6 +11,8 @@
                     </ul>
                     <h1 class="h-side-title page-title page-title-big text-color-primary">TIPO PERSONA</h1>
                 </section> <!-- /. content-header -->
+                <?php  echo $controlador->mensaje_exito; ?>
+                <?php  echo $controlador->mensaje_warning; ?>
                 <?php include 'templates/listas/cat_sat_tipo_persona/content.php';?>
             </div><!-- /.center-content -->
         </div>

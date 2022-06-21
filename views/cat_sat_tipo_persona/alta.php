@@ -15,7 +15,7 @@ include "init.php"; ?>
                     <ul class="breadcrumb">
                         <?php include "templates/breadcrumb/adm_session/inicio.php"; ?>
                         <?php include "templates/breadcrumb/cat_sat_tipo_persona/lista.php"; ?>
-                        <li class="item"> Modifica </li>
+                        <li class="item"> Alta </li>
                     </ul>
                     <h1 class="h-side-title page-title page-title-big text-color-primary">TIPO PERSONA</h1>
                 </section> <!-- /. content-header -->
