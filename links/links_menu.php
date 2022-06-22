@@ -112,6 +112,7 @@ class links_menu{
 
     /**
      * Genera y asigna los links basicos para views de controller
+     * @version v0.21.2
      * @param system $controler Controlador en ejecucion
      * @return stdClass
      */
