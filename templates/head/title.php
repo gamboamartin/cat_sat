@@ -1,6 +1,5 @@
+<?php /** @var controllers\base\system $controlador */ ?>
 <section class="top-title">
-    <ul class="breadcrumb">
-        <?php include "templates/breadcrumb/base/view.alta.php"; ?>
-    </ul>
-    <h1 class="h-side-title page-title page-title-big text-color-primary">TIPO PERSONA</h1>
+    <?php include "templates/breadcrumb/base/view.alta.php"; ?>
+    <?php include "templates/title.php"; ?>
 </section> <!-- /. content-header -->
