@@ -7,7 +7,8 @@
     <td><?php echo $row->cat_sat_tipo_persona_descripcion; ?></td>
     <td><?php echo $row->cat_sat_tipo_persona_descripcion_select; ?></td>
     <td><?php echo $row->cat_sat_tipo_persona_alias; ?></td>
-    <td>Valida persona fisica</td>
+    <td><?php include 'templates/botons/cat_sat_tipo_persona/link_valida_persona_fisica.php';?></td>
+
     <!-- End dynamic generated -->
 
     <?php include 'templates/listas/base/action_row.php';?>

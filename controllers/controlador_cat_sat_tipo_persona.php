@@ -13,6 +13,7 @@ use gamboamartin\errores\errores;
 use html\directivas;
 use html\directivas\cat_sat_tipo_persona_html;
 use JsonException;
+use links\secciones\link_cat_sat_tipo_persona;
 use models\cat_sat_tipo_persona;
 use PDO;
 use stdClass;
@@ -22,13 +23,24 @@ class controlador_cat_sat_tipo_persona extends system {
     public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
         $modelo = new cat_sat_tipo_persona(link: $link);
         $html = new cat_sat_tipo_persona_html(controler: $this);
-        parent::__construct(html:$html, link: $link,modelo:  $modelo, paths_conf: $paths_conf);
+        $obj_link = new link_cat_sat_tipo_persona($this->registro_id);
+        parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Tipos de Persona';
+        $this->acciones->valida_persona_fisica = new stdClass();
+        $this->acciones->valida_persona_fisica->style = '';
+        $this->acciones->valida_persona_fisica->style_status = true;
 
     }
 
-
+    /**
+     * @param bool $header
+     * @param bool $ws
+     * @param string $breadcrumbs
+     * @param bool $aplica_form
+     * @param bool $muestra_btn
+     * @return array|string
+     */
     public function modifica(bool $header, bool $ws = false, string $breadcrumbs = '',
                              bool $aplica_form = true, bool $muestra_btn = true): array|string
     {

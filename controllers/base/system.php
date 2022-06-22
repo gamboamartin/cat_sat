@@ -22,9 +22,12 @@ class system extends controlador_base{
     public string $link_modifica_bd = '';
 
     public string $accion_titulo;
+    protected stdClass $acciones;
+
+    public links_menu $obj_link;
 
     public function __construct(cat_sat_tipo_persona_html|cat_sat_tipo_de_comprobante_html $html,PDO $link,
-                                modelo $modelo, array $filtro_boton_lista = array(),
+                                modelo $modelo, links_menu $obj_link, array $filtro_boton_lista = array(),
                                 string $campo_busca = 'registro_id', string $valor_busca_fault = '',
                                 stdClass $paths_conf = new stdClass())
     {
@@ -32,23 +35,24 @@ class system extends controlador_base{
         parent::__construct(link: $link,modelo:  $modelo,filtro_boton_lista:  $filtro_boton_lista,
             campo_busca:  $campo_busca,valor_busca_fault:  $valor_busca_fault,paths_conf:  $paths_conf);
 
-        $init_msj = (new mensajeria())->init_mensajes(controler: $this);
+        $init = (new init())->init_controller(controller:$this);
         if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al inicializar mensajes', data: $init_msj);
+            $error = $this->errores->error(mensaje: 'Error al inicializar controller', data: $init);
             var_dump($error);
             die('Error');
         }
 
+        $this->obj_link = $obj_link;
         $this->html = $html;
-        $seccion = $this->seccion;
-        $this->link_alta = (new links_menu(registro_id: $this->registro_id))->links->$seccion->alta;
-        $this->link_alta_bd = (new links_menu(registro_id: $this->registro_id))->links->$seccion->alta_bd;
-        $this->link_elimina_bd = (new links_menu(registro_id: $this->registro_id))->links->$seccion->elimina_bd;
-        $this->link_lista = (new links_menu(registro_id: $this->registro_id))->links->$seccion->lista;
-        $this->link_modifica = (new links_menu(registro_id: $this->registro_id))->links->$seccion->modifica;
-        $this->link_modifica_bd = (new links_menu(registro_id: $this->registro_id))->links->$seccion->modifica_bd;
+        $this->acciones = new stdClass();
+        $this->acciones->modifica = new stdClass();
+        $this->acciones->elimina_bd = new stdClass();
 
+        $this->acciones->modifica->style = 'info';
+        $this->acciones->modifica->style_status = false;
 
+        $this->acciones->elimina_bd->style = 'danger';
+        $this->acciones->elimina_bd->style_status = false;
 
     }
 
@@ -136,14 +140,14 @@ class system extends controlador_base{
                 data:  $registros, header: $header, ws: $ws);
         }
 
-
-        $acciones = array('modifica','elimina_bd');
-        $registros_view = (new actions())->registros_view_actions(acciones: $acciones,registros:  $registros,
-            seccion:  $this->seccion);
+        $registros_view = (new actions())->registros_view_actions(acciones: $this->acciones,
+            obj_link: $this->obj_link,registros:  $registros, seccion:  $this->seccion);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al asignar link', data:  $registros_view, header: $header,
                     ws: $ws);
         }
+
+
 
         $this->registros = $registros_view;
 

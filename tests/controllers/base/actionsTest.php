@@ -23,6 +23,20 @@ class actionsTest extends test {
         $this->paths_conf->views = '/var/www/html/cat_sat/config/views.php';
     }
 
+    public function test_key_id(): void
+    {
+        errores::$error = false;
+        $act = new actions();
+        $act = new liberator($act);
+
+        $seccion = 'a';
+        $resultado = $act->key_id($seccion);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('a_id', $resultado);
+        errores::$error = false;
+    }
+
     /**
      * @throws JsonException
      */
@@ -47,7 +61,6 @@ class actionsTest extends test {
         errores::$error = false;
 
 
-        errores::$error = false;
     }
 
 

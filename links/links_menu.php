@@ -1,13 +1,14 @@
 <?php
 namespace links;
 use config\generales;
+use controllers\base\system;
 use gamboamartin\errores\errores;
 use stdClass;
 
 class links_menu{
     public stdClass $links;
-    private string $session_id;
-    private errores $error;
+    protected string $session_id;
+    protected errores $error;
     private array $secciones;
     public function __construct(int $registro_id){
         $this->error = new errores();
@@ -110,6 +111,23 @@ class links_menu{
     }
 
     /**
+     * Genera y asigna los links basicos para views de controller
+     * @param system $controler Controlador en ejecucion
+     * @return stdClass
+     */
+    public function init_link_controller(system $controler): stdClass
+    {
+        $seccion = $controler->seccion;
+        $controler->link_alta = $this->links->$seccion->alta;
+        $controler->link_alta_bd = $this->links->$seccion->alta_bd;
+        $controler->link_elimina_bd = $this->links->$seccion->elimina_bd;
+        $controler->link_lista = $this->links->$seccion->lista;
+        $controler->link_modifica = $this->links->$seccion->modifica;
+        $controler->link_modifica_bd = $this->links->$seccion->modifica_bd;
+        return $this->links;
+    }
+
+    /**
      * Genera un link de tipo alta
      * @version 0.18.1
      * @param string $seccion Seccion a inicializar el link
@@ -190,7 +208,7 @@ class links_menu{
         return $modifica;
     }
 
-    private function links(int $registro_id): stdClass|array
+    protected function links(int $registro_id): stdClass|array
     {
 
         $listas  = $this->listas();

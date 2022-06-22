@@ -13,27 +13,33 @@ class actions{
     }
 
 
-    private function asigna_link_row(string $accion, int $indice, string $link, array $registros_view, stdClass $row): array
+    private function asigna_link_row(string $accion, int $indice, string $link, array $registros_view, stdClass $row,
+                                     string $style): array
     {
         $name_link = 'link_'.$accion;
         $row->$name_link = $link;
+
+        $style_att = $accion.'_style';
+
+        $row->$style_att = $style;
         $registros_view[$indice] = $row;
         return $registros_view;
     }
 
-    private function asigna_link_rows(string $accion, int $indice, array $registros_view, stdClass $row, string $seccion): array
+    private function asigna_link_rows(string $accion, int $indice, links_menu $obj_link, array $registros_view,
+                                      stdClass $row, string $seccion, string $style): array
     {
         $key_id = $this->key_id(seccion: $seccion);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener key id', data:  $key_id);
         }
-        $link = $this->link_accion(accion: $accion,key_id:  $key_id,row:  $row,seccion:  $seccion);
+        $link = $this->link_accion(accion: $accion,key_id:  $key_id, obj_link: $obj_link,row:  $row,seccion:  $seccion);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar link', data:  $link);
         }
 
         $registros_view = $this->asigna_link_row(accion: $accion,indice:  $indice,
-            link:  $link,registros_view:  $registros_view,row:  $row);
+            link:  $link,registros_view:  $registros_view,row:  $row, style: $style);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al asignar link', data:  $registros_view);
         }
@@ -53,11 +59,24 @@ class actions{
         return $siguiente_view;
     }
 
-    private function genera_link_row(string $accion, array $registros, array $registros_view, string $seccion): array
+    private function genera_link_row(string $accion, links_menu $obj_link, array $registros, array $registros_view,
+                                     string $seccion, string $style, bool $style_status): array
     {
+
+        /**
+         * REFACTORIZAR
+         */
         foreach ($registros as $indice=>$row){
-            $registros_view = $this->asigna_link_rows(accion: $accion,indice:  $indice,
-                registros_view: $registros_view,row:  $row, seccion: $seccion);
+
+            if($style_status){
+                $style = 'danger';
+                $key = $seccion.'_'.$accion;
+                if($row->$key === 'activo'){
+                    $style = 'info';
+                }
+            }
+            $registros_view = $this->asigna_link_rows(accion: $accion,indice:  $indice,obj_link:  $obj_link,
+                registros_view: $registros_view,row:  $row, seccion: $seccion, style: $style);
             if(errores::$error){
                 return $this->error->error(mensaje: 'Error al asignar link', data:  $registros_view);
             }
@@ -80,22 +99,49 @@ class actions{
         return $_POST;
     }
 
-    private function link_accion(string $accion, string $key_id , stdClass $row, string $seccion){
-        return (new links_menu(registro_id: $row->$key_id))->links->$seccion->$accion;
+    private function link_accion(string $accion, string $key_id , links_menu $obj_link, stdClass $row, string $seccion): array|string
+    {
+        if(!isset($row->$key_id)){
+            return $this->error->error(mensaje: "Error no existe row->$key_id", data:  $row);
+        }
+
+        $links_menu = new $obj_link(registro_id: $row->$key_id);
+
+        if(!isset($links_menu->links->$seccion)){
+            return $this->error->error(mensaje: "Error no existe links_menu->$seccion", data:  $links_menu);
+        }
+        $existe_accion = isset($links_menu->links->$seccion->$accion);
+        if(!$existe_accion){
+            return $this->error->error(mensaje: "Error no existe links_menu->$seccion->$accion", data:  $links_menu);
+        }
+
+        return $links_menu->links->$seccion->$accion;
     }
 
-    private function key_id(string $seccion): string
+    /**
+     * Genera el key de identificar de la tabla
+     * @param string $seccion Seccion en ejecucion
+     * @return string|array
+     * @version 0.21.1
+     */
+    private function key_id(string $seccion): string|array
     {
-
+        $seccion = trim($seccion);
+        if($seccion === ''){
+            return $this->error->error(mensaje: 'Error la seccion esta vacia', data:  $seccion);
+        }
         return $seccion.'_id';
     }
 
-    public function registros_view_actions(array $acciones, array $registros, string $seccion): array
+    public function registros_view_actions(stdClass $acciones, links_menu $obj_link, array $registros, string $seccion): array
     {
         $registros_view = array();
-        foreach ($acciones as $accion){
-            $registros_view = $this->genera_link_row(accion: $accion,registros:  $registros,
-                registros_view: $registros_view,seccion:  $seccion);
+        foreach ($acciones as $accion=>$data_accion){
+            $style = $data_accion->style;
+            $style_status = $data_accion->style_status;
+
+            $registros_view = $this->genera_link_row(accion: $accion, obj_link: $obj_link, registros:  $registros,
+                registros_view: $registros_view,seccion:  $seccion, style: $style, style_status:$style_status);
             if(errores::$error){
                 return $this->error->error(mensaje: 'Error al asignar link', data:  $registros_view);
             }
