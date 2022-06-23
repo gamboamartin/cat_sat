@@ -23,6 +23,25 @@ class actionsTest extends test {
         $this->paths_conf->views = '/var/www/html/cat_sat/config/views.php';
     }
 
+    public function test_asigna_link_row(): void
+    {
+        errores::$error = false;
+        $act = new actions();
+        $act = new liberator($act);
+
+        $accion = 'a';
+        $indice = '0';
+        $link = 'a';
+        $registros_view = array();
+        $row = new stdClass();
+        $style = 'a';
+        $resultado = $act->asigna_link_row($accion, $indice, $link, $registros_view, $row, $style);
+        $this->assertIsArray($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('a', $resultado[0]->link_a);
+        errores::$error = false;
+    }
+
     public function test_key_id(): void
     {
         errores::$error = false;

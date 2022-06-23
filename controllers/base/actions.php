@@ -14,6 +14,7 @@ class actions{
 
     /**
      * Asigna a registros de lista los links mostrables en la lista para su ejecucion
+     * @version 0.25.2
      * @param string $accion Accion a ejecutar en el boton
      * @param int $indice Indice del arreglo para vista
      * @param string $link Liga de ejecucion de tipo a
@@ -25,6 +26,23 @@ class actions{
     private function asigna_link_row(string $accion, int $indice, string $link, array $registros_view, stdClass $row,
                                      string $style): array
     {
+        if($indice<0){
+            return $this->error->error(mensaje: 'Error el indice debe ser mayor o igual a 0', data:  $indice);
+        }
+
+        $accion = trim($accion);
+        if($accion === ''){
+            return $this->error->error(mensaje: 'Error  $accion esta vacia', data:  $accion);
+        }
+        $link = trim($link);
+        if($link === ''){
+            return $this->error->error(mensaje: 'Error  $link esta vacio', data:  $link);
+        }
+        $style = trim($style);
+        if($style === ''){
+            return $this->error->error(mensaje: 'Error  $style esta vacio', data:  $style);
+        }
+
         $name_link = 'link_'.$accion;
         $row->$name_link = $link;
 

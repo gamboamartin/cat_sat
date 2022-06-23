@@ -5,7 +5,7 @@
  * @version 0.21.2
  */
 namespace base;
-use base\controller\controlador_base;
+use controllers\base\system;
 use gamboamartin\errores\errores;
 use html\directivas;
 use stdClass;
@@ -20,11 +20,11 @@ class mensajeria{
 
     /**
      * Inicializa los mensajes a mostrar en views
-     * @version 0.20.1
-     * @param controlador_base $controler Controlador en ejecucion
+     * @param system $controler Controlador en ejecucion
      * @return array|stdClass
+     * @version 0.20.1
      */
-    public function init_mensajes(controlador_base $controler): array|stdClass
+    public function init_mensajes(system $controler): array|stdClass
     {
         $mensaje_exito = (new directivas())->mensaje_exito(controler: $controler);
         if(errores::$error){
