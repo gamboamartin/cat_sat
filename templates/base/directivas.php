@@ -1,6 +1,6 @@
 <?php
 namespace html;
-use base\controller\controlador_base;
+use controllers\base\system;
 use gamboamartin\errores\errores;
 use stdClass;
 
@@ -39,11 +39,11 @@ class directivas{
     /**
      * Genera un boton de tipo link para transaccionar status
      * @param int $cols Columnas en formato css de 1 a 12
-     * @param controlador_base $controler Controlador en ejecucion
+     * @param system $controler Controlador en ejecucion
      * @param string $seccion Seccion a ejecutar
      * @return array|string
      */
-    public function button_href_status(int $cols, controlador_base $controler, string $seccion): array|string
+    public function button_href_status(int $cols, system $controler, string $seccion): array|string
     {
         $style = 'danger';
         if($controler->row_upd->status === 'activo'){
@@ -58,7 +58,7 @@ class directivas{
         return "<div class='control-group col-sm-$cols'>$html</div>";
     }
 
-    public function button_href_valida_persona_fisica(controlador_base $controler): array|string
+    public function button_href_valida_persona_fisica(system $controler): array|string
     {
 
         $style = 'danger';
@@ -75,7 +75,12 @@ class directivas{
         return $html;
     }
 
-    public function input_alias(controlador_base $controler, bool $value_vacio): array|string
+    /**
+     * @param system $controler Controlador en ejecucion
+     * @param bool $value_vacio
+     * @return array|string
+     */
+    public function input_alias(system $controler, bool $value_vacio): array|string
     {
         $html =$this->input_text_required(controler: $controler,disable: false,name: 'alias',
             place_holder: 'Alias', value_vacio: $value_vacio);
@@ -85,7 +90,7 @@ class directivas{
         return "<div class='control-group col-sm-6'>$html</div>";
     }
 
-    public function input_codigo(int $cols, controlador_base $controler, bool $value_vacio): array|string
+    public function input_codigo(int $cols, system $controler, bool $value_vacio): array|string
     {
 
         $html =$this->input_text_required(controler: $controler,disable: false,name: 'codigo',place_holder: 'Codigo',
@@ -96,7 +101,7 @@ class directivas{
         return "<div class='control-group col-sm-$cols'>$html</div>";
     }
 
-    public function input_codigo_bis(int $cols, controlador_base $controler, bool $value_vacio): array|string
+    public function input_codigo_bis(int $cols, system $controler, bool $value_vacio): array|string
     {
         $html =$this->input_text_required(controler: $controler,disable: false,name: 'codigo_bis',
             place_holder: 'Codigo BIS', value_vacio: $value_vacio);
@@ -108,7 +113,7 @@ class directivas{
 
     }
 
-    public function input_descripcion(controlador_base $controler, bool $value_vacio): array|string
+    public function input_descripcion(system $controler, bool $value_vacio): array|string
     {
         $html =$this->input_text_required(controler: $controler,disable: false,name: 'descripcion',
             place_holder: 'Descripcion', value_vacio: $value_vacio);
@@ -119,7 +124,7 @@ class directivas{
 
     }
 
-    public function input_descripcion_select(controlador_base $controler, bool $value_vacio): array|string
+    public function input_descripcion_select(system $controler, bool $value_vacio): array|string
     {
         $html =$this->input_text_required(controler: $controler,disable: false,name: 'descripcion_select',
             place_holder: 'Descripcion Select', value_vacio: $value_vacio);
@@ -129,7 +134,7 @@ class directivas{
         return "<div class='control-group col-sm-6'>$html</div>";
     }
 
-    public function input_id(controlador_base $controler, bool $value_vacio): array|string
+    public function input_id(int $cols, system $controler, bool $value_vacio): array|string
     {
         $html =$this->input_text(controler: $controler,disable: true,name: 'id',place_holder: 'ID',
             required: false, value_vacio: $value_vacio);
@@ -137,10 +142,10 @@ class directivas{
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
         }
 
-        return "<div class='control-group col-sm-4'>$html</div>";
+        return "<div class='control-group col-sm-$cols'>$html</div>";
     }
 
-    private function input_text(controlador_base $controler, bool $disable, string $name, string $place_holder,
+    private function input_text(system $controler, bool $disable, string $name, string $place_holder,
                                 bool $required, bool $value_vacio): array|string
     {
         $label = $this->html->label(id_css: $name, place_holder: $place_holder);
@@ -160,7 +165,15 @@ class directivas{
 
     }
 
-    private function input_text_required(controlador_base $controler, bool $disable, string $name,
+    /**
+     * @param system $controler
+     * @param bool $disable
+     * @param string $name Usado para identificador css name input y place holder
+     * @param string $place_holder
+     * @param bool $value_vacio
+     * @return array|string
+     */
+    private function input_text_required(system $controler, bool $disable, string $name,
                                          string $place_holder, bool $value_vacio ): array|string
     {
         $label = $this->html->label(id_css: $name, place_holder: $place_holder);
@@ -180,11 +193,11 @@ class directivas{
 
     /**
      * Genera un mensaje de exito
-     * @param controlador_base $controler Controlador en ejecucion
-     * @version 0.13.0
+     * @param system $controler Controlador en ejecucion
      * @return array|string
+     * @version 0.13.0
      */
-    public function mensaje_exito(controlador_base $controler): array|string
+    public function mensaje_exito(system $controler): array|string
     {
         if($controler->mensaje_exito!==''){
             $alert_exito = $this->html->alert_success(mensaje: $controler->mensaje_exito);
@@ -198,11 +211,11 @@ class directivas{
 
     /**
      * Genera un mensaje de tipo warning
-     * @param controlador_base $controler Controlador en ejecucion
-     * @version 0.19.1
+     * @param system $controler Controlador en ejecucion
      * @return array|string
+     * @version 0.19.1
      */
-    public function mensaje_warning(controlador_base $controler): array|string
+    public function mensaje_warning(system $controler): array|string
     {
         if($controler->mensaje_warning!==''){
             $alert_warning = $this->html->alert_warning(mensaje: $controler->mensaje_warning);
