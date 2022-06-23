@@ -12,7 +12,16 @@ class actions{
         $this->error = new errores();
     }
 
-
+    /**
+     * Asigna a registros de lista los links mostrables en la lista para su ejecucion
+     * @param string $accion Accion a ejecutar en el boton
+     * @param int $indice Indice del arreglo para vista
+     * @param string $link Liga de ejecucion de tipo a
+     * @param array $registros_view Conjunto de registros obtenidos
+     * @param stdClass $row Registro a ajustar o generar link
+     * @param string $style Estilo css danger info, success etc
+     * @return array
+     */
     private function asigna_link_row(string $accion, int $indice, string $link, array $registros_view, stdClass $row,
                                      string $style): array
     {
@@ -26,6 +35,16 @@ class actions{
         return $registros_view;
     }
 
+    /**
+     * @param string $accion Accion a ejecutar en el boton
+     * @param int $indice
+     * @param links_menu $obj_link
+     * @param array $registros_view
+     * @param stdClass $row
+     * @param string $seccion Seccion en ejecucion
+     * @param string $style
+     * @return array
+     */
     private function asigna_link_rows(string $accion, int $indice, links_menu $obj_link, array $registros_view,
                                       stdClass $row, string $seccion, string $style): array
     {
@@ -59,6 +78,16 @@ class actions{
         return $siguiente_view;
     }
 
+    /**
+     * @param string $accion Accion a ejecutar en el boton
+     * @param links_menu $obj_link
+     * @param array $registros
+     * @param array $registros_view
+     * @param string $seccion Seccion en ejecucion
+     * @param string $style
+     * @param bool $style_status
+     * @return array
+     */
     private function genera_link_row(string $accion, links_menu $obj_link, array $registros, array $registros_view,
                                      string $seccion, string $style, bool $style_status): array
     {
@@ -99,6 +128,14 @@ class actions{
         return $_POST;
     }
 
+    /**
+     * @param string $accion Accion a ejecutar en el boton
+     * @param string $key_id Key donde se encuentra el id del modelo
+     * @param links_menu $obj_link
+     * @param stdClass $row
+     * @param string $seccion
+     * @return array|string
+     */
     private function link_accion(string $accion, string $key_id , links_menu $obj_link, stdClass $row, string $seccion): array|string
     {
         if(!isset($row->$key_id)){
@@ -133,6 +170,13 @@ class actions{
         return $seccion.'_id';
     }
 
+    /**
+     * @param stdClass $acciones
+     * @param links_menu $obj_link
+     * @param array $registros
+     * @param string $seccion Seccion en ejecucion
+     * @return array
+     */
     public function registros_view_actions(stdClass $acciones, links_menu $obj_link, array $registros, string $seccion): array
     {
         $registros_view = array();
@@ -149,11 +193,29 @@ class actions{
         return $registros_view;
     }
 
-    public function retorno_alta_bd(int $registro_id, string $siguiente_view){
+    /**
+     * Genera un link para ser aplicado en header despues de una accion
+     * @version 0.22.2
+     * @param int $registro_id Identificador del modelo
+     * @param string $seccion Seccion en ejecucion
+     * @param string $siguiente_view Que accion se ejecutara
+     * @return array|string link para header
+     */
+    public function retorno_alta_bd(int $registro_id, string $seccion, string $siguiente_view): array|string
+    {
+        $seccion = trim($seccion);
+        if($seccion === ''){
+            return $this->error->error(mensaje: 'Error la seccion esta vacia', data:  $seccion);
+        }
         $links = new links_menu(registro_id: $registro_id);
-        $retorno = $links->links->cat_sat_tipo_persona->modifica;
+
+        if(!isset($links->links->$seccion)){
+            return $this->error->error(mensaje: 'Error la seccion no esta habilitada para links', data:  $seccion);
+        }
+
+        $retorno = $links->links->$seccion->modifica;
         if($siguiente_view === 'alta'){
-            $retorno = $links->links->cat_sat_tipo_persona->alta;
+            $retorno = $links->links->$seccion->alta;
         }
         return $retorno;
     }

@@ -38,11 +38,12 @@ class directivas{
 
     /**
      * Genera un boton de tipo link para transaccionar status
+     * @param int $cols Columnas en formato css de 1 a 12
      * @param controlador_base $controler Controlador en ejecucion
      * @param string $seccion Seccion a ejecutar
      * @return array|string
      */
-    public function button_href_status(controlador_base $controler, string $seccion): array|string
+    public function button_href_status(int $cols, controlador_base $controler, string $seccion): array|string
     {
         $style = 'danger';
         if($controler->row_upd->status === 'activo'){
@@ -53,7 +54,8 @@ class directivas{
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar label', data: $html);
         }
-        return $html;
+
+        return "<div class='control-group col-sm-$cols'>$html</div>";
     }
 
     public function button_href_valida_persona_fisica(controlador_base $controler): array|string
@@ -80,10 +82,10 @@ class directivas{
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
         }
-        return $html;
+        return "<div class='control-group col-sm-6'>$html</div>";
     }
 
-    public function input_codigo(controlador_base $controler, bool $value_vacio): array|string
+    public function input_codigo(int $cols, controlador_base $controler, bool $value_vacio): array|string
     {
 
         $html =$this->input_text_required(controler: $controler,disable: false,name: 'codigo',place_holder: 'Codigo',
@@ -91,17 +93,19 @@ class directivas{
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
         }
-        return $html;
+        return "<div class='control-group col-sm-$cols'>$html</div>";
     }
 
-    public function input_codigo_bis(controlador_base $controler, bool $value_vacio): array|string
+    public function input_codigo_bis(int $cols, controlador_base $controler, bool $value_vacio): array|string
     {
         $html =$this->input_text_required(controler: $controler,disable: false,name: 'codigo_bis',
             place_holder: 'Codigo BIS', value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
         }
-        return $html;
+
+        return "<div class='control-group col-sm-$cols'>$html</div>";
+
     }
 
     public function input_descripcion(controlador_base $controler, bool $value_vacio): array|string
@@ -111,7 +115,8 @@ class directivas{
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
         }
-        return $html;
+        return "<div class='control-group col-sm-12'>$html</div>";
+
     }
 
     public function input_descripcion_select(controlador_base $controler, bool $value_vacio): array|string
@@ -121,7 +126,7 @@ class directivas{
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
         }
-        return $html;
+        return "<div class='control-group col-sm-6'>$html</div>";
     }
 
     public function input_id(controlador_base $controler, bool $value_vacio): array|string
@@ -131,7 +136,8 @@ class directivas{
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
         }
-        return $html;
+
+        return "<div class='control-group col-sm-4'>$html</div>";
     }
 
     private function input_text(controlador_base $controler, bool $disable, string $name, string $place_holder,

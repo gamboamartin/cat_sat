@@ -1,4 +1,9 @@
 <?php
+/**
+ * Inicializa los mensajes de error warning etc definido sen variable SESSION[mensajes]
+ * @author Martin Gamboa Vazquez
+ * @version 0.21.2
+ */
 namespace base;
 use base\controller\controlador_base;
 use gamboamartin\errores\errores;

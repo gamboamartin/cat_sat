@@ -30,13 +30,13 @@ class cat_sat_tipo_de_comprobante_html{
 
     private function inputs_base(bool $value_vacio): array|stdClass
     {
-        $html_codigo = $this->directivas->input_codigo(controler: $this->controler,value_vacio: $value_vacio);
+        $html_codigo = $this->directivas->input_codigo(cols: 6,controler: $this->controler,value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html_codigo);
         }
         $this->controler->inputs->codigo = $html_codigo;
 
-        $html_codigo_bis = $this->directivas->input_codigo_bis(controler: $this->controler,value_vacio: $value_vacio);
+        $html_codigo_bis = $this->directivas->input_codigo_bis(cols:6,controler: $this->controler,value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html_codigo);
         }

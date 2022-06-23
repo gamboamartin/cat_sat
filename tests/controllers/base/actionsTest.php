@@ -38,6 +38,25 @@ class actionsTest extends test {
     }
 
     /**
+     */
+    public function test_retorno_alta_bd(): void
+    {
+        errores::$error = false;
+        $act = new actions();
+        //$act = new liberator($act);
+        $_GET['session_id'] = 1;
+        $registro_id = -1;
+        $seccion = 'cat_sat_tipo_de_comprobante';
+        $siguiente_view = '';
+
+        $resultado = $act->retorno_alta_bd($registro_id, $seccion, $siguiente_view);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('./index.php?seccion=cat_sat_tipo_de_comprobante&accion=modifica&registro_id=-1&session_id=1', $resultado);
+        errores::$error = false;
+    }
+
+    /**
      * @throws JsonException
      */
     public function test_siguiente_view(): void

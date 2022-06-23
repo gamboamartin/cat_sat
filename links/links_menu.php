@@ -19,6 +19,12 @@ class links_menu{
         $this->secciones[] = 'cat_sat_tipo_de_comprobante';
         $this->secciones[] = 'cat_sat_tipo_persona';
 
+        $this->session_id = trim($this->session_id);
+        if($this->session_id === ''){
+            $error = $this->error->error(mensaje: 'Error session_id esta vacio', data: $this->session_id);
+            print_r($error);
+            die('Error');
+        }
 
         $links = $this->links(registro_id: $registro_id);
         if(errores::$error){
@@ -211,6 +217,10 @@ class links_menu{
 
     protected function links(int $registro_id): stdClass|array
     {
+        $this->session_id = trim($this->session_id);
+        if($this->session_id === ''){
+            return $this->error->error(mensaje: 'Error links_menu->session_id esta vacio', data: $this->session_id);
+        }
 
         $listas  = $this->listas();
         if(errores::$error){
@@ -266,6 +276,10 @@ class links_menu{
 
     private function links_sin_id(string $accion): array|stdClass
     {
+        $this->session_id = trim($this->session_id);
+        if($this->session_id === ''){
+            return $this->error->error(mensaje: 'Error links_menu->session_id esta vacio', data: $this->session_id);
+        }
         foreach ($this->secciones as $seccion){
 
             $init = $this->sin_id(seccion: $seccion,accion: $accion);
@@ -283,6 +297,11 @@ class links_menu{
 
     private function listas(): array|stdClass
     {
+
+        $this->session_id = trim($this->session_id);
+        if($this->session_id === ''){
+            return $this->error->error(mensaje: 'Error links_menu->session_id esta vacio', data: $this->session_id);
+        }
 
         $links = $this->links_sin_id(accion: 'lista');
         if(errores::$error){
@@ -325,6 +344,12 @@ class links_menu{
 
     private function sin_id(string $seccion, string $accion): array|stdClass
     {
+
+        $this->session_id = trim($this->session_id);
+        if($this->session_id === ''){
+            return $this->error->error(mensaje: 'Error links_menu->session_id esta vacio', data: $this->session_id);
+        }
+
         $function_link = 'link_'.$accion;
 
         $link_accion = $this->$function_link(seccion: $seccion);

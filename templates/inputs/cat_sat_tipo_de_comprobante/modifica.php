@@ -4,6 +4,5 @@
 <?php include "templates/inputs/modifica/descripcion.php"; ?>
 <?php include "templates/inputs/modifica/alias.php"; ?>
 <?php include "templates/inputs/modifica/descripcion_select.php"; ?>
-<?php include "templates/botons/cat_sat_tipo_persona/valida_persona_fisica.php"; ?>
 <?php include "templates/botons/status.php"; ?>
 <?php include "templates/botons/submit/modifica_bd.php"; ?>

@@ -22,7 +22,7 @@ class system extends controlador_base{
     public string $link_modifica_bd = '';
 
     public string $accion_titulo;
-    protected stdClass $acciones;
+    public stdClass $acciones;
 
     public links_menu $obj_link;
 
@@ -44,15 +44,6 @@ class system extends controlador_base{
 
         $this->obj_link = $obj_link;
         $this->html = $html;
-        $this->acciones = new stdClass();
-        $this->acciones->modifica = new stdClass();
-        $this->acciones->elimina_bd = new stdClass();
-
-        $this->acciones->modifica->style = 'info';
-        $this->acciones->modifica->style_status = false;
-
-        $this->acciones->elimina_bd->style = 'danger';
-        $this->acciones->elimina_bd->style_status = false;
 
     }
 
@@ -86,7 +77,7 @@ class system extends controlador_base{
         }
 
         if($header){
-            $retorno = (new actions())->retorno_alta_bd(registro_id: $r_alta_bd->registro_id,
+            $retorno = (new actions())->retorno_alta_bd(registro_id: $r_alta_bd->registro_id, seccion: $this->tabla,
                 siguiente_view: $siguiente_view);
             if(errores::$error){
                 return $this->retorno_error(mensaje: 'Error al dar de alta registro', data: $r_alta_bd, header:  true,
@@ -179,7 +170,7 @@ class system extends controlador_base{
                 header:  $header, ws: $ws);
         }
 
-        $button_status = (new directivas())->button_href_status(controler:$this,seccion: $this->seccion);
+        $button_status = (new directivas())->button_href_status(cols: 12, controler:$this,seccion: $this->seccion);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar boton', data: $button_status,
                 header:  $header, ws: $ws);

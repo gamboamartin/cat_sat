@@ -10,6 +10,22 @@ class init{
     public function __construct(){
         $this->error = new errores();
     }
+
+    private function init_acciones_base(system $controller): stdClass
+    {
+        $controller->acciones = new stdClass();
+        $controller->acciones->modifica = new stdClass();
+        $controller->acciones->elimina_bd = new stdClass();
+
+        $controller->acciones->modifica->style = 'info';
+        $controller->acciones->modifica->style_status = false;
+
+        $controller->acciones->elimina_bd->style = 'danger';
+        $controller->acciones->elimina_bd->style_status = false;
+
+        return $controller->acciones;
+    }
+
     public function init_controller(system $controller): array|stdClass
     {
         $init_msj = (new mensajeria())->init_mensajes(controler: $controller);
@@ -21,8 +37,14 @@ class init{
             controler: $controller);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al inicializar links', data: $init_links);
-
         }
+
+        $init_acciones = $this->init_acciones_base(controller:$controller);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al inicializar acciones', data: $init_acciones);
+        }
+
+
         $data = new stdClass();
         $data->msj = $init_msj;
         $data->links = $init_links;
