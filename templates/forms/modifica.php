@@ -5,6 +5,6 @@
     </div>
     <?php include "templates/mensajes.php"; ?>
     <form method="post" action="<?php echo$controlador->link_modifica_bd; ?>" class="form-additional">
-        <?php include "templates/inputs/$controlador->seccion/modifica.php"; ?>
+        <?php include $controlador->include_inputs_modifica; ?>
     </form>
 </div>

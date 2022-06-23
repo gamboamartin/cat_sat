@@ -24,6 +24,7 @@ class system extends controlador_base{
     public string $link_modifica_bd = '';
 
     public string $include_inputs_alta = '';
+    public string $include_inputs_modifica = '';
 
     public string $accion_titulo;
     public stdClass $acciones;
@@ -191,6 +192,13 @@ class system extends controlador_base{
                 header:  $header, ws: $ws);
         }
         $this->inputs->status = $button_status;
+
+        $include_inputs_modifica = (new generales())->path_base."templates/inputs/$this->seccion/modifica.php";
+        if(!file_exists($include_inputs_modifica)){
+            $include_inputs_modifica = (new generales())->path_base."templates/inputs/base/modifica.php";
+        }
+
+        $this->include_inputs_modifica = $include_inputs_modifica;
 
         return $r_modifica;
     }

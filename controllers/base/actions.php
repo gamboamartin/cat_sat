@@ -151,7 +151,7 @@ class actions{
      * @param string $key_id Key donde se encuentra el id del modelo
      * @param links_menu $obj_link Objeto para generacion de links
      * @param stdClass $row Registro en verificacion y asignacion
-     * @param string $seccion
+     * @param string $seccion Seccion en ejecucion
      * @return array|string
      */
     private function link_accion(string $accion, string $key_id , links_menu $obj_link, stdClass $row, string $seccion): array|string
