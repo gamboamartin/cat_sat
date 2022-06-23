@@ -5,6 +5,6 @@
     <?php include "templates/mensajes.php"; ?>
 
     <form method="post" action="<?php echo $controlador->link_alta_bd; ?>" class="form-additional">
-        <?php include "templates/inputs/$controlador->seccion/alta.php"; ?>
+        <?php include $controlador->include_inputs_alta; ?>
     </form>
 </div>

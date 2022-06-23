@@ -23,6 +23,8 @@ class system extends controlador_base{
     public string $link_modifica = '';
     public string $link_modifica_bd = '';
 
+    public string $include_inputs_alta = '';
+
     public string $accion_titulo;
     public stdClass $acciones;
 
@@ -62,6 +64,14 @@ class system extends controlador_base{
             return $this->retorno_error(mensaje: 'Error al generar inputs', data: $inputs,
                 header:  $header, ws: $ws);
         }
+
+        $include_inputs_alta = (new generales())->path_base."templates/inputs/$this->seccion/alta.php";
+        if(!file_exists($include_inputs_alta)){
+            $include_inputs_alta = (new generales())->path_base."templates/inputs/base/alta.php";
+        }
+
+        $this->include_inputs_alta = $include_inputs_alta;
+
 
         return $r_alta;
     }

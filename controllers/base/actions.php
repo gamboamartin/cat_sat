@@ -56,9 +56,9 @@ class actions{
     /**
      * @param string $accion Accion a ejecutar en el boton
      * @param int $indice
-     * @param links_menu $obj_link
+     * @param links_menu $obj_link Objeto para generacion de links
      * @param array $registros_view
-     * @param stdClass $row
+     * @param stdClass $row Registro en verificacion y asignacion
      * @param string $seccion Seccion en ejecucion
      * @param string $style
      * @return array
@@ -98,7 +98,7 @@ class actions{
 
     /**
      * @param string $accion Accion a ejecutar en el boton
-     * @param links_menu $obj_link
+     * @param links_menu $obj_link Objeto para generacion de links
      * @param array $registros
      * @param array $registros_view
      * @param string $seccion Seccion en ejecucion
@@ -149,8 +149,8 @@ class actions{
     /**
      * @param string $accion Accion a ejecutar en el boton
      * @param string $key_id Key donde se encuentra el id del modelo
-     * @param links_menu $obj_link
-     * @param stdClass $row
+     * @param links_menu $obj_link Objeto para generacion de links
+     * @param stdClass $row Registro en verificacion y asignacion
      * @param string $seccion
      * @return array|string
      */
@@ -190,7 +190,7 @@ class actions{
 
     /**
      * @param stdClass $acciones
-     * @param links_menu $obj_link
+     * @param links_menu $obj_link Objeto para generacion de links
      * @param array $registros
      * @param string $seccion Seccion en ejecucion
      * @return array
