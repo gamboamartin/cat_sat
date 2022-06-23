@@ -1,7 +1,9 @@
 <?php
 namespace html;
+use config\generales;
 use controllers\base\system;
 use gamboamartin\errores\errores;
+use links\links_menu;
 use stdClass;
 
 class directivas{
@@ -188,6 +190,41 @@ class directivas{
             required: true, value: $controler->row_upd->$name);
 
         return $label."<div class='controls'>$html</div>";
+
+    }
+
+    private function li_menu_principal_lista(string $seccion): array|string
+    {
+        $a = $this->link_menu_principal_lista(seccion: $seccion);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar liga', data: $a);
+        }
+
+        return "<li class='nav-item'>$a</li>";
+    }
+
+    private function link_menu_principal_lista(string $seccion): string
+    {
+        $links_menu = new links_menu(-1);
+
+        $liga = $links_menu->links->$seccion->lista;
+        $title_seccion = str_replace('_', ' ', $seccion);
+        $title_seccion = ucwords($title_seccion);
+        return "<a class='nav-link' href='$liga' role='button'>$title_seccion</a>";
+    }
+
+    public function lis_menu_principal(): array|string
+    {
+        $secciones = (new generales())->secciones;
+        $lis = '';
+        foreach($secciones as $seccion){
+            $li = $this->li_menu_principal_lista(seccion: $seccion);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al generar li', data: $li);
+            }
+            $lis.=$li;
+        }
+        return $lis;
 
     }
 

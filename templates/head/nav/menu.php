@@ -1,4 +1,5 @@
-<?php use config\generales; ?>
+<?php use config\generales;
+use html\directivas; ?>
 <div class="pull-left menu">
     <?php include (new generales())->path_base.'templates/head/nav/_menu_responsive.php'?>
 
@@ -8,8 +9,7 @@
         <!-- Links -->
         <div class="collapse navbar-collapse" id="main-menu">
             <ul class="nav navbar-nav clearfix">
-                <?php include (new generales())->path_base.'templates/head/nav/links/_tipo_persona.php'?>
-                <?php include (new generales())->path_base.'templates/head/nav/links/_tipo_de_comprobante.php'?>
+                <?php echo (new directivas())->lis_menu_principal(); ?>
             </ul>
         </div>
     </nav>

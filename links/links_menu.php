@@ -18,6 +18,7 @@ class links_menu{
 
         $this->secciones[] = 'cat_sat_tipo_de_comprobante';
         $this->secciones[] = 'cat_sat_tipo_persona';
+        $this->secciones[] = 'cat_sat_tipo_concepto';
 
         $this->session_id = trim($this->session_id);
         if($this->session_id === ''){

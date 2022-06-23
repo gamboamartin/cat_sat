@@ -52,12 +52,34 @@ class html{
      * @param int $registro_id Registro a mandar transaccion
      * @param string $seccion Seccion a ejecutar
      * @param string $style Estilo del boton info,danger,warning etc
-     * @return string
+     * @return string|array
      */
     public function button_href(string $accion, string $etiqueta, int $registro_id, string $seccion,
-                                string $style): string
+                                string $style): string|array
     {
+
+        $seccion = trim($seccion);
+        if($seccion === ''){
+            return $this->error->error(mensaje: 'Error la $seccion esta vacia', data: $seccion);
+        }
+        $accion = trim($accion);
+        if($accion === ''){
+            return $this->error->error(mensaje: 'Error la $accion esta vacia', data: $accion);
+        }
+        $style = trim($style);
+        if($style === ''){
+            return $this->error->error(mensaje: 'Error la $style esta vacia', data: $style);
+        }
+        $etiqueta = trim($etiqueta);
+        if($etiqueta === ''){
+            return $this->error->error(mensaje: 'Error la $etiqueta esta vacia', data: $etiqueta);
+        }
         $session_id = (new generales())->session_id;
+
+        if($session_id === ''){
+            return $this->error->error(mensaje: 'Error la $session_id esta vacia', data: $session_id);
+        }
+
         $link = "index.php?seccion=$seccion&accion=$accion&registro_id=$registro_id&session_id=$session_id";
         return "<a role='button' href='$link' class='btn btn-$style col-sm-12'>$etiqueta</a>";
     }

@@ -3,17 +3,19 @@ namespace controllers\base;
 use base\controller\controlador_base;
 use base\mensajeria;
 use base\orm\modelo;
+use config\generales;
 use gamboamartin\errores\errores;
 use html\directivas;
 use html\directivas\cat_sat_tipo_de_comprobante_html;
 use html\directivas\cat_sat_tipo_persona_html;
+use html\html_controler;
 use links\links_menu;
 use PDO;
 use stdClass;
 
 class system extends controlador_base{
 
-    private cat_sat_tipo_de_comprobante_html|cat_sat_tipo_persona_html $html;
+    private html_controler $html;
     public string $link_alta = '';
     public string $link_alta_bd = '';
     public string $link_elimina_bd = '';
@@ -25,11 +27,11 @@ class system extends controlador_base{
     public stdClass $acciones;
 
     public links_menu $obj_link;
+    public array $secciones = array();
 
-    public function __construct(cat_sat_tipo_persona_html|cat_sat_tipo_de_comprobante_html $html,PDO $link,
-                                modelo $modelo, links_menu $obj_link, array $filtro_boton_lista = array(),
-                                string $campo_busca = 'registro_id', string $valor_busca_fault = '',
-                                stdClass $paths_conf = new stdClass())
+    public function __construct(html_controler $html,PDO $link, modelo $modelo, links_menu $obj_link,
+                                array $filtro_boton_lista = array(), string $campo_busca = 'registro_id',
+                                string $valor_busca_fault = '', stdClass $paths_conf = new stdClass())
     {
         $this->msj_con_html = false;
         parent::__construct(link: $link,modelo:  $modelo,filtro_boton_lista:  $filtro_boton_lista,
@@ -42,8 +44,11 @@ class system extends controlador_base{
             die('Error');
         }
 
+        $this->secciones = (new generales())->secciones;
+
         $this->obj_link = $obj_link;
         $this->html = $html;
+
 
     }
 
