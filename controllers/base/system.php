@@ -26,6 +26,7 @@ class system extends controlador_base{
     public string $include_inputs_alta = '';
     public string $include_inputs_modifica = '';
     public string $include_lista_row = '';
+    public string $include_lista_thead= '';
 
     public string $accion_titulo;
     public stdClass $acciones;
@@ -33,6 +34,7 @@ class system extends controlador_base{
     public links_menu $obj_link;
     public array $secciones = array();
     public array $keys_row_lista = array();
+    public array $rows_lista = array('id','codigo','codigo_bis','descripcion','descripcion_select','alias');
 
     public function __construct(html_controler $html,PDO $link, modelo $modelo, links_menu $obj_link,
                                 array $filtro_boton_lista = array(), string $campo_busca = 'registro_id',
@@ -54,11 +56,12 @@ class system extends controlador_base{
         $this->obj_link = $obj_link;
         $this->html = $html;
 
-        $rows_lista_base = array('id','codigo','codigo_bis','descripcion','descripcion_select','alias');
 
-        foreach ($rows_lista_base as $row){
-            $key_value = $this->tabla.'_'.$row;
-            $this->keys_row_lista[] = $key_value;
+        $keys_row_lista = (new init())->keys_row_lista(controler:$this);
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al inicializar $key_row_lista', data: $keys_row_lista);
+            var_dump($error);
+            die('Error');
         }
 
 
@@ -149,7 +152,12 @@ class system extends controlador_base{
      */
     public function lista(bool $header, bool $ws = false): array
     {
-        $registros = $this->modelo->registros(columnas:$this->keys_row_lista,return_obj: true);
+        $columnas = array();
+        foreach ($this->keys_row_lista as $key_row_lista){
+            $columnas[] = $key_row_lista->campo;
+        }
+
+        $registros = $this->modelo->registros(columnas:$columnas,return_obj: true);
 
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener registros',
@@ -171,8 +179,14 @@ class system extends controlador_base{
         if(!file_exists($include_lista_row)){
             $include_lista_row = (new generales())->path_base."templates/listas/base/row.php";
         }
-
         $this->include_lista_row = $include_lista_row;
+
+        $include_lista_thead = (new generales())->path_base."templates/listas/$this->seccion/thead.php";
+        if(!file_exists($include_lista_thead)){
+            $include_lista_thead= (new generales())->path_base."templates/listas/base/thead.php";
+        }
+
+        $this->include_lista_thead = $include_lista_thead;
 
         return $this->registros;
     }

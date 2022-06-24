@@ -8,6 +8,7 @@
  */
 namespace controllers;
 
+use controllers\base\init;
 use controllers\base\system;
 use gamboamartin\errores\errores;
 use html\directivas;
@@ -24,13 +25,13 @@ class controlador_cat_sat_tipo_persona extends system {
         $modelo = new cat_sat_tipo_persona(link: $link);
         $html = new cat_sat_tipo_persona_html(controler: $this);
         $obj_link = new link_cat_sat_tipo_persona($this->registro_id);
+        $this->rows_lista[] = 'valida_persona_fisica';
         parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Tipos de Persona';
         $this->acciones->valida_persona_fisica = new stdClass();
         $this->acciones->valida_persona_fisica->style = '';
         $this->acciones->valida_persona_fisica->style_status = true;
-        $this->keys_row_lista[] = $this->seccion.'_valida_persona_fisica';
 
     }
 

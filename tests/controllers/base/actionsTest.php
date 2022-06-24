@@ -43,6 +43,33 @@ class actionsTest extends test {
         errores::$error = false;
     }
 
+    public function test_asigna_link_rows(): void
+    {
+        errores::$error = false;
+        $act = new actions();
+        $act = new liberator($act);
+        $_GET['session_id'] = 1;
+        $seccion = 'cat_sat_metodo_pago';
+        $obj_link = new links_menu(-1);
+        $row = new stdClass();
+        $row->cat_sat_metodo_pago_id = '1';
+
+        $indice = 0;
+        $accion = 'elimina_bd';
+        $style = 'a';
+        $registros_view = array();
+
+        $resultado = $act->asigna_link_rows($accion, $indice, $obj_link, $registros_view, $row, $seccion, $style);
+
+        $this->assertIsArray($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals(1, $resultado[0]->cat_sat_metodo_pago_id);
+        $this->assertEquals('./index.php?seccion=cat_sat_metodo_pago&accion=elimina_bd&registro_id=1&session_id=1', $resultado[0]->link_elimina_bd);
+        $this->assertEquals('a', $resultado[0]->elimina_bd_style);
+        errores::$error = false;
+
+    }
+
     public function test_key_id(): void
     {
         errores::$error = false;

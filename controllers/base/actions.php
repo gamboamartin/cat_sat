@@ -55,6 +55,7 @@ class actions{
 
     /**
      * Asigna los links necesarios de cada controller para ser usados en las views y header
+     * @version 0.30.2
      * @param string $accion Accion a ejecutar en el boton
      * @param int $indice Indice de row de registros
      * @param links_menu $obj_link Objeto para generacion de links
@@ -67,10 +68,21 @@ class actions{
     private function asigna_link_rows(string $accion, int $indice, links_menu $obj_link, array $registros_view,
                                       stdClass $row, string $seccion, string $style): array
     {
+        $seccion = trim($seccion);
+        if($seccion === ''){
+            return $this->error->error(mensaje: 'Error la seccion esta vacia', data:  $seccion);
+        }
+
         $key_id = $this->key_id(seccion: $seccion);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener key id', data:  $key_id);
         }
+
+        $valida = $this->valida_data_link(accion: $accion,key_id: $key_id,row: $row,seccion: $seccion);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar datos', data:  $valida);
+        }
+
         $link = $this->link_accion(accion: $accion,key_id:  $key_id, obj_link: $obj_link,row:  $row,seccion:  $seccion);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar link', data:  $link);
