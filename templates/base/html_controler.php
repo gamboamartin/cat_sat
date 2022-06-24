@@ -49,7 +49,11 @@ class html_controler{
             return $this->error->error(mensaje: 'Error al validar cols', data: $valida);
         }
 
-        $html_codigo = $this->directivas->input_codigo(cols: $cols->codigo,controler: $this->controler,
+        if(!isset($this->controler->row_upd)){
+            $this->controler->row_upd = new stdClass();
+        }
+
+        $html_codigo = $this->directivas->input_codigo(cols: $cols->codigo,row_upd: $this->controler->row_upd,
             value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html_codigo);
@@ -57,26 +61,26 @@ class html_controler{
         $this->controler->inputs->codigo = $html_codigo;
 
         $html_codigo_bis = $this->directivas->input_codigo_bis(cols: $cols->codigo_bis,
-            controler: $this->controler,value_vacio: $value_vacio);
+            row_upd: $this->controler->row_upd,value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html_codigo);
         }
 
         $this->controler->inputs->codigo_bis = $html_codigo_bis;
 
-        $html_descripcion = $this->directivas->input_descripcion(controler: $this->controler,value_vacio: $value_vacio);
+        $html_descripcion = $this->directivas->input_descripcion(row_upd: $this->controler->row_upd,value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html_descripcion);
         }
         $this->controler->inputs->descripcion = $html_descripcion;
 
-        $html_alias = $this->directivas->input_alias(controler: $this->controler,value_vacio: $value_vacio);
+        $html_alias = $this->directivas->input_alias(row_upd: $this->controler->row_upd,value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html_alias);
         }
         $this->controler->inputs->alias = $html_alias;
 
-        $html_descripcion_select = $this->directivas->input_descripcion_select(controler: $this->controler,
+        $html_descripcion_select = $this->directivas->input_descripcion_select(row_upd: $this->controler->row_upd,
             value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html_descripcion_select);
@@ -90,7 +94,7 @@ class html_controler{
     {
         $this->controler->inputs = new stdClass();
 
-        $html_id = $this->directivas->input_id(cols:4,controler: $this->controler,value_vacio: false);
+        $html_id = $this->directivas->input_id(cols:4,row_upd: $this->controler->row_upd,value_vacio: false);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html_id);
         }

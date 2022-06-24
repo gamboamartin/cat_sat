@@ -39,7 +39,7 @@ class directivasTest extends test {
 
         $controler = new controlador_cat_sat_tipo_persona(link: $this->link,paths_conf: $this->paths_conf);
 
-        $resultado = $html->mensaje_exito($controler);
+        $resultado = $html->mensaje_exito($controler->mensaje_exito);
 
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
@@ -49,7 +49,7 @@ class directivasTest extends test {
         $html = new directivas();
         $_SESSION['exito'][]['mensaje'] = 'hola';
         $controler = new controlador_cat_sat_tipo_persona(link: $this->link,paths_conf: $this->paths_conf);
-        $resultado = $html->mensaje_exito($controler);
+        $resultado = $html->mensaje_exito($controler->mensaje_exito);
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertStringContainsStringIgnoringCase("<div class='alert alert-success' role='alert' ><strong>Muy bien!</strong> ", $resultado);
@@ -70,8 +70,8 @@ class directivasTest extends test {
         $_SESSION['grupo_id'] = 1;
         $_SESSION['warning'][]['mensaje'] = 'a';
         $controler = new controlador_cat_sat_tipo_persona(link: $this->link, paths_conf: $this->paths_conf);
-
-        $resultado = $html->mensaje_warning($controler);
+        //$controler->mensaje_exito = 'a'
+        $resultado = $html->mensaje_warning($controler->mensaje_warning);
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertStringContainsStringIgnoringCase("<div class='alert alert-warning' role='alert' ><strong>Advertencia!</strong> <div class='alert alert-warning' role='alert' ><strong>Advertencia!</strong> a.</div>.</div>", $resultado);

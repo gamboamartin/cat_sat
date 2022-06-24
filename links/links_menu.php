@@ -133,6 +133,16 @@ class links_menu{
         return $this->links;
     }
 
+    private function li_menu_principal_lista(string $seccion): array|string
+    {
+        $a = $this->link_menu_principal_lista(seccion: $seccion);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar liga', data: $a);
+        }
+
+        return "<li class='nav-item'>$a</li>";
+    }
+
     /**
      * Genera un link de tipo alta
      * @version 0.18.1
@@ -190,6 +200,15 @@ class links_menu{
 
         $lista_cstp.="&session_id=$this->session_id";
         return $lista_cstp;
+    }
+
+    private function link_menu_principal_lista(string $seccion): string
+    {
+
+        $liga = $this->links->$seccion->lista;
+        $title_seccion = str_replace('_', ' ', $seccion);
+        $title_seccion = ucwords($title_seccion);
+        return "<a class='nav-link' href='$liga' role='button'>$title_seccion</a>";
     }
 
     private function link_modifica(int $registro_id, string $seccion): array|string
@@ -287,6 +306,21 @@ class links_menu{
             }
         }
         return $this->links;
+    }
+
+    public function lis_menu_principal(): array|string
+    {
+        $secciones = (new generales())->secciones;
+        $lis = '';
+        foreach($secciones as $seccion){
+            $li = $this->li_menu_principal_lista(seccion: $seccion);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al generar li', data: $li);
+            }
+            $lis.=$li;
+        }
+        return $lis;
+
     }
 
     private function lista(string $seccion): string

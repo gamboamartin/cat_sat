@@ -1,5 +1,5 @@
 <?php use config\generales;
-use html\directivas; ?>
+use links\links_menu; ?>
 <div class="pull-left menu">
     <?php include (new generales())->path_base.'templates/head/nav/_menu_responsive.php'?>
 
@@ -9,7 +9,7 @@ use html\directivas; ?>
         <!-- Links -->
         <div class="collapse navbar-collapse" id="main-menu">
             <ul class="nav navbar-nav clearfix">
-                <?php echo (new directivas())->lis_menu_principal(); ?>
+                <?php echo (new links_menu(registro_id:-1))->lis_menu_principal(); ?>
             </ul>
         </div>
     </nav>

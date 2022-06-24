@@ -26,12 +26,12 @@ class mensajeria{
      */
     public function init_mensajes(system $controler): array|stdClass
     {
-        $mensaje_exito = (new directivas())->mensaje_exito(controler: $controler);
+        $mensaje_exito = (new directivas())->mensaje_exito(mensaje_exito: $controler->mensaje_exito);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar alerta', data: $mensaje_exito);
         }
 
-        $mensaje_warning = (new directivas())->mensaje_warning(controler: $controler);
+        $mensaje_warning = (new directivas())->mensaje_warning(mensaje_warning: $controler->mensaje_warning);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar alerta', data: $mensaje_warning);
         }
@@ -40,6 +40,9 @@ class mensajeria{
 
         $data->exito = $mensaje_exito;
         $data->warning = $mensaje_warning;
+
+        $controler->mensaje_exito = $mensaje_exito;
+        $controler->mensaje_warning = $mensaje_warning;
 
         return $data;
     }

@@ -1,13 +1,10 @@
 <?php
 namespace controllers\base;
 use base\controller\controlador_base;
-use base\mensajeria;
 use base\orm\modelo;
 use config\generales;
 use gamboamartin\errores\errores;
 use html\directivas;
-use html\directivas\cat_sat_tipo_de_comprobante_html;
-use html\directivas\cat_sat_tipo_persona_html;
 use html\html_controler;
 use links\links_menu;
 use PDO;
@@ -213,7 +210,8 @@ class system extends controlador_base{
                 header:  $header, ws: $ws);
         }
 
-        $button_status = (new directivas())->button_href_status(cols: 12, controler:$this,seccion: $this->seccion);
+        $button_status = (new directivas())->button_href_status(cols: 12, registro_id:$this->registro_id,
+            seccion: $this->seccion,status: $this->row_upd->status);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al generar boton', data: $button_status,
                 header:  $header, ws: $ws);
