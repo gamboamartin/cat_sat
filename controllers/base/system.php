@@ -25,12 +25,14 @@ class system extends controlador_base{
 
     public string $include_inputs_alta = '';
     public string $include_inputs_modifica = '';
+    public string $include_lista_row = '';
 
     public string $accion_titulo;
     public stdClass $acciones;
 
     public links_menu $obj_link;
     public array $secciones = array();
+    public array $keys_row_lista = array();
 
     public function __construct(html_controler $html,PDO $link, modelo $modelo, links_menu $obj_link,
                                 array $filtro_boton_lista = array(), string $campo_busca = 'registro_id',
@@ -51,6 +53,13 @@ class system extends controlador_base{
 
         $this->obj_link = $obj_link;
         $this->html = $html;
+
+        $rows_lista_base = array('id','codigo','codigo_bis','descripcion','descripcion_select','alias');
+
+        foreach ($rows_lista_base as $row){
+            $key_value = $this->tabla.'_'.$row;
+            $this->keys_row_lista[] = $key_value;
+        }
 
 
     }
@@ -140,7 +149,7 @@ class system extends controlador_base{
      */
     public function lista(bool $header, bool $ws = false): array
     {
-        $registros = $this->modelo->registros(return_obj: true);
+        $registros = $this->modelo->registros(columnas:$this->keys_row_lista,return_obj: true);
 
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener registros',
@@ -154,12 +163,16 @@ class system extends controlador_base{
                     ws: $ws);
         }
 
-
-
         $this->registros = $registros_view;
-
         $n_registros = count($registros_view);
         $this->n_registros = $n_registros;
+
+        $include_lista_row = (new generales())->path_base."templates/listas/$this->seccion/row.php";
+        if(!file_exists($include_lista_row)){
+            $include_lista_row = (new generales())->path_base."templates/listas/base/row.php";
+        }
+
+        $this->include_lista_row = $include_lista_row;
 
         return $this->registros;
     }

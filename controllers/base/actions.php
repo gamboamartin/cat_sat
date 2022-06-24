@@ -54,13 +54,14 @@ class actions{
     }
 
     /**
+     * Asigna los links necesarios de cada controller para ser usados en las views y header
      * @param string $accion Accion a ejecutar en el boton
-     * @param int $indice
+     * @param int $indice Indice de row de registros
      * @param links_menu $obj_link Objeto para generacion de links
-     * @param array $registros_view
+     * @param array $registros_view Registros de  salida para view
      * @param stdClass $row Registro en verificacion y asignacion
      * @param string $seccion Seccion en ejecucion
-     * @param string $style
+     * @param string $style Estilos para botones
      * @return array
      */
     private function asigna_link_rows(string $accion, int $indice, links_menu $obj_link, array $registros_view,
@@ -100,9 +101,9 @@ class actions{
      * @param string $accion Accion a ejecutar en el boton
      * @param links_menu $obj_link Objeto para generacion de links
      * @param array $registros
-     * @param array $registros_view
+     * @param array $registros_view Registros de  salida para view
      * @param string $seccion Seccion en ejecucion
-     * @param string $style
+     * @param string $style Estilos para botones
      * @param bool $style_status
      * @return array
      */
@@ -200,7 +201,8 @@ class actions{
      * @param string $seccion Seccion en ejecucion
      * @return array
      */
-    public function registros_view_actions(stdClass $acciones, links_menu $obj_link, array $registros, string $seccion): array
+    public function registros_view_actions(stdClass $acciones, links_menu $obj_link, array $registros,
+                                           string $seccion): array
     {
         $registros_view = array();
         foreach ($acciones as $accion=>$data_accion){
