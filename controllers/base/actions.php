@@ -147,6 +147,8 @@ class actions{
     }
 
     /**
+     * Asigna los datos de un link para ser usado en la views
+     * @version 0.28.2
      * @param string $accion Accion a ejecutar en el boton
      * @param string $key_id Key donde se encuentra el id del modelo
      * @param links_menu $obj_link Objeto para generacion de links
@@ -154,10 +156,13 @@ class actions{
      * @param string $seccion Seccion en ejecucion
      * @return array|string
      */
-    private function link_accion(string $accion, string $key_id , links_menu $obj_link, stdClass $row, string $seccion): array|string
+    private function link_accion(string $accion, string $key_id , links_menu $obj_link, stdClass $row,
+                                 string $seccion): array|string
     {
-        if(!isset($row->$key_id)){
-            return $this->error->error(mensaje: "Error no existe row->$key_id", data:  $row);
+
+        $valida = $this->valida_data_link(accion: $accion,key_id: $key_id,row: $row,seccion: $seccion);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar datos', data:  $valida);
         }
 
         $links_menu = new $obj_link(registro_id: $row->$key_id);
@@ -250,6 +255,41 @@ class actions{
             $siguiente_view = 'alta';
         }
         return $siguiente_view;
+    }
+
+    /**
+     * @param string $accion Accion a ejecutar en el boton
+     * @param string $key_id Key donde se encuentra el id del modelo
+     * @param stdClass $row Registro en verificacion y asignacion
+     * @param string $seccion Seccion en ejecucion
+     * @return bool|array
+     */
+    private function valida_data_link(string $accion, string $key_id, stdClass $row, string $seccion): bool|array
+    {
+        $key_id = trim($key_id);
+        if($key_id === ''){
+            return $this->error->error(mensaje: 'Error no $key_id esta vacio', data:  $key_id);
+        }
+        if(!isset($row->$key_id)){
+            return $this->error->error(mensaje: "Error no existe row->$key_id", data:  $row);
+        }
+
+        if(!is_numeric($row->$key_id)){
+            return $this->error->error(mensaje: "Error  row->$key_id debe ser un entero positivo", data:  $row);
+        }
+        if((int)$row->$key_id<=0){
+            return $this->error->error(mensaje: "Error  row->$key_id debe ser mayor a 0", data:  $row);
+        }
+
+        $seccion = trim($seccion);
+        if($seccion === ''){
+            return $this->error->error(mensaje: 'Error no $seccion esta vacio', data:  $seccion);
+        }
+        $accion = trim($accion);
+        if($accion === ''){
+            return $this->error->error(mensaje: 'Error no $accion esta vacio', data:  $accion);
+        }
+        return true;
     }
 
 

@@ -7,6 +7,7 @@ use gamboamartin\errores\errores;
 use gamboamartin\test\liberator;
 use gamboamartin\test\test;
 use JsonException;
+use links\links_menu;
 use stdClass;
 
 
@@ -53,6 +54,26 @@ class actionsTest extends test {
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertEquals('a_id', $resultado);
+        errores::$error = false;
+    }
+
+    public function test_link_accion(): void
+    {
+        errores::$error = false;
+        $act = new actions();
+        $act = new liberator($act);
+        $_GET['session_id'] = 1;
+        $seccion = 'cat_sat_tipo_persona';
+        $obj_link = new links_menu(-1);
+        $row = new stdClass();
+        $row->a = '1';
+        $key_id = 'a';
+        $accion = 'elimina_bd';
+
+        $resultado = $act->link_accion($accion, $key_id, $obj_link, $row, $seccion);
+        $this->assertIsString($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertEquals('./index.php?seccion=cat_sat_tipo_persona&accion=elimina_bd&registro_id=1&session_id=1', $resultado);
         errores::$error = false;
     }
 
