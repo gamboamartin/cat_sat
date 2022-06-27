@@ -1,3 +1,4 @@
+<?php use config\views; ?>
 <?php /** @var stdClass $row  viene de registros del controler*/ ?>
 <tr>
     <td><?php echo $row->cat_sat_tipo_persona_id; ?></td>
@@ -11,5 +12,5 @@
 
     <!-- End dynamic generated -->
 
-    <?php include 'templates/listas/base/action_row.php';?>
+    <?php include (new views())->ruta_templates.'listas/action_row.php';?>
 </tr>

@@ -1,6 +1,6 @@
 <?php /** @var controllers\controlador_adm_session $controlador */
 
-use links\links_menu; ?>
+use gamboamartin\system\links_menu; ?>
 
 <div class="container">
     <div class="row">

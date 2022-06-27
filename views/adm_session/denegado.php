@@ -1,10 +1,10 @@
-<?php /** @var controllers\controlador_adm_session $controlador */ ?>
+<?php use config\views; ?>
 <div class="container">
     <div class="row">
         <div class="col-md-12">
             <div class="top-title">
                 <ul class="breadcrumb">
-                    <?php include "templates/breadcrumb/adm_session/inicio.php"; ?>
+                    <?php include (new views())->ruta_templates."breadcrumb/adm_session/inicio.php"; ?>
                     <li class="item"> Login</li>
                 </ul>
                 <h1 class="h-side-title page-title page-title-big text-color-primary">Denegado</h1>

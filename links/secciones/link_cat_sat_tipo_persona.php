@@ -1,7 +1,7 @@
 <?php
 namespace links\secciones;
 use gamboamartin\errores\errores;
-use links\links_menu;
+use gamboamartin\system\links_menu;
 use stdClass;
 
 class link_cat_sat_tipo_persona extends links_menu {

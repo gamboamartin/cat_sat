@@ -1,7 +1,9 @@
 <?php /** @var stdClass $data */
-use config\generales;
+use config\views;
+use gamboamartin\system\links_menu;
 
-$path_base_template = (new generales())->path_base.'templates/';
+$path_base_template = (new views())->ruta_templates;
+$links_menu = (new links_menu(registro_id: -1))->links;
 
 ?>
 <!DOCTYPE html>
@@ -20,7 +22,7 @@ $path_base_template = (new generales())->path_base.'templates/';
 <div id="fb-root"></div>
 <div class="container container-wrapper">
     <header class="header">
-        <?php include $path_base_template.'head/_head.php'?>
+        <?php include $path_base_template.'nav/_head.php'?>
     </header><!-- /.header-->
     <main class="main section-color-primary">
         <?php  include($data->include_action); ?>

@@ -14,14 +14,10 @@
         "psr-4": {
             "controllers\\": "controllers",
             "config\\": "config/",
-            "base\\": "base/",
-            "orm\\": "orm/base",
             "models\\": "orm",
-            "validacion\\": "validacion/",
             "tests\\": "tests/",
             "links\\": "links/",
-            "directivas\\": "directivas/",
-            "html\\": "templates/base/"
+            "html\\": "templates/directivas/"
 
         }
     },
@@ -55,7 +51,8 @@
         "gamboa.martin/test": "dev-main",
         "gamboa.martin/validacion": "dev-main",
         "gamboa.martin/services": "dev-main",
-        "gamboa.martin/template_1": "dev-main"
+        "gamboa.martin/template_1": "dev-main",
+        "gamboa.martin/system": "dev-main"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5"

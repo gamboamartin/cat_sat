@@ -1,10 +1,11 @@
+<?php use config\views; ?>
 <main class="main section-color-primary">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <?php include "templates/head/lista/title.php"; ?>
-                <?php include "templates/mensajes.php"; ?>
-                <?php include 'templates/listas/base/content.php';?>
+                <?php include (new views())->ruta_templates."head/lista/title.php"; ?>
+                <?php include (new views())->ruta_templates."mensajes.php"; ?>
+                <?php include (new views())->ruta_templates.'listas/content.php';?>
             </div><!-- /.center-content -->
         </div>
     </div>
