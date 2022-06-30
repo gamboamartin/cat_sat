@@ -44,7 +44,7 @@ class link_cat_sat_regimen_fiscal extends links_menu {
      */
     private function nuevo_regimen_fiscal(): string
     {
-        return "./index.php?seccion=cat_sat_regimen_fiscal&accion=nuevo_regimen_fiscal";
+        return "./index.php?seccion=cat_sat_regimen_fiscal&accion=alta";
     }
 
 

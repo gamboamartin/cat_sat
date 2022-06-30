@@ -41,7 +41,7 @@ class link_cat_sat_regimen_fiscalTest extends test {
 
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
-        $this->assertEquals('./index.php?seccion=cat_sat_regimen_fiscal&accion=nuevo_regimen_fiscal', $resultado);
+        $this->assertEquals('./index.php?seccion=cat_sat_regimen_fiscal&accion=alta', $resultado);
 
 
         errores::$error = false;
