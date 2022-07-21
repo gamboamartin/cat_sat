@@ -9,8 +9,9 @@
 namespace controllers;
 
 use gamboamartin\system\system;
+use gamboamartin\template_1\html;
 use html\cat_sat_regimen_fiscal_html;
-use html\html;
+
 use links\secciones\link_cat_sat_regimen_fiscal;
 use models\cat_sat_regimen_fiscal;
 use PDO;

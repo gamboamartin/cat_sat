@@ -10,10 +10,9 @@ namespace controllers;
 
 use gamboamartin\errores\errores;
 use gamboamartin\system\system;
+use gamboamartin\template_1\html;
 use html\cat_sat_tipo_persona_html;
-use html\directivas;
 
-use html\html;
 use JsonException;
 use links\secciones\link_cat_sat_tipo_persona;
 use models\cat_sat_tipo_persona;
