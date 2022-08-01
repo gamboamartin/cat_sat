@@ -13,7 +13,8 @@ class cat_sat_regimen_fiscal_html extends html_controler {
     {
         $modelo = new cat_sat_regimen_fiscal($link);
 
-        $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected, modelo: $modelo);
+        $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
+            modelo: $modelo, label: 'Regimen fiscal');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
