@@ -1,27 +1,27 @@
 <?php
 namespace html;
 
-use controllers\controlador_cat_sat_clase_producto;
 use controllers\controlador_cat_sat_grupo_producto;
+use controllers\controlador_cat_sat_producto;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
-use models\cat_sat_clase_producto;
 use models\cat_sat_grupo_producto;
+use models\cat_sat_producto;
 use PDO;
 use stdClass;
 
-class cat_sat_clase_producto_html extends html_controler {
+class cat_sat_producto_html extends html_controler {
 
-    private function asigna_inputs(controlador_cat_sat_clase_producto $controler, stdClass $inputs): array|stdClass
+    private function asigna_inputs(controlador_cat_sat_producto $controler, stdClass $inputs): array|stdClass
     {
         $controler->inputs->select = new stdClass();
 
-        $controler->inputs->select->cat_sat_grupo_producto_id = $inputs->selects->cat_sat_grupo_producto_id;
+        $controler->inputs->select->cat_sat_clase_producto_id = $inputs->selects->cat_sat_clase_producto_id;
 
         return $controler->inputs;
     }
 
-    public function genera_inputs_alta(controlador_cat_sat_clase_producto $controler,PDO $link): array|stdClass
+    public function genera_inputs_alta(controlador_cat_sat_producto $controler,PDO $link): array|stdClass
     {
         $inputs = $this->init_alta(link: $link);
         if(errores::$error){
@@ -53,25 +53,25 @@ class cat_sat_clase_producto_html extends html_controler {
     {
         $selects = new stdClass();
 
-        $cat_sat_grupo_producto_html = new cat_sat_grupo_producto_html(html:$this->html_base);
+        $cat_sat_clase_producto_html = new cat_sat_clase_producto_html(html:$this->html_base);
 
-        $select = $cat_sat_grupo_producto_html->select_cat_sat_grupo_producto_id(cols: 12, con_registros:true,
+        $select = $cat_sat_clase_producto_html->select_cat_sat_clase_producto_id(cols: 12, con_registros:true,
             id_selected:-1,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
         }
 
-        $selects->cat_sat_grupo_producto_id = $select;
+        $selects->cat_sat_clase_producto_id = $select;
 
         return $selects;
     }
 
-    public function select_cat_sat_clase_producto_id(int $cols,bool $con_registros,int $id_selected, PDO $link): array|string
+    public function select_cat_sat_producto_id(int $cols,bool $con_registros,int $id_selected, PDO $link): array|string
     {
-        $modelo = new cat_sat_clase_producto($link);
+        $modelo = new cat_sat_producto($link);
 
         $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
-            modelo: $modelo,label: 'Clase producto',required: true);
+            modelo: $modelo,label: 'Producto',required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
