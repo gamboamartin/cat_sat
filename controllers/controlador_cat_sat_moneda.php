@@ -12,10 +12,8 @@ use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use gamboamartin\template_1\html;
 use html\cat_sat_moneda_html;
-use html\cat_sat_tipo_concepto_html;
 use html\dp_pais_html;
 use models\cat_sat_moneda;
-use models\cat_sat_tipo_concepto;
 use PDO;
 use stdClass;
 
@@ -27,8 +25,8 @@ class controlador_cat_sat_moneda extends system {
             return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_alta, header: $header,ws:$ws);
         }
 
-
-        $select = (new dp_pais_html(html: $this->html_base))->select_dp_pais_id(cols:12,con_registros: true,id_selected:-1,link: $this->link);
+        $select = (new dp_pais_html(html: $this->html_base))->select_dp_pais_id(cols:12,con_registros: true,
+            id_selected:-1,link: $this->link);
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar select',data:  $select);
             print_r($error);
