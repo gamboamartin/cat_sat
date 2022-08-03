@@ -13,7 +13,7 @@ class cat_sat_metodo_pago_html extends html_controler {
     {
         $modelo = new cat_sat_metodo_pago($link);
 
-        $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected, modelo: $modelo);
+        $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected, modelo: $modelo, label: "Metodo de pago");
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
