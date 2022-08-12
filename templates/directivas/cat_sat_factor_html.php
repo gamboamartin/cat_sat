@@ -1,24 +1,26 @@
 <?php
 namespace html;
+use controllers\controlador_cat_sat_factor;
 use controllers\controlador_cat_sat_obj_imp;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
+use models\cat_sat_factor;
 use models\cat_sat_obj_imp;
 use PDO;
 use stdClass;
 
 
-class cat_sat_obj_imp_html extends html_controler {
+class cat_sat_factor_html extends html_controler {
 
-    private function asigna_inputs(controlador_cat_sat_obj_imp $controler, stdClass $inputs): array|stdClass
+    private function asigna_inputs(controlador_cat_sat_factor $controler, stdClass $inputs): array|stdClass
     {
         $controler->inputs->select = new stdClass();
-        $controler->inputs->exento = $inputs->texts->exento;
+        $controler->inputs->factor = $inputs->texts->factor;
 
         return $controler->inputs;
     }
 
-    public function genera_inputs_alta(controlador_cat_sat_obj_imp $controler, PDO $link): array|stdClass
+    public function genera_inputs_alta(controlador_cat_sat_factor $controler, PDO $link): array|stdClass
     {
         $inputs = $this->init_alta(link: $link);
         if(errores::$error){
@@ -33,7 +35,7 @@ class cat_sat_obj_imp_html extends html_controler {
         return $inputs_asignados;
     }
 
-    private function genera_inputs_modifica(controlador_cat_sat_obj_imp $controler, PDO $link): array|stdClass
+    private function genera_inputs_modifica(controlador_cat_sat_factor $controler, PDO $link): array|stdClass
     {
         $inputs = $this->init_modifica(link: $link, row_upd: $controler->row_upd);
         if(errores::$error){
@@ -87,7 +89,7 @@ class cat_sat_obj_imp_html extends html_controler {
         return $alta_inputs;
     }
 
-    public function inputs_cat_sat_obj_imp(controlador_cat_sat_obj_imp $controlador): array|stdClass
+    public function inputs_cat_sat_factor(controlador_cat_sat_factor $controlador): array|stdClass
     {
         $inputs = $this->genera_inputs_modifica(controler: $controlador, link: $controlador->link);
         if(errores::$error){
@@ -96,14 +98,14 @@ class cat_sat_obj_imp_html extends html_controler {
         return $inputs;
     }
 
-    public function input_exento(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+    public function input_factor(int $cols, stdClass $row_upd, bool $value_vacio): array|string
     {
         $valida = $this->directivas->valida_cols(cols: $cols);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al validar columnas', data: $valida);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'exento',place_holder: 'Exento',
+        $html =$this->directivas->input_text_required(disable: false,name: 'factor',place_holder: 'Factor',
             row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -117,7 +119,6 @@ class cat_sat_obj_imp_html extends html_controler {
         return $div;
     }
 
-
     private function selects_alta(PDO $link): array|stdClass
     {
         $selects = new stdClass();
@@ -130,12 +131,12 @@ class cat_sat_obj_imp_html extends html_controler {
         return $selects;
     }
 
-    public function select_cat_sat_obj_imp_id(int $cols, bool $con_registros, int $id_selected, PDO $link): array|string
+    public function select_cat_sat_factor_id(int $cols, bool $con_registros, int $id_selected, PDO $link): array|string
     {
-        $modelo = new cat_sat_obj_imp(link: $link);
+        $modelo = new cat_sat_factor(link: $link);
 
         $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
-            modelo: $modelo,label: 'OBJ',required: true);
+            modelo: $modelo,label: 'Factor',required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
@@ -146,11 +147,11 @@ class cat_sat_obj_imp_html extends html_controler {
     {
         $texts = new stdClass();
 
-        $in_exento = $this->input_exento(cols: 6,row_upd:  $row_upd,value_vacio:  $value_vacio);
+        $in_factor = $this->input_factor(cols: 6,row_upd:  $row_upd,value_vacio:  $value_vacio);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input',data:  $in_exento);
+            return $this->error->error(mensaje: 'Error al generar input',data:  $in_factor);
         }
-        $texts->exento = $in_exento;
+        $texts->factor = $in_factor;
 
         return $texts;
     }
