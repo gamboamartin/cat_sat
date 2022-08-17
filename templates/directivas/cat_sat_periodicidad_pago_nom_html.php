@@ -75,8 +75,10 @@ class cat_sat_periodicidad_pago_nom_html extends html_controler {
     {
         $modelo = new cat_sat_periodicidad_pago_nom($link);
 
+        $extra_params_keys[] = 'cat_sat_periodicidad_pago_nom_n_dias';
+
         $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
-            modelo: $modelo,label: 'Periodicidad pago',required: true);
+            modelo: $modelo, extra_params_keys:$extra_params_keys,label: 'Periodicidad pago',required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
