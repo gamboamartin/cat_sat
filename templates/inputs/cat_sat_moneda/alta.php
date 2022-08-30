@@ -6,6 +6,5 @@
 
 <div class="control-group btn-alta col-12">
     <div class="controls">
-        <?php include 'templates/botons/dp_pais_alta.php';?>
     </div>
 </div>
