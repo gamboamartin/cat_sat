@@ -7,7 +7,7 @@ class cat_sat_tipo_otro_pago_nom  extends modelo{
     public function __construct(PDO $link){
         $tabla = __CLASS__;
         $columnas = array($tabla=>false);
-        $campos_obligatorios[] = '';
+        $campos_obligatorios[] = 'descripcion';
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
             columnas: $columnas);
