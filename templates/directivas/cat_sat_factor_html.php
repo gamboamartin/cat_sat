@@ -131,12 +131,13 @@ class cat_sat_factor_html extends html_controler {
         return $selects;
     }
 
-    public function select_cat_sat_factor_id(int $cols, bool $con_registros, int $id_selected, PDO $link): array|string
+    public function select_cat_sat_factor_id(int $cols, bool $con_registros, int $id_selected, PDO $link,
+                                             bool $required = false): array|string
     {
         $modelo = new cat_sat_factor(link: $link);
 
         $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
-            modelo: $modelo,label: 'Factor',required: true);
+            modelo: $modelo,label: 'Factor',required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
