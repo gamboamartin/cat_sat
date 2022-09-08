@@ -7,6 +7,7 @@ use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
 use models\cat_sat_factor;
 use models\cat_sat_obj_imp;
+use models\cat_sat_tipo_impuesto;
 use PDO;
 use stdClass;
 
@@ -111,7 +112,7 @@ class cat_sat_tipo_impuesto_html extends html_controler {
 
     public function select_cat_sat_tipo_impuesto_id(int $cols, bool $con_registros, int $id_selected, PDO $link): array|string
     {
-        $modelo = new cat_sat_factor(link: $link);
+        $modelo = new cat_sat_tipo_impuesto(link: $link);
 
         $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
             modelo: $modelo,label: 'Tipo impuesto',required: true);
