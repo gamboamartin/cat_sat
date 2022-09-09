@@ -11,6 +11,16 @@ use PDO;
 
 class cat_sat_tipo_contrato_nom_html extends html_controler {
 
+    /**
+     * Genera un select de tipo contrato nomina
+     * @param int $cols No de columnas css
+     * @param bool $con_registros si con registros integra todos los options disponibles
+     * @param int|null $id_selected id seleccionado
+     * @param PDO $link conexion a la base de datos
+     * @return array|string
+     * @version 0.77.9
+     *
+     */
     public function select_cat_sat_tipo_contrato_nom_id(int $cols, bool $con_registros, int|null $id_selected, PDO $link): array|string
     {
         $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);
