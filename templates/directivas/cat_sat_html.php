@@ -6,6 +6,15 @@ use gamboamartin\system\html_controler;
 use stdClass;
 
 class cat_sat_html extends html_controler {
+
+    /**
+     * Se integra input n dias
+     * @param int $cols No de columnas css
+     * @param stdClass $row_upd registro
+     * @param bool $value_vacio si valor esta vacio
+     * @return array|string
+     * @version 0.80.9
+     */
     public function input_n_dias(int $cols, stdClass $row_upd, bool $value_vacio): array|string
     {
         $valida = $this->directivas->valida_cols(cols: $cols);
