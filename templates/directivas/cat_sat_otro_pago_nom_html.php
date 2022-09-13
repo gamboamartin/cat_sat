@@ -13,7 +13,7 @@ use models\cat_sat_periodicidad_pago_nom;
 use PDO;
 use stdClass;
 
-class cat_sat_otro_pago_nom_html extends html_controler {
+class cat_sat_otro_pago_nom_html extends cat_sat_html {
 
     private function asigna_inputs(controlador_cat_sat_otro_pago_nom $controler, stdClass $inputs): array|stdClass
     {
@@ -52,26 +52,7 @@ class cat_sat_otro_pago_nom_html extends html_controler {
         return $alta_inputs;
     }
 
-    public function input_n_dias(int $cols, stdClass $row_upd, bool $value_vacio): array|string
-    {
-        $valida = $this->directivas->valida_cols(cols: $cols);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al validar columnas', data: $valida);
-        }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'n-dias',place_holder: 'Numero dias',
-            row_upd: $row_upd, value_vacio: $value_vacio);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input', data: $html);
-        }
-
-        $div = $this->directivas->html->div_group(cols: $cols,html:  $html);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al integrar div', data: $div);
-        }
-
-        return $div;
-    }
 
     public function select_cat_sat_otro_pago_nom(int $cols,bool $con_registros,int $id_selected, PDO $link): array|string
     {
