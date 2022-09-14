@@ -1,20 +1,21 @@
 <?php
 namespace html;
 
-
-
 use controllers\controlador_cat_sat_subsidio;
 use gamboamartin\errores\errores;
-use gamboamartin\nomina\controllers\controlador_nom_deduccion;
-
 use gamboamartin\system\html_controler;
 use models\cat_sat_subsidio;
-use models\nom_deduccion;
 use PDO;
 use stdClass;
 
 class cat_sat_subsidio_html extends html_controler {
 
+    /**
+     * Asigna los input para se mostrados en front
+     * @param controlador_cat_sat_subsidio $controler
+     * @param stdClass $inputs
+     * @return array|stdClass
+     */
     private function asigna_inputs(controlador_cat_sat_subsidio $controler, stdClass $inputs): array|stdClass
     {
         $controler->inputs->select = new stdClass();
@@ -28,9 +29,16 @@ class cat_sat_subsidio_html extends html_controler {
         return $controler->inputs;
     }
 
-    public function genera_inputs_alta(controlador_cat_sat_subsidio $controler, PDO $link): array|stdClass
+    /**
+     * Genera los inputs para un alta de formulario
+     * @param controlador_cat_sat_subsidio $controler
+     * @param array $keys_selects
+     * @param PDO $link
+     * @return array|stdClass
+     */
+    public function genera_inputs_alta(controlador_cat_sat_subsidio $controler, array $keys_selects, PDO $link): array|stdClass
     {
-        $inputs = $this->init_alta(link: $link);
+        $inputs = $this->init_alta(keys_selects: $keys_selects, link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
 
@@ -59,9 +67,16 @@ class cat_sat_subsidio_html extends html_controler {
         return $inputs_asignados;
     }
 
-    private function init_alta(PDO $link): array|stdClass
+    /**
+     * Inicializa los elementos de tipo alta
+     * @param array $keys_selects
+     * @param PDO $link
+     * @return array|stdClass
+     */
+    private function init_alta(array $keys_selects, PDO $link): array|stdClass
     {
-        $selects = $this->selects_alta(link: $link);
+
+        $selects = $this->selects_alta(keys_selects: $keys_selects, link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar selects',data:  $selects);
         }
@@ -107,6 +122,15 @@ class cat_sat_subsidio_html extends html_controler {
         return $inputs;
     }
 
+    /**
+     * Genera un input de tipo numero para limite inferior
+     * @param int $cols n columnas css
+     * @param stdClass $row_upd Registro en proceso
+     * @param bool $value_vacio si vacio dej ael input sin value
+     * @param bool $disabled si disabled el input queda deshabilitado
+     * @return array|string
+     * @version 0.81.9
+     */
     public function input_limite_inferior(int $cols, stdClass $row_upd, bool $value_vacio, bool $disabled = false):
     array|string
     {
@@ -239,19 +263,7 @@ class cat_sat_subsidio_html extends html_controler {
         return $div;
     }
 
-    private function selects_alta(PDO $link): array|stdClass
-    {
-        $selects = new stdClass();
 
-        $select = (new cat_sat_periodicidad_pago_nom_html(html:$this->html_base))->select_cat_sat_periodicidad_pago_nom_id(
-            cols: 12, con_registros:true, id_selected:-1,link: $link);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
-        }
-        $selects->cat_sat_periodicidad_pago_nom_id = $select;
-
-        return $selects;
-    }
 
     private function selects_modifica(PDO $link, stdClass $row_upd): array|stdClass
     {
@@ -282,7 +294,14 @@ class cat_sat_subsidio_html extends html_controler {
         return $select;
     }
 
-    private function texts_alta(stdClass $row_upd, bool $value_vacio, stdClass $params = new stdClass()): array|stdClass
+    /**
+     * Genera los input de tipo alta
+     * @param stdClass $row_upd
+     * @param bool $value_vacio
+     * @param stdClass $params
+     * @return array|stdClass
+     */
+    protected function texts_alta(stdClass $row_upd, bool $value_vacio, stdClass $params = new stdClass()): array|stdClass
     {
         $texts = new stdClass();
 

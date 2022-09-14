@@ -12,21 +12,8 @@ use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use gamboamartin\template\html;
-use html\cat_sat_moneda_html;
 use html\cat_sat_subsidio_html;
-use html\com_cliente_html;
-use html\com_producto_html;
-use html\com_sucursal_html;
-use html\em_empleado_html;
-use html\nom_deduccion_html;
-use html\nom_percepcion_html;
 use models\cat_sat_subsidio;
-use models\com_cliente;
-use models\com_producto;
-use models\com_sucursal;
-use models\em_empleado;
-use models\nom_deduccion;
-use models\nom_percepcion;
 use PDO;
 use stdClass;
 
@@ -49,7 +36,13 @@ class controlador_cat_sat_subsidio extends system {
             return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_alta, header: $header,ws:$ws);
         }
 
-        $inputs = (new cat_sat_subsidio_html(html: $this->html_base))->genera_inputs_alta(controler: $this, link: $this->link);
+        $keys_selects = array();
+        $keys_selects['cat_sat_periodicidad_pago_nom'] = new stdClass();
+        $keys_selects['cat_sat_periodicidad_pago_nom']->label = 'Periodicidad de Pago';
+
+
+        $inputs = (new cat_sat_subsidio_html(html: $this->html_base))->genera_inputs_alta(
+            controler: $this, keys_selects: $keys_selects, link: $this->link);
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $inputs);
             print_r($error);
