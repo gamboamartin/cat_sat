@@ -37,20 +37,6 @@ class cat_sat_periodicidad_pago_nom_html extends cat_sat_html {
         return $inputs_asignados;
     }
 
-    private function init_alta(PDO $link): array|stdClass
-    {
-        $texts = $this->texts_alta(row_upd: new stdClass(), value_vacio: true);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar texts',data:  $texts);
-        }
-
-        $alta_inputs = new stdClass();
-        $alta_inputs->texts = $texts;
-
-        return $alta_inputs;
-    }
-
-
 
     public function select_cat_sat_periodicidad_pago_nom_id(int $cols,bool $con_registros,int $id_selected, PDO $link): array|string
     {
