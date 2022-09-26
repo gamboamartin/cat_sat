@@ -48,10 +48,10 @@ class base_test{
         return $del;
     }
 
-    public function del_cat_tipo_nomina(PDO $link): array
+    public function del_cat_sat_tipo_nomina(PDO $link): array
     {
 
-        $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_tipo_nomina');
+        $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_tipo_nomina');
         if(errores::$error){
             return (new errores())->error('Error al eliminar', $del);
         }
