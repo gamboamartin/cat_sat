@@ -1,12 +1,10 @@
 <?php
 namespace html;
 
+use gamboamartin\cat_sat\models\cat_sat_tipo_otro_pago_nom;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
 use gamboamartin\template\directivas;
-use models\cat_sat_actividad_economica;
-use models\cat_sat_tipo_otro_pago_nom;
-use models\cat_sat_tipo_percepcion_nom;
 use PDO;
 
 class cat_sat_tipo_otro_pago_nom_html extends html_controler {

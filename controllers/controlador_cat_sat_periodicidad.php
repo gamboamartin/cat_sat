@@ -9,11 +9,11 @@
 namespace controllers;
 
 
+use gamboamartin\cat_sat\models\cat_sat_periodicidad;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
+use gamboamartin\template_1\html;
 use html\cat_sat_periodicidad_html;
-use html\html;
-use models\cat_sat_periodicidad;
 use PDO;
 use stdClass;
 

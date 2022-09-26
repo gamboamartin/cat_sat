@@ -7,13 +7,13 @@
  *
  */
 namespace controllers;
+use gamboamartin\cat_sat\models\cat_sat_moneda;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use gamboamartin\template_1\html;
 use html\cat_sat_moneda_html;
 use html\dp_pais_html;
-use models\cat_sat_moneda;
 use PDO;
 use stdClass;
 

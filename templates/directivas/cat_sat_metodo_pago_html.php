@@ -1,9 +1,9 @@
 <?php
 namespace html;
 
+use gamboamartin\cat_sat\models\cat_sat_metodo_pago;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
-use models\cat_sat_metodo_pago;
 use PDO;
 
 

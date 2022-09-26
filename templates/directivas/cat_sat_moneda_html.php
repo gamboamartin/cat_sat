@@ -1,10 +1,10 @@
 <?php
 namespace html;
 
+use gamboamartin\cat_sat\models\cat_sat_moneda;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
 use gamboamartin\template\directivas;
-use models\cat_sat_moneda;
 use PDO;
 
 

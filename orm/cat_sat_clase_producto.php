@@ -1,11 +1,11 @@
 <?php
-namespace models;
+namespace gamboamartin\cat_sat\models;
 use base\orm\modelo;
 use PDO;
 
 class cat_sat_clase_producto extends modelo{
     public function __construct(PDO $link){
-        $tabla = __CLASS__;
+        $tabla = 'cat_sat_clase_producto';
         $columnas = array($tabla=>false);
         $campos_obligatorios[] = 'descripcion';
 

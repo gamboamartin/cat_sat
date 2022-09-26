@@ -8,12 +8,11 @@
  */
 namespace controllers;
 
+use gamboamartin\cat_sat\models\cat_sat_regimen_fiscal;
 use gamboamartin\system\system;
 use gamboamartin\template_1\html;
 use html\cat_sat_regimen_fiscal_html;
-
 use links\secciones\link_cat_sat_regimen_fiscal;
-use models\cat_sat_regimen_fiscal;
 use PDO;
 use stdClass;
 

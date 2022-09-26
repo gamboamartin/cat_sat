@@ -8,16 +8,12 @@
  */
 namespace controllers;
 
+use gamboamartin\cat_sat\models\cat_sat_tipo_impuesto;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
-use html\cat_sat_factor_html;
-use html\cat_sat_obj_imp_html;
 use gamboamartin\template\html;
 use html\cat_sat_tipo_impuesto_html;
-use models\cat_sat_factor;
-use models\cat_sat_obj_imp;
-use models\cat_sat_tipo_impuesto;
 use PDO;
 use stdClass;
 

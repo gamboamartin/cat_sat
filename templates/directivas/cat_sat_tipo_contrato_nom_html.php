@@ -2,10 +2,10 @@
 namespace html;
 
 
+use gamboamartin\cat_sat\models\cat_sat_tipo_contrato_nom;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
 use gamboamartin\template\directivas;
-use models\cat_sat_tipo_contrato_nom;
 use PDO;
 
 

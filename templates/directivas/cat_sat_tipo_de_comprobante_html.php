@@ -1,9 +1,9 @@
 <?php
 namespace html;
 
+use gamboamartin\cat_sat\models\cat_sat_tipo_de_comprobante;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
-use models\cat_sat_tipo_de_comprobante;
 use PDO;
 
 

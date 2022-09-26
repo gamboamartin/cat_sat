@@ -1,5 +1,5 @@
 <?php
-namespace models;
+namespace gamboamartin\cat_sat\models;
 use base\orm\modelo;
 use gamboamartin\errores\errores;
 use PDO;
@@ -7,7 +7,7 @@ use stdClass;
 
 class cat_sat_regimen_fiscal extends modelo{
     public function __construct(PDO $link){
-        $tabla = __CLASS__;
+        $tabla = 'cat_sat_regimen_fiscal';
         $columnas = array($tabla=>false);
         $campos_obligatorios[] = 'descripcion';
 

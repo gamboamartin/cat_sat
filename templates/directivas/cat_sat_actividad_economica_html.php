@@ -1,9 +1,9 @@
 <?php
 namespace html;
 
+use gamboamartin\cat_sat\models\cat_sat_actividad_economica;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
-use models\cat_sat_actividad_economica;
 use PDO;
 
 class cat_sat_actividad_economica_html extends html_controler {

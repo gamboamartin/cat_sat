@@ -8,11 +8,12 @@
  */
 namespace controllers;
 
+use gamboamartin\cat_sat\models\cat_sat_unidad;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use html\cat_sat_unidad_html;
 use gamboamartin\template\html;
-use models\cat_sat_unidad;
+
 use PDO;
 use stdClass;
 

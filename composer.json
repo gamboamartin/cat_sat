@@ -12,13 +12,12 @@
 
     "autoload": {
         "psr-4": {
-            "controllers\\": "controllers",
-            "config\\": "config/",
-            "models\\": "orm",
-            "tests\\": "tests/",
-            "links\\": "links/",
-            "html\\": "templates/directivas/"
-
+          "controllers\\": "controllers",
+          "config\\": "config/",
+          "gamboamartin\\cat_sat\\models\\": "orm",
+          "tests\\": "tests/",
+          "links\\": "links/",
+          "html\\": "templates/directivas/"
         }
     },
     "require": {

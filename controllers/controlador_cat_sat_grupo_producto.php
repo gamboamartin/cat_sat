@@ -8,16 +8,12 @@
  */
 namespace controllers;
 
+use gamboamartin\cat_sat\models\cat_sat_grupo_producto;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use gamboamartin\template\html;
-use html\cat_sat_actividad_economica_html;
 use html\cat_sat_grupo_producto_html;
-use html\cat_sat_tipo_nomina_html;
-use models\cat_sat_actividad_economica;
-use models\cat_sat_grupo_producto;
-use models\cat_sat_tipo_nomina;
 use PDO;
 use stdClass;
 

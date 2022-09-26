@@ -2,9 +2,9 @@
 namespace html;
 
 use controllers\controlador_cat_sat_grupo_producto;
+use gamboamartin\cat_sat\models\cat_sat_grupo_producto;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
-use models\cat_sat_grupo_producto;
 use PDO;
 use stdClass;
 

@@ -8,12 +8,12 @@
  */
 namespace controllers;
 
+use gamboamartin\cat_sat\models\cat_sat_clase_producto;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use gamboamartin\template\html;
 use html\cat_sat_clase_producto_html;
-use models\cat_sat_clase_producto;
 use PDO;
 use stdClass;
 

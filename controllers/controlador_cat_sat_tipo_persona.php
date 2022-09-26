@@ -8,6 +8,7 @@
  */
 namespace controllers;
 
+use gamboamartin\cat_sat\models\cat_sat_tipo_persona;
 use gamboamartin\errores\errores;
 use gamboamartin\system\system;
 use gamboamartin\template_1\html;
@@ -15,7 +16,7 @@ use html\cat_sat_tipo_persona_html;
 
 use JsonException;
 use links\secciones\link_cat_sat_tipo_persona;
-use models\cat_sat_tipo_persona;
+
 use PDO;
 use stdClass;
 

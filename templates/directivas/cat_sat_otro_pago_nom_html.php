@@ -1,15 +1,8 @@
 <?php
 namespace html;
 
-use controllers\controlador_cat_sat_division;
 use controllers\controlador_cat_sat_otro_pago_nom;
-use controllers\controlador_cat_sat_periodicidad_pago_nom;
 use gamboamartin\errores\errores;
-use gamboamartin\system\html_controler;
-use models\cat_sat_actividad_economica;
-use models\cat_sat_division;
-use models\cat_sat_otro_pago_nom;
-use models\cat_sat_periodicidad_pago_nom;
 use PDO;
 use stdClass;
 

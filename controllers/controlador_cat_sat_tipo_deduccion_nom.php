@@ -8,13 +8,11 @@
  */
 namespace controllers;
 
+use gamboamartin\cat_sat\models\cat_sat_tipo_deduccion_nom;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use gamboamartin\template\html;
 use html\cat_sat_tipo_deduccion_nom_html;
-use html\cat_sat_tipo_percepcion_nom_html;
-use models\cat_sat_tipo_deduccion_nom;
-use models\cat_sat_tipo_percepcion_nom;
 use PDO;
 use stdClass;
 

@@ -1,14 +1,10 @@
 <?php
 namespace tests\controllers;
 
-use controllers\controlador_cat_sat_tipo_persona;
 use gamboamartin\errores\errores;
 use gamboamartin\template_1\html;
-use gamboamartin\test\liberator;
 use gamboamartin\test\test;
 use html\cat_sat_regimen_fiscal_html;
-use JsonException;
-use links\secciones\link_cat_sat_regimen_fiscal;
 use stdClass;
 
 

@@ -2,10 +2,9 @@
 namespace html;
 
 use controllers\controlador_cat_sat_division;
+use gamboamartin\cat_sat\models\cat_sat_division;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
-use models\cat_sat_actividad_economica;
-use models\cat_sat_division;
 use PDO;
 use stdClass;
 
