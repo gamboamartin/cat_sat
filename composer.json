@@ -15,7 +15,7 @@
           "controllers\\": "controllers",
           "config\\": "config/",
           "gamboamartin\\cat_sat\\models\\": "orm",
-          "tests\\": "tests/",
+          "gamboamartin\\cat_sat\\tests\\": "tests",
           "links\\": "links/",
           "html\\": "templates/directivas/"
         }

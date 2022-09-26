@@ -1,5 +1,5 @@
 <?php
-namespace tests\orm;
+namespace gamboamartin\cat_sat\tests\orm;
 
 use gamboamartin\cat_sat\models\cat_sat_moneda;
 use gamboamartin\direccion_postal\tests\base_test;
@@ -34,7 +34,7 @@ class cat_sat_monedaTest extends test {
         $_GET['session_id'] = '1';
         $modelo = new cat_sat_moneda(link: $this->link);
 
-        $del = (new \tests\base_test())->del_dp_pais(link: $this->link);
+        $del = (new \gamboamartin\cat_sat\tests\base_test())->del_dp_pais(link: $this->link);
         if(errores::$error){
             $error = (new errores())->error(mensaje: 'Error al eliminar', data: $del);
             print_r($error);

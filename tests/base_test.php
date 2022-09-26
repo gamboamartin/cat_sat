@@ -1,10 +1,10 @@
 <?php
-namespace tests;
+namespace gamboamartin\cat_sat\tests;
 use base\orm\modelo_base;
 use gamboamartin\errores\errores;
-use models\cat_sat_tipo_nomina;
+
 use PDO;
-use stdClass;
+
 
 class base_test{
 
