@@ -1,6 +1,7 @@
 <?php
 namespace gamboamartin\cat_sat\tests;
 use base\orm\modelo_base;
+use gamboamartin\cat_sat\models\cat_sat_tipo_nomina;
 use gamboamartin\errores\errores;
 
 use PDO;
@@ -41,6 +42,16 @@ class base_test{
     {
 
         $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_moneda');
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+        return $del;
+    }
+
+    public function del_cat_tipo_nomina(PDO $link): array
+    {
+
+        $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_tipo_nomina');
         if(errores::$error){
             return (new errores())->error('Error al eliminar', $del);
         }
