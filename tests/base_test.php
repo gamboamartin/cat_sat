@@ -1,6 +1,7 @@
 <?php
 namespace gamboamartin\cat_sat\tests;
 use base\orm\modelo_base;
+use gamboamartin\cat_sat\models\cat_sat_regimen_fiscal;
 use gamboamartin\cat_sat\models\cat_sat_tipo_nomina;
 use gamboamartin\errores\errores;
 
@@ -8,6 +9,22 @@ use PDO;
 
 
 class base_test{
+
+    public function alta_cat_sat_regimen_fiscal(PDO $link): array|\stdClass
+    {
+        $registro = array();
+        $registro['id'] = 1;
+        $registro['codigo'] = 1;
+        $registro['descripcion'] = 1;
+        $registro['descripcion_select'] = 1;
+
+        $alta = (new cat_sat_regimen_fiscal($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+
+        }
+        return $alta;
+    }
 
     public function alta_cat_sat_tipo_nomina(PDO $link): array|\stdClass
     {
