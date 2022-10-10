@@ -12,7 +12,7 @@ use PDO;
 
 class base_test{
 
-    public function alta_cat_sat_moneda(PDO $link, int $dp_pais_id = -1, bool $predeterminado = false): array|\stdClass
+    public function alta_cat_sat_moneda(PDO $link, int $id = 1, int $dp_pais_id = -1, bool $predeterminado = false): array|\stdClass
     {
         $registro = array();
         if($predeterminado){
@@ -45,7 +45,7 @@ class base_test{
 
         }
 
-        $registro['id'] = 1;
+        $registro['id'] = $id;
         $registro['descripcion'] = 1;
         $registro['codigo'] = 'XSM';
 
