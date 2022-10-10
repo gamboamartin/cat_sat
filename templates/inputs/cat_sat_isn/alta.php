@@ -1,6 +1,5 @@
-<?php /** @var  \controllers\controlador_cat_sat_tipo_impuesto $controlador  controlador en ejecucion */ ?>
+<?php /** @var  \controllers\controlador_cat_sat_isn $controlador  controlador en ejecucion */ ?>
 <?php use config\views; ?>
-
 <?php echo $controlador->inputs->codigo; ?>
 <?php echo $controlador->inputs->codigo_bis; ?>
 <?php echo $controlador->inputs->descripcion; ?>

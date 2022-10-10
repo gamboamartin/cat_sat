@@ -18,5 +18,7 @@ class cat_sat_isn extends modelo{
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
             columnas: $columnas, campos_view: $campos_view);
+
+        $this->NAMESPACE = __NAMESPACE__;
     }
 }
