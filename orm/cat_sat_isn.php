@@ -7,7 +7,7 @@ use PDO;
 class cat_sat_isn extends modelo{
     public function __construct(PDO $link){
         $tabla = 'cat_sat_isn';
-        $columnas = array($tabla=>false);
+        $columnas = array($tabla=>false, 'dp_estado' => $tabla);
         $campos_obligatorios[] = 'descripcion';
 
         $campos_view = array();
