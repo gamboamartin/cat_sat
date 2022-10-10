@@ -1,14 +1,62 @@
 <?php
 namespace gamboamartin\cat_sat\tests;
 use base\orm\modelo_base;
+use gamboamartin\cat_sat\models\cat_sat_moneda;
 use gamboamartin\cat_sat\models\cat_sat_regimen_fiscal;
 use gamboamartin\cat_sat\models\cat_sat_tipo_nomina;
+use gamboamartin\direccion_postal\models\dp_pais;
 use gamboamartin\errores\errores;
 
 use PDO;
 
 
 class base_test{
+
+    public function alta_cat_sat_moneda(PDO $link, int $dp_pais_id = -1, bool $predeterminado = false): array|\stdClass
+    {
+        $registro = array();
+        if($predeterminado){
+            $registro['predeterminado'] = 'activo';
+        }
+
+        if($dp_pais_id === -1) {
+
+            $alta =(new \gamboamartin\direccion_postal\tests\base_test())->alta_dp_pais(link:$link, predeterminado: true);
+            if(errores::$error){
+                return (new errores())->error('Error al dar de alta', $alta);
+
+            }
+
+        }
+        if($dp_pais_id > 0){
+            $registro['dp_pais_id'] = $dp_pais_id;
+
+            $existe = (new dp_pais($link))->existe_by_id(registro_id: $dp_pais_id);
+            if (errores::$error) {
+                return (new errores())->error('Error al validar si existe', $existe);
+            }
+
+            if(!$existe) {
+                $alta = (new \gamboamartin\direccion_postal\tests\base_test())->alta_dp_pais(link: $link, id: $dp_pais_id);
+                if (errores::$error) {
+                    return (new errores())->error('Error al dar de alta', $alta);
+                }
+            }
+
+        }
+
+        $registro['id'] = 1;
+        $registro['descripcion'] = 1;
+        $registro['codigo'] = 'XSM';
+
+
+        $alta = (new cat_sat_moneda($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+
+        }
+        return $alta;
+    }
 
     public function alta_cat_sat_regimen_fiscal(PDO $link): array|\stdClass
     {
