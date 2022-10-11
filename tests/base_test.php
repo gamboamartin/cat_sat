@@ -21,16 +21,35 @@ class base_test{
 
         if($dp_pais_id === -1) {
 
-            $alta =(new \gamboamartin\direccion_postal\tests\base_test())->alta_dp_pais(link:$link, predeterminado: true);
-            if(errores::$error){
-                return (new errores())->error('Error al dar de alta', $alta);
+            $existe = (new dp_pais($link))->existe_by_id(registro_id: 1);
+            if (errores::$error) {
+                return (new errores())->error('Error al validar si existe', $existe);
 
+            }
+            if($existe){
+                $del = (new \gamboamartin\direccion_postal\tests\base_test())->del_dp_pais(link: $link);
+                if (errores::$error) {
+                    return (new errores())->error('Error al eliminar', $del);
+                }
+            }
+            $existe = (new dp_pais($link))->existe_predeterminado();
+            if (errores::$error) {
+                return (new errores())->error('Error al validar si existe', $existe);
+
+            }
+            if(!$existe) {
+
+                $alta = (new \gamboamartin\direccion_postal\tests\base_test())->alta_dp_pais(link: $link, predeterminado: true);
+                if (errores::$error) {
+                    return (new errores())->error('Error al dar de alta', $alta);
+
+                }
             }
 
         }
         if($dp_pais_id > 0){
-            $registro['dp_pais_id'] = $dp_pais_id;
 
+            $registro['dp_pais_id'] = $dp_pais_id;
             $existe = (new dp_pais($link))->existe_by_id(registro_id: $dp_pais_id);
             if (errores::$error) {
                 return (new errores())->error('Error al validar si existe', $existe);

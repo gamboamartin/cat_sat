@@ -88,12 +88,6 @@ class cat_sat_monedaTest extends test {
 
         $modelo = new cat_sat_moneda(link: $this->link);
 
-        $del = (new base_test())->del_dp_pais($this->link);
-        if(errores::$error){
-            $error = (new errores())->error('Error al eliminar', $del);
-            print_r($error);
-            exit;
-        }
 
         $alta = (new \gamboamartin\cat_sat\tests\base_test())->alta_cat_sat_moneda(link: $this->link, predeterminado: true);
         if(errores::$error){
