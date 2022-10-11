@@ -1,6 +1,7 @@
 <?php
 namespace gamboamartin\cat_sat\tests;
 use base\orm\modelo_base;
+use gamboamartin\cat_sat\models\cat_sat_metodo_pago;
 use gamboamartin\cat_sat\models\cat_sat_moneda;
 use gamboamartin\cat_sat\models\cat_sat_regimen_fiscal;
 use gamboamartin\cat_sat\models\cat_sat_tipo_nomina;
@@ -13,6 +14,24 @@ use stdClass;
 
 
 class base_test{
+
+    public function alta_cat_sat_metodo_pago(PDO $link, string $codigo = '1', $descripcion = '1', int $id = 1,
+                                             bool $predeterminado = false): array|stdClass
+    {
+        $registro = (new test())->registro(
+            codigo:$codigo,descripcion: $descripcion,id: $id, predeterminado: $predeterminado);
+        if (errores::$error) {
+            return (new errores())->error('Error al integrar predeterminado si existe', $registro);
+
+        }
+
+        $alta = (new cat_sat_metodo_pago($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+
+        }
+        return $alta;
+    }
 
     public function alta_cat_sat_moneda(PDO $link, string $codigo = 'XSM', string $descripcion = '1', int $id = 1,
                                         int $dp_pais_id = -1, bool $predeterminado = false): array|stdClass
