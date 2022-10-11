@@ -27,17 +27,6 @@ class base_test{
 
         if($dp_pais_id === -1) {
 
-            $existe = (new dp_pais($link))->existe_by_id(registro_id: 1);
-            if (errores::$error) {
-                return (new errores())->error('Error al validar si existe', $existe);
-
-            }
-            if($existe){
-                $del = (new \gamboamartin\direccion_postal\tests\base_test())->del_dp_pais(link: $link);
-                if (errores::$error) {
-                    return (new errores())->error('Error al eliminar', $del);
-                }
-            }
 
             $existe = (new dp_pais($link))->existe_predeterminado();
             if (errores::$error) {

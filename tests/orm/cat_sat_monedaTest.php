@@ -79,6 +79,15 @@ class cat_sat_monedaTest extends test {
             print_r($error);
             exit;
         }
+
+        $del = (new \gamboamartin\direccion_postal\tests\base_test())->del_dp_pais($this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al eliminar', $del);
+            print_r($error);
+            exit;
+        }
+
+
         $resultado = $modelo->existe_predeterminado();
         $this->assertIsBool($resultado);
         $this->assertNotTrue(errores::$error);
