@@ -2,6 +2,7 @@
 namespace html;
 use base\orm\modelo;
 use controllers\controlador_cat_sat_isn;
+use gamboamartin\cat_sat\models\cat_sat_isn;
 use gamboamartin\direccion_postal\models\dp_estado;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
@@ -125,6 +126,19 @@ class cat_sat_isn_html extends html_controler {
         $selects->dp_estado_id = $select;
 
         return $selects;
+    }
+
+    public function select_cat_sat_isn_id(int $cols, bool $con_registros, int $id_selected, PDO $link,
+                                          bool $disabled = false, array $filtro = array()): array|string
+    {
+        $modelo = new cat_sat_isn(link: $link);
+
+        $select = $this->select_catalogo(cols: $cols, con_registros: $con_registros, id_selected: $id_selected,
+            modelo: $modelo, disabled: $disabled, filtro: $filtro, label: 'Impuesto sobre nomina', required: true);
+        if (errores::$error) {
+            return $this->error->error(mensaje: 'Error al generar select', data: $select);
+        }
+        return $select;
     }
 
     protected function texts_modifica(stdClass $row_upd, bool $value_vacio, stdClass $params = new stdClass()): array|stdClass
