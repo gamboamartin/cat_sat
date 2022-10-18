@@ -34,7 +34,7 @@ class base_test{
     }
 
     public function alta_cat_sat_moneda(PDO $link, string $codigo = 'XSM', string $descripcion = '1', int $id = 1,
-                                        int $dp_pais_id = -1, bool $predeterminado = false): array|stdClass
+                                        int $dp_pais_id = 1, bool $predeterminado = false): array|stdClass
     {
 
         $registro = (new test())->registro(codigo:$codigo,descripcion:  $descripcion, id: $id,
@@ -44,43 +44,21 @@ class base_test{
 
         }
 
-        if($dp_pais_id === -1) {
-
-
-            $existe = (new dp_pais($link))->existe_predeterminado();
-            if (errores::$error) {
-                return (new errores())->error('Error al validar si existe', $existe);
-
-            }
-            if(!$existe) {
-
-                $alta = (new \gamboamartin\direccion_postal\tests\base_test())->alta_dp_pais(link: $link, predeterminado: true);
-                if (errores::$error) {
-                    return (new errores())->error('Error al dar de alta', $alta);
-
-                }
-            }
+        $existe = (new dp_pais($link))->existe_by_id(registro_id: $dp_pais_id);
+        if (errores::$error) {
+            return (new errores())->error('Error al validar si existe', $existe);
 
         }
-        if($dp_pais_id > 0){
 
-            $registro['dp_pais_id'] = $dp_pais_id;
-
-            $existe = (new dp_pais($link))->existe_by_id(registro_id: $dp_pais_id);
+        if(!$existe) {
+            $alta = (new base_test())->alta_dp_pais(link: $link);
             if (errores::$error) {
-                return (new errores())->error('Error al validar si existe', $existe);
-            }
-
-            if(!$existe) {
-                $alta = (new \gamboamartin\direccion_postal\tests\base_test())->alta_dp_pais(link: $link, id: $dp_pais_id);
-                if (errores::$error) {
-                    return (new errores())->error('Error al dar de alta', $alta);
-                }
+                return (new errores())->error('Error al dar de alta', $alta);
             }
 
         }
 
-
+        $registro['dp_pais_id'] = $dp_pais_id;
 
         $alta = (new cat_sat_moneda($link))->alta_registro($registro);
         if(errores::$error){
@@ -120,6 +98,19 @@ class base_test{
         }
 
         $alta = (new cat_sat_tipo_nomina($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+
+        }
+        return $alta;
+    }
+
+    public function alta_dp_pais(PDO $link, string $codigo = '1', $descripcion = '1', int $id = 1,
+                                 bool $predeterminado = false): array|stdClass
+    {
+
+        $alta = (new \gamboamartin\direccion_postal\tests\base_test())->alta_dp_pais(link: $link,
+            codigo: $codigo, descripcion: $descripcion, id: $id, predeterminado: $predeterminado);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
 

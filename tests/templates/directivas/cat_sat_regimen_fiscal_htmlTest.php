@@ -44,7 +44,7 @@ class cat_sat_regimen_fiscal_htmlTest extends test {
 
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
-        $this->assertEquals("<div class='control-group col-sm-1'><label class='control-label' for='cat_sat_regimen_fiscal_id'>Regimen fiscal</label><div class='controls'><select class='form-control selectpicker color-secondary cat_sat_regimen_fiscal_id' id='cat_sat_regimen_fiscal_id' name='cat_sat_regimen_fiscal_id'  ><option value=''  >Selecciona una opcion</option></select></div></div>", $resultado);
+        $this->assertEquals("<div class='control-group col-sm-1'><label class='control-label' for='cat_sat_regimen_fiscal_id'>Regimen fiscal</label><div class='controls'><select class='form-control selectpicker color-secondary  cat_sat_regimen_fiscal_id' data-live-search='true' id='cat_sat_regimen_fiscal_id' name='cat_sat_regimen_fiscal_id'  ><option value=''  >Selecciona una opcion</option></select></div></div>", $resultado);
 
 
         errores::$error = false;
