@@ -7,6 +7,7 @@ use gamboamartin\cat_sat\models\cat_sat_metodo_pago;
 use gamboamartin\cat_sat\models\cat_sat_moneda;
 use gamboamartin\cat_sat\models\cat_sat_periodicidad_pago_nom;
 use gamboamartin\cat_sat\models\cat_sat_regimen_fiscal;
+use gamboamartin\cat_sat\models\cat_sat_subsidio;
 use gamboamartin\cat_sat\models\cat_sat_tipo_nomina;
 use gamboamartin\direccion_postal\models\dp_pais;
 use gamboamartin\errores\errores;
@@ -188,6 +189,15 @@ class base_test{
         return $del;
     }
 
+    public function del_cat_sat_subsidio(PDO $link): array
+    {
+        $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_subsidio');
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+        return $del;
+    }
+
     public function alta_cat_sat_periodicidad_pago_nom(PDO $link, $id = 1): array|\stdClass
     {
             $registro = array();
@@ -239,6 +249,45 @@ class base_test{
         $registro['fecha_fin'] = '2020-12-31';
 
         $alta = (new cat_sat_isr($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+
+        }
+        return $alta;
+    }
+
+    public function alta_cat_sat_subsidio(PDO $link, int $cat_sat_periodicidad_pago_nom_id = 1): array|\stdClass
+    {
+
+        $existe = (new cat_sat_periodicidad_pago_nom($link))->existe_by_id(registro_id: $cat_sat_periodicidad_pago_nom_id);
+        if(errores::$error){
+            return (new errores())->error('Error al verificar si existe', $existe);
+
+        }
+
+        if(!$existe) {
+            $alta = (new base_test())->alta_cat_sat_periodicidad_pago_nom(link: $link, id: $cat_sat_periodicidad_pago_nom_id);
+            if (errores::$error) {
+                return (new errores())->error('Error al dar de alta', $alta);
+            }
+        }
+
+        $registro = array();
+        $registro['id'] = 1;
+        $registro['codigo'] = 1;
+        $registro['descripcion'] = 1;
+        $registro['descripcion_select'] = 1;
+        $registro['codigo_bis'] = 1;
+        $registro['alias'] = 1;
+        $registro['limite_inferior'] = 0.01;
+        $registro['limite_superior'] = 250;
+        $registro['cuota_fija'] = 0;
+        $registro['porcentaje_excedente'] = 1.92;
+        $registro['cat_sat_periodicidad_pago_nom_id'] = $cat_sat_periodicidad_pago_nom_id;
+        $registro['fecha_inicio'] = '2020-01-01';
+        $registro['fecha_fin'] = '2020-12-31';
+
+        $alta = (new cat_sat_subsidio($link))->alta_registro($registro);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
 
