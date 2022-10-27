@@ -181,7 +181,7 @@ class base_test{
 
     public function del_cat_sat_isr(PDO $link): array
     {
-        $del = $this->del($link, 'cat_sat_isr');
+        $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_isr');
         if(errores::$error){
             return (new errores())->error('Error al eliminar', $del);
         }
