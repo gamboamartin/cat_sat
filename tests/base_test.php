@@ -280,7 +280,7 @@ class base_test{
         $registro['codigo_bis'] = 1;
         $registro['alias'] = 1;
         $registro['limite_inferior'] = 0.01;
-        $registro['limite_superior'] = 250;
+        $registro['limite_superior'] = 99999;
         $registro['cuota_fija'] = 0;
         $registro['porcentaje_excedente'] = 1.92;
         $registro['cat_sat_periodicidad_pago_nom_id'] = $cat_sat_periodicidad_pago_nom_id;
