@@ -1,6 +1,8 @@
 <?php
 namespace gamboamartin\cat_sat\tests;
 use base\orm\modelo_base;
+use gamboamartin\cat_sat\models\cat_sat_isn;
+use gamboamartin\cat_sat\models\cat_sat_isr;
 use gamboamartin\cat_sat\models\cat_sat_metodo_pago;
 use gamboamartin\cat_sat\models\cat_sat_moneda;
 use gamboamartin\cat_sat\models\cat_sat_regimen_fiscal;
@@ -176,7 +178,30 @@ class base_test{
         return $del;
     }
 
+    public function alta_cat_sat_isr(PDO $link): array|\stdClass
+    {
+        $registro = array();
+        $registro['id'] = 1;
+        $registro['codigo'] = 1;
+        $registro['descripcion'] = 1;
+        $registro['descripcion_select'] = 1;
+        $registro['codigo_bis'] = 1;
+        $registro['alias'] = 1;
+        $registro['limite_inferior'] = 0.01;
+        $registro['limite_superior'] = 21.20;
+        $registro['cuota_fija'] = 0;
+        $registro['porcentaje_excedente'] = 1.92;
+        $registro['cat_sat_periodicidad_pago_id'] = 1;
+        $registro['fecha_inicio'] = '2020-01-01';
+        $registro['fecha_fin'] = '2020-12-31';
 
+        $alta = (new cat_sat_isr($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+
+        }
+        return $alta;
+    }
 
 
 }
