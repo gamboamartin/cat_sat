@@ -225,7 +225,7 @@ class base_test{
         $registro['limite_superior'] = 21.20;
         $registro['cuota_fija'] = 0;
         $registro['porcentaje_excedente'] = 1.92;
-        $registro['cat_sat_periodicidad_pago_id'] = $cat_sat_periodicidad_pago_nom_id;
+        $registro['cat_sat_periodicidad_pago_nom_id'] = $cat_sat_periodicidad_pago_nom_id;
         $registro['fecha_inicio'] = '2020-01-01';
         $registro['fecha_fin'] = '2020-12-31';
 
