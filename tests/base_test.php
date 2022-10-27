@@ -5,6 +5,7 @@ use gamboamartin\cat_sat\models\cat_sat_isn;
 use gamboamartin\cat_sat\models\cat_sat_isr;
 use gamboamartin\cat_sat\models\cat_sat_metodo_pago;
 use gamboamartin\cat_sat\models\cat_sat_moneda;
+use gamboamartin\cat_sat\models\cat_sat_periodicidad_pago_nom;
 use gamboamartin\cat_sat\models\cat_sat_regimen_fiscal;
 use gamboamartin\cat_sat\models\cat_sat_tipo_nomina;
 use gamboamartin\direccion_postal\models\dp_pais;
@@ -178,8 +179,41 @@ class base_test{
         return $del;
     }
 
-    public function alta_cat_sat_isr(PDO $link): array|\stdClass
+    public function alta_cat_sat_periodicidad_pago_nom(PDO $link, $id = 1): array|\stdClass
     {
+            $registro = array();
+            $registro['id'] = $id;
+            $registro['codigo'] = 1;
+            $registro['descripcion'] = 1;
+            $registro['descripcion_select'] = 1;
+            $registro['codigo_bis'] = 1;
+            $registro['alias'] = 1;
+            $registro['n_dias'] = 1;
+
+            $alta = (new cat_sat_periodicidad_pago_nom($link))->alta_registro($registro);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+
+            }
+            return $alta;
+    }
+
+    public function alta_cat_sat_isr(PDO $link, int $cat_sat_periodicidad_pago_nom_id = 1): array|\stdClass
+    {
+
+        $existe = (new cat_sat_periodicidad_pago_nom($link))->existe_by_id(registro_id: $cat_sat_periodicidad_pago_nom_id);
+        if(errores::$error){
+            return (new errores())->error('Error al verificar si existe', $existe);
+
+        }
+
+        if(!$existe) {
+            $alta = (new base_test())->alta_cat_sat_periodicidad_pago_nom(link: $link, id: $cat_sat_periodicidad_pago_nom_id);
+            if (errores::$error) {
+                return (new errores())->error('Error al dar de alta', $alta);
+            }
+        }
+
         $registro = array();
         $registro['id'] = 1;
         $registro['codigo'] = 1;
@@ -191,7 +225,7 @@ class base_test{
         $registro['limite_superior'] = 21.20;
         $registro['cuota_fija'] = 0;
         $registro['porcentaje_excedente'] = 1.92;
-        $registro['cat_sat_periodicidad_pago_id'] = 1;
+        $registro['cat_sat_periodicidad_pago_id'] = $cat_sat_periodicidad_pago_nom_id;
         $registro['fecha_inicio'] = '2020-01-01';
         $registro['fecha_fin'] = '2020-12-31';
 
