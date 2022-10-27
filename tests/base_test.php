@@ -179,6 +179,15 @@ class base_test{
         return $del;
     }
 
+    public function del_cat_sat_isr(PDO $link): array
+    {
+        $del = $this->del($link, 'cat_sat_isr');
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+        return $del;
+    }
+
     public function alta_cat_sat_periodicidad_pago_nom(PDO $link, $id = 1): array|\stdClass
     {
             $registro = array();
