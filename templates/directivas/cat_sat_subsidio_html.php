@@ -115,7 +115,7 @@ class cat_sat_subsidio_html extends html_controler {
             return $this->error->error(mensaje: 'Error al validar columnas', data: $valida);
         }
 
-        $html =$this->directivas->input_text_required(disable: $disabled,name: 'limite_inferior',
+        $html =$this->directivas->input_text_required(disabled: $disabled,name: 'limite_inferior',
             place_holder: 'Limite Inferior', row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -137,7 +137,7 @@ class cat_sat_subsidio_html extends html_controler {
             return $this->error->error(mensaje: 'Error al validar columnas', data: $valida);
         }
 
-        $html =$this->directivas->input_text_required(disable: $disabled,name: 'limite_superior',
+        $html =$this->directivas->input_text_required(disabled: $disabled,name: 'limite_superior',
             place_holder: 'Limite Superior', row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -159,7 +159,7 @@ class cat_sat_subsidio_html extends html_controler {
             return $this->error->error(mensaje: 'Error al validar columnas', data: $valida);
         }
 
-        $html =$this->directivas->input_text_required(disable: $disabled,name: 'cuota_fija',
+        $html =$this->directivas->input_text_required(disabled: $disabled,name: 'cuota_fija',
             place_holder: 'Cuota Fija', row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -181,7 +181,7 @@ class cat_sat_subsidio_html extends html_controler {
             return $this->error->error(mensaje: 'Error al validar columnas', data: $valida);
         }
 
-        $html =$this->directivas->input_text_required(disable: $disabled,name: 'porcentaje_excedente',
+        $html =$this->directivas->input_text_required(disabled: $disabled,name: 'porcentaje_excedente',
             place_holder: 'Porcentaje Excedente', row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -203,7 +203,7 @@ class cat_sat_subsidio_html extends html_controler {
             return $this->error->error(mensaje: 'Error al validar columnas', data: $valida);
         }
 
-        $html =$this->directivas->fecha_required(disable: $disabled,name: 'fecha_inicio',
+        $html =$this->directivas->fecha_required(disabled: $disabled,name: 'fecha_inicio',
             place_holder: 'Fecha Inicio', row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -225,7 +225,7 @@ class cat_sat_subsidio_html extends html_controler {
             return $this->error->error(mensaje: 'Error al validar columnas', data: $valida);
         }
 
-        $html =$this->directivas->fecha_required(disable: $disabled,name: 'fecha_fin',
+        $html =$this->directivas->fecha_required(disabled: $disabled,name: 'fecha_fin',
             place_holder: 'Fecha Fin', row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);

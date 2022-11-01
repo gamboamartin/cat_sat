@@ -22,7 +22,7 @@ class controlador_cat_sat_moneda extends system {
         $modelo = new cat_sat_moneda(link: $link);
         $html_base = new html();
         $html = new cat_sat_moneda_html(html: $html_base);
-        $obj_link = new links_menu($this->registro_id);
+        $obj_link = new links_menu(link: $link, registro_id: $this->registro_id);
         parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Moneda';

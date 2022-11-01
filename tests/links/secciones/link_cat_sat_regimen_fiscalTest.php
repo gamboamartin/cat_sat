@@ -34,7 +34,7 @@ class link_cat_sat_regimen_fiscalTest extends test {
         $_GET['accion'] = 'lista';
         $_SESSION['grupo_id'] = 1;
         $_GET['session_id'] = '1';
-        $link = new link_cat_sat_regimen_fiscal(-1);
+        $link = new link_cat_sat_regimen_fiscal($this->link, -1);
         $link = new liberator($link);
 
         $resultado = $link->nuevo_regimen_fiscal();

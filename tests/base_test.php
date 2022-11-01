@@ -19,6 +19,48 @@ use stdClass;
 
 class base_test{
 
+    public function alta_cat_sat_isr(PDO $link, int $cat_sat_periodicidad_pago_nom_id = 1,
+                                     string $fecha_fin = '2020-12-31', string $fecha_inicio = '2020-01-01',
+                                     int $id = 1, float $limite_inferior = 0.01,
+                                     float $limite_superior = 99999): array|\stdClass
+    {
+
+        $existe = (new cat_sat_periodicidad_pago_nom($link))->existe_by_id(registro_id: $cat_sat_periodicidad_pago_nom_id);
+        if(errores::$error){
+            return (new errores())->error('Error al verificar si existe', $existe);
+
+        }
+
+        if(!$existe) {
+            $alta = (new base_test())->alta_cat_sat_periodicidad_pago_nom(link: $link, id: $cat_sat_periodicidad_pago_nom_id);
+            if (errores::$error) {
+                return (new errores())->error('Error al dar de alta', $alta);
+            }
+        }
+
+        $registro = array();
+        $registro['id'] = $id;
+        $registro['codigo'] = 1;
+        $registro['descripcion'] = 1;
+        $registro['descripcion_select'] = 1;
+        $registro['codigo_bis'] = 1;
+        $registro['alias'] = 1;
+        $registro['limite_inferior'] =$limite_inferior;
+        $registro['limite_superior'] = $limite_superior;
+        $registro['cuota_fija'] = 0;
+        $registro['porcentaje_excedente'] = 1.92;
+        $registro['cat_sat_periodicidad_pago_nom_id'] = $cat_sat_periodicidad_pago_nom_id;
+        $registro['fecha_inicio'] = $fecha_inicio;
+        $registro['fecha_fin'] = $fecha_fin;
+
+        $alta = (new cat_sat_isr($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+
+        }
+        return $alta;
+    }
+
     public function alta_cat_sat_metodo_pago(PDO $link, string $codigo = '1', $descripcion = '1', int $id = 1,
                                              bool $predeterminado = false): array|stdClass
     {
@@ -217,44 +259,7 @@ class base_test{
             return $alta;
     }
 
-    public function alta_cat_sat_isr(PDO $link, int $cat_sat_periodicidad_pago_nom_id = 1): array|\stdClass
-    {
 
-        $existe = (new cat_sat_periodicidad_pago_nom($link))->existe_by_id(registro_id: $cat_sat_periodicidad_pago_nom_id);
-        if(errores::$error){
-            return (new errores())->error('Error al verificar si existe', $existe);
-
-        }
-
-        if(!$existe) {
-            $alta = (new base_test())->alta_cat_sat_periodicidad_pago_nom(link: $link, id: $cat_sat_periodicidad_pago_nom_id);
-            if (errores::$error) {
-                return (new errores())->error('Error al dar de alta', $alta);
-            }
-        }
-
-        $registro = array();
-        $registro['id'] = 1;
-        $registro['codigo'] = 1;
-        $registro['descripcion'] = 1;
-        $registro['descripcion_select'] = 1;
-        $registro['codigo_bis'] = 1;
-        $registro['alias'] = 1;
-        $registro['limite_inferior'] = 0.01;
-        $registro['limite_superior'] = 99999;
-        $registro['cuota_fija'] = 0;
-        $registro['porcentaje_excedente'] = 1.92;
-        $registro['cat_sat_periodicidad_pago_nom_id'] = $cat_sat_periodicidad_pago_nom_id;
-        $registro['fecha_inicio'] = '2020-01-01';
-        $registro['fecha_fin'] = '2020-12-31';
-
-        $alta = (new cat_sat_isr($link))->alta_registro($registro);
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
-
-        }
-        return $alta;
-    }
 
     public function alta_cat_sat_subsidio(PDO $link, int $cat_sat_periodicidad_pago_nom_id = 1): array|\stdClass
     {

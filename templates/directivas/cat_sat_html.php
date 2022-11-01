@@ -22,7 +22,7 @@ class cat_sat_html extends html_controler {
             return $this->error->error(mensaje: 'Error al validar columnas', data: $valida);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'n-dias',place_holder: 'Numero dias',
+        $html =$this->directivas->input_text_required(disabled: false,name: 'n-dias',place_holder: 'Numero dias',
             row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);

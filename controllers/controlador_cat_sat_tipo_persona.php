@@ -26,7 +26,7 @@ class controlador_cat_sat_tipo_persona extends system {
         $modelo = new cat_sat_tipo_persona(link: $link);
         $html_base = new html();
         $html = new cat_sat_tipo_persona_html(html: $html_base);
-        $obj_link = new link_cat_sat_tipo_persona($this->registro_id);
+        $obj_link = new link_cat_sat_tipo_persona(link: $link, registro_id: $this->registro_id);
         $this->rows_lista[] = 'valida_persona_fisica';
         parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
