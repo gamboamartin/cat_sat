@@ -19,10 +19,10 @@ use stdClass;
 
 class base_test{
 
-    public function alta_cat_sat_isr(PDO $link, int $cat_sat_periodicidad_pago_nom_id = 1,
+    public function alta_cat_sat_isr(PDO $link, int $cat_sat_periodicidad_pago_nom_id = 1, float $cuota_fija = 0,
                                      string $fecha_fin = '2020-12-31', string $fecha_inicio = '2020-01-01',
                                      int $id = 1, float $limite_inferior = 0.01,
-                                     float $limite_superior = 99999): array|\stdClass
+                                     float $limite_superior = 99999, float $porcentaje_excedente = 1.92): array|\stdClass
     {
 
         $existe = (new cat_sat_periodicidad_pago_nom($link))->existe_by_id(registro_id: $cat_sat_periodicidad_pago_nom_id);
@@ -47,8 +47,8 @@ class base_test{
         $registro['alias'] = 1;
         $registro['limite_inferior'] =$limite_inferior;
         $registro['limite_superior'] = $limite_superior;
-        $registro['cuota_fija'] = 0;
-        $registro['porcentaje_excedente'] = 1.92;
+        $registro['cuota_fija'] = $cuota_fija;
+        $registro['porcentaje_excedente'] = $porcentaje_excedente;
         $registro['cat_sat_periodicidad_pago_nom_id'] = $cat_sat_periodicidad_pago_nom_id;
         $registro['fecha_inicio'] = $fecha_inicio;
         $registro['fecha_fin'] = $fecha_fin;
