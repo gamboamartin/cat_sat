@@ -261,7 +261,8 @@ class base_test{
 
 
 
-    public function alta_cat_sat_subsidio(PDO $link, int $cat_sat_periodicidad_pago_nom_id = 1): array|\stdClass
+    public function alta_cat_sat_subsidio(PDO $link, int $cat_sat_periodicidad_pago_nom_id = 1, float $cuota_fija = 0,
+                                          float $porcentaje_excedente = 1.92): array|\stdClass
     {
 
         $existe = (new cat_sat_periodicidad_pago_nom($link))->existe_by_id(registro_id: $cat_sat_periodicidad_pago_nom_id);
@@ -286,8 +287,8 @@ class base_test{
         $registro['alias'] = 1;
         $registro['limite_inferior'] = 0.01;
         $registro['limite_superior'] = 99999;
-        $registro['cuota_fija'] = 0;
-        $registro['porcentaje_excedente'] = 1.92;
+        $registro['cuota_fija'] = $cuota_fija;
+        $registro['porcentaje_excedente'] = $porcentaje_excedente;
         $registro['cat_sat_periodicidad_pago_nom_id'] = $cat_sat_periodicidad_pago_nom_id;
         $registro['fecha_inicio'] = '2020-01-01';
         $registro['fecha_fin'] = '2020-12-31';
