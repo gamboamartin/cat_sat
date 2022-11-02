@@ -133,9 +133,11 @@ class base_test{
         return $alta;
     }
 
-    public function alta_cat_sat_subsidio(PDO $link, int $cat_sat_periodicidad_pago_nom_id = 1, float $cuota_fija = 0,
+    public function alta_cat_sat_subsidio(PDO $link, string $alias = '1', int $cat_sat_periodicidad_pago_nom_id = 1,
+                                          string $codigo = '1', string $codigo_bis = '1', float $cuota_fija = 0,
+                                          string $descripcion = '1', string $descripcion_select = '1',
                                           string $fecha_fin = '2020-12-31', string $fecha_inicio = '2020-01-01',
-                                          float $limite_inferior = 0.01, float $limite_superior = 99999,
+                                          int $id = 1, float $limite_inferior = 0.01, float $limite_superior = 99999,
                                           float $porcentaje_excedente = 1.92): array|\stdClass
     {
 
@@ -153,12 +155,12 @@ class base_test{
         }
 
         $registro = array();
-        $registro['id'] = 1;
-        $registro['codigo'] = 1;
-        $registro['descripcion'] = 1;
-        $registro['descripcion_select'] = 1;
-        $registro['codigo_bis'] = 1;
-        $registro['alias'] = 1;
+        $registro['id'] = $id;
+        $registro['codigo'] = $codigo;
+        $registro['descripcion'] = $descripcion;
+        $registro['descripcion_select'] = $descripcion_select;
+        $registro['codigo_bis'] = $codigo_bis;
+        $registro['alias'] = $alias;
         $registro['limite_inferior'] = $limite_inferior;
         $registro['limite_superior'] = $limite_superior;
         $registro['cuota_fija'] = $cuota_fija;
