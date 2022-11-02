@@ -134,7 +134,7 @@ class base_test{
     }
 
     public function alta_cat_sat_subsidio(PDO $link, int $cat_sat_periodicidad_pago_nom_id = 1, float $cuota_fija = 0,
-                                          string $fecha_fin = 'fecha_fin', string $fecha_inicio = 'fecha_inicio',
+                                          string $fecha_fin = '2020-12-31', string $fecha_inicio = '2020-01-01',
                                           float $limite_inferior = 0.01, float $limite_superior = 99999,
                                           float $porcentaje_excedente = 1.92): array|\stdClass
     {
