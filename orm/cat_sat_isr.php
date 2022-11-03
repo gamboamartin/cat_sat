@@ -20,5 +20,7 @@ class cat_sat_isr extends modelo{
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
             columnas: $columnas,temp: true);
+
+        $this->NAMESPACE = __NAMESPACE__;
     }
 }
