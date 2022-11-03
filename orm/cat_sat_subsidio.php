@@ -11,6 +11,6 @@ class cat_sat_subsidio extends modelo{
         $campos_obligatorios = array();
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
-            columnas: $columnas);
+            columnas: $columnas, temp: true);
     }
 }
