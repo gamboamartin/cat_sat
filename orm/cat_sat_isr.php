@@ -19,6 +19,6 @@ class cat_sat_isr extends modelo{
         $campos_obligatorios[] = 'cat_sat_periodicidad_pago_nom_id';
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
-            columnas: $columnas);
+            columnas: $columnas,temp: true);
     }
 }
