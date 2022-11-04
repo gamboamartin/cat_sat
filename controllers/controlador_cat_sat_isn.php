@@ -34,11 +34,11 @@ class controlador_cat_sat_isn extends system {
         $columns["cat_sat_isn_id"]["titulo"] = "Id";
         $columns["cat_sat_isn_codigo"]["titulo"] = "Codigo";
         $columns["cat_sat_isn_descripcion"]["titulo"] = "Descripcion";
-        $columns["cat_sat_periodicidad_pago_nom_descripcion"]["titulo"] = "Periodicidad Pago";
-        $columns["cat_sat_isn_cuota_fija"]["titulo"] = "Cuota Fija";
+        $columns["dp_estado_descripcion"]["titulo"] = "Periodicidad Pago";
+        $columns["cat_sat_isn_porcentaje"]["titulo"] = "Cuota Fija";
 
-        $filtro = array("cat_sat_isn.id","cat_sat_isn.codigo","cat_sat_isn.descripcion","cat_sat_isn.cuota_fija",
-            "cat_sat_periodicidad_pago_nom.descripcion");
+        $filtro = array("cat_sat_isn.id","cat_sat_isn.codigo","cat_sat_isn.descripcion","cat_sat_isn.porcentaje",
+            "dp_estado.descripcion");
 
         $datatables = new stdClass();
         $datatables->columns = $columns;
