@@ -23,14 +23,29 @@ use stdClass;
 
 class controlador_cat_sat_isn extends system {
 
-    public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
+    public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
+                                stdClass $paths_conf = new stdClass()){
         $modelo = new cat_sat_isn(link: $link);
-        $html_base = new html();
-        $html = new cat_sat_isn_html(html: $html_base);
-        $obj_link = new links_menu(link: $link, registro_id: $this->registro_id);
+        $html_ = new cat_sat_isn_html(html: $html);
+        $obj_link = new links_menu(link: $link, registro_id:  $this->registro_id);
         $this->rows_lista[] = 'dp_estado_id';
         $this->rows_lista[] = 'porcentaje';
-        parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
+
+        $columns["cat_sat_isn_id"]["titulo"] = "Id";
+        $columns["cat_sat_isn_codigo"]["titulo"] = "Codigo";
+        $columns["cat_sat_isn_descripcion"]["titulo"] = "Descripcion";
+        $columns["cat_sat_periodicidad_pago_nom_descripcion"]["titulo"] = "Periodicidad Pago";
+        $columns["cat_sat_isn_cuota_fija"]["titulo"] = "Cuota Fija";
+
+        $filtro = array("cat_sat_isn.id","cat_sat_isn.codigo","cat_sat_isn.descripcion","cat_sat_isn.cuota_fija",
+            "cat_sat_periodicidad_pago_nom.descripcion");
+
+        $datatables = new stdClass();
+        $datatables->columns = $columns;
+        $datatables->filtro = $filtro;
+
+        parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, datatables: $datatables,
+            paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Impuesto sobre nomina';
     }
