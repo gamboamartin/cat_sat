@@ -3,6 +3,7 @@ namespace gamboamartin\cat_sat\models;
 use base\orm\modelo;
 use gamboamartin\errores\errores;
 use PDO;
+use stdClass;
 
 class cat_sat_tipo_de_comprobante extends modelo{
     public function __construct(PDO $link){
@@ -15,7 +16,7 @@ class cat_sat_tipo_de_comprobante extends modelo{
             columnas: $columnas, tipo_campos: $tipo_campos);
     }
 
-    public function get_tipo_comprobante_predeterminado(): array|int
+    public function get_tipo_comprobante_predeterminado(): array|stdClass
     {
         $filtro['cat_sat_tipo_de_comprobante.predeterminado'] = "activo";
         $predeterminado =  $this->filtro_and(filtro: $filtro);
@@ -34,6 +35,6 @@ class cat_sat_tipo_de_comprobante extends modelo{
                 data: $predeterminado);
         }
 
-        return $predeterminado->registros;
+        return $predeterminado;
     }
 }
