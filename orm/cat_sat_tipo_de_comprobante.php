@@ -1,6 +1,7 @@
 <?php
 namespace gamboamartin\cat_sat\models;
 use base\orm\modelo;
+use gamboamartin\errores\errores;
 use PDO;
 
 class cat_sat_tipo_de_comprobante extends modelo{
@@ -12,5 +13,27 @@ class cat_sat_tipo_de_comprobante extends modelo{
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
             columnas: $columnas, tipo_campos: $tipo_campos);
+    }
+
+    private function get_tipo_comprobante_predeterminado(): array|int
+    {
+        $filtro['cat_sat_tipo_de_comprobante.predeterminado'] = "activo";
+        $predeterminado =  $this->filtro_and(filtro: $filtro);
+        if (errores::$error) {
+            return $this->error->error(mensaje: 'Error al obtener tipo de comprobante predeterminado',
+                data: $predeterminado);
+        }
+
+        if ($predeterminado->n_registros === 0){
+            return $this->error->error(mensaje: 'Error no exite un tipo de comprobante predeterminado',
+                data: $predeterminado);
+        }
+
+        if ($predeterminado->n_registros > 1){
+            return $this->error->error(mensaje: 'Error exite mas de un tipo de comprobante predeterminado',
+                data: $predeterminado);
+        }
+
+        return $predeterminado->registros;
     }
 }
