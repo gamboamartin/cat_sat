@@ -15,7 +15,7 @@ class cat_sat_tipo_de_comprobante extends modelo{
             columnas: $columnas, tipo_campos: $tipo_campos);
     }
 
-    private function get_tipo_comprobante_predeterminado(): array|int
+    public function get_tipo_comprobante_predeterminado(): array|int
     {
         $filtro['cat_sat_tipo_de_comprobante.predeterminado'] = "activo";
         $predeterminado =  $this->filtro_and(filtro: $filtro);
