@@ -33,7 +33,7 @@ class link_cat_sat_tipo_persona extends links_menu {
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar link', data: $valida_persona_fisica);
         }
-        $this->links->cat_sat_tipo_persona->valida_persona_fisica = $valida_persona_fisica;
+
 
         return $links;
     }
