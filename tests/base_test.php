@@ -195,12 +195,11 @@ class base_test{
         return $alta;
     }
 
-    public function alta_dp_pais(PDO $link, string $codigo = '1', $descripcion = '1', int $id = 1,
-                                 bool $predeterminado = false): array|stdClass
+    public function alta_dp_pais(PDO $link, string $codigo = '1', $descripcion = '1', int $id = 1): array|stdClass
     {
 
-        $alta = (new \gamboamartin\direccion_postal\tests\base_test())->alta_dp_pais(link: $link,
-            codigo: $codigo, descripcion: $descripcion, id: $id, predeterminado: $predeterminado);
+        $alta = (new \gamboamartin\direccion_postal\tests\base_test())->alta_dp_pais(link: $link, codigo: $codigo,
+            descripcion: $descripcion, id: $id);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
 

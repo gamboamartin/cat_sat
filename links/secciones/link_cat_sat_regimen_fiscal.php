@@ -33,7 +33,7 @@ class link_cat_sat_regimen_fiscal extends links_menu {
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar link', data: $nuevo_regimen_fiscal);
         }
-        
+
 
         return $links;
     }

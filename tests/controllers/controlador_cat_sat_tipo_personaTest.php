@@ -22,7 +22,6 @@ class controlador_cat_sat_tipo_personaTest extends test {
     }
 
     /**
-     * @throws JsonException
      */
     public function test_lista(): void
     {
