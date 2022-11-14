@@ -60,6 +60,16 @@ class cat_sat_grupo_producto extends modelo{
         return $data;
     }
 
+    public function get_grupo(int $cat_sat_grupo_producto_id): array|stdClass
+    {
+        $registro = $this->registro(registro_id: $cat_sat_grupo_producto_id);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener grupo producto',data:  $registro);
+        }
+
+        return $registro;
+    }
+
     private function limpia_campos(array $registro, array $campos_limpiar): array
     {
         foreach ($campos_limpiar as $valor) {
