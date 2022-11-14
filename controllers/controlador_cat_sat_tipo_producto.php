@@ -29,7 +29,7 @@ class controlador_cat_sat_tipo_producto extends system {
 
         $columns["cat_sat_tipo_producto_id"]["titulo"] = "Id";
         $columns["cat_sat_tipo_producto_codigo"]["titulo"] = "Código";
-        $columns["cat_sat_tipo_producto_descripcion"]["titulo"] = "Tipo Producto";
+        $columns["cat_sat_tipo_producto_descripcion"]["titulo"] = "Tipo";
 
         $filtro = array("cat_sat_tipo_producto.id","cat_sat_tipo_producto.codigo","cat_sat_tipo_producto.descripcion");
 
@@ -42,7 +42,7 @@ class controlador_cat_sat_tipo_producto extends system {
 
         $this->titulo_lista = 'Tipo Producto';
 
-        $propiedades = $this->inicializa_priedades();
+        $propiedades = $this->inicializa_propiedades();
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al inicializar propiedades',data:  $propiedades);
             print_r($error);
@@ -78,14 +78,14 @@ class controlador_cat_sat_tipo_producto extends system {
         }
     }
 
-    private function inicializa_priedades(): array
+    private function inicializa_propiedades(): array
     {
         $identificador = "codigo";
         $propiedades = array("place_holder" => "Código", "cols" => 4);
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "descripcion";
-        $propiedades = array("place_holder" => "Tipo Producto", "cols" => 8);
+        $propiedades = array("place_holder" => "Tipo", "cols" => 8);
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         return $this->keys_selects;

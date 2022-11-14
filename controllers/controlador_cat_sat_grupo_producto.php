@@ -8,6 +8,7 @@
  */
 namespace controllers;
 
+use gamboamartin\cat_sat\models\cat_sat_division_producto;
 use gamboamartin\cat_sat\models\cat_sat_grupo_producto;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
@@ -29,9 +30,9 @@ class controlador_cat_sat_grupo_producto extends system {
 
         $columns["cat_sat_grupo_producto_id"]["titulo"] = "Id";
         $columns["cat_sat_grupo_producto_codigo"]["titulo"] = "Código";
-        $columns["cat_sat_grupo_producto_descripcion"]["titulo"] = "Grupo";
-        $columns["cat_sat_tipo_producto_descripcion"]["titulo"] = "Tipo Producto";
+        $columns["cat_sat_tipo_producto_descripcion"]["titulo"] = "Tipo";
         $columns["cat_sat_division_producto_descripcion"]["titulo"] = "División";
+        $columns["cat_sat_grupo_producto_descripcion"]["titulo"] = "Grupo";
 
         $filtro = array("cat_sat_grupo_producto.id","cat_sat_grupo_producto.codigo","cat_sat_grupo_producto.descripcion",
             "cat_sat_tipo_producto.descripcion","cat_sat_division_producto.descripcion");
@@ -45,7 +46,7 @@ class controlador_cat_sat_grupo_producto extends system {
 
         $this->titulo_lista = 'Grupo productos';
 
-        $propiedades = $this->inicializa_priedades();
+        $propiedades = $this->inicializa_propiedades();
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al inicializar propiedades',data:  $propiedades);
             print_r($error);
@@ -81,18 +82,22 @@ class controlador_cat_sat_grupo_producto extends system {
         }
     }
 
-    private function inicializa_priedades(): array
+    private function inicializa_propiedades(): array
     {
+        $identificador = "cat_sat_tipo_producto_id";
+        $propiedades = array("label" => "Tipo");
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
         $identificador = "cat_sat_division_producto_id";
-        $propiedades = array("label" => "División");
+        $propiedades = array("label" => "División", "con_registros" => false);
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "codigo";
-        $propiedades = array("place_holder" => "Código");
+        $propiedades = array("place_holder" => "Código", "cols" => 4);
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "descripcion";
-        $propiedades = array("place_holder" => "Grupo", "cols" => 12);
+        $propiedades = array("place_holder" => "Grupo", "cols" => 8);
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         return $this->keys_selects;
@@ -105,8 +110,19 @@ class controlador_cat_sat_grupo_producto extends system {
             return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_modifica, header: $header,ws:$ws);
         }
 
-        $this->asignar_propiedad(identificador:'cat_sat_division_producto_id',
-            propiedades: ["id_selected"=>$this->row_upd->cat_sat_division_producto_id]);
+        $division = (new cat_sat_division_producto($this->link))->get_division($this->row_upd->cat_sat_division_producto_id);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener $cp',data:  $division);
+        }
+
+        $identificador = "cat_sat_tipo_producto_id";
+        $propiedades = array("id_selected" => $division['cat_sat_tipo_producto_id']);
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+
+        $identificador = "cat_sat_division_producto_id";
+        $propiedades = array("id_selected" => $this->row_upd->cat_sat_division_producto_id, "con_registros" => true,
+            "filtro" => array('cat_sat_tipo_producto.id' => $division['cat_sat_tipo_producto_id']));
+        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
         if(errores::$error){

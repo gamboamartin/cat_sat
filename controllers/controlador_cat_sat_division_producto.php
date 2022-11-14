@@ -31,8 +31,8 @@ class controlador_cat_sat_division_producto extends system {
 
         $columns["cat_sat_division_producto_id"]["titulo"] = "Id";
         $columns["cat_sat_division_producto_codigo"]["titulo"] = "Código";
+        $columns["cat_sat_tipo_producto_descripcion"]["titulo"] = "Tipo";
         $columns["cat_sat_division_producto_descripcion"]["titulo"] = "División";
-        $columns["cat_sat_tipo_producto_descripcion"]["titulo"] = "Tipo Producto";
 
         $filtro = array("cat_sat_division_producto.id","cat_sat_division_producto.codigo","cat_sat_division_producto.descripcion",
             "cat_sat_tipo_producto.descripcion");
@@ -46,7 +46,7 @@ class controlador_cat_sat_division_producto extends system {
 
         $this->titulo_lista = 'División';
 
-        $propiedades = $this->inicializa_priedades();
+        $propiedades = $this->inicializa_propiedades();
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al inicializar propiedades',data:  $propiedades);
             print_r($error);
@@ -82,10 +82,22 @@ class controlador_cat_sat_division_producto extends system {
         }
     }
 
-    private function inicializa_priedades(): array
+    public function get_divisiones(bool $header, bool $ws = true): array|stdClass
+    {
+        $keys['cat_sat_tipo_producto'] = array('id','descripcion','codigo','codigo_bis');
+
+        $salida = $this->get_out(header: $header,keys: $keys, ws: $ws);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar salida',data:  $salida,header: $header,ws: $ws);
+        }
+
+        return $salida;
+    }
+
+    private function inicializa_propiedades(): array
     {
         $identificador = "cat_sat_tipo_producto_id";
-        $propiedades = array("label" => "Tipo Producto");
+        $propiedades = array("label" => "Tipo");
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "codigo";

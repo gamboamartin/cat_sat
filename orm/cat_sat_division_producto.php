@@ -53,6 +53,16 @@ class cat_sat_division_producto extends modelo{
         return $data;
     }
 
+    public function get_division(int $cat_sat_division_producto_id): array|stdClass
+    {
+        $registro = $this->registro(registro_id: $cat_sat_division_producto_id);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener division producto',data:  $registro);
+        }
+
+        return $registro;
+    }
+
     public function modifica_bd(array $registro, int $id, bool $reactiva = false): array|stdClass
     {
         $registro = $this->campos_base(data:$registro);
