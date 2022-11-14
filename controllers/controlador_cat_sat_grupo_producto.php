@@ -92,7 +92,7 @@ class controlador_cat_sat_grupo_producto extends system {
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "descripcion";
-        $propiedades = array("place_holder" => "Grupo");
+        $propiedades = array("place_holder" => "Grupo", "cols" => 12);
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         return $this->keys_selects;
