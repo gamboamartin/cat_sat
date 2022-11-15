@@ -8,13 +8,16 @@ let asigna_divisiones = (cat_sat_tipo_producto_id = '') => {
 
     get_data(url, function (data) {
         sl_cat_sat_division_producto.empty();
+        sl_cat_sat_grupo_producto.empty();
 
         integra_new_option(sl_cat_sat_division_producto,'Seleccione una division','-1');
+        integra_new_option(sl_cat_sat_grupo_producto,'Seleccione un grupo','-1');
 
         $.each(data.registros, function( index, division ) {
             integra_new_option(sl_cat_sat_division_producto,division.cat_sat_division_producto_descripcion_select,division.cat_sat_division_producto_id);
         });
         sl_cat_sat_division_producto.selectpicker('refresh');
+        sl_cat_sat_grupo_producto.selectpicker('refresh');
     });
 }
 

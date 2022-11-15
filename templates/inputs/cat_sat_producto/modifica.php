@@ -6,5 +6,5 @@
 <?php echo $controlador->inputs->cat_sat_clase_producto_id; ?>
 <?php echo $controlador->inputs->codigo; ?>
 <?php echo $controlador->inputs->descripcion; ?>
-<?php include (new views())->ruta_templates.'botons/submit/alta_bd.php';?>
+<?php include (new views())->ruta_templates.'botons/submit/modifica_bd.php';?>
 

@@ -39,7 +39,7 @@ class cat_sat_clase_producto extends modelo{
 
         $r_alta_bd = parent::alta_bd();
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al insertar estado',data:  $r_alta_bd);
+            return $this->error->error(mensaje: 'Error al insertar clase',data:  $r_alta_bd);
         }
         return $r_alta_bd;
     }
@@ -60,6 +60,16 @@ class cat_sat_clase_producto extends modelo{
             $data['alias'] = $data['codigo'];
         }
         return $data;
+    }
+
+    public function get_clase(int $cat_sat_clase_producto_id): array|stdClass
+    {
+        $registro = $this->registro(registro_id: $cat_sat_clase_producto_id);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener clase producto',data:  $registro);
+        }
+
+        return $registro;
     }
 
     private function limpia_campos(array $registro, array $campos_limpiar): array
