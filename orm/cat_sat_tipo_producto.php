@@ -28,7 +28,7 @@ class cat_sat_tipo_producto extends modelo{
 
         $r_alta_bd =  parent::alta_bd();
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al insertar tipo producto', data: $r_alta_bd);
+            return $this->error->error(mensaje: 'Error al insertar tipo', data: $r_alta_bd);
         }
         return $r_alta_bd;
     }
@@ -60,7 +60,7 @@ class cat_sat_tipo_producto extends modelo{
 
         $r_modifica_bd = parent::modifica_bd($registro, $id, $reactiva);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al modificar cp',data:  $r_modifica_bd);
+            return $this->error->error(mensaje: 'Error al modificar tipo',data:  $r_modifica_bd);
         }
 
         return $r_modifica_bd;
