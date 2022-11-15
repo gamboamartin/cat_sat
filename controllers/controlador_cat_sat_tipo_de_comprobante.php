@@ -109,6 +109,4 @@ class controlador_cat_sat_tipo_de_comprobante extends system {
 
         return $r_modifica;
     }
-
-
 }
