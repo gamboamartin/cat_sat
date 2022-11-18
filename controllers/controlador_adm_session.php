@@ -6,7 +6,7 @@
  * @final En proceso
  *
  */
-namespace controllers;
+namespace gamboamartin\cat_sat\controllers;
 
 use config\generales;
 use gamboamartin\errores\errores;

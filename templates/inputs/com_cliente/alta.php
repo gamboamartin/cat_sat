@@ -1,4 +1,4 @@
-<?php /** @var controllers\controlador_cat_sat_moneda $controlador  controlador en ejecucion */ ?>
+<?php /** @var gamboamartin\cat_sat\controllers\controlador_cat_sat_moneda $controlador  controlador en ejecucion */ ?>
 <?php use config\views; ?>
 <?php echo $controlador->forms_inputs_alta; ?>
 <?php echo $controlador->inputs->select->dp_calle_pertenece_id; ?>

@@ -1,7 +1,7 @@
 <?php
 namespace html;
 use base\orm\modelo;
-use controllers\controlador_cat_sat_isn;
+use gamboamartin\cat_sat\controllers\controlador_cat_sat_isn;
 use gamboamartin\cat_sat\models\cat_sat_isn;
 use gamboamartin\direccion_postal\models\dp_estado;
 use gamboamartin\errores\errores;

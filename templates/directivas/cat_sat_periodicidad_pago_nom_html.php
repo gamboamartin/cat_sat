@@ -2,7 +2,7 @@
 namespace html;
 
 
-use controllers\controlador_cat_sat_periodicidad_pago_nom;
+use gamboamartin\cat_sat\controllers\controlador_cat_sat_periodicidad_pago_nom;
 use gamboamartin\cat_sat\models\cat_sat_periodicidad_pago_nom;
 use gamboamartin\errores\errores;
 

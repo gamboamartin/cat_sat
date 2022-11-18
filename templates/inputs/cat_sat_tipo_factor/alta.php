@@ -1,4 +1,4 @@
-<?php /** @var \controllers\controlador_cat_sat_tipo_factor $controlador  controlador en ejecucion */ ?>
+<?php /** @var \gamboamartin\cat_sat\controllers\controlador_cat_sat_tipo_factor $controlador  controlador en ejecucion */ ?>
 <?php use config\views; ?>
 <?php echo $controlador->inputs->codigo; ?>
 <?php echo $controlador->inputs->descripcion; ?>

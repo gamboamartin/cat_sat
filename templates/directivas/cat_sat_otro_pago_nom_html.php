@@ -1,7 +1,7 @@
 <?php
 namespace html;
 
-use controllers\controlador_cat_sat_otro_pago_nom;
+use gamboamartin\cat_sat\controllers\controlador_cat_sat_otro_pago_nom;
 use gamboamartin\errores\errores;
 use PDO;
 use stdClass;

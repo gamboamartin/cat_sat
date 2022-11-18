@@ -6,7 +6,7 @@
  * @final En proceso
  *
  */
-namespace controllers;
+namespace gamboamartin\cat_sat\controllers;
 
 use gamboamartin\cat_sat\models\cat_sat_isn;
 use gamboamartin\direccion_postal\models\dp_estado;

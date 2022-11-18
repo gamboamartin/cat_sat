@@ -9,16 +9,16 @@
       "email": "gamboa.martin@gmail.com"
     }],
 
-
     "autoload": {
-        "psr-4": {
-          "controllers\\": "controllers",
-          "config\\": "config/",
-          "gamboamartin\\cat_sat\\models\\": "orm",
-          "gamboamartin\\cat_sat\\tests\\": "tests",
-          "links\\": "links/",
-          "html\\": "templates/directivas/"
-        }
+      "psr-4": {
+        "gamboamartin\\cat_sat\\controllers\\": "controllers",
+        "gamboamartin\\cat_sat\\models\\": "orm",
+        "config\\": "config/",
+        "gamboamartin\\cat_sat\\tests\\": "tests",
+        "links\\": "links/",
+        "html\\": "templates/directivas/"
+
+      }
     },
     "require": {
 

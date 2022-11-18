@@ -1,7 +1,7 @@
 <?php
 namespace html;
 
-use controllers\controlador_cat_sat_division;
+use gamboamartin\cat_sat\controllers\controlador_cat_sat_division;
 use gamboamartin\cat_sat\models\cat_sat_division;
 use gamboamartin\cat_sat\models\cat_sat_division_producto;
 use gamboamartin\errores\errores;

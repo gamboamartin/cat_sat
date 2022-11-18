@@ -1,7 +1,7 @@
 <?php
 namespace tests\controllers;
 
-use controllers\controlador_cat_sat_tipo_persona;
+use gamboamartin\cat_sat\controllers\controlador_cat_sat_tipo_persona;
 use gamboamartin\errores\errores;
 use gamboamartin\template_1\html;
 use gamboamartin\test\liberator;

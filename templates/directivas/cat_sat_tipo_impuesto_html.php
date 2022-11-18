@@ -1,6 +1,6 @@
 <?php
 namespace html;
-use controllers\controlador_cat_sat_tipo_impuesto;
+use gamboamartin\cat_sat\controllers\controlador_cat_sat_tipo_impuesto;
 use gamboamartin\cat_sat\models\cat_sat_tipo_impuesto;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;

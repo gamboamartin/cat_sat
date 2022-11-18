@@ -6,8 +6,7 @@
  * @final En proceso
  *
  */
-namespace controllers;
-
+namespace gamboamartin\cat_sat\controllers;
 use gamboamartin\cat_sat\models\cat_sat_tipo_jornada_nom;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;

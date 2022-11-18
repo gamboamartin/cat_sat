@@ -6,7 +6,7 @@
  * @final En proceso
  *
  */
-namespace controllers;
+namespace gamboamartin\cat_sat\controllers;
 
 use gamboamartin\cat_sat\models\cat_sat_regimen_fiscal;
 use gamboamartin\errores\errores;

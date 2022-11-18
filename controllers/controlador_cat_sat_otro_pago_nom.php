@@ -6,7 +6,7 @@
  * @final En proceso
  *
  */
-namespace controllers;
+namespace gamboamartin\cat_sat\controllers;
 
 use gamboamartin\cat_sat\models\cat_sat_otro_pago_nom;
 use gamboamartin\errores\errores;

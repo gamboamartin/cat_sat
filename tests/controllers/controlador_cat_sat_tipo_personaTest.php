@@ -1,7 +1,7 @@
 <?php
 namespace tests\controllers;
 
-use controllers\controlador_cat_sat_tipo_persona;
+use gamboamartin\cat_sat\controllers\controlador_cat_sat_tipo_persona;
 use gamboamartin\errores\errores;
 use gamboamartin\test\test;
 use JsonException;
