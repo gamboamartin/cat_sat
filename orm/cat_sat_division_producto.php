@@ -15,8 +15,10 @@ class cat_sat_division_producto extends modelo{
         $campos_view['codigo'] = array('type' => 'inputs');
         $campos_view['descripcion'] = array('type' => 'inputs');
 
+        $tipo_campos['cod_int_0_2_numbers'] = array('codigo');
+
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
-            columnas: $columnas,campos_view: $campos_view);
+            columnas: $columnas,campos_view: $campos_view, tipo_campos: $tipo_campos);
 
         $this->NAMESPACE = __NAMESPACE__;
     }
