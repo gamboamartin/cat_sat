@@ -8,13 +8,13 @@
  */
 namespace gamboamartin\cat_sat\controllers;
 
-use gamboamartin\cat_sat\models\cat_sat_division;
+
 use gamboamartin\cat_sat\models\cat_sat_division_producto;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use gamboamartin\template\html;
-use html\cat_sat_division_html;
+
 use html\cat_sat_division_producto_html;
 use PDO;
 use stdClass;

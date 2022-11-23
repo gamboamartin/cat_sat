@@ -7,6 +7,7 @@ let asigna_divisiones = (cat_sat_tipo_producto_id = '') => {
     let url = get_url("cat_sat_division_producto","get_divisiones", {cat_sat_tipo_producto_id: cat_sat_tipo_producto_id});
 
     get_data(url, function (data) {
+        console.log(url);
         sl_cat_sat_division_producto.empty();
 
         integra_new_option(sl_cat_sat_division_producto,'Seleccione una division','-1');
