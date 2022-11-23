@@ -8,9 +8,10 @@
  */
 namespace gamboamartin\cat_sat\controllers;
 
-use gamboamartin\cat_sat\controllers\_ctl_parent;
+
 use gamboamartin\cat_sat\models\cat_sat_tipo_producto;
 use gamboamartin\errores\errores;
+use gamboamartin\system\_ctl_parent;
 use gamboamartin\system\links_menu;
 use gamboamartin\template\html;
 use html\cat_sat_tipo_producto_html;
