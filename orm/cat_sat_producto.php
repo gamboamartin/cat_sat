@@ -1,11 +1,12 @@
 <?php
 namespace gamboamartin\cat_sat\models;
+use base\orm\_modelo_parent;
 use base\orm\modelo;
 use gamboamartin\errores\errores;
 use PDO;
 use stdClass;
 
-class cat_sat_producto extends modelo{
+class cat_sat_producto extends _modelo_parent{
     public function __construct(PDO $link){
         $tabla = 'cat_sat_producto';
         $columnas = array($tabla=>false, "cat_sat_clase_producto" => $tabla, "cat_sat_grupo_producto" => "cat_sat_clase_producto",
@@ -27,7 +28,7 @@ class cat_sat_producto extends modelo{
 
     public function alta_bd(): array|stdClass
     {
-        $this->registro =$this->campos_base(data:$this->registro, modelo: $this);
+        $this->registro = $this->campos_base(data:$this->registro,modelo: $this);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al inicializar campo base',data: $this->registro);
         }
@@ -43,24 +44,6 @@ class cat_sat_producto extends modelo{
             return $this->error->error(mensaje: 'Error al insertar producto',data:  $r_alta_bd);
         }
         return $r_alta_bd;
-    }
-
-    protected function campos_base(array $data, modelo $modelo, int $id = -1): array
-    {
-        if(!isset($data['codigo_bis'])){
-            $data['codigo_bis'] =  $data['codigo'];
-        }
-
-        if(!isset($data['descripcion_select'])){
-            $ds = str_replace("_"," ",$data['descripcion']);
-            $ds = ucwords($ds);
-            $data['descripcion_select'] =  "{$data['codigo']} - {$ds}";
-        }
-
-        if(!isset($data['alias'])){
-            $data['alias'] = $data['codigo'];
-        }
-        return $data;
     }
 
     public function get_producto(int $cat_sat_producto_id): array|stdClass
@@ -85,7 +68,7 @@ class cat_sat_producto extends modelo{
 
     public function modifica_bd(array $registro, int $id, bool $reactiva = false): array|stdClass
     {
-        $registro =$this->campos_base(data:$registro, modelo: $this);
+        $registro = $this->campos_base(data: $registro, modelo: $this, id: $id);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al inicializar campo base',data: $registro);
         }

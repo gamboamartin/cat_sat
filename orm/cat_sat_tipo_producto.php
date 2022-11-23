@@ -1,7 +1,7 @@
 <?php
 namespace gamboamartin\cat_sat\models;
-use base\orm\_modelo_parent;
 
+use base\orm\_modelo_parent;
 use PDO;
 
 

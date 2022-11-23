@@ -97,15 +97,15 @@ class controlador_cat_sat_division_producto extends system {
     private function inicializa_propiedades(): array
     {
         $identificador = "cat_sat_tipo_producto_id";
-        $propiedades = array("label" => "Tipo");
+        $propiedades = array("label" => "Tipo", "cols" => 12);
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "codigo";
-        $propiedades = array("place_holder" => "Código");
+        $propiedades = array("place_holder" => "Código", "cols" => 4);
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         $identificador = "descripcion";
-        $propiedades = array("place_holder" => "División", "cols" => 12);
+        $propiedades = array("place_holder" => "División", "cols" => 8);
         $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
         return $this->keys_selects;
