@@ -8,16 +8,16 @@
  */
 namespace gamboamartin\cat_sat\controllers;
 
+use gamboamartin\cat_sat\controllers\_ctl_parent;
 use gamboamartin\cat_sat\models\cat_sat_tipo_producto;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
-use gamboamartin\system\system;
 use gamboamartin\template\html;
 use html\cat_sat_tipo_producto_html;
 use PDO;
 use stdClass;
 
-class controlador_cat_sat_tipo_producto extends system {
+class controlador_cat_sat_tipo_producto extends _ctl_parent {
 
     public array $keys_selects = array();
 
@@ -52,16 +52,19 @@ class controlador_cat_sat_tipo_producto extends system {
 
     public function alta(bool $header, bool $ws = false): array|string
     {
-        $r_alta =  parent::alta(header: false);
+
+        $r_alta = $this->init_alta();
         if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_alta, header: $header,ws:$ws);
+            return $this->retorno_error(
+                mensaje: 'Error al inicializar alta',data:  $r_alta, header: $header,ws:  $ws);
         }
 
-        $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
+
+        $keys_selects = array();
+        $inputs = $this->inputs(keys_selects: $keys_selects);
         if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $inputs);
-            print_r($error);
-            die('Error');
+            return $this->retorno_error(
+                mensaje: 'Error al obtener inputs',data:  $inputs, header: $header,ws:  $ws);
         }
 
         return $r_alta;
@@ -91,20 +94,20 @@ class controlador_cat_sat_tipo_producto extends system {
         return $this->keys_selects;
     }
 
-    public function modifica(bool $header, bool $ws = false): array|stdClass
+    protected function key_selects_txt(array $keys_selects): array
     {
-        $r_modifica =  parent::modifica(header: false);
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'codigo', keys_selects:$keys_selects, place_holder: 'Cod');
         if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_modifica, header: $header,ws:$ws);
+            return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
 
-        $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'Tipo Producto');
         if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $inputs);
-            print_r($error);
-            die('Error');
+            return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
 
-        return $r_modifica;
+        return $keys_selects;
     }
+
+
 }

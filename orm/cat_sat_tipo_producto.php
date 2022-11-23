@@ -1,11 +1,11 @@
 <?php
 namespace gamboamartin\cat_sat\models;
-use base\orm\modelo;
-use gamboamartin\errores\errores;
-use PDO;
-use stdClass;
+use base\orm\_modelo_parent;
 
-class cat_sat_tipo_producto extends modelo{
+use PDO;
+
+
+class cat_sat_tipo_producto extends _modelo_parent {
     public function __construct(PDO $link){
         $tabla = 'cat_sat_tipo_producto';
         $columnas = array($tabla=>false);
@@ -19,50 +19,5 @@ class cat_sat_tipo_producto extends modelo{
         $this->NAMESPACE = __NAMESPACE__;
     }
 
-    public function alta_bd(): array|stdClass
-    {
-        $this->registro =$this->campos_base(data:$this->registro, modelo: $this);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al inicializar campo base',data: $this->registro);
-        }
 
-        $r_alta_bd =  parent::alta_bd();
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al insertar tipo', data: $r_alta_bd);
-        }
-        return $r_alta_bd;
-    }
-
-    protected function campos_base(array $data, modelo $modelo, int $id = -1): array
-    {
-        if(!isset($data['codigo_bis'])){
-            $data['codigo_bis'] =  $data['codigo'];
-        }
-
-        if(!isset($data['descripcion_select'])){
-            $ds = str_replace("_"," ",$data['descripcion']);
-            $ds = ucwords($ds);
-            $data['descripcion_select'] =  "{$data['codigo']} - {$ds}";
-        }
-
-        if(!isset($data['alias'])){
-            $data['alias'] = $data['codigo'];
-        }
-        return $data;
-    }
-
-    public function modifica_bd(array $registro, int $id, bool $reactiva = false): array|stdClass
-    {
-        $registro =$this->campos_base(data:$registro, modelo: $this);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al inicializar campo base',data: $registro);
-        }
-
-        $r_modifica_bd = parent::modifica_bd($registro, $id, $reactiva);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al modificar tipo',data:  $r_modifica_bd);
-        }
-
-        return $r_modifica_bd;
-    }
 }
