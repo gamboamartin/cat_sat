@@ -18,8 +18,10 @@ class cat_sat_grupo_producto extends _modelo_parent {
         $campos_view['codigo'] = array('type' => 'inputs');
         $campos_view['descripcion'] = array('type' => 'inputs');
 
+        $tipo_campos['codigo'] = 'cod_int_0_4_numbers';
+
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
-            columnas: $columnas,campos_view: $campos_view);
+            columnas: $columnas,campos_view: $campos_view, tipo_campos: $tipo_campos);
 
         $this->NAMESPACE = __NAMESPACE__;
     }
