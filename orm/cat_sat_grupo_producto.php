@@ -26,7 +26,7 @@ class cat_sat_grupo_producto extends _modelo_parent {
         $this->NAMESPACE = __NAMESPACE__;
     }
 
-    public function alta_bd(): array|stdClass
+    public function alta_bd(array $keys_integra_ds = array()): array|stdClass
     {
         $this->registro = $this->campos_base(data:$this->registro,modelo: $this);
         if(errores::$error){
@@ -65,7 +65,7 @@ class cat_sat_grupo_producto extends _modelo_parent {
         return $registro;
     }
 
-    public function modifica_bd(array $registro, int $id, bool $reactiva = false): array|stdClass
+    public function modifica_bd(array $registro, int $id, bool $reactiva = false,  array $keys_integra_ds = array()): array|stdClass
     {
         $registro = $this->campos_base(data: $registro, modelo: $this, id: $id);
         if(errores::$error){
