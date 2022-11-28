@@ -75,7 +75,7 @@ class cat_sat_tipo_de_comprobante extends modelo{
         return $predeterminado;
     }
 
-    public function modifica_bd(array $registro, int $id, bool $reactiva = false): array|stdClass
+    public function modifica_bd(array $registro, int $id, bool $reactiva = false, array $keys_integra_ds = array('codigo','descripcion')): array|stdClass
     {
         $registro =$this->campos_base(data:$registro, modelo: $this);
         if(errores::$error){

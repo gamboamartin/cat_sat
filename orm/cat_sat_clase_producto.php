@@ -67,7 +67,8 @@ class cat_sat_clase_producto extends _modelo_parent{
         return $registro;
     }
 
-    public function modifica_bd(array $registro, int $id, bool $reactiva = false): array|stdClass
+    public function modifica_bd(array $registro, int $id, bool $reactiva = false,
+                                array $keys_integra_ds = array('codigo','descripcion')): array|stdClass
     {
         $registro = $this->campos_base(data: $registro, modelo: $this, id: $id);
         if(errores::$error){
