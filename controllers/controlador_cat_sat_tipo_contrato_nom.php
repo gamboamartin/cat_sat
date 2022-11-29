@@ -35,7 +35,7 @@ class controlador_cat_sat_tipo_contrato_nom extends _ctl_base {
         $datatables->columns = array();
         $datatables->columns['cat_sat_tipo_contrato_nom_id']['titulo'] = 'Id';
         $datatables->columns['cat_sat_tipo_contrato_nom_codigo']['titulo'] = 'Codigo';
-        $datatables->columns['cat_sat_tipo_contrato_nom_descripcion']['titulo'] = 'Descripcion';
+        $datatables->columns['cat_sat_tipo_contrato_nom_descripcion']['titulo'] = 'Tipo Contrato';
 
         $datatables->filtro = array();
         $datatables->filtro[] = 'cat_sat_tipo_contrato_nom.id';
@@ -52,8 +52,6 @@ class controlador_cat_sat_tipo_contrato_nom extends _ctl_base {
 
     public function alta(bool $header, bool $ws = false): array|string
     {
-
-
         $r_alta = $this->init_alta();
         if(errores::$error){
             return $this->retorno_error(
@@ -80,9 +78,6 @@ class controlador_cat_sat_tipo_contrato_nom extends _ctl_base {
         $keys->inputs = array('codigo','descripcion');
         $keys->selects = array();
 
-
-
-
         $campos_view = (new \base\controller\init())->model_init_campos_template(
             campos_view: array(),keys:  $keys, link: $this->link);
 
@@ -96,12 +91,14 @@ class controlador_cat_sat_tipo_contrato_nom extends _ctl_base {
     protected function key_selects_txt(array $keys_selects): array
     {
 
-        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'codigo', keys_selects:$keys_selects, place_holder: 'Cod');
+        $keys_selects = (new \base\controller\init())->key_select_txt(
+            cols: 6,key: 'codigo', keys_selects:$keys_selects, place_holder: 'Cod');
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
 
-        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'Descripcion');
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'descripcion',
+            keys_selects:$keys_selects, place_holder: 'Tipo Contrato');
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
