@@ -8,11 +8,11 @@
  */
 namespace gamboamartin\cat_sat\controllers;
 
-use base\controller\init;
+
 use gamboamartin\cat_sat\models\cat_sat_tipo_nomina;
 use gamboamartin\errores\errores;
 use gamboamartin\system\_ctl_base;
-use gamboamartin\system\_ctl_parent;
+
 
 
 use gamboamartin\system\links_menu;
@@ -31,8 +31,20 @@ class controlador_cat_sat_tipo_nomina extends _ctl_base {
         $obj_link = new links_menu(link: $link, registro_id: $this->registro_id);
 
 
+        $datatables = new stdClass();
+        $datatables->columns = array();
+        $datatables->columns['cat_sat_tipo_nomina_id']['titulo'] = 'Id';
+        $datatables->columns['cat_sat_tipo_nomina_codigo']['titulo'] = 'Cod';
+        $datatables->columns['cat_sat_tipo_nomina_descripcion']['titulo'] = 'Tipo Nomina';
 
-        parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
+        $datatables->filtro = array();
+        $datatables->filtro[] = 'cat_sat_tipo_nomina.id';
+        $datatables->filtro[] = 'cat_sat_tipo_nomina.codigo';
+        $datatables->filtro[] = 'cat_sat_tipo_nomina.descripcion';
+
+
+        parent::__construct(html: $html_, link: $link, modelo: $modelo, obj_link: $obj_link,
+            datatables: $datatables, paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Tipos de Nomina';
 
