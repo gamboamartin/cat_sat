@@ -26,7 +26,7 @@ class controlador_cat_sat_tipo_nomina extends system {
         $obj_link = new links_menu(link: $link, registro_id: $this->registro_id);
         parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
-        $this->titulo_lista = 'Formas de Pago';
+        $this->titulo_lista = 'Tipos de Nomina';
 
     }
 
