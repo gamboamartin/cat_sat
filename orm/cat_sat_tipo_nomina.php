@@ -12,8 +12,10 @@ class cat_sat_tipo_nomina extends _modelo_parent{
         $campos_obligatorios[] = 'descripcion';
         $campos_obligatorios[] = 'descripcion_select';
 
+        $tipo_campos['codigo'] = 'cod_1_letras_mayusc';
+
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
-            columnas: $columnas);
+            columnas: $columnas, tipo_campos: $tipo_campos);
 
         $this->NAMESPACE = __NAMESPACE__;
     }
