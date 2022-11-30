@@ -10,7 +10,7 @@ class cat_sat_tipo_deduccion_nom  extends _modelo_parent{
         $campos_obligatorios[] = 'descripcion';
         $campos_obligatorios[] = 'descripcion_select';
 
-        $tipo_campos['codigo'] = 'cod_int_0_2_numbers';
+        $tipo_campos['codigo'] = 'cod_int_0_3_numbers';
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
             columnas: $columnas, tipo_campos: $tipo_campos);
@@ -22,5 +22,5 @@ class cat_sat_tipo_deduccion_nom  extends _modelo_parent{
     }
 
 
-    
+
 }
