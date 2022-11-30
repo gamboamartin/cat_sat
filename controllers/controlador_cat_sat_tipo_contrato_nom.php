@@ -31,6 +31,7 @@ class controlador_cat_sat_tipo_contrato_nom extends _ctl_base {
         $obj_link = new links_menu(link: $link, registro_id: $this->registro_id);
 
 
+
         $datatables = new stdClass();
         $datatables->columns = array();
         $datatables->columns['cat_sat_tipo_contrato_nom_id']['titulo'] = 'Id';
