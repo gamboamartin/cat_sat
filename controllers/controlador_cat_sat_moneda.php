@@ -9,15 +9,14 @@
 namespace gamboamartin\cat_sat\controllers;
 use gamboamartin\cat_sat\models\cat_sat_moneda;
 use gamboamartin\errores\errores;
+use gamboamartin\system\_ctl_base;
 use gamboamartin\system\links_menu;
-use gamboamartin\system\system;
 use gamboamartin\template_1\html;
 use html\cat_sat_moneda_html;
-use html\dp_pais_html;
 use PDO;
 use stdClass;
 
-class controlador_cat_sat_moneda extends system {
+class controlador_cat_sat_moneda extends _ctl_base {
 
     public array $keys_selects = array();
 
@@ -43,12 +42,6 @@ class controlador_cat_sat_moneda extends system {
 
         $this->titulo_lista = 'Monedas';
 
-        $propiedades = $this->inicializa_propiedades();
-        if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al inicializar propiedades',data:  $propiedades);
-            print_r($error);
-            die('Error');
-        }
 
         $this->lista_get_data = true;
 
@@ -56,19 +49,48 @@ class controlador_cat_sat_moneda extends system {
 
     public function alta(bool $header, bool $ws = false): array|string
     {
-        $r_alta =  parent::alta(header: false);
+
+        $r_alta = $this->init_alta();
         if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_alta, header: $header,ws:$ws);
+            return $this->retorno_error(
+                mensaje: 'Error al inicializar alta',data:  $r_alta, header: $header,ws:  $ws);
         }
 
-        $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
+        $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'dp_pais_id',
+            keys_selects: array(), id_selected: -1, label: 'Pais');
         if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $inputs);
-            print_r($error);
-            die('Error');
+            return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
+        }
+
+
+        $inputs = $this->inputs(keys_selects: $keys_selects);
+        if(errores::$error){
+            return $this->retorno_error(
+                mensaje: 'Error al obtener inputs',data:  $inputs, header: $header,ws:  $ws);
         }
 
         return $r_alta;
+    }
+
+    public function alta_bd(bool $header, bool $ws = false): array|stdClass
+    {
+        $this->link->beginTransaction();
+
+        $result = $this->alta_bd_base();
+        if(errores::$error){
+            $this->link->rollBack();
+            return $this->retorno_error(mensaje: 'Error al insertar registro',data:  $result, header: $header,ws: $ws);
+        }
+
+        $this->link->commit();
+
+        $result = $this->out_alta_bd(header: $header,data_retorno:  $result->data_retorno, result: $result->r_alta_bd, ws: $ws);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al retornar', data: $result, header: $header,ws:  $ws);
+        }
+
+        return $result;
+
     }
 
     public function asignar_propiedad(string $identificador, mixed $propiedades)
@@ -82,41 +104,64 @@ class controlador_cat_sat_moneda extends system {
         }
     }
 
-    private function inicializa_propiedades(): array
+    protected function campos_view(): array
     {
-        $identificador = "dp_pais_id";
-        $propiedades = array("label" => "Pais");
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        $keys = new stdClass();
+        $keys->inputs = array('codigo','descripcion');
+        $keys->selects = array();
 
-        $identificador = "codigo";
-        $propiedades = array("place_holder" => "Código");
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        $init_data = array();
+        $init_data['dp_pais'] = "gamboamartin\\direccion_postal";
+        $campos_view = $this->campos_view_base(init_data: $init_data,keys:  $keys);
 
-        $identificador = "descripcion";
-        $propiedades = array("place_holder" => "Moneda", "cols" => 12);
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al inicializar campo view',data:  $campos_view);
+        }
 
-        return $this->keys_selects;
+        return $campos_view;
     }
 
-    public function modifica(bool $header, bool $ws = false): array|stdClass
+
+    protected function key_selects_txt(array $keys_selects): array
     {
-        $r_modifica =  parent::modifica(header: false);
+
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'Moneda');
         if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_modifica, header: $header,ws:$ws);
+            return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
 
-        $identificador = "dp_pais_id";
-        $propiedades = array("id_selected" => $this->row_upd->dp_pais_id);
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-
-        $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'codigo', keys_selects:$keys_selects, place_holder: 'Cod');
         if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $inputs);
-            print_r($error);
-            die('Error');
+            return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
+        return $keys_selects;
+    }
+
+
+
+    public function modifica(
+        bool $header, bool $ws = false): array|stdClass
+    {
+        $r_modifica = $this->init_modifica(); // TODO: Change the autogenerated stub
+        if(errores::$error){
+            return $this->retorno_error(
+                mensaje: 'Error al generar salida de template',data:  $r_modifica,header: $header,ws: $ws);
+        }
+
+        $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'dp_pais_id',
+            keys_selects: array(), id_selected: $this->registro['dp_pais_id'], label: 'Pais');
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
+        }
+
+
+        $base = $this->base_upd(keys_selects: $keys_selects, not_actions: array(__FUNCTION__), params: array(),params_ajustados: array());
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al integrar base',data:  $base, header: $header,ws:  $ws);
+        }
+
 
         return $r_modifica;
     }
+
 }
