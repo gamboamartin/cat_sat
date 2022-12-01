@@ -22,7 +22,7 @@ class cat_sat_moneda extends modelo{
         $campos_view['descripcion'] = array('type' => 'inputs');
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
-            columnas: $columnas, campos_view: $campos_view);
+            columnas: $columnas, campos_view: $campos_view, tipo_campos: $tipo_campos);
 
         $this->NAMESPACE = __NAMESPACE__;
     }
