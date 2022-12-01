@@ -76,7 +76,12 @@ class controlador_cat_sat_regimen_fiscal extends _ctl_base {
         return $r_alta;
     }
 
-    public function asignar_propiedad(string $identificador, mixed $propiedades)
+    /**
+     * @param string $identificador
+     * @param array $propiedades
+     * @return array
+     */
+    private function asignar_propiedad(string $identificador, array $propiedades): array
     {
         if (!array_key_exists($identificador,$this->keys_selects)){
             $this->keys_selects[$identificador] = new stdClass();
@@ -85,6 +90,7 @@ class controlador_cat_sat_regimen_fiscal extends _ctl_base {
         foreach ($propiedades as $key => $value){
             $this->keys_selects[$identificador]->$key = $value;
         }
+        return $this->keys_selects;
     }
 
     protected function campos_view(): array
@@ -107,11 +113,17 @@ class controlador_cat_sat_regimen_fiscal extends _ctl_base {
     {
         $identificador = "codigo";
         $propiedades = array("place_holder" => "Código", "cols" => 4);
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        $result = $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al inicializar propiedad',data:  $result);
+        }
 
         $identificador = "descripcion";
         $propiedades = array("place_holder" => "Régimen Fiscal", "cols" => 8);
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        $result = $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al inicializar propiedad',data:  $result);
+        }
 
         return $this->keys_selects;
     }
@@ -132,7 +144,7 @@ class controlador_cat_sat_regimen_fiscal extends _ctl_base {
         }
         return $keys_selects;
     }
-    
+
 
     public function modifica(
         bool $header, bool $ws = false): array|stdClass
