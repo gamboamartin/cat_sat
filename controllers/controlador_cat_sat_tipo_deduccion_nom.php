@@ -49,6 +49,8 @@ class controlador_cat_sat_tipo_deduccion_nom extends _ctl_base {
 
         $this->titulo_lista = 'Tipo de deduccion';
 
+        $this->lista_get_data = true;
+
     }
 
     public function alta(bool $header, bool $ws = false): array|string
