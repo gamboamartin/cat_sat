@@ -72,4 +72,5 @@ class cat_sat_moneda extends _modelo_children{
         }
         return $r_modifica_bd;
     }
+
 }

@@ -93,16 +93,6 @@ class controlador_cat_sat_moneda extends _ctl_base {
 
     }
 
-    public function asignar_propiedad(string $identificador, mixed $propiedades)
-    {
-        if (!array_key_exists($identificador,$this->keys_selects)){
-            $this->keys_selects[$identificador] = new stdClass();
-        }
-
-        foreach ($propiedades as $key => $value){
-            $this->keys_selects[$identificador]->$key = $value;
-        }
-    }
 
     protected function campos_view(): array
     {
@@ -121,6 +111,18 @@ class controlador_cat_sat_moneda extends _ctl_base {
         return $campos_view;
     }
 
+    public function get_cat_sat_moneda(bool $header, bool $ws = false): array|stdClass
+    {
+        $keys['dp_pais'] = array('id','descripcion','codigo','codigo_bis');
+        $keys['cat_sat_moneda'] = array('id','descripcion','codigo','codigo_bis');
+
+        $salida = $this->get_out(header: $header,keys: $keys, ws: $ws);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar salida',data:  $salida,header: $header,ws: $ws);
+
+        }
+        return $salida;
+    }
 
     protected function key_selects_txt(array $keys_selects): array
     {
@@ -136,8 +138,6 @@ class controlador_cat_sat_moneda extends _ctl_base {
         }
         return $keys_selects;
     }
-
-
 
     public function modifica(
         bool $header, bool $ws = false): array|stdClass
