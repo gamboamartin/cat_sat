@@ -9,6 +9,17 @@ use PDO;
 
 
 class cat_sat_moneda_html extends html_controler {
+
+    /**
+     * Genera un input de tipo select de moneda
+     * @param int $cols Cols css
+     * @param bool $con_registros si con registros asigna options
+     * @param int|null $id_selected identificador selected
+     * @param PDO $link conexion a la base de datos
+     * @param bool $disabled atributo disabled
+     * @param string $label Label input
+     * @return array|string
+     */
     public function select_cat_sat_moneda_id(int $cols, bool $con_registros, int|null $id_selected, PDO $link,
                                              bool $disabled = false, string $label = 'Moneda'): array|string
     {
