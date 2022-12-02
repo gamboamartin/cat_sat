@@ -18,7 +18,6 @@ class cat_sat_tipo_jornada_nom_html extends html_controler {
 
 
 
-
     public function select_cat_sat_tipo_jornada_nom_id(int $cols, bool $con_registros, int|null $id_selected, PDO $link): array|string
     {
 
