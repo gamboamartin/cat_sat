@@ -197,11 +197,10 @@ class base_test{
         return $alta;
     }
 
-    public function alta_cat_sat_tipo_nomina(PDO $link, string $codigo = '1', $descripcion = '1', int $id = 1,
-                                             bool $predeterminado = false): array|stdClass
+    public function alta_cat_sat_tipo_nomina(PDO $link, string $codigo = 'A', $descripcion = '1', int $id = 1): array|stdClass
     {
         $registro = (new test())->registro(
-            codigo:$codigo,descripcion: $descripcion,id: $id, predeterminado: $predeterminado);
+            codigo:$codigo,descripcion: $descripcion,id: $id, predeterminado: false);
         if (errores::$error) {
             return (new errores())->error('Error al integrar predeterminado si existe', $registro);
 
