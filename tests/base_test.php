@@ -10,6 +10,7 @@ use gamboamartin\cat_sat\models\cat_sat_regimen_fiscal;
 use gamboamartin\cat_sat\models\cat_sat_subsidio;
 use gamboamartin\cat_sat\models\cat_sat_tipo_de_comprobante;
 use gamboamartin\cat_sat\models\cat_sat_tipo_nomina;
+use gamboamartin\cat_sat\models\cat_sat_uso_cfdi;
 use gamboamartin\direccion_postal\models\dp_pais;
 use gamboamartin\errores\errores;
 
@@ -207,6 +208,24 @@ class base_test{
         }
 
         $alta = (new cat_sat_tipo_nomina($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+
+        }
+        return $alta;
+    }
+
+    public function alta_cat_sat_uso_cfdi(PDO $link, string $codigo = '1', $descripcion = '1', int $id = 1,
+                                             bool $predeterminado = false): array|stdClass
+    {
+        $registro = (new test())->registro(
+            codigo:$codigo,descripcion: $descripcion,id: $id, predeterminado: $predeterminado);
+        if (errores::$error) {
+            return (new errores())->error('Error al integrar predeterminado si existe', $registro);
+
+        }
+
+        $alta = (new cat_sat_uso_cfdi($link))->alta_registro($registro);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
 
