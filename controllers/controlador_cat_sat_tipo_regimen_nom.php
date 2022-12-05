@@ -11,7 +11,6 @@ namespace gamboamartin\cat_sat\controllers;
 use gamboamartin\cat_sat\models\cat_sat_tipo_regimen_nom;
 
 
-
 use gamboamartin\system\links_menu;
 use html\cat_sat_tipo_regimen_nom_html;
 use PDO;
@@ -46,6 +45,6 @@ class controlador_cat_sat_tipo_regimen_nom extends _base {
 
         $this->lista_get_data = true;
     }
-    
+
 
 }
