@@ -47,7 +47,7 @@ class _base extends \gamboamartin\system\_ctl_base {
     {
 
         $place_holder_desc = $this->tabla;
-        $place_holder_desc = str_replace('cat_sat_', '', $place_holder_desc);
+        $place_holder_desc = str_replace('cat_sat_', '',  $place_holder_desc );
         $place_holder_desc = str_replace('_', ' ', $place_holder_desc);
         $place_holder_desc = ucwords($place_holder_desc);
 
