@@ -116,7 +116,7 @@ class base_test{
         return $alta;
     }
 
-    public function alta_cat_sat_regimen_fiscal(PDO $link, string $codigo = '1', string $descripcion = '1',
+    public function alta_cat_sat_regimen_fiscal(PDO $link, string $codigo = '001', string $descripcion = '1',
                                                 int $id = 1, bool $predeterminado = false): array|stdClass
     {
         $registro = (new test())->registro(
