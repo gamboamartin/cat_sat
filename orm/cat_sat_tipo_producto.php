@@ -1,23 +1,26 @@
 <?php
+
 namespace gamboamartin\cat_sat\models;
 
 use base\orm\_modelo_parent;
 use PDO;
 
-
-class cat_sat_tipo_producto extends _modelo_parent {
-    public function __construct(PDO $link){
+class cat_sat_tipo_producto extends _modelo_parent
+{
+    public function __construct(PDO $link)
+    {
         $tabla = 'cat_sat_tipo_producto';
-        $columnas = array($tabla=>false);
+
+        $columnas = array($tabla => false);
+
         $campos_obligatorios[] = 'descripcion';
 
-        $campos_view['codigo'] = array('type' => 'inputs');
-        $campos_view['descripcion'] = array('type' => 'inputs');
+        $columnas_extra['cat_sat_tipo_producto_n_divisiones'] = "(SELECT COUNT(*) FROM cat_sat_division_producto 
+        WHERE cat_sat_division_producto.cat_sat_tipo_producto_id = cat_sat_tipo_producto.id)";
 
-        parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
-            columnas: $columnas, campos_view: $campos_view);
+        parent::__construct(link: $link, tabla: $tabla, campos_obligatorios: $campos_obligatorios, columnas: $columnas,
+            columnas_extra: $columnas_extra);
+
         $this->NAMESPACE = __NAMESPACE__;
     }
-
-
 }
