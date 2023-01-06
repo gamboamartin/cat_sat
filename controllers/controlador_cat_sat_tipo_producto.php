@@ -12,7 +12,6 @@ namespace gamboamartin\cat_sat\controllers;
 use base\controller\controler;
 use gamboamartin\cat_sat\models\cat_sat_tipo_producto;
 use gamboamartin\errores\errores;
-
 use gamboamartin\system\_ctl_base;
 use gamboamartin\system\links_menu;
 use gamboamartin\template\html;
@@ -23,7 +22,6 @@ use stdClass;
 class controlador_cat_sat_tipo_producto extends _ctl_base
 {
     public controlador_cat_sat_division_producto $controlador_cat_sat_division_producto;
-
     public string $link_cat_sat_division_producto_alta_bd = '';
 
     public function __construct(PDO      $link, html $html = new \gamboamartin\template_1\html(),
@@ -115,23 +113,6 @@ class controlador_cat_sat_tipo_producto extends _ctl_base
         return $contenido_table;
     }
 
-    protected function key_selects_txt(array $keys_selects): array
-    {
-        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 4, key: 'codigo',
-            keys_selects: array(), place_holder: 'Código');
-        if (errores::$error) {
-            return $this->errores->error(mensaje: 'Error al maquetar key_selects', data: $keys_selects);
-        }
-
-        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 8, key: 'descripcion',
-            keys_selects: $keys_selects, place_holder: 'Descripción');
-        if (errores::$error) {
-            return $this->errores->error(mensaje: 'Error al maquetar key_selects', data: $keys_selects);
-        }
-
-        return $keys_selects;
-    }
-
     private function init_configuraciones(): controler
     {
         $this->seccion_titulo = 'SAT Tipos de Productos';
@@ -180,7 +161,6 @@ class controlador_cat_sat_tipo_producto extends _ctl_base
 
     protected function inputs_children(stdClass $registro): array|stdClass
     {
-
         $r_template = $this->controlador_cat_sat_division_producto->alta(header: false);
         if (errores::$error) {
             return $this->errores->error(mensaje: 'Error al obtener template', data: $r_template);
@@ -203,6 +183,23 @@ class controlador_cat_sat_tipo_producto extends _ctl_base
         $this->inputs = $inputs;
 
         return $this->inputs;
+    }
+
+    protected function key_selects_txt(array $keys_selects): array
+    {
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 4, key: 'codigo',
+            keys_selects: array(), place_holder: 'Código');
+        if (errores::$error) {
+            return $this->errores->error(mensaje: 'Error al maquetar key_selects', data: $keys_selects);
+        }
+
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 8, key: 'descripcion',
+            keys_selects: $keys_selects, place_holder: 'Descripción');
+        if (errores::$error) {
+            return $this->errores->error(mensaje: 'Error al maquetar key_selects', data: $keys_selects);
+        }
+
+        return $keys_selects;
     }
 
     public function modifica(bool $header, bool $ws = false): array|stdClass

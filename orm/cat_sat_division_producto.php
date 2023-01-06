@@ -11,14 +11,13 @@ class cat_sat_division_producto extends _modelo_parent{
         $columnas = array($tabla=>false,"cat_sat_tipo_producto" => $tabla);
         $campos_obligatorios[] = 'descripcion';
 
-        $campos_view['cat_sat_tipo_producto_id'] = array('type' => 'selects', 'model' => new cat_sat_tipo_producto($link));
-        $campos_view['codigo'] = array('type' => 'inputs');
-        $campos_view['descripcion'] = array('type' => 'inputs');
+        $columnas_extra['cat_sat_division_producto_n_grupos'] = "(SELECT COUNT(*) FROM cat_sat_grupo_producto 
+        WHERE cat_sat_grupo_producto.cat_sat_division_producto_id = cat_sat_division_producto.id)";
 
         $tipo_campos['codigo'] = 'cod_int_0_2_numbers';
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
-            columnas: $columnas,campos_view: $campos_view, tipo_campos: $tipo_campos);
+            columnas: $columnas, columnas_extra: $columnas_extra, tipo_campos: $tipo_campos);
 
         $this->NAMESPACE = __NAMESPACE__;
     }
