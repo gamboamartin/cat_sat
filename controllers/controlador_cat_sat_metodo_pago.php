@@ -21,10 +21,10 @@ class controlador_cat_sat_metodo_pago extends system {
 
     public array $keys_selects = array();
 
-    public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
+    public function __construct(PDO $link, \gamboamartin\template\html $html = new \gamboamartin\template_1\html(),
+                                stdClass $paths_conf = new stdClass()){
         $modelo = new cat_sat_metodo_pago(link: $link);
-        $html_base = new html();
-        $html = new cat_sat_metodo_pago_html(html: $html_base);
+        $html_ = new cat_sat_metodo_pago_html(html: $html);
         $obj_link = new links_menu(link: $link, registro_id: $this->registro_id);
 
         $columns["cat_sat_metodo_pago_id"]["titulo"] = "Id";
@@ -37,7 +37,7 @@ class controlador_cat_sat_metodo_pago extends system {
         $datatables->columns = $columns;
         $datatables->filtro = $filtro;
 
-        parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, datatables: $datatables,
+        parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, datatables: $datatables,
             paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Métodos de Pago';
