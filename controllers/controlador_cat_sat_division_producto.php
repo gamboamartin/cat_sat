@@ -196,7 +196,6 @@ class controlador_cat_sat_division_producto extends _ctl_base
 
     public function init_selects_inputs(): array
     {
-
         return $this->init_selects(keys_selects: array(), key: "cat_sat_tipo_producto_id", label: "Tipo de Producto",
             cols: 12);
     }
