@@ -21,10 +21,10 @@ class controlador_cat_sat_regimen_fiscal extends _base {
 
     public array $keys_selects = array();
 
-    public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
+    public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
+                                stdClass $paths_conf = new stdClass()){
         $modelo = new cat_sat_regimen_fiscal(link: $link);
-        $html_base = new html();
-        $html = new cat_sat_regimen_fiscal_html(html: $html_base);
+        $html = new cat_sat_regimen_fiscal_html(html: $html);
         $obj_link = new link_cat_sat_regimen_fiscal(link: $link, registro_id: $this->registro_id);
 
         $columns["cat_sat_regimen_fiscal_id"]["titulo"] = "Id";
