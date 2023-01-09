@@ -12,7 +12,7 @@ use gamboamartin\cat_sat\models\cat_sat_tipo_de_comprobante;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
-use gamboamartin\template_1\html;
+use gamboamartin\template\html;
 use html\cat_sat_tipo_de_comprobante_html;
 use PDO;
 use stdClass;
@@ -21,11 +21,11 @@ class controlador_cat_sat_tipo_de_comprobante extends system {
 
     public array $keys_selects = array();
 
-    public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
+    public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
+                                stdClass $paths_conf = new stdClass()){
 
         $modelo = new cat_sat_tipo_de_comprobante(link: $link);
-        $html_base = new html();
-        $html = new cat_sat_tipo_de_comprobante_html(html: $html_base);
+        $html_ = new cat_sat_tipo_de_comprobante_html(html: $html);
         $obj_link = new links_menu(link: $link, registro_id: $this->registro_id);
 
         $columns["cat_sat_tipo_de_comprobante_id"]["titulo"] = "Id";
@@ -39,7 +39,7 @@ class controlador_cat_sat_tipo_de_comprobante extends system {
         $datatables->columns = $columns;
         $datatables->filtro = $filtro;
 
-        parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, datatables: $datatables,
+        parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, datatables: $datatables,
             paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Tipos de Comprobante';
