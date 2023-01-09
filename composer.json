@@ -51,9 +51,9 @@
         "gamboa.martin/validacion": "^1.0.0",
         "gamboa.martin/services": "^3.0.0",
         "gamboa.martin/template": "^3.0.0",
-        "gamboa.martin/template_1": "^3.0.0",
-        "gamboa.martin/system": "^3.0.0",
-        "gamboa.martin/direccion_postal": "^5.0.0",
+        "gamboa.martin/template_1": "^4.0.0",
+        "gamboa.martin/system": "^4.0.0",
+        "gamboa.martin/direccion_postal": "^6.0.0",
         "gamboa.martin/js_base": "^1.0.0"
     },
     "require-dev": {
