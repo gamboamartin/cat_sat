@@ -11,7 +11,7 @@ namespace gamboamartin\cat_sat\controllers;
 use gamboamartin\cat_sat\models\cat_sat_regimen_fiscal;
 use gamboamartin\errores\errores;
 
-use gamboamartin\template_1\html;
+use gamboamartin\template\html;
 use html\cat_sat_regimen_fiscal_html;
 use links\secciones\link_cat_sat_regimen_fiscal;
 use PDO;
@@ -23,8 +23,9 @@ class controlador_cat_sat_regimen_fiscal extends _base {
 
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass()){
+
         $modelo = new cat_sat_regimen_fiscal(link: $link);
-        $html = new cat_sat_regimen_fiscal_html(html: $html);
+        $html_ = new cat_sat_regimen_fiscal_html(html: $html);
         $obj_link = new link_cat_sat_regimen_fiscal(link: $link, registro_id: $this->registro_id);
 
         $columns["cat_sat_regimen_fiscal_id"]["titulo"] = "Id";
@@ -37,7 +38,7 @@ class controlador_cat_sat_regimen_fiscal extends _base {
         $datatables->columns = $columns;
         $datatables->filtro = $filtro;
 
-        parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, datatables: $datatables,
+        parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, datatables: $datatables,
             paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Regímenes  Fiscales';
