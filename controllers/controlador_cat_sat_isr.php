@@ -188,7 +188,6 @@ class controlador_cat_sat_isr extends _ctl_base
             return $this->errores->error(mensaje: 'Error al maquetar key_selects', data: $keys_selects);
         }
 
-
         return $keys_selects;
     }
 
@@ -208,8 +207,7 @@ class controlador_cat_sat_isr extends _ctl_base
 
         $keys_selects['cat_sat_periodicidad_pago_nom_id']->id_selected = $this->registro['cat_sat_periodicidad_pago_nom_id'];
 
-        $base = $this->base_upd(keys_selects: $keys_selects, not_actions: array(__FUNCTION__), params: array(),
-            params_ajustados: array());
+        $base = $this->base_upd(keys_selects: $keys_selects, params: array(), params_ajustados: array());
         if (errores::$error) {
             return $this->retorno_error(mensaje: 'Error al integrar base', data: $base, header: $header, ws: $ws);
         }

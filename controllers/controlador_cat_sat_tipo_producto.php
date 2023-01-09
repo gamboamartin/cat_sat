@@ -210,8 +210,7 @@ class controlador_cat_sat_tipo_producto extends _ctl_base
                 mensaje: 'Error al generar salida de template', data: $r_modifica, header: $header, ws: $ws);
         }
 
-        $base = $this->base_upd(keys_selects: array(), not_actions: array(__FUNCTION__), params: array(),
-            params_ajustados: array());
+        $base = $this->base_upd(keys_selects: array(), params: array(), params_ajustados: array());
         if (errores::$error) {
             return $this->retorno_error(mensaje: 'Error al integrar base', data: $base, header: $header, ws: $ws);
         }
