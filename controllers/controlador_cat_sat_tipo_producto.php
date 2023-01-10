@@ -93,7 +93,7 @@ class controlador_cat_sat_tipo_producto extends _ctl_base
         return $campos_view;
     }
 
-    public function divisiones(bool $header = true, bool $ws = false): array|string
+    public function divisiones(bool $header = true, bool $ws = false, array $not_actions = array()): array|string
     {
         $seccion = "cat_sat_division_producto";
 
@@ -104,7 +104,8 @@ class controlador_cat_sat_tipo_producto extends _ctl_base
         $data_view->namespace_model = 'gamboamartin\\cat_sat\\models';
         $data_view->name_model_children = $seccion;
 
-        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__);
+        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__,
+            not_actions: $not_actions);
         if (errores::$error) {
             return $this->retorno_error(
                 mensaje: 'Error al obtener tbody', data: $contenido_table, header: $header, ws: $ws);
