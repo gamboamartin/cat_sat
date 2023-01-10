@@ -114,7 +114,7 @@ class controlador_cat_sat_division_producto extends _ctl_base
         return $salida;
     }
 
-    public function grupos(bool $header = true, bool $ws = false): array|string
+    public function grupos(bool $header = true, bool $ws = false, array $not_actions = array()): array|string
     {
         $seccion = "cat_sat_grupo_producto";
 
@@ -125,7 +125,8 @@ class controlador_cat_sat_division_producto extends _ctl_base
         $data_view->namespace_model = 'gamboamartin\\cat_sat\\models';
         $data_view->name_model_children = $seccion;
 
-        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__);
+        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__,
+            not_actions: $not_actions);
         if (errores::$error) {
             return $this->retorno_error(
                 mensaje: 'Error al obtener tbody', data: $contenido_table, header: $header, ws: $ws);
@@ -202,7 +203,6 @@ class controlador_cat_sat_division_producto extends _ctl_base
 
     protected function inputs_children(stdClass $registro): array|stdClass
     {
-
         $r_template = $this->controlador_cat_sat_grupo_producto->alta(header: false);
         if (errores::$error) {
             return $this->errores->error(mensaje: 'Error al obtener template', data: $r_template);
@@ -228,6 +228,7 @@ class controlador_cat_sat_division_producto extends _ctl_base
         $keys_selects['cat_sat_division_producto_id']->filtro = array("cat_sat_tipo_producto.id" =>
             $division['cat_sat_tipo_producto_id']);
         $keys_selects['cat_sat_division_producto_id']->disabled = true;
+        $keys_selects['cat_sat_division_producto_id']->extra_params_keys = array("cat_sat_division_producto_codigo");
 
         $inputs = $this->controlador_cat_sat_grupo_producto->inputs(keys_selects: $keys_selects);
         if (errores::$error) {
