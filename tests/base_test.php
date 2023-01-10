@@ -22,7 +22,7 @@ use stdClass;
 
 class base_test{
 
-    public function alta_cat_forma_pago(PDO $link, string $codigo = '99', $descripcion = '99', int $id = 1,
+    public function alta_cat_sat_forma_pago(PDO $link, string $codigo = '99', $descripcion = '99', int $id = 1,
                                              bool $predeterminado = false): array|stdClass
     {
         $registro = (new test())->registro(
