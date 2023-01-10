@@ -1,6 +1,7 @@
 <?php
 namespace gamboamartin\cat_sat\tests;
 use base\orm\modelo_base;
+use gamboamartin\cat_sat\models\cat_sat_forma_pago;
 use gamboamartin\cat_sat\models\cat_sat_isn;
 use gamboamartin\cat_sat\models\cat_sat_isr;
 use gamboamartin\cat_sat\models\cat_sat_metodo_pago;
@@ -20,6 +21,24 @@ use stdClass;
 
 
 class base_test{
+
+    public function alta_cat_forma_pago(PDO $link, string $codigo = '99', $descripcion = '99', int $id = 1,
+                                             bool $predeterminado = false): array|stdClass
+    {
+        $registro = (new test())->registro(
+            codigo:$codigo,descripcion: $descripcion,id: $id, predeterminado: $predeterminado);
+        if (errores::$error) {
+            return (new errores())->error('Error al integrar predeterminado si existe', $registro);
+
+        }
+
+        $alta = (new cat_sat_forma_pago($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+
+        }
+        return $alta;
+    }
 
     public function alta_cat_sat_isr(PDO $link, int $cat_sat_periodicidad_pago_nom_id = 1, float $cuota_fija = 0,
                                      string $fecha_fin = '2020-12-31', string $fecha_inicio = '2020-01-01',
