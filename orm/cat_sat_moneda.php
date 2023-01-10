@@ -45,12 +45,6 @@ class cat_sat_moneda extends _modelo_children{
             return $this->error->error(mensaje: 'Error al validar registro en modelo '.$this->tabla,data: $valida);
         }
 
-        $registro = $this->init_row_alta(
-            defaults: $this->defaults,parents_data: $this->parents_data, registro: $this->registro);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al inicializar registro en modelo '.$this->tabla,data: $registro);
-        }
-
         if(!isset($this->registro['dp_pais_id']) || (int)$this->registro['dp_pais_id']<=0 ){
             $ins_pred = (new dp_pais(link: $this->link))->inserta_predeterminado();
             if(errores::$error){
@@ -66,6 +60,14 @@ class cat_sat_moneda extends _modelo_children{
             $this->registro['dp_pais_id'] = $dp_pais_id;
 
         }
+
+        $registro = $this->init_row_alta(
+            defaults: $this->defaults,parents_data: $this->parents_data, registro: $this->registro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al inicializar registro en modelo '.$this->tabla,data: $registro);
+        }
+
+
 
         $this->registro = $registro;
 
