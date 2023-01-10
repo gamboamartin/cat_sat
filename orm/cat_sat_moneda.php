@@ -46,7 +46,7 @@ class cat_sat_moneda extends _modelo_children{
         }
 
         if(!isset($this->registro['dp_pais_id']) || (int)$this->registro['dp_pais_id']<=0 ){
-            $ins_pred = (new dp_pais(link: $this->link))->inserta_predeterminado();
+            $ins_pred = (new dp_pais(link: $this->link))->inserta_predeterminado(codigo: 'XXX',descripcion: 'SIN PAIS');
             if(errores::$error){
                 return $this->error->error(mensaje: 'Error al insertar pais_predeterminado en modelo '.$this->tabla,
                     data: $ins_pred);
