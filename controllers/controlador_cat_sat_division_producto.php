@@ -228,6 +228,7 @@ class controlador_cat_sat_division_producto extends _ctl_base
         $keys_selects['cat_sat_division_producto_id']->filtro = array("cat_sat_tipo_producto.id" =>
             $division['cat_sat_tipo_producto_id']);
         $keys_selects['cat_sat_division_producto_id']->disabled = true;
+        $keys_selects['cat_sat_division_producto_id']->con_registros = true;
         $keys_selects['cat_sat_division_producto_id']->extra_params_keys = array("cat_sat_division_producto_codigo");
 
         $inputs = $this->controlador_cat_sat_grupo_producto->inputs(keys_selects: $keys_selects);
