@@ -49,7 +49,7 @@ class cat_sat_htmlTest extends test {
 
         $this->assertIsString($resultado);
         $this->assertNotTrue(errores::$error);
-        $this->assertEquals("<div class='control-group col-sm-1'><label class='control-label' for='n-dias'>Numero dias</label><div class='controls'><input type='text' name='n-dias' value='' class='form-control'  required id='n-dias' placeholder='Numero dias' /></div></div>", $resultado);
+        $this->assertEquals("<div class='control-group col-sm-1'><label class='control-label' for='n-dias'>Numero dias</label><div class='controls'><input type='text' name='n-dias' value='' class='form-control' required id='n-dias' placeholder='Numero dias' title='Numero dias' /></div></div>", $resultado);
 
 
         errores::$error = false;

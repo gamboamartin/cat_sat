@@ -12,6 +12,7 @@ use gamboamartin\cat_sat\models\cat_sat_subsidio;
 use gamboamartin\cat_sat\models\cat_sat_tipo_de_comprobante;
 use gamboamartin\cat_sat\models\cat_sat_tipo_nomina;
 use gamboamartin\cat_sat\models\cat_sat_uso_cfdi;
+use gamboamartin\direccion_postal\models\dp_estado;
 use gamboamartin\direccion_postal\models\dp_pais;
 use gamboamartin\errores\errores;
 
@@ -33,6 +34,39 @@ class base_test{
         }
 
         $alta = (new cat_sat_forma_pago($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+
+        }
+        return $alta;
+    }
+
+    public function alta_cat_sat_isn(PDO $link, string $codigo = '1', int $dp_estado_id = 1, $descripcion = '1', int $id = 1): array|stdClass
+    {
+
+        $existe = (new dp_estado($link))->existe_by_id(registro_id: $dp_estado_id);
+        if(errores::$error){
+            return (new errores())->error('Error al verificar si existe', $existe);
+
+        }
+
+        if(!$existe) {
+            $alta = (new base_test())->alta_dp_estado(link: $link, id: $dp_estado_id);
+            if (errores::$error) {
+                return (new errores())->error('Error al dar de alta', $alta);
+            }
+        }
+
+        $registro = (new test())->registro(
+            codigo:$codigo,descripcion: $descripcion,id: $id, predeterminado: false);
+        if (errores::$error) {
+            return (new errores())->error('Error al integrar predeterminado si existe', $registro);
+
+        }
+
+        $registro['dp_estado_id'] = $dp_estado_id;
+
+        $alta = (new cat_sat_isn($link))->alta_registro($registro);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
 
@@ -244,6 +278,18 @@ class base_test{
         }
 
         $alta = (new cat_sat_uso_cfdi($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+
+        }
+        return $alta;
+    }
+
+    public function alta_dp_estado(PDO $link, string $codigo = '1', $descripcion = '1', int $id = 1): array|stdClass
+    {
+
+        $alta = (new \gamboamartin\direccion_postal\tests\base_test())->alta_dp_estado(link: $link, codigo: $codigo,
+            descripcion: $descripcion, id: $id);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
 
