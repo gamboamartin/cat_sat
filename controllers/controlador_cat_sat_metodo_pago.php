@@ -10,104 +10,132 @@ namespace gamboamartin\cat_sat\controllers;
 
 use gamboamartin\cat_sat\models\cat_sat_metodo_pago;
 use gamboamartin\errores\errores;
+use gamboamartin\system\_ctl_base;
 use gamboamartin\system\links_menu;
-use gamboamartin\system\system;
-use gamboamartin\template_1\html;
+use gamboamartin\template\html;
 use html\cat_sat_metodo_pago_html;
 use PDO;
 use stdClass;
 
-class controlador_cat_sat_metodo_pago extends system {
+class controlador_cat_sat_metodo_pago extends _ctl_base {
 
-    public array $keys_selects = array();
-
-    public function __construct(PDO $link, \gamboamartin\template\html $html = new \gamboamartin\template_1\html(),
+    public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass()){
+
         $modelo = new cat_sat_metodo_pago(link: $link);
         $html_ = new cat_sat_metodo_pago_html(html: $html);
-        $obj_link = new links_menu(link: $link, registro_id: $this->registro_id);
+        $obj_link = new links_menu(link: $link, registro_id:$this->registro_id);
 
-        $columns["cat_sat_metodo_pago_id"]["titulo"] = "Id";
-        $columns["cat_sat_metodo_pago_codigo"]["titulo"] = "Código";
-        $columns["cat_sat_metodo_pago_descripcion"]["titulo"] = "Método Pago";
-
-        $filtro = array("cat_sat_metodo_pago.id","cat_sat_metodo_pago.codigo","cat_sat_metodo_pago.descripcion");
 
         $datatables = new stdClass();
-        $datatables->columns = $columns;
-        $datatables->filtro = $filtro;
+        $datatables->columns = array();
+        $datatables->columns['cat_sat_metodo_pago_id']['titulo'] = 'Id';
+        $datatables->columns['cat_sat_metodo_pago_codigo']['titulo'] = 'Cod';
+        $datatables->columns['cat_sat_metodo_pago_descripcion']['titulo'] = 'Metodo de pago';
 
-        parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, datatables: $datatables,
-            paths_conf: $paths_conf);
 
-        $this->titulo_lista = 'Métodos de Pago';
+        $datatables->filtro = array();
+        $datatables->filtro[] = 'cat_sat_metodo_pago.id';
+        $datatables->filtro[] = 'cat_sat_metodo_pago.codigo';
+        $datatables->filtro[] = 'cat_sat_metodo_pago.descripcion';
 
-        $propiedades = $this->inicializa_priedades();
-        if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al inicializar propiedades',data:  $propiedades);
-            print_r($error);
-            die('Error');
-        }
+
+        parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link,
+            datatables: $datatables, paths_conf: $paths_conf);
+
+        $this->titulo_lista = 'Metodo de pago';
 
     }
 
     public function alta(bool $header, bool $ws = false): array|string
     {
-        $r_alta =  parent::alta(header: false);
+
+        $r_alta = $this->init_alta();
         if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_alta, header: $header,ws:$ws);
+            return $this->retorno_error(
+                mensaje: 'Error al inicializar alta',data:  $r_alta, header: $header,ws:  $ws);
         }
 
-        $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
+
+        $keys_selects['descripcion'] = new stdClass();
+        $keys_selects['descripcion']->cols = 12;
+
+
+        $inputs = $this->inputs(keys_selects: $keys_selects);
         if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $inputs);
-            print_r($error);
-            die('Error');
+            return $this->retorno_error(
+                mensaje: 'Error al obtener inputs',data:  $inputs, header: $header,ws:  $ws);
         }
+
+
 
         return $r_alta;
     }
 
-    public function asignar_propiedad(string $identificador, mixed $propiedades)
+    protected function campos_view(): array
     {
-        if (!array_key_exists($identificador,$this->keys_selects)){
-            $this->keys_selects[$identificador] = new stdClass();
+        $keys = new stdClass();
+        $keys->inputs = array('codigo','descripcion');
+        $keys->selects = array();
+
+        $init_data = array();
+        $campos_view = $this->campos_view_base(init_data: $init_data,keys:  $keys);
+
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al inicializar campo view',data:  $campos_view);
         }
 
-        foreach ($propiedades as $key => $value){
-            $this->keys_selects[$identificador]->$key = $value;
-        }
+
+        return $campos_view;
     }
 
-    private function inicializa_priedades(): array
+
+
+    protected function key_selects_txt(array $keys_selects): array
     {
-        $identificador = "codigo";
-        $propiedades = array("place_holder" => "Código", "cols" => 4);
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
 
-        $identificador = "descripcion";
-        $propiedades = array("place_holder" => "Método de Pago", "cols" => 8);
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6, key: 'codigo', keys_selects: $keys_selects, place_holder: 'Cod');
+        if (errores::$error) {
+            return $this->errores->error(mensaje: 'Error al maquetar key_selects', data: $keys_selects);
+        }
 
-        return $this->keys_selects;
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 12,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'Metodo de pago');
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
+        }
+
+
+        return $keys_selects;
     }
 
-    public function modifica(bool $header, bool $ws = false): array|stdClass
+    public function modifica(
+        bool $header, bool $ws = false): array|stdClass
     {
-        $r_modifica =  parent::modifica(header: false);
+        $r_modifica = $this->init_modifica(); // TODO: Change the autogenerated stub
         if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_modifica, header: $header,ws:$ws);
+            return $this->retorno_error(
+                mensaje: 'Error al generar salida de template',data:  $r_modifica,header: $header,ws: $ws);
         }
 
-        $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
+
+        $keys_selects['descripcion'] = new stdClass();
+        $keys_selects['descripcion']->cols = 12;
+
+        $keys_selects['codigo'] = new stdClass();
+        $keys_selects['codigo']->disabled = true;
+
+        $base = $this->base_upd(keys_selects: $keys_selects, params: array(),params_ajustados: array());
         if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $inputs);
-            print_r($error);
-            die('Error');
+            return $this->retorno_error(mensaje: 'Error al integrar base',data:  $base, header: $header,ws:  $ws);
         }
+
+
+
 
         return $r_modifica;
     }
+
+
 
 
 }
