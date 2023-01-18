@@ -9,7 +9,7 @@ class cat_sat_metodo_pago extends _modelo_parent {
 
     public function __construct(PDO $link){
         $tabla = 'cat_sat_metodo_pago';
-        $columnas = array($tabla=>false,'cat_sat_metodo_pago'=>$tabla);
+        $columnas = array($tabla=>false);
         $campos_obligatorios[] = 'descripcion';
         $campos_obligatorios[] = 'descripcion_select';
 
