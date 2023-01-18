@@ -61,7 +61,7 @@ class cat_sat_metodo_pagoTest extends test {
             print_r($error);
             exit;
         }
-        $resultado = $modelo->existe_predeterminado(); 
+        $resultado = $modelo->existe_predeterminado();
 
         $this->assertIsBool($resultado);
         $this->assertNotTrue(errores::$error);
