@@ -2,7 +2,6 @@
 namespace gamboamartin\cat_sat\controllers;
 use gamboamartin\errores\errores;
 use gamboamartin\system\_ctl_parent;
-use stdClass;
 
 class _base extends _ctl_parent {
 
