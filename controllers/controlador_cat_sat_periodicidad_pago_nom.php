@@ -119,7 +119,7 @@ class controlador_cat_sat_periodicidad_pago_nom extends _ctl_base {
 
 
 
-        $base = $this->base_upd(keys_selects: array(), not_actions: array(__FUNCTION__), params: array(),params_ajustados: array());
+        $base = $this->base_upd(keys_selects: array(), params: array(),params_ajustados: array());
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al integrar base',data:  $base, header: $header,ws:  $ws);
         }
