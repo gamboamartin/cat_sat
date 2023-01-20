@@ -37,8 +37,8 @@ class controlador_cat_sat_producto extends _cat_sat {
         $columns["cat_sat_clase_producto_descripcion"]["titulo"] = "Clase";
         $columns["cat_sat_producto_descripcion"]["titulo"] = "Producto";
 
-        $filtro = array("cat_sat_grupo_producto.id","cat_sat_grupo_producto.codigo","cat_sat_grupo_producto.descripcion",
-            "cat_sat_tipo_producto.descripcion","cat_sat_division_producto.descripcion");
+        $filtro = array("cat_sat_producto.id","cat_sat_grupo_producto.descripcion",
+            "cat_sat_tipo_producto.descripcion","cat_sat_division_producto.descripcion","cat_sat_producto.codigo");
 
         $datatables = new stdClass();
         $datatables->columns = $columns;
