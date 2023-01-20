@@ -34,9 +34,17 @@ sl_cat_sat_tipo_producto.change(function () {
 });
 
 sl_cat_sat_division_producto.change(function () {
+
     let selected = $(this).find('option:selected');
     let codigo = selected.data(`cat_sat_division_producto_codigo`);
+    if(codigo === 30){
+        $("#codigo").val(30);
+    }
+    else{
+        mask.value = ``;
+        mask.updateOptions({mask: `${codigo}00`});
+    }
 
-    mask.value = ``;
-    mask.updateOptions({mask: `${codigo}00`});
+
+
 });

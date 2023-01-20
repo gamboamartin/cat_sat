@@ -23,7 +23,7 @@ class controlador_cat_sat_obj_imp extends _cat_sat {
 
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass()){
-        $modelo = new cat_sat_obj_imp(link: $link); 
+        $modelo = new cat_sat_obj_imp(link: $link);
         $html_ = new cat_sat_obj_imp_html(html: $html);
         $obj_link = new links_menu(link: $link, registro_id: $this->registro_id);
 
