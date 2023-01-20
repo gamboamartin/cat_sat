@@ -37,8 +37,8 @@ sl_cat_sat_division_producto.change(function () {
 
     let selected = $(this).find('option:selected');
     let codigo = selected.data(`cat_sat_division_producto_codigo`);
-    if(codigo === 30){
-        $("#codigo").val(30);
+    if(codigo === 10 || codigo === 20 || codigo === 30 || codigo === 40 || codigo === 50 || codigo === 60 || codigo === 70 || codigo === 80 || codigo === 90){
+        $("#codigo").val(codigo);
     }
     else{
         mask.value = ``;
