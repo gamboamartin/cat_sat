@@ -185,6 +185,17 @@ class controlador_cat_sat_division_producto extends _ctl_base
         return $this->link_cat_sat_grupo_producto_alta_bd;
     }
 
+    /**
+     * Integra los selects
+     * @param array $keys_selects Key de selcta integrar
+     * @param string $key key a validar
+     * @param string $label Etiqueta a mostrar
+     * @param int $id_selected  selected
+     * @param int $cols cols css
+     * @param bool $con_registros Intrega valores
+     * @param array $filtro Filtro de datos
+     * @return array
+     */
     private function init_selects(array $keys_selects, string $key, string $label, int $id_selected = -1, int $cols = 6,
                                   bool  $con_registros = true, array $filtro = array()): array
     {
