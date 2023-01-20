@@ -62,6 +62,7 @@ class controlador_cat_sat_division_producto extends _ctl_base
             die('Error');
         }
         $this->path_vendor_views = 'gamboa.martin/cat_sat';
+        $this->lista_get_data = true;
     }
 
     public function alta(bool $header, bool $ws = false): array|string

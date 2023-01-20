@@ -29,6 +29,8 @@ class controlador_cat_sat_otro_pago_nom extends system {
 
         $this->titulo_lista = 'otro Pago';
 
+        $this->lista_get_data = true;
+
     }
 
     public function alta(bool $header, bool $ws = false): array|string

@@ -46,6 +46,7 @@ class controlador_cat_sat_isr extends _ctl_base
             print_r($error);
             die('Error');
         }
+        $this->lista_get_data = true;
 
     }
 

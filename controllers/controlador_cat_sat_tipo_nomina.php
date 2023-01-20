@@ -46,6 +46,7 @@ class controlador_cat_sat_tipo_nomina extends _base {
             datatables: $datatables, paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Tipos de Nomina';
+        $this->lista_get_data = true;
 
     }
 

@@ -28,6 +28,7 @@ class controlador_cat_sat_actividad_economica extends system {
         $this->titulo_lista = 'Actividad Economica';
 
         $this->path_vendor_views = 'gamboa.martin/cat_sat';
+        $this->lista_get_data = true;
 
     }
 

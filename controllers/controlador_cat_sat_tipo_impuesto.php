@@ -27,6 +27,7 @@ class controlador_cat_sat_tipo_impuesto extends system {
         parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Factor';
+        $this->lista_get_data = true;
     }
 
     public function alta(bool $header, bool $ws = false): array|string

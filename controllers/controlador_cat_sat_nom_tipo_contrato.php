@@ -27,6 +27,7 @@ class controlador_cat_sat_nom_tipo_contrato extends system {
         parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Nomina tipo contrato';
+        $this->lista_get_data = true;
 
     }
 

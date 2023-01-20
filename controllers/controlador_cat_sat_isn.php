@@ -48,6 +48,7 @@ class controlador_cat_sat_isn extends system {
             paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Impuesto sobre nomina';
+        $this->lista_get_data = true;
     }
 
     public function alta(bool $header, bool $ws = false): array|string

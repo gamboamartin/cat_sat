@@ -25,6 +25,7 @@ class controlador_cat_sat_tipo_concepto extends system {
         parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Tipos de Concepto';
+        $this->lista_get_data = true;
 
     }
 

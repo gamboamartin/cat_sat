@@ -61,6 +61,7 @@ class controlador_cat_sat_tipo_producto extends _ctl_base
             print_r($error);
             die('Error');
         }
+        $this->lista_get_data = true;
     }
 
     public function alta(bool $header, bool $ws = false): array|string

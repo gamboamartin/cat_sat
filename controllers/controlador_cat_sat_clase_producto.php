@@ -56,6 +56,7 @@ class controlador_cat_sat_clase_producto extends _ctl_base {
             die('Error');
         }
         $this->path_vendor_views = 'gamboa.martin/cat_sat';
+        $this->lista_get_data = true;
     }
 
     private function init_selects(array $keys_selects, string $key, string $label, int $id_selected = -1, int $cols = 6,

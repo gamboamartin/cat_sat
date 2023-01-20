@@ -44,6 +44,7 @@ class controlador_cat_sat_metodo_pago extends _ctl_base {
             datatables: $datatables, paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Metodo de pago';
+        $this->lista_get_data = true;
 
     }
 

@@ -26,5 +26,6 @@ class controlador_cat_sat_tipo_percepcion_nom extends system {
         parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Tipo percepcion';
+        $this->lista_get_data = true;
     }
 }

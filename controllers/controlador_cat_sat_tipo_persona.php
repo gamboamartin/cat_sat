@@ -35,6 +35,7 @@ class controlador_cat_sat_tipo_persona extends system {
         $this->acciones->valida_persona_fisica = new stdClass();
         $this->acciones->valida_persona_fisica->style = '';
         $this->acciones->valida_persona_fisica->style_status = true;
+        $this->lista_get_data = true;
 
     }
 
