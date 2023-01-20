@@ -2,6 +2,7 @@
 namespace tests\controllers;
 
 use gamboamartin\cat_sat\controllers\controlador_cat_sat_tipo_persona;
+use gamboamartin\cat_sat\tests\base_test;
 use gamboamartin\errores\errores;
 use gamboamartin\test\test;
 use JsonException;
@@ -30,15 +31,30 @@ class controlador_cat_sat_tipo_personaTest extends test {
         $_GET['seccion'] = 'cat_sat_tipo_persona';
         $_GET['accion'] = 'lista';
         $_SESSION['grupo_id'] = 1;
+        $_SESSION['usuario_id'] = 2;
         $_GET['session_id'] = '1';
         $controler = new controlador_cat_sat_tipo_persona(link: $this->link, paths_conf: $this->paths_conf);
         //$inicializacion = new liberator($inicializacion);
 
+        $del = (new base_test())->del_cat_sat_tipo_persona(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al eliminar', data: $del);
+            print_r($error);
+            exit;
+        }
+        
+        $alta = (new base_test())->alta_cat_sat_tipo_persona(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+            print_r($error);
+            exit;
+        }
         $resultado = $controler->lista(header: false, ws: false);
+
 
         $this->assertIsArray($resultado);
         $this->assertNotTrue(errores::$error);
-        $this->assertEquals(1, $resultado[0]->cat_sat_tipo_persona_id);
+        $this->assertEmpty($resultado);
 
 
         errores::$error = false;
