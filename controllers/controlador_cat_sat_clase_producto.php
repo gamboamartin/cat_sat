@@ -31,13 +31,15 @@ class controlador_cat_sat_clase_producto extends _ctl_base {
 
         $columns["cat_sat_clase_producto_id"]["titulo"] = "Id";
         $columns["cat_sat_clase_producto_codigo"]["titulo"] = "Código";
+        $columns["cat_sat_clase_producto_descripcion"]["titulo"] = "Clase";
+
         $columns["cat_sat_tipo_producto_descripcion"]["titulo"] = "Tipo";
         $columns["cat_sat_division_producto_descripcion"]["titulo"] = "División";
         $columns["cat_sat_grupo_producto_descripcion"]["titulo"] = "Grupo";
-        $columns["cat_sat_clase_producto_descripcion"]["titulo"] = "Clase";
 
-        $filtro = array("cat_sat_grupo_producto.id","cat_sat_grupo_producto.codigo","cat_sat_grupo_producto.descripcion",
-            "cat_sat_tipo_producto.descripcion","cat_sat_division_producto.descripcion");
+
+        $filtro = array("cat_sat_clase_producto.id","cat_sat_clase_producto.codigo","cat_sat_division_producto.descripcion",
+            "cat_sat_grupo_producto.descripcion","cat_sat_clase_producto.descripcion");
 
         $datatables = new stdClass();
         $datatables->columns = $columns;

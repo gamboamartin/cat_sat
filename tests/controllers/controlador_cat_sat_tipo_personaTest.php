@@ -28,7 +28,7 @@ class controlador_cat_sat_tipo_personaTest extends test {
     {
         errores::$error = false;
 
-        $_GET['seccion'] = 'cat_sat_tipo_persona';
+        $_GET['seccion'] = 'adm_accion';
         $_GET['accion'] = 'lista';
         $_SESSION['grupo_id'] = 1;
         $_SESSION['usuario_id'] = 2;
