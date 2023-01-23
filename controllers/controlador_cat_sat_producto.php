@@ -8,6 +8,7 @@
  */
 namespace gamboamartin\cat_sat\controllers;
 
+use base\controller\controler;
 use gamboamartin\cat_sat\models\cat_sat_clase_producto;
 use gamboamartin\cat_sat\models\cat_sat_producto;
 use gamboamartin\errores\errores;
@@ -21,45 +22,53 @@ use stdClass;
 
 class controlador_cat_sat_producto extends _ctl_base {
 
-    public array $keys_selects = array();
-
-    public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
-                                stdClass $paths_conf = new stdClass()){
-
+    public function __construct(PDO      $link, html $html = new \gamboamartin\template_1\html(),
+                                stdClass $paths_conf = new stdClass())
+    {
         $modelo = new cat_sat_producto(link: $link);
         $html_ = new cat_sat_producto_html(html: $html);
         $obj_link = new links_menu(link: $link, registro_id: $this->registro_id);
 
-        $columns["cat_sat_producto_id"]["titulo"] = "Id";
-        $columns["cat_sat_producto_codigo"]["titulo"] = "Código";
-        $columns["cat_sat_tipo_producto_descripcion"]["titulo"] = "Tipo";
-        $columns["cat_sat_division_producto_descripcion"]["titulo"] = "División";
-        $columns["cat_sat_grupo_producto_descripcion"]["titulo"] = "Grupo";
-        $columns["cat_sat_clase_producto_descripcion"]["titulo"] = "Clase";
-        $columns["cat_sat_producto_descripcion"]["titulo"] = "Producto";
-
-        $filtro = array("cat_sat_producto.id","cat_sat_grupo_producto.descripcion",
-            "cat_sat_tipo_producto.descripcion","cat_sat_division_producto.descripcion","cat_sat_producto.codigo");
-
-        $datatables = new stdClass();
-        $datatables->columns = $columns;
-        $datatables->filtro = $filtro;
-
-        parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, datatables: $datatables,
-            paths_conf: $paths_conf);
-
-        $this->titulo_lista = 'Producto';
-
-        $propiedades = $this->inicializa_propiedades();
-        if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al inicializar propiedades',data:  $propiedades);
+        $datatables = $this->init_datatable();
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al inicializar datatable', data: $datatables);
             print_r($error);
             die('Error');
         }
-        $this->lista_get_data = true;
+
+        parent::__construct(html: $html_, link: $link, modelo: $modelo, obj_link: $obj_link, datatables: $datatables,
+            paths_conf: $paths_conf);
+
+        $configuraciones = $this->init_configuraciones();
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al inicializar configuraciones', data: $configuraciones);
+            print_r($error);
+            die('Error');
+        }
+
     }
 
+    public function alta(bool $header, bool $ws = false): array|string
+    {
+        $r_alta = $this->init_alta();
+        if (errores::$error) {
+            return $this->retorno_error(mensaje: 'Error al inicializar alta', data: $r_alta, header: $header, ws: $ws);
+        }
 
+        $keys_selects = $this->init_selects_inputs();
+        if (errores::$error) {
+            return $this->retorno_error(mensaje: 'Error al inicializar selects', data: $keys_selects, header: $header,
+                ws: $ws);
+        }
+
+        $inputs = $this->inputs(keys_selects: $keys_selects);
+        if (errores::$error) {
+            return $this->retorno_error(
+                mensaje: 'Error al obtener inputs', data: $inputs, header: $header, ws: $ws);
+        }
+
+        return $r_alta;
+    }
 
     protected function campos_view(): array
     {
@@ -79,6 +88,49 @@ class controlador_cat_sat_producto extends _ctl_base {
         }
 
         return $campos_view;
+    }
+
+    public function get_productos(bool $header, bool $ws = true): array|stdClass
+    {
+        $keys['cat_sat_clase_producto'] = array('id','descripcion','codigo','codigo_bis');
+
+        $salida = $this->get_out(header: $header,keys: $keys, ws: $ws);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar salida',data:  $salida,header: $header,ws: $ws);
+        }
+
+        return $salida;
+    }
+
+    private function init_configuraciones(): controler
+    {
+        $this->seccion_titulo = 'SAT Productos';
+        $this->titulo_lista = 'Registro de Productos';
+
+        $this->lista_get_data = true;
+
+        return $this;
+    }
+
+    private function init_datatable(): stdClass
+    {
+        $columns["cat_sat_producto_id"]["titulo"] = "Id";
+        $columns["cat_sat_producto_codigo"]["titulo"] = "Código";
+        $columns["cat_sat_tipo_producto_descripcion"]["titulo"] = "Tipo";
+        $columns["cat_sat_division_producto_descripcion"]["titulo"] = "División";
+        $columns["cat_sat_grupo_producto_descripcion"]["titulo"] = "Grupo";
+        $columns["cat_sat_clase_producto_descripcion"]["titulo"] = "Clase";
+        $columns["cat_sat_producto_descripcion"]["titulo"] = "Producto";
+
+        $filtro = array("cat_sat_producto.id", "cat_sat_producto.codigo", "cat_sat_producto.descripcion",
+            "cat_sat_tipo_producto.descripcion", "cat_sat_division_producto.descripcion"
+        , "cat_sat_grupo_producto.descripcion", "cat_sat_clase_producto.descripcion");
+
+        $datatables = new stdClass();
+        $datatables->columns = $columns;
+        $datatables->filtro = $filtro;
+
+        return $datatables;
     }
 
     private function init_selects(array $keys_selects, string $key, string $label, int $id_selected = -1, int $cols = 6,
@@ -122,97 +174,49 @@ class controlador_cat_sat_producto extends _ctl_base {
         return $keys_selects;
     }
 
-
-
-
-    public function asignar_propiedad(string $identificador, mixed $propiedades)
-    {
-        if (!array_key_exists($identificador,$this->keys_selects)){
-            $this->keys_selects[$identificador] = new stdClass();
-        }
-
-        foreach ($propiedades as $key => $value){
-            $this->keys_selects[$identificador]->$key = $value;
-        }
-    }
-
-    public function get_productos(bool $header, bool $ws = true): array|stdClass
-    {
-        $keys['cat_sat_clase_producto'] = array('id','descripcion','codigo','codigo_bis');
-
-        $salida = $this->get_out(header: $header,keys: $keys, ws: $ws);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al generar salida',data:  $salida,header: $header,ws: $ws);
-        }
-
-        return $salida;
-    }
-
-    private function inicializa_propiedades(): array
-    {
-        $identificador = "cat_sat_tipo_producto_id";
-        $propiedades = array("label" => "Tipo");
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-
-        $identificador = "cat_sat_division_producto_id";
-        $propiedades = array("label" => "División", "con_registros" => false);
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-
-        $identificador = "cat_sat_grupo_producto_id";
-        $propiedades = array("label" => "Grupo", "con_registros" => false);
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-
-        $identificador = "cat_sat_clase_producto_id";
-        $propiedades = array("label" => "Clase", "con_registros" => false);
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-
-        $identificador = "codigo";
-        $propiedades = array("place_holder" => "Código", "cols" => 4);
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-
-        $identificador = "descripcion";
-        $propiedades = array("place_holder" => "Producto", "cols" => 8);
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
-
-        return $this->keys_selects;
-    }
-
     public function modifica(bool $header, bool $ws = false): array|stdClass
     {
-        $r_modifica =  parent::modifica(header: false);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al generar template',data:  $r_modifica, header: $header,ws:$ws);
+        $r_modifica = $this->init_modifica();
+        if (errores::$error) {
+            return $this->retorno_error(
+                mensaje: 'Error al generar salida de template', data: $r_modifica, header: $header, ws: $ws);
         }
 
-        $clase = (new cat_sat_clase_producto($this->link))->get_clase($this->row_upd->cat_sat_clase_producto_id);
-        if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al obtener clase',data:  $clase);
+        $keys_selects = $this->init_selects_inputs();
+        if (errores::$error) {
+            return $this->retorno_error(mensaje: 'Error al inicializar selects', data: $keys_selects, header: $header,
+                ws: $ws);
         }
 
-        $identificador = "cat_sat_tipo_producto_id";
-        $propiedades = array("id_selected" => $clase['cat_sat_tipo_producto_id']);
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        $producto = (new cat_sat_producto(link: $this->link))->get_producto(cat_sat_producto_id: $this->registro_id);
+        if (errores::$error) {
+            return $this->errores->error(mensaje: 'Error al obtener producto', data: $producto);
+        }
 
-        $identificador = "cat_sat_division_producto_id";
-        $propiedades = array("id_selected" => $clase['cat_sat_division_producto_id'], "con_registros" => true,
-            "filtro" => array('cat_sat_tipo_producto.id' => $clase['cat_sat_tipo_producto_id']));
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        $keys_selects['cat_sat_tipo_producto_id']->id_selected = $this->registro['cat_sat_tipo_producto_id'];
 
-        $identificador = "cat_sat_grupo_producto_id";
-        $propiedades = array("id_selected" => $clase['cat_sat_grupo_producto_id'], "con_registros" => true,
-            "filtro" => array('cat_sat_division_producto.id' => $clase['cat_sat_division_producto_id']));
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        $keys_selects['cat_sat_division_producto_id']->con_registros = true;
+        $keys_selects['cat_sat_division_producto_id']->filtro = array("cat_sat_tipo_producto.id" =>
+            $producto['cat_sat_tipo_producto_id']);
+        $keys_selects['cat_sat_division_producto_id']->id_selected = $producto['cat_sat_division_producto_id'];
+        $keys_selects['cat_sat_division_producto_id']->extra_params_keys = array('cat_sat_division_producto_codigo');
 
-        $identificador = "cat_sat_clase_producto_id";
-        $propiedades = array("id_selected" => $this->row_upd->cat_sat_clase_producto_id, "con_registros" => true,
-            "filtro" => array('cat_sat_grupo_producto.id' => $clase['cat_sat_grupo_producto_id']));
-        $this->asignar_propiedad(identificador:$identificador, propiedades: $propiedades);
+        $keys_selects['cat_sat_grupo_producto_id']->con_registros = true;
+        $keys_selects['cat_sat_grupo_producto_id']->filtro = array("cat_sat_division_producto.id" =>
+            $producto['cat_sat_division_producto_id']);
+        $keys_selects['cat_sat_grupo_producto_id']->id_selected = $producto['cat_sat_grupo_producto_id'];
+        $keys_selects['cat_sat_grupo_producto_id']->extra_params_keys = array('cat_sat_grupo_producto_codigo');
 
-        $inputs = $this->genera_inputs(keys_selects:  $this->keys_selects);
-        if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $inputs);
-            print_r($error);
-            die('Error');
+        $keys_selects['cat_sat_clase_producto_id']->con_registros = true;
+        $keys_selects['cat_sat_clase_producto_id']->filtro = array("cat_sat_grupo_producto.id" =>
+            $producto['cat_sat_grupo_producto_id']);
+        $keys_selects['cat_sat_clase_producto_id']->id_selected = $producto['cat_sat_clase_producto_id'];
+        $keys_selects['cat_sat_clase_producto_id']->extra_params_keys = array('cat_sat_clase_producto_codigo');
+
+
+        $base = $this->base_upd(keys_selects: $keys_selects, params: array(), params_ajustados: array());
+        if (errores::$error) {
+            return $this->retorno_error(mensaje: 'Error al integrar base', data: $base, header: $header, ws: $ws);
         }
 
         return $r_modifica;

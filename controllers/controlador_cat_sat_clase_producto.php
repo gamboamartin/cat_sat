@@ -10,8 +10,6 @@ namespace gamboamartin\cat_sat\controllers;
 
 use base\controller\controler;
 use gamboamartin\cat_sat\models\cat_sat_clase_producto;
-use gamboamartin\cat_sat\models\cat_sat_grupo_producto;
-use gamboamartin\cat_sat\models\cat_sat_producto;
 use gamboamartin\errores\errores;
 use gamboamartin\system\_ctl_base;
 use gamboamartin\system\links_menu;
@@ -298,7 +296,7 @@ class controlador_cat_sat_clase_producto extends _ctl_base {
 
         $clase = (new cat_sat_clase_producto(link: $this->link))->get_clase(cat_sat_clase_producto_id: $this->registro_id);
         if (errores::$error) {
-            return $this->errores->error(mensaje: 'Error al obtener producto', data: $clase);
+            return $this->errores->error(mensaje: 'Error al obtener clase', data: $clase);
         }
 
         $keys_selects['cat_sat_tipo_producto_id']->id_selected = $this->registro['cat_sat_tipo_producto_id'];
@@ -321,5 +319,4 @@ class controlador_cat_sat_clase_producto extends _ctl_base {
 
         return $r_modifica;
     }
-
 }
