@@ -1,5 +1,3 @@
-let input = $("#codigo");
-
 var mask = IMask(
     document.getElementById('codigo'),
     {

@@ -2,6 +2,36 @@ let sl_cat_sat_tipo_producto = $("#cat_sat_tipo_producto_id");
 let sl_cat_sat_division_producto = $("#cat_sat_division_producto_id");
 let sl_cat_sat_grupo_producto = $("#cat_sat_grupo_producto_id");
 
+var mask = IMask(
+    document.getElementById('codigo'),
+    {
+        mask: `00`,
+        lazy: false,
+        placeholderChar: '#'
+    }
+);
+
+$( ".form-additional" ).validate({
+    errorLabelContainer: $("div.error"),
+    submitHandler: function(form) {
+        form.submit();
+    },
+    rules: {
+        codigo: {
+            required: true,
+            digits: true
+        },
+        descripcion: {
+            required: true
+        }
+    },
+    messages: {
+        cat_sat_tipo_producto_id: "* Seleccione un tipo de producto",
+        codigo: "* Ingrese un código valido",
+        descripcion: "* Ingrese una descripción valida"
+    }
+});
+
 
 let asigna_divisiones = (cat_sat_tipo_producto_id = '') => {
     let url = get_url("cat_sat_division_producto","get_divisiones", {cat_sat_tipo_producto_id: cat_sat_tipo_producto_id});

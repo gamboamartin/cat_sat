@@ -24,6 +24,7 @@
                             <button type="submit" class="btn btn-success" value="grupos" name="btn_action_next">Alta</button><br>
                         </div>
                     </form>
+                    <div class="error"></div>
                 </div>
             </div>
         </div>
