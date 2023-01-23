@@ -1,4 +1,4 @@
-<?php /** @var \gamboamartin\cat_sat\controllers\controlador_cat_sat_grupo_producto $controlador  controlador en ejecucion */ ?>
+<?php /** @var \gamboamartin\cat_sat\controllers\controlador_cat_sat_clase_producto $controlador  controlador en ejecucion */ ?>
 <?php use config\views; ?>
 <main class="main section-color-primary">
     <div class="container">
@@ -9,12 +9,13 @@
                 <?php include (new views())->ruta_templates."mensajes.php"; ?>
 
                 <div class="widget  widget-box box-container form-main widget-form-cart" id="form">
-                    <form method="post" action="<?php echo $controlador->link_cat_sat_clase_producto_alta_bd; ?>" class="form-additional">
+                    <form method="post" action="<?php echo $controlador->link_cat_sat_producto_alta_bd; ?>" class="form-additional">
                         <?php include (new views())->ruta_templates."head/subtitulo.php"; ?>
 
                         <?php echo $controlador->inputs->cat_sat_tipo_producto_id; ?>
                         <?php echo $controlador->inputs->cat_sat_division_producto_id; ?>
                         <?php echo $controlador->inputs->cat_sat_grupo_producto_id; ?>
+                        <?php echo $controlador->inputs->cat_sat_clase_producto_id; ?>
                         <?php echo $controlador->inputs->codigo; ?>
                         <?php echo $controlador->inputs->descripcion; ?>
 
@@ -22,7 +23,7 @@
                         <?php echo $controlador->inputs->hidden_seccion_retorno; ?>
                         <?php echo $controlador->inputs->hidden_id_retorno; ?>
                         <div class="controls">
-                            <button type="submit" class="btn btn-success" value="clases" name="btn_action_next">Alta</button><br>
+                            <button type="submit" class="btn btn-success" value="productos" name="btn_action_next">Alta</button><br>
                         </div>
                         <div class="error"></div>
                     </form>

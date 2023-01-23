@@ -3,6 +3,53 @@ let sl_cat_sat_division_producto = $("#cat_sat_division_producto_id");
 let sl_cat_sat_grupo_producto = $("#cat_sat_grupo_producto_id");
 let text_codigo = $("#codigo");
 
+const mask_formato = (cadena) => {
+    let salida = "";
+    let aux = '';
+
+    for (var i = 0; i < cadena.length; i++) {
+        let value = cadena.substring(i, i + 1);
+        if (cadena.substring(i, i + 1) === '0'){
+            aux = '\\'
+        }
+        salida += `${aux}${value}`
+    }
+    return salida;
+}
+
+var mask = IMask(
+    document.getElementById('codigo'),
+    {
+        mask: `000000`,
+        lazy: false,
+        placeholderChar: '#'
+    }
+);
+
+$( ".form-additional" ).validate({
+    errorLabelContainer: $("div.error"),
+    submitHandler: function(form) {
+        form.submit();
+    },
+    rules: {
+        codigo: {
+            required: true,
+            digits: true
+        },
+        descripcion: {
+            required: true
+        }
+    },
+    messages: {
+        cat_sat_tipo_producto_id: "* Seleccione un tipo de producto",
+        cat_sat_division_producto_id: "* Seleccione un división de producto",
+        cat_sat_grupo_producto_id: "* Seleccione un grupo de producto",
+        codigo: "* Ingrese un código valido",
+        descripcion: "* Ingrese una descripción valida"
+    }
+});
+
+
 let asigna_divisiones = (cat_sat_tipo_producto_id = '') => {
     let url = get_url("cat_sat_division_producto","get_divisiones", {cat_sat_tipo_producto_id: cat_sat_tipo_producto_id});
 
@@ -40,21 +87,44 @@ let asigna_grupos = (cat_sat_division_producto_id = '') => {
 }
 
 sl_cat_sat_tipo_producto.change(function () {
-
     let selected = $(this).find('option:selected');
     asigna_divisiones(selected.val());
+
+    mask.Value = ``;
+    mask.updateOptions({mask: `000000`});
 });
 
 sl_cat_sat_division_producto.change(function () {
     let selected = $(this).find('option:selected');
     let codigo = selected.data(`cat_sat_division_codigo`);
     asigna_grupos(selected.val());
-    text_codigo.val(`${codigo}NNNN`);
+
+    let mascara = ``;
+
+    mask.Value = "";
+
+    if (codigo === undefined) {
+        mascara = `00`;
+    } else {
+        mascara = mask_formato(`${codigo}`);
+    }
+
+    mask.updateOptions({mask: `${mascara}0000`});
 });
 
 sl_cat_sat_grupo_producto.change(function () {
     let selected = $(this).find('option:selected');
     let codigo = selected.data(`cat_sat_grupo_codigo`);
 
-    text_codigo.val(`${codigo}NN`);
+    let mascara = ``;
+
+    mask.Value = "";
+
+    if (codigo === undefined) {
+        mascara = `0000`;
+    } else {
+        mascara = mask_formato(`${codigo}`);
+    }
+
+    mask.updateOptions({mask: `${mascara}00`});
 });

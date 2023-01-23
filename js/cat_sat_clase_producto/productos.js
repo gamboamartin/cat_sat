@@ -1,8 +1,8 @@
-let sl_cat_sat_grupo_producto = $("#cat_sat_grupo_producto_id");
+let sl_cat_sat_clase_producto = $("#cat_sat_clase_producto_id");
 let input = $("#codigo");
 
-let grupo = sl_cat_sat_grupo_producto.find('option:selected');
-let codigo_grupo = grupo.data(`cat_sat_grupo_producto_codigo`);
+let clase = sl_cat_sat_clase_producto.find('option:selected');
+let codigo_clase = clase.data(`cat_sat_clase_producto_codigo`);
 
 const mask_formato = (cadena) => {
     let salida = "";
@@ -18,12 +18,12 @@ const mask_formato = (cadena) => {
     return salida;
 }
 
-codigo_grupo = mask_formato(`${codigo_grupo}`)
+codigo_clase = mask_formato(`${codigo_clase}`)
 
 var mask = IMask(
     document.getElementById('codigo'),
     {
-        mask: `${codigo_grupo}00`,
+        mask: `${codigo_clase}00`,
         lazy: false,
     }
 );
@@ -47,6 +47,4 @@ $( ".form-additional" ).validate({
         descripcion: "* Ingrese una descripción valida"
     }
 });
-
-
 

@@ -11,6 +11,7 @@ namespace gamboamartin\cat_sat\controllers;
 use gamboamartin\cat_sat\models\cat_sat_clase_producto;
 use gamboamartin\cat_sat\models\cat_sat_producto;
 use gamboamartin\errores\errores;
+use gamboamartin\system\_ctl_base;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use gamboamartin\template\html;
@@ -18,7 +19,7 @@ use html\cat_sat_producto_html;
 use PDO;
 use stdClass;
 
-class controlador_cat_sat_producto extends _cat_sat {
+class controlador_cat_sat_producto extends _ctl_base {
 
     public array $keys_selects = array();
 
@@ -57,6 +58,71 @@ class controlador_cat_sat_producto extends _cat_sat {
         }
         $this->lista_get_data = true;
     }
+
+
+
+    protected function campos_view(): array
+    {
+        $keys = new stdClass();
+        $keys->inputs = array('codigo', 'descripcion');
+        $keys->selects = array();
+
+        $init_data = array();
+        $init_data['cat_sat_tipo_producto'] = "gamboamartin\\cat_sat";
+        $init_data['cat_sat_division_producto'] = "gamboamartin\\cat_sat";
+        $init_data['cat_sat_grupo_producto'] = "gamboamartin\\cat_sat";
+        $init_data['cat_sat_clase_producto'] = "gamboamartin\\cat_sat";
+
+        $campos_view = $this->campos_view_base(init_data: $init_data, keys: $keys);
+        if (errores::$error) {
+            return $this->errores->error(mensaje: 'Error al inicializar campo view', data: $campos_view);
+        }
+
+        return $campos_view;
+    }
+
+    private function init_selects(array $keys_selects, string $key, string $label, int $id_selected = -1, int $cols = 6,
+                                  bool  $con_registros = true, array $filtro = array()): array
+    {
+        $keys_selects = $this->key_select(cols: $cols, con_registros: $con_registros, filtro: $filtro, key: $key,
+            keys_selects: $keys_selects, id_selected: $id_selected, label: $label);
+        if (errores::$error) {
+            return $this->errores->error(mensaje: 'Error al maquetar key_selects', data: $keys_selects);
+        }
+
+        return $keys_selects;
+    }
+
+    public function init_selects_inputs(): array
+    {
+        $keys_selects = $this->init_selects(keys_selects: array(), key: "cat_sat_tipo_producto_id",
+            label: "Tipo de Producto");
+        $keys_selects = $this->init_selects(keys_selects: $keys_selects, key: "cat_sat_division_producto_id",
+            label: "División", con_registros: false);
+        $keys_selects = $this->init_selects(keys_selects: $keys_selects, key: "cat_sat_grupo_producto_id", label: "Grupo",
+            con_registros: false);
+        return $this->init_selects(keys_selects: $keys_selects, key: "cat_sat_clase_producto_id", label: "Clase",
+            con_registros: false);
+    }
+
+    protected function key_selects_txt(array $keys_selects): array
+    {
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 4, key: 'codigo',
+            keys_selects: $keys_selects, place_holder: 'Código');
+        if (errores::$error) {
+            return $this->errores->error(mensaje: 'Error al maquetar key_selects', data: $keys_selects);
+        }
+
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 8, key: 'descripcion',
+            keys_selects: $keys_selects, place_holder: 'Producto');
+        if (errores::$error) {
+            return $this->errores->error(mensaje: 'Error al maquetar key_selects', data: $keys_selects);
+        }
+
+        return $keys_selects;
+    }
+
+
 
 
     public function asignar_propiedad(string $identificador, mixed $propiedades)
