@@ -13,9 +13,9 @@ jQuery.validator.setDefaults({
 });
 
 
-$( ".form-additional" ).validate({
+$(".form-additional").validate({
     errorLabelContainer: $("div.error"),
-    submitHandler: function(form) {
+    submitHandler: function (form) {
         form.submit();
     },
     rules: {

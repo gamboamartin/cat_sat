@@ -1,13 +1,50 @@
 let sl_cat_sat_tipo_producto = $("#cat_sat_tipo_producto_id");
 let sl_cat_sat_division_producto = $("#cat_sat_division_producto_id");
 
+const mask_formato = (cadena) => {
+    let salida = "";
+    let aux = '';
+
+    for (var i = 0; i < cadena.length; i++) {
+        let value = cadena.substring(i, i + 1);
+        if (cadena.substring(i, i + 1) === '0'){
+            aux = '\\'
+        }
+        salida += `${aux}${value}`
+    }
+    return salida;
+}
+
 var mask = IMask(
     document.getElementById('codigo'),
     {
         mask: `0000`,
         lazy: false,
+        placeholderChar: '#'
     }
 );
+
+$( ".form-additional" ).validate({
+    errorLabelContainer: $("div.error"),
+    submitHandler: function(form) {
+        form.submit();
+    },
+    rules: {
+        codigo: {
+            required: true,
+            digits: true
+        },
+        descripcion: {
+            required: true
+        }
+    },
+    messages: {
+        cat_sat_tipo_producto_id: "* Seleccione un tipo de producto",
+        cat_sat_division_producto_id: "* Seleccione un división de producto",
+        codigo: "* Ingrese un código valido",
+        descripcion: "* Ingrese una descripción valida"
+    }
+});
 
 let asigna_divisiones = (cat_sat_tipo_producto_id = '') => {
     let url = get_url("cat_sat_division_producto","get_divisiones", {cat_sat_tipo_producto_id: cat_sat_tipo_producto_id});
@@ -29,22 +66,23 @@ let asigna_divisiones = (cat_sat_tipo_producto_id = '') => {
 sl_cat_sat_tipo_producto.change(function () {
     let selected = $(this).find('option:selected');
     asigna_divisiones(selected.val());
-    mask.value = ``;
+
+    mask.Value = ``;
     mask.updateOptions({mask: `0000`});
 });
 
 sl_cat_sat_division_producto.change(function () {
-
     let selected = $(this).find('option:selected');
     let codigo = selected.data(`cat_sat_division_producto_codigo`);
-    if(codigo === 10 || codigo === 20 || codigo === 30 || codigo === 40 || codigo === 50 || codigo === 60 || codigo === 70 || codigo === 80 || codigo === 90){
-        $("#codigo").val(codigo);
+    let mascara = ``;
+
+    mask.Value = "";
+
+    if (codigo === undefined) {
+        mascara = `00`;
+    } else {
+        mascara = mask_formato(`${codigo}`);
     }
-    else{
-        mask.value = ``;
-        mask.updateOptions({mask: `${codigo}00`});
-    }
 
-
-
+    mask.updateOptions({mask: `${mascara}00`});
 });
