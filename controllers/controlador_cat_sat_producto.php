@@ -45,6 +45,7 @@ class controlador_cat_sat_producto extends _ctl_base {
             print_r($error);
             die('Error');
         }
+        $this->lista_get_data = true;
 
     }
 

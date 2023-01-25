@@ -11,7 +11,6 @@ use gamboamartin\cat_sat\models\cat_sat_moneda;
 use gamboamartin\errores\errores;
 use gamboamartin\system\_ctl_base;
 use gamboamartin\system\links_menu;
-use gamboamartin\template_1\html;
 use html\cat_sat_moneda_html;
 use PDO;
 use stdClass;

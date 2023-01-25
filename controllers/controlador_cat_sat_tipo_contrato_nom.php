@@ -10,7 +10,6 @@ namespace gamboamartin\cat_sat\controllers;
 
 
 use gamboamartin\cat_sat\models\cat_sat_tipo_contrato_nom;
-use gamboamartin\errores\errores;
 
 
 
