@@ -16,7 +16,6 @@ class cat_sat_clase_producto extends _modelo_parent{
         $columnas_extra['cat_sat_clase_producto_n_productos'] = "(SELECT COUNT(*) FROM cat_sat_producto 
         WHERE cat_sat_producto.cat_sat_clase_producto_id = cat_sat_clase_producto.id)";
 
-
         $tipo_campos['codigo'] = 'cod_int_0_6_numbers';
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios, columnas: $columnas,
@@ -32,7 +31,7 @@ class cat_sat_clase_producto extends _modelo_parent{
             return $this->error->error(mensaje: 'Error al inicializar campo base',data: $this->registro);
         }
 
-        $this->registro = $this->limpia_campos(registro: $this->registro,
+        $this->registro = $this->limpia_campos_extras(registro: $this->registro,
             campos_limpiar: array('cat_sat_tipo_producto_id','cat_sat_division_producto_id'));
         if (errores::$error) {
             return $this->error->error(mensaje: 'Error al limpiar campos', data: $this->registro);
@@ -40,7 +39,7 @@ class cat_sat_clase_producto extends _modelo_parent{
 
         $r_alta_bd = parent::alta_bd();
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al insertar clase',data:  $r_alta_bd);
+            return $this->error->error(mensaje: 'Error al insertar clase producto',data:  $r_alta_bd);
         }
         return $r_alta_bd;
     }
@@ -55,16 +54,6 @@ class cat_sat_clase_producto extends _modelo_parent{
         return $registro;
     }
 
-    private function limpia_campos(array $registro, array $campos_limpiar): array
-    {
-        foreach ($campos_limpiar as $valor) {
-            if (isset($registro[$valor])) {
-                unset($registro[$valor]);
-            }
-        }
-        return $registro;
-    }
-
     public function modifica_bd(array $registro, int $id, bool $reactiva = false,
                                 array $keys_integra_ds = array('codigo','descripcion')): array|stdClass
     {
@@ -73,7 +62,7 @@ class cat_sat_clase_producto extends _modelo_parent{
             return $this->error->error(mensaje: 'Error al inicializar campo base',data: $registro);
         }
 
-        $registro = $this->limpia_campos(registro: $registro,
+        $registro = $this->limpia_campos_extras(registro: $registro,
             campos_limpiar: array('cat_sat_tipo_producto_id','cat_sat_division_producto_id'));
         if (errores::$error) {
             return $this->error->error(mensaje: 'Error al limpiar campos', data: $registro);
@@ -81,7 +70,7 @@ class cat_sat_clase_producto extends _modelo_parent{
 
         $r_modifica_bd = parent::modifica_bd($registro, $id, $reactiva);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al modificar estado',data:  $r_modifica_bd);
+            return $this->error->error(mensaje: 'Error al modificar clase producto',data:  $r_modifica_bd);
         }
         return $r_modifica_bd;
     }
