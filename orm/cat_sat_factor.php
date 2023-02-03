@@ -5,64 +5,67 @@ use gamboamartin\errores\errores;
 use PDO;
 use stdClass;
 
-class cat_sat_factor  extends modelo{
+class cat_sat_factor  extends modelo {
     public function __construct(PDO $link){
         $tabla = 'cat_sat_factor';
         $columnas = array($tabla=>false);
         $campos_obligatorios[] = 'factor';
 
-        $campos_view['codigo'] = array('type' => 'inputs');
-        $campos_view['factor'] = array('type' => 'inputs');
-
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
-            columnas: $columnas, campos_view: $campos_view);
+            columnas: $columnas);
         $this->NAMESPACE = __NAMESPACE__;
     }
 
-    public function alta_bd(): array|stdClass
+    public function alta_bd(array $keys_integra_ds = array('codigo', 'factor')): array|stdClass
     {
-        $this->registro =$this->campos_base(data:$this->registro, modelo: $this);
+        $this->registro = $this->inicializa_extras(data: $this->registro);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al inicializar campo base',data: $this->registro);
+            return $this->error->error(mensaje: 'Error al inicializar campos',data: $this->registro);
         }
 
-        $r_alta_bd =  parent::alta_bd();
+        $r_alta_bd = parent::alta_bd();
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al insertar factor', data: $r_alta_bd);
+            return $this->error->error(mensaje: 'Error al dar de alta factor',data: $r_alta_bd);
         }
+
         return $r_alta_bd;
     }
 
-    protected function campos_base(array $data, modelo $modelo, int $id = -1, array $keys_integra_ds = array()): array
-    {
-        if(!isset($data['codigo_bis'])){
-            $data['codigo_bis'] =  $data['codigo'];
+    private function inicializa_extras(array $data){
+
+        if (isset($data['status'])){
+            return  $data;
         }
 
-        if(!isset($data['descripcion_select'])){
-            $ds = str_replace("_"," ",$data['factor']);
-            $ds = ucwords($ds);
-            $data['descripcion_select'] =  "{$data['codigo']} - {$ds}";
+        if (!isset($data['descripcion_select'])){
+            $data['descripcion_select'] = $data['codigo']. ' ';
+            $data['descripcion_select'] .= $data['factor'];
         }
 
-        if(!isset($data['alias'])){
+        if (!isset($data['codigo_bis'])){
+            $data['codigo_bis'] = $data['codigo'];
+        }
+
+        if (!isset($data['alias'])){
             $data['alias'] = $data['codigo'];
         }
+
         return $data;
     }
 
-    public function modifica_bd(array $registro, int $id, bool $reactiva = false, array $keys_integra_ds = array('codigo','descripcion')): array|stdClass
+    public function modifica_bd(array $registro, int $id, bool $reactiva = false): array|stdClass
     {
-        $registro =$this->campos_base(data:$registro, modelo: $this);
+        $registro = $this->inicializa_extras(data: $registro);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al inicializar campo base',data: $registro);
+            return $this->error->error(mensaje: 'Error al inicializar campos',data: $registro);
         }
 
         $r_modifica_bd = parent::modifica_bd($registro, $id, $reactiva);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al modificar factor',data:  $r_modifica_bd);
+            return $this->error->error(mensaje: 'Error al modificar factor',data: $r_modifica_bd);
         }
 
         return $r_modifica_bd;
     }
+
 }
