@@ -1,11 +1,9 @@
 <?php
 namespace gamboamartin\cat_sat\models;
-use base\orm\modelo;
-use gamboamartin\errores\errores;
+use base\orm\_modelo_parent;
 use PDO;
-use stdClass;
 
-class cat_sat_obj_imp extends modelo{
+class cat_sat_obj_imp extends _modelo_parent{
     public function __construct(PDO $link){
         $tabla = 'cat_sat_obj_imp';
         $columnas = array($tabla=>false);
@@ -19,50 +17,4 @@ class cat_sat_obj_imp extends modelo{
         $this->NAMESPACE = __NAMESPACE__;
     }
 
-    public function alta_bd(): array|stdClass
-    {
-        $this->registro =$this->campos_base(data:$this->registro, modelo: $this);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al inicializar campo base',data: $this->registro);
-        }
-
-        $r_alta_bd =  parent::alta_bd();
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al insertar Objeto del Impuesto', data: $r_alta_bd);
-        }
-        return $r_alta_bd;
-    }
-
-    protected function campos_base(array $data, modelo $modelo, int $id = -1, array $keys_integra_ds = array()): array
-    {
-        if(!isset($data['codigo_bis'])){
-            $data['codigo_bis'] =  $data['codigo'];
-        }
-
-        if(!isset($data['descripcion_select'])){
-            $ds = str_replace("_"," ",$data['descripcion']);
-            $ds = ucwords($ds);
-            $data['descripcion_select'] =  "{$data['codigo']} - {$ds}";
-        }
-
-        if(!isset($data['alias'])){
-            $data['alias'] = $data['codigo'];
-        }
-        return $data;
-    }
-
-    public function modifica_bd(array $registro, int $id, bool $reactiva = false, array $keys_integra_ds = array('codigo','descripcion')): array|stdClass
-    {
-        $registro =$this->campos_base(data:$registro, modelo: $this);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al inicializar campo base',data: $registro);
-        }
-
-        $r_modifica_bd = parent::modifica_bd($registro, $id, $reactiva);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al modificar Objeto del Impuesto',data:  $r_modifica_bd);
-        }
-
-        return $r_modifica_bd;
-    }
 }
