@@ -31,8 +31,10 @@ class cat_sat_producto extends _modelo_parent
             return $this->error->error(mensaje: 'Error al inicializar campo base', data: $this->registro);
         }
 
-        $this->registro = $this->limpia_campos_extras(registro: $this->registro,
-            campos_limpiar: array('cat_sat_tipo_producto_id', 'cat_sat_division_producto_id', 'cat_sat_grupo_producto_id'));
+        $campos_limpiar[] = 'cat_sat_tipo_producto_id';
+        $campos_limpiar[] = 'cat_sat_division_producto_id';
+        $campos_limpiar[] = 'cat_sat_grupo_producto_id';
+        $this->registro = $this->limpia_campos_extras(registro: $this->registro, campos_limpiar: $campos_limpiar);
         if (errores::$error) {
             return $this->error->error(mensaje: 'Error al limpiar campos', data: $this->registro);
         }
@@ -62,8 +64,10 @@ class cat_sat_producto extends _modelo_parent
             return $this->error->error(mensaje: 'Error al inicializar campo base', data: $registro);
         }
 
-        $registro = $this->limpia_campos_extras(registro: $registro,
-            campos_limpiar: array('cat_sat_tipo_producto_id', 'cat_sat_division_producto_id', 'cat_sat_grupo_producto_id'));
+        $campos_limpiar[] = 'cat_sat_tipo_producto_id';
+        $campos_limpiar[] = 'cat_sat_division_producto_id';
+        $campos_limpiar[] = 'cat_sat_grupo_producto_id';
+        $registro = $this->limpia_campos_extras(registro: $registro, campos_limpiar: $campos_limpiar);
         if (errores::$error) {
             return $this->error->error(mensaje: 'Error al limpiar campos', data: $registro);
         }

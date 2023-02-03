@@ -43,10 +43,7 @@ class controlador_cat_sat_producto extends _cat_sat_base {
             die('Error');
         }
         $this->lista_get_data = true;
-
     }
-
-
 
     protected function campos_view(): array
     {
