@@ -3,7 +3,7 @@ namespace gamboamartin\cat_sat\tests\orm;
 
 use gamboamartin\cat_sat\models\cat_sat_metodo_pago;
 use gamboamartin\cat_sat\models\cat_sat_moneda;
-use gamboamartin\direccion_postal\tests\base_test;
+use gamboamartin\cat_sat\tests\base_test;
 use gamboamartin\errores\errores;
 use gamboamartin\test\test;
 use stdClass;
@@ -44,6 +44,13 @@ class cat_sat_metodo_pagoTest extends test {
             exit;
         }
 
+        $alta = (new \gamboamartin\cat_sat\tests\base_test())->alta_cat_sat_metodo_pago(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al eliminar', $del);
+            print_r($error);
+            exit;
+        }
+
         $resultado = $modelo->existe_predeterminado();
 
         $this->assertIsBool($resultado);
@@ -54,14 +61,23 @@ class cat_sat_metodo_pagoTest extends test {
 
         $modelo = new cat_sat_moneda(link: $this->link);
 
+        $del = (new \gamboamartin\cat_sat\tests\base_test())->del_cat_sat_moneda($this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al eliminar', $del);
+            print_r($error);
+            exit;
+        }
 
-        $alta = (new \gamboamartin\cat_sat\tests\base_test())->alta_cat_sat_metodo_pago(link: $this->link, predeterminado: true);
+        $alta = (new base_test())->alta_cat_sat_moneda(link: $this->link, predeterminado: 'activo');
         if(errores::$error){
             $error = (new errores())->error('Error al insertar', $alta);
             print_r($error);
             exit;
         }
+
+        //print_r($resultado);exit;
         $resultado = $modelo->existe_predeterminado();
+
 
         $this->assertIsBool($resultado);
         $this->assertNotTrue(errores::$error);

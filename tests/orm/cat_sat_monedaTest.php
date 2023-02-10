@@ -98,7 +98,7 @@ class cat_sat_monedaTest extends test {
         $modelo = new cat_sat_moneda(link: $this->link);
 
 
-        $alta = (new \gamboamartin\cat_sat\tests\base_test())->alta_cat_sat_moneda(link: $this->link, predeterminado: true);
+        $alta = (new \gamboamartin\cat_sat\tests\base_test())->alta_cat_sat_moneda(link: $this->link, predeterminado: 'activo');
         if(errores::$error){
             $error = (new errores())->error('Error al insertar', $alta);
             print_r($error);

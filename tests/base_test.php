@@ -141,7 +141,7 @@ class base_test{
     }
 
     public function alta_cat_sat_metodo_pago(PDO $link, string $codigo = '1', $descripcion = '1', int $id = 1,
-                                             bool $predeterminado = false): array|stdClass
+                                             string $predeterminado = 'inactivo'): array|stdClass
     {
         $registro = (new test())->registro(
             codigo:$codigo,descripcion: $descripcion,id: $id, predeterminado: $predeterminado);
@@ -149,6 +149,8 @@ class base_test{
             return (new errores())->error('Error al integrar predeterminado si existe', $registro);
 
         }
+
+        $registro['predeterminado'] = $predeterminado;
 
         $alta = (new cat_sat_metodo_pago($link))->alta_registro($registro);
         if(errores::$error){
@@ -159,7 +161,7 @@ class base_test{
     }
 
     public function alta_cat_sat_moneda(PDO $link, string $codigo = 'XSM', string $descripcion = '1', int $id = 1,
-                                        int $dp_pais_id = 1, bool $predeterminado = false): array|stdClass
+                                        int $dp_pais_id = 1, string $predeterminado = 'inactivo'): array|stdClass
     {
 
         $registro = (new test())->registro(codigo:$codigo,descripcion:  $descripcion, id: $id,
@@ -168,6 +170,8 @@ class base_test{
             return (new errores())->error('Error al integrar predeterminado si existe', $registro);
 
         }
+
+
 
         $existe = (new dp_pais($link))->existe_by_id(registro_id: $dp_pais_id);
         if (errores::$error) {
@@ -184,8 +188,28 @@ class base_test{
         }
 
         $registro['dp_pais_id'] = $dp_pais_id;
+        $registro['predeterminado'] = $predeterminado;
 
         $alta = (new cat_sat_moneda($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+
+        }
+        return $alta;
+    }
+
+    public function alta_cat_sat_periodicidad_pago_nom(PDO $link, string $codigo = '01', $id = 1): array|\stdClass
+    {
+        $registro = array();
+        $registro['id'] = $id;
+        $registro['codigo'] = $codigo;
+        $registro['descripcion'] = 1;
+        $registro['descripcion_select'] = 1;
+        $registro['codigo_bis'] = 1;
+        $registro['alias'] = 1;
+        $registro['n_dias'] = 1;
+
+        $alta = (new cat_sat_periodicidad_pago_nom($link))->alta_registro($registro);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
 
@@ -353,6 +377,8 @@ class base_test{
 
 
 
+
+
     public function del(PDO $link, string $name_model): array
     {
 
@@ -380,6 +406,17 @@ class base_test{
 
 
         $del = (new \gamboamartin\administrador\tests\base_test())->del_adm_usuario(link: $link);
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+        return $del;
+    }
+
+    public function del_cat_sat_isn(PDO $link): array
+    {
+
+
+        $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_isn');
         if(errores::$error){
             return (new errores())->error('Error al eliminar', $del);
         }
@@ -444,6 +481,11 @@ class base_test{
             return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
         }
 
+        $del = $this->del_cat_sat_isn($link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
+        }
+
         $del = (new \gamboamartin\direccion_postal\tests\base_test())->del_dp_pais(link: $link);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
@@ -469,24 +511,7 @@ class base_test{
         return $del;
     }
 
-    public function alta_cat_sat_periodicidad_pago_nom(PDO $link, string $codigo = '01', $id = 1): array|\stdClass
-    {
-            $registro = array();
-            $registro['id'] = $id;
-            $registro['codigo'] = $codigo;
-            $registro['descripcion'] = 1;
-            $registro['descripcion_select'] = 1;
-            $registro['codigo_bis'] = 1;
-            $registro['alias'] = 1;
-            $registro['n_dias'] = 1;
 
-            $alta = (new cat_sat_periodicidad_pago_nom($link))->alta_registro($registro);
-            if(errores::$error){
-                return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
-
-            }
-            return $alta;
-    }
 
 
 

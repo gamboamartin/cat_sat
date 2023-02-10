@@ -33,6 +33,12 @@ class cat_sat_isnTest extends test {
         $_GET['session_id'] = '1';
         $modelo = new cat_sat_isn(link: $this->link);
 
+        $del = (new base_test())->del_cat_sat_isn(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error('Error al del',data:  $del);
+            print_r($error);exit;
+        }
+
         $alta = (new base_test())->alta_cat_sat_isn(link: $this->link);
         if(errores::$error){
             $error = (new errores())->error('Error al insertar',data:  $alta);
@@ -58,16 +64,16 @@ class cat_sat_isnTest extends test {
         $_SESSION['grupo_id'] = 1;
         $_SESSION['usuario_id'] = 1;
         $_GET['session_id'] = '1';
-        $modelo = new cat_sat_isr(link: $this->link);
+        $modelo = new cat_sat_isn(link: $this->link);
 
-        $del = (new base_test())->del_cat_sat_isr(link: $this->link);
+        $del = (new base_test())->del_cat_sat_isn(link: $this->link);
         if(errores::$error){
             $error = (new errores())->error(mensaje: 'Error al del',data:  $del);
             print_r($error);
             exit;
         }
 
-        $alta = (new base_test())->alta_cat_sat_isr(link: $this->link);
+        $alta = (new base_test())->alta_cat_sat_isn(link: $this->link);
         if(errores::$error){
             $error = (new errores())->error(mensaje: 'Error al insertar',data:  $alta);
             print_r($error);
