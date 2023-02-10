@@ -24,6 +24,29 @@ use stdClass;
 
 class base_test{
 
+    public function alta_adm_seccion(PDO $link, string $descripcion = 'adm_seccion', int $id = 1): array|stdClass
+    {
+
+        $alta = (new \gamboamartin\administrador\tests\base_test())->alta_adm_seccion(
+            link: $link, descripcion: $descripcion, id: $id);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+
+        }
+        return $alta;
+    }
+
+    public function alta_adm_usuario(PDO $link, int $id = 1): array|stdClass
+    {
+
+        $alta = (new \gamboamartin\administrador\tests\base_test())->alta_adm_usuario(link: $link,id: $id);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+
+        }
+        return $alta;
+    }
+
     public function alta_cat_sat_forma_pago(PDO $link, string $codigo = '99', $descripcion = '99', int $id = 1,
                                              bool $predeterminado = false): array|stdClass
     {
@@ -341,6 +364,28 @@ class base_test{
         return $del;
     }
 
+    public function del_adm_seccion(PDO $link): array
+    {
+
+
+        $del = (new \gamboamartin\administrador\tests\base_test())->del_adm_seccion(link: $link);
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+        return $del;
+    }
+
+    public function del_adm_usuario(PDO $link): array
+    {
+
+
+        $del = (new \gamboamartin\administrador\tests\base_test())->del_adm_usuario(link: $link);
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+        return $del;
+    }
+
     public function del_cat_sat_metodo_pago(PDO $link): array
     {
 
@@ -424,11 +469,11 @@ class base_test{
         return $del;
     }
 
-    public function alta_cat_sat_periodicidad_pago_nom(PDO $link, $id = 1): array|\stdClass
+    public function alta_cat_sat_periodicidad_pago_nom(PDO $link, string $codigo = '01', $id = 1): array|\stdClass
     {
             $registro = array();
             $registro['id'] = $id;
-            $registro['codigo'] = 1;
+            $registro['codigo'] = $codigo;
             $registro['descripcion'] = 1;
             $registro['descripcion_select'] = 1;
             $registro['codigo_bis'] = 1;

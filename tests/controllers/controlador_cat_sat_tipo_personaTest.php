@@ -28,11 +28,41 @@ class controlador_cat_sat_tipo_personaTest extends test {
     {
         errores::$error = false;
 
-        $_GET['seccion'] = 'adm_accion';
+        $_GET['seccion'] = 'cat_sat_tipo_persona';
         $_GET['accion'] = 'lista';
-        $_SESSION['grupo_id'] = 1;
+        $_SESSION['grupo_id'] = 2;
         $_SESSION['usuario_id'] = 2;
         $_GET['session_id'] = '1';
+
+        $del = (new base_test())->del_adm_usuario(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al eliminar', data: $del);
+            print_r($error);
+            exit;
+        }
+
+        $del = (new base_test())->del_adm_seccion(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al del', data: $del);
+            print_r($error);
+            exit;
+        }
+
+        $alta = (new base_test())->alta_adm_usuario(link: $this->link, id: 2);
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+            print_r($error);
+            exit;
+        }
+
+        $alta = (new base_test())->alta_adm_seccion(link: $this->link, descripcion: 'cat_sat_tipo_persona', id: 2);
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+            print_r($error);
+            exit;
+        }
+
+
         $controler = new controlador_cat_sat_tipo_persona(link: $this->link, paths_conf: $this->paths_conf);
         //$inicializacion = new liberator($inicializacion);
 

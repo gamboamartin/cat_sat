@@ -60,6 +60,19 @@ class cat_sat_isnTest extends test {
         $_GET['session_id'] = '1';
         $modelo = new cat_sat_isr(link: $this->link);
 
+        $del = (new base_test())->del_cat_sat_isr(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al del',data:  $del);
+            print_r($error);
+            exit;
+        }
+
+        $alta = (new base_test())->alta_cat_sat_isr(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al insertar',data:  $alta);
+            print_r($error);
+            exit;
+        }
 
         $resultado = $modelo->registro(1);
 
