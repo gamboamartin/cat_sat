@@ -29,7 +29,7 @@ class cat_sat_obj_impTest extends test {
 
     /**
      */
-    public function test_registro(): void
+    public function test_registro(): void 
     {
         errores::$error = false;
 
