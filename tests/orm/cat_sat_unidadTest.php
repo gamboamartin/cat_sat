@@ -55,7 +55,7 @@ class cat_sat_unidadTest extends test {
         }
 
         $resultado = $modelo->registro(1);
-
+ 
         $this->assertIsArray($resultado);
         $this->assertNotTrue(errores::$error);
 
