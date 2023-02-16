@@ -8,6 +8,7 @@
  */
 namespace gamboamartin\cat_sat\controllers;
 use gamboamartin\cat_sat\models\cat_sat_moneda;
+use gamboamartin\direccion_postal\models\dp_pais;
 use gamboamartin\errores\errores;
 use gamboamartin\system\_ctl_base;
 use gamboamartin\system\links_menu;
@@ -42,6 +43,7 @@ class controlador_cat_sat_moneda extends _ctl_base {
 
 
         $this->lista_get_data = true;
+        $this->parents_verifica[] = new dp_pais(link: $this->link);
 
     }
 
