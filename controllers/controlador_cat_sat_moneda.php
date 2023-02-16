@@ -44,6 +44,7 @@ class controlador_cat_sat_moneda extends _ctl_base {
 
         $this->lista_get_data = true;
         $this->parents_verifica[] = new dp_pais(link: $this->link);
+        $this->verifica_parents_alta = true;
 
     }
 
