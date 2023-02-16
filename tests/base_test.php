@@ -9,6 +9,7 @@ use gamboamartin\cat_sat\models\cat_sat_isn;
 use gamboamartin\cat_sat\models\cat_sat_isr;
 use gamboamartin\cat_sat\models\cat_sat_metodo_pago;
 use gamboamartin\cat_sat\models\cat_sat_moneda;
+use gamboamartin\cat_sat\models\cat_sat_obj_imp;
 use gamboamartin\cat_sat\models\cat_sat_periodicidad_pago_nom;
 use gamboamartin\cat_sat\models\cat_sat_producto;
 use gamboamartin\cat_sat\models\cat_sat_regimen_fiscal;
@@ -295,6 +296,20 @@ class base_test{
         $registro['predeterminado'] = $predeterminado;
 
         $alta = (new cat_sat_moneda($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+
+        }
+        return $alta;
+    }
+
+    public function alta_cat_sat_obj_imp(PDO $link, string $codigo = '1', $descripcion = '1', int $id = 1,
+                                        bool $predeterminado = false): array|stdClass
+    {
+        $registro['id'] = $id;
+        $registro['descripcion'] = $descripcion;
+        $registro['predeterminado'] = $predeterminado;
+        $alta = (new cat_sat_obj_imp($link))->alta_registro($registro);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
 
@@ -607,6 +622,17 @@ class base_test{
     {
 
         $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_moneda');
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+        return $del;
+    }
+
+    public function del_cat_sat_obj_imp(PDO $link): array
+    {
+
+
+        $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_obj_imp');
         if(errores::$error){
             return (new errores())->error('Error al eliminar', $del);
         }
