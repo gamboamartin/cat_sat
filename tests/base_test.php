@@ -17,6 +17,7 @@ use gamboamartin\cat_sat\models\cat_sat_tipo_de_comprobante;
 use gamboamartin\cat_sat\models\cat_sat_tipo_nomina;
 use gamboamartin\cat_sat\models\cat_sat_tipo_persona;
 use gamboamartin\cat_sat\models\cat_sat_tipo_producto;
+use gamboamartin\cat_sat\models\cat_sat_unidad;
 use gamboamartin\cat_sat\models\cat_sat_uso_cfdi;
 use gamboamartin\direccion_postal\models\dp_estado;
 use gamboamartin\direccion_postal\models\dp_pais;
@@ -505,6 +506,20 @@ class base_test{
         return $alta;
     }
 
+    public function alta_cat_sat_unidad(PDO $link, string $codigo = '1', $descripcion = '1', int $id = 1,
+                                          bool $predeterminado = false): array|stdClass
+    {
+        $registro['id'] = $id;
+        $registro['descripcion'] = $descripcion;
+        $registro['predeterminado'] = $predeterminado;
+        $alta = (new cat_sat_unidad($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+
+        }
+        return $alta;
+    }
+
     public function alta_dp_estado(PDO $link, string $codigo = '1', $descripcion = '1', int $id = 1): array|stdClass
     {
 
@@ -634,6 +649,17 @@ class base_test{
 
 
         $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_tipo_persona');
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+        return $del;
+    }
+
+    public function del_cat_sat_unidad(PDO $link): array
+    {
+
+
+        $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_unidad');
         if(errores::$error){
             return (new errores())->error('Error al eliminar', $del);
         }
