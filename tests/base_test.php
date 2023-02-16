@@ -1,17 +1,22 @@
 <?php
 namespace gamboamartin\cat_sat\tests;
 use base\orm\modelo_base;
+use gamboamartin\cat_sat\models\cat_sat_clase_producto;
+use gamboamartin\cat_sat\models\cat_sat_division_producto;
 use gamboamartin\cat_sat\models\cat_sat_forma_pago;
+use gamboamartin\cat_sat\models\cat_sat_grupo_producto;
 use gamboamartin\cat_sat\models\cat_sat_isn;
 use gamboamartin\cat_sat\models\cat_sat_isr;
 use gamboamartin\cat_sat\models\cat_sat_metodo_pago;
 use gamboamartin\cat_sat\models\cat_sat_moneda;
 use gamboamartin\cat_sat\models\cat_sat_periodicidad_pago_nom;
+use gamboamartin\cat_sat\models\cat_sat_producto;
 use gamboamartin\cat_sat\models\cat_sat_regimen_fiscal;
 use gamboamartin\cat_sat\models\cat_sat_subsidio;
 use gamboamartin\cat_sat\models\cat_sat_tipo_de_comprobante;
 use gamboamartin\cat_sat\models\cat_sat_tipo_nomina;
 use gamboamartin\cat_sat\models\cat_sat_tipo_persona;
+use gamboamartin\cat_sat\models\cat_sat_tipo_producto;
 use gamboamartin\cat_sat\models\cat_sat_uso_cfdi;
 use gamboamartin\direccion_postal\models\dp_estado;
 use gamboamartin\direccion_postal\models\dp_pais;
@@ -47,6 +52,70 @@ class base_test{
         return $alta;
     }
 
+    public function alta_cat_sat_clase_producto(PDO $link, int $cat_sat_grupo_producto_id = 1,
+                                                string $codigo = '010101', $descripcion = '010101',
+                                                int $id = 1, string $predeterminado = 'inactivo'): array|stdClass
+    {
+
+        $existe = (new cat_sat_grupo_producto($link))->existe_by_id(registro_id: $cat_sat_grupo_producto_id);
+        if(errores::$error){
+            return (new errores())->error('Error al verificar si existe', $existe);
+
+        }
+
+        if(!$existe) {
+            $alta = (new base_test())->alta_cat_sat_grupo_producto(link: $link, id: $cat_sat_grupo_producto_id);
+            if (errores::$error) {
+                return (new errores())->error('Error al dar de alta', $alta);
+            }
+        }
+
+        $registro['id'] = $id;
+        $registro['descripcion'] = $descripcion;
+        $registro['predeterminado'] = $predeterminado;
+        $registro['cat_sat_grupo_producto_id'] = $cat_sat_grupo_producto_id;
+        $registro['codigo'] = $codigo;
+
+        $alta = (new cat_sat_clase_producto($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+
+        }
+        return $alta;
+    }
+
+    public function alta_cat_sat_division_producto(PDO $link, int $cat_sat_tipo_producto_id = 1, string $codigo = '01',
+                                                   $descripcion = '01', int $id = 1,
+                                                   string $predeterminado = 'inactivo'): array|stdClass
+    {
+
+        $existe = (new cat_sat_tipo_producto($link))->existe_by_id(registro_id: $cat_sat_tipo_producto_id);
+        if(errores::$error){
+            return (new errores())->error('Error al verificar si existe', $existe);
+
+        }
+
+        if(!$existe) {
+            $alta = (new base_test())->alta_cat_sat_tipo_producto(link: $link, id: $cat_sat_tipo_producto_id);
+            if (errores::$error) {
+                return (new errores())->error('Error al dar de alta', $alta);
+            }
+        }
+
+        $registro['id'] = $id;
+        $registro['descripcion'] = $descripcion;
+        $registro['predeterminado'] = $predeterminado;
+        $registro['codigo'] = $codigo;
+        $registro['cat_sat_tipo_producto_id'] = $cat_sat_tipo_producto_id;
+
+        $alta = (new cat_sat_division_producto($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+
+        }
+        return $alta;
+    }
+
     public function alta_cat_sat_forma_pago(PDO $link, string $codigo = '99', $descripcion = '99', int $id = 1,
                                              bool $predeterminado = false): array|stdClass
     {
@@ -58,6 +127,38 @@ class base_test{
         }
 
         $alta = (new cat_sat_forma_pago($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+
+        }
+        return $alta;
+    }
+
+    public function alta_cat_sat_grupo_producto(PDO $link, int $cat_sat_division_producto_id = 1,
+                                                string $codigo = '0101', $descripcion = '0101', int $id = 1,
+                                                string $predeterminado = 'inactivo'): array|stdClass
+    {
+
+        $existe = (new cat_sat_division_producto($link))->existe_by_id(registro_id: $cat_sat_division_producto_id);
+        if(errores::$error){
+            return (new errores())->error('Error al verificar si existe', $existe);
+
+        }
+
+        if(!$existe) {
+            $alta = (new base_test())->alta_cat_sat_division_producto(link: $link, id: $cat_sat_division_producto_id);
+            if (errores::$error) {
+                return (new errores())->error('Error al dar de alta', $alta);
+            }
+        }
+
+        $registro['id'] = $id;
+        $registro['descripcion'] = $descripcion;
+        $registro['predeterminado'] = $predeterminado;
+        $registro['codigo'] = $codigo;
+        $registro['cat_sat_division_producto_id'] = $cat_sat_division_producto_id;
+
+        $alta = (new cat_sat_grupo_producto($link))->alta_registro($registro);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
 
@@ -160,6 +261,8 @@ class base_test{
         return $alta;
     }
 
+
+
     public function alta_cat_sat_moneda(PDO $link, string $codigo = 'XSM', string $descripcion = '1', int $id = 1,
                                         int $dp_pais_id = 1, string $predeterminado = 'inactivo'): array|stdClass
     {
@@ -210,6 +313,39 @@ class base_test{
         $registro['n_dias'] = 1;
 
         $alta = (new cat_sat_periodicidad_pago_nom($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+
+        }
+        return $alta;
+    }
+
+    public function alta_cat_sat_producto(PDO $link, int $cat_sat_clase_producto_id = 1, string $codigo = '01010101',
+                                          $descripcion = '01010101', int $id = 1,
+                                          string $predeterminado = 'inactivo'): array|stdClass
+    {
+
+        $existe = (new cat_sat_clase_producto($link))->existe_by_id(registro_id: $cat_sat_clase_producto_id);
+        if (errores::$error) {
+            return (new errores())->error('Error al validar si existe', $existe);
+
+        }
+
+        if(!$existe) {
+            $alta = (new base_test())->alta_cat_sat_clase_producto(link: $link);
+            if (errores::$error) {
+                return (new errores())->error('Error al dar de alta', $alta);
+            }
+
+        }
+
+        $registro['id'] = $id;
+        $registro['descripcion'] = $descripcion;
+        $registro['predeterminado'] = $predeterminado;
+        $registro['cat_sat_clase_producto_id'] = $cat_sat_clase_producto_id;
+        $registro['codigo'] = $codigo;
+
+        $alta = (new cat_sat_producto($link))->alta_registro($registro);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
 
@@ -333,6 +469,24 @@ class base_test{
         return $alta;
     }
 
+    public function alta_cat_sat_tipo_producto(PDO $link, string $codigo = '010101', $descripcion = '010101',
+                                                int $id = 1, string $predeterminado = 'inactivo'): array|stdClass
+    {
+
+
+        $registro['id'] = $id;
+        $registro['descripcion'] = $descripcion;
+        $registro['predeterminado'] = $predeterminado;
+        $registro['codigo'] = $codigo;
+
+        $alta = (new cat_sat_tipo_producto($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+
+        }
+        return $alta;
+    }
+
     public function alta_cat_sat_uso_cfdi(PDO $link, string $codigo = '1', $descripcion = '1', int $id = 1,
                                              bool $predeterminado = false): array|stdClass
     {
@@ -444,6 +598,17 @@ class base_test{
         return $del;
     }
 
+    public function del_cat_sat_producto(PDO $link): array
+    {
+
+
+        $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_producto');
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+        return $del;
+    }
+
     public function del_cat_sat_tipo_de_comprobante(PDO $link): array
     {
         $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_tipo_de_comprobante');
@@ -452,6 +617,7 @@ class base_test{
         }
         return $del;
     }
+
 
     public function del_cat_sat_tipo_nomina(PDO $link): array
     {

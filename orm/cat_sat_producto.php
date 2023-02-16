@@ -15,6 +15,7 @@ class cat_sat_producto extends _modelo_parent
         $columnas = array($tabla => false, "cat_sat_clase_producto" => $tabla, "cat_sat_grupo_producto" => "cat_sat_clase_producto",
             "cat_sat_division_producto" => "cat_sat_grupo_producto", "cat_sat_tipo_producto" => "cat_sat_division_producto");
         $campos_obligatorios[] = 'descripcion';
+        $campos_obligatorios[] = 'cat_sat_clase_producto_id';
 
         $tipo_campos['codigo'] = 'cod_int_0_8_numbers';
 

@@ -10,6 +10,7 @@ class cat_sat_division_producto extends _modelo_parent{
         $tabla = 'cat_sat_division_producto';
         $columnas = array($tabla=>false,"cat_sat_tipo_producto" => $tabla);
         $campos_obligatorios[] = 'descripcion';
+        $campos_obligatorios[] = 'cat_sat_tipo_producto_id';
 
         $columnas_extra['cat_sat_division_producto_n_grupos'] = "(SELECT COUNT(*) FROM cat_sat_grupo_producto 
         WHERE cat_sat_grupo_producto.cat_sat_division_producto_id = cat_sat_division_producto.id)";
