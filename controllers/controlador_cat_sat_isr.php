@@ -13,7 +13,6 @@ namespace gamboamartin\cat_sat\controllers;
 use base\controller\controler;
 use gamboamartin\cat_sat\models\cat_sat_isr;
 use gamboamartin\errores\errores;
-use gamboamartin\system\_ctl_base;
 use gamboamartin\system\links_menu;
 use html\cat_sat_isr_html;
 

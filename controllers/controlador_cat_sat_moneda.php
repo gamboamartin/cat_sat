@@ -18,7 +18,7 @@ use stdClass;
 
 class controlador_cat_sat_moneda extends _ctl_base {
 
-    public array $keys_selects = array();
+    public array|stdClass $keys_selects = array();
 
     public function __construct(PDO $link, \gamboamartin\template\html $html = new \gamboamartin\template_1\html(), stdClass $paths_conf = new stdClass()){
         $modelo = new cat_sat_moneda(link: $link);

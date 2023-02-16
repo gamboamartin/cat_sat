@@ -12,7 +12,6 @@ use base\controller\controler;
 use gamboamartin\cat_sat\models\cat_sat_tipo_factor;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
-use gamboamartin\system\system;
 use gamboamartin\template\html;
 use html\cat_sat_uso_cfdi_html;
 use PDO;
