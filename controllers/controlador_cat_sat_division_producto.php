@@ -11,6 +11,7 @@ namespace gamboamartin\cat_sat\controllers;
 
 use base\controller\controler;
 use gamboamartin\cat_sat\models\cat_sat_division_producto;
+use gamboamartin\cat_sat\models\cat_sat_tipo_producto;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\template\html;
@@ -60,8 +61,11 @@ class controlador_cat_sat_division_producto extends _cat_sat_base
             print_r($error);
             die('Error');
         }
-        $this->path_vendor_views = 'gamboa.martin/cat_sat';
+
         $this->lista_get_data = true;
+
+        $this->parents_verifica[] = new cat_sat_tipo_producto(link: $this->link);
+        $this->verifica_parents_alta = true;
     }
 
 

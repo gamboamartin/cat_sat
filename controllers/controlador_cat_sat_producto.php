@@ -9,6 +9,7 @@
 namespace gamboamartin\cat_sat\controllers;
 
 use base\controller\controler;
+use gamboamartin\cat_sat\models\cat_sat_clase_producto;
 use gamboamartin\cat_sat\models\cat_sat_producto;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
@@ -43,6 +44,9 @@ class controlador_cat_sat_producto extends _cat_sat_base {
             die('Error');
         }
         $this->lista_get_data = true;
+
+        $this->parents_verifica[] = new cat_sat_clase_producto(link: $this->link);
+        $this->verifica_parents_alta = true;
     }
 
     protected function campos_view(): array
