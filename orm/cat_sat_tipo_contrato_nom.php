@@ -19,6 +19,8 @@ class cat_sat_tipo_contrato_nom  extends _modelo_parent{
 
 
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'Tipo Contrato NOM';
     }
 
 

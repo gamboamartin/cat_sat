@@ -22,5 +22,7 @@ class cat_sat_tipo_producto extends _modelo_parent
             columnas_extra: $columnas_extra);
 
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'Tipo Producto';
     }
 }

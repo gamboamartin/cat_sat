@@ -13,5 +13,7 @@ class cat_sat_unidad extends _modelo_parent{
             columnas: $columnas);
 
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'Unidad';
     }
 }

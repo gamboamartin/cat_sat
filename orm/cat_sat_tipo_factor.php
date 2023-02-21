@@ -12,5 +12,7 @@ class cat_sat_tipo_factor extends _modelo_parent{
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
             columnas: $columnas);
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'Tipo Factor';
     }
 }

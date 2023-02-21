@@ -15,5 +15,7 @@ class cat_sat_forma_pago extends _modelo_parent{
             columnas: $columnas);
 
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'Forma Pago';
     }
 }

@@ -13,5 +13,7 @@ class cat_sat_uso_cfdi extends _modelo_parent{
             columnas: $columnas);
 
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'Uso CFDI';
     }
 }

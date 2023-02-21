@@ -21,5 +21,7 @@ class cat_sat_subsidio extends _modelo_parent{
             columnas: $columnas, temp: true);
 
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'Subsidio';
     }
 }

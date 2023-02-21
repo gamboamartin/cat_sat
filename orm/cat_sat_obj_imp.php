@@ -12,6 +12,8 @@ class cat_sat_obj_imp extends _modelo_parent{
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
             columnas: $columnas);
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'Obj de impuesto';
     }
 
 }

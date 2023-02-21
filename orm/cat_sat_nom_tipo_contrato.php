@@ -11,5 +11,7 @@ class cat_sat_nom_tipo_contrato extends modelo{
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
             columnas: $columnas);
+
+        $this->etiqueta = 'Tipo de contrato';
     }
 }

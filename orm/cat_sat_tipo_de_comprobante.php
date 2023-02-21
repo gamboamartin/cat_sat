@@ -17,6 +17,8 @@ class cat_sat_tipo_de_comprobante extends _modelo_parent{
             columnas: $columnas);
 
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'Tipo de comprobante';
     }
 
     public function get_tipo_comprobante_predeterminado(): array|stdClass

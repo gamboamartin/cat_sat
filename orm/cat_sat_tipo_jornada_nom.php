@@ -15,10 +15,9 @@ class cat_sat_tipo_jornada_nom extends _modelo_parent{
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
             columnas: $columnas, tipo_campos: $tipo_campos);
 
-
-
-
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'Tipo Jornada';
 
     }
 

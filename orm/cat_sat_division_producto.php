@@ -21,6 +21,8 @@ class cat_sat_division_producto extends _modelo_parent{
             columnas: $columnas, columnas_extra: $columnas_extra, tipo_campos: $tipo_campos);
 
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'Division Producto';
     }
 
     public function get_division(int $cat_sat_division_producto_id): array|stdClass

@@ -23,5 +23,7 @@ class cat_sat_isr extends _modelo_parent
             columnas: $columnas, temp: true);
 
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'ISR';
     }
 }

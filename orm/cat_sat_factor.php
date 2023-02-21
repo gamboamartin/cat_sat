@@ -14,6 +14,8 @@ class cat_sat_factor  extends modelo {
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
             columnas: $columnas);
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'Factor';
     }
 
     public function alta_bd(array $keys_integra_ds = array('codigo', 'factor')): array|stdClass

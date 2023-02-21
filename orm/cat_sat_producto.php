@@ -23,6 +23,8 @@ class cat_sat_producto extends _modelo_parent
             columnas: $columnas, tipo_campos: $tipo_campos);
 
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'Producto SAT';
     }
 
     public function alta_bd(array $keys_integra_ds = array()): array|stdClass

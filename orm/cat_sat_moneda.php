@@ -33,6 +33,8 @@ class cat_sat_moneda extends _modelo_children{
             columnas: $columnas, campos_view: $campos_view, tipo_campos: $tipo_campos, parents_data: $parents_data);
 
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'Moneda';
     }
 
 

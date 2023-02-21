@@ -17,5 +17,7 @@ class cat_sat_regimen_fiscal extends _modelo_parent{
             columnas: $columnas, tipo_campos: $tipo_campos);
 
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'Regimen Fiscal';
     }
 }

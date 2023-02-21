@@ -26,6 +26,8 @@ class cat_sat_grupo_producto extends _modelo_parent
             columnas: $columnas, columnas_extra: $columnas_extra, tipo_campos: $tipo_campos);
 
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'Grupo Producto';
     }
 
     public function alta_bd(array $keys_integra_ds = array()): array|stdClass

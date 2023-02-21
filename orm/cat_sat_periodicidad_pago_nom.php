@@ -16,5 +16,7 @@ class cat_sat_periodicidad_pago_nom extends _modelo_parent{
             columnas: $columnas, tipo_campos: $tipo_campos);
 
         $this->NAMESPACE = __NAMESPACE__;
+
+        $this->etiqueta = 'Periodicidad Pago Nom';
     }
 }
