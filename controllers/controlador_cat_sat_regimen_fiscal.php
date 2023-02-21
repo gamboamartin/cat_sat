@@ -63,7 +63,6 @@ class controlador_cat_sat_regimen_fiscal extends _cat_sat_base {
 
     private function init_configuraciones(): controler
     {
-        $this->seccion_titulo = 'SAT Régimen Fiscal';
         $this->titulo_lista = 'Registro de Regímenes  Fiscales';
 
         $this->lista_get_data = true;

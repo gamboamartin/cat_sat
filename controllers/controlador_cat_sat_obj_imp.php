@@ -61,7 +61,6 @@ class controlador_cat_sat_obj_imp extends _cat_sat_base {
 
     private function init_configuraciones(): controler
     {
-        $this->seccion_titulo = 'SAT Objeto Impuesto';
         $this->titulo_lista = 'Registro de Objeto de Impuestos';
 
         $this->lista_get_data = true;

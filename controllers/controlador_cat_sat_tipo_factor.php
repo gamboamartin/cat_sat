@@ -61,7 +61,6 @@ class controlador_cat_sat_tipo_factor extends _cat_sat_base {
 
     private function init_configuraciones(): controler
     {
-        $this->seccion_titulo = 'SAT Tipo Factor';
         $this->titulo_lista = 'Registro de Tipo Factor';
 
         $this->lista_get_data = true;

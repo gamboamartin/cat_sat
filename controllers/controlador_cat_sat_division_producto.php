@@ -122,7 +122,6 @@ class controlador_cat_sat_division_producto extends _cat_sat_base
 
     private function init_configuraciones(): controler
     {
-        $this->seccion_titulo = 'SAT Divisiones';
         $this->titulo_lista = 'Registro de Divisiones';
 
         return $this;

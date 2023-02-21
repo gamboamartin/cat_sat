@@ -117,7 +117,7 @@ class controlador_cat_sat_tipo_producto extends _ctl_base
 
     private function init_configuraciones(): controler
     {
-        $this->seccion_titulo = 'SAT Tipos de Productos';
+
         $this->titulo_lista = 'Registro de Tipos de Productos';
 
         return $this;

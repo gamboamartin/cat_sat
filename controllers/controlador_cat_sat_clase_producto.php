@@ -122,7 +122,6 @@ class controlador_cat_sat_clase_producto extends _cat_sat_base {
 
     private function init_configuraciones(): controler
     {
-        $this->seccion_titulo = 'SAT Clases';
         $this->titulo_lista = 'Registro de Clases';
 
         $this->path_vendor_views = 'gamboa.martin/cat_sat';
@@ -306,4 +305,6 @@ class controlador_cat_sat_clase_producto extends _cat_sat_base {
 
         return $r_modifica;
     }
+
+
 }

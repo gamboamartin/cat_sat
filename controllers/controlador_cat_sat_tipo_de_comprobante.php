@@ -62,7 +62,6 @@ class controlador_cat_sat_tipo_de_comprobante extends _cat_sat_base {
 
     private function init_configuraciones(): controler
     {
-        $this->seccion_titulo = 'SAT Tipo Comprobante';
         $this->titulo_lista = 'Registro de Tipos de Comprobante';
 
         $this->lista_get_data = true;

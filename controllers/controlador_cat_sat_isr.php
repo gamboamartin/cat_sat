@@ -71,7 +71,6 @@ class controlador_cat_sat_isr extends _cat_sat_base
 
     private function init_configuraciones(): controler
     {
-        $this->seccion_titulo = 'SAT ISR';
         $this->titulo_lista = 'Registro de Impuestos sobre la Renta';
 
         return $this;

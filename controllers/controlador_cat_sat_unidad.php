@@ -63,7 +63,7 @@ class controlador_cat_sat_unidad extends _cat_sat_base {
 
     private function init_configuraciones(): controler
     {
-        $this->seccion_titulo = 'SAT Unidad';
+
         $this->titulo_lista = 'Registro de Unidades';
 
         $this->lista_get_data = true;

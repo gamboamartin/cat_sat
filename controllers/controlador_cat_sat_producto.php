@@ -83,7 +83,6 @@ class controlador_cat_sat_producto extends _cat_sat_base {
 
     private function init_configuraciones(): controler
     {
-        $this->seccion_titulo = 'SAT Productos';
         $this->titulo_lista = 'Registro de Productos';
 
         $this->lista_get_data = true;

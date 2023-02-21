@@ -61,7 +61,6 @@ class controlador_cat_sat_factor extends _cat_sat_base {
 
     private function init_configuraciones(): controler
     {
-        $this->seccion_titulo = 'SAT Factor';
         $this->titulo_lista = 'Registro de Factores';
 
         $this->lista_get_data = true;

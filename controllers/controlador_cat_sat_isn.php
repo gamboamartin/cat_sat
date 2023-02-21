@@ -47,7 +47,6 @@ class controlador_cat_sat_isn extends system {
         parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, datatables: $datatables,
             paths_conf: $paths_conf);
 
-        $this->titulo_lista = 'Impuesto sobre nomina';
         $this->lista_get_data = true;
     }
 

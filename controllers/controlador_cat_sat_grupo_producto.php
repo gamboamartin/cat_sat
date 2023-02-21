@@ -123,7 +123,6 @@ class controlador_cat_sat_grupo_producto extends _cat_sat_base
 
     private function init_configuraciones(): controler
     {
-        $this->seccion_titulo = 'SAT Grupos';
         $this->titulo_lista = 'Registro de Grupos';
 
         return $this;

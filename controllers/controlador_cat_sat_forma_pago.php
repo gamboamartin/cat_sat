@@ -61,7 +61,6 @@ class controlador_cat_sat_forma_pago extends _cat_sat_base {
 
     private function init_configuraciones(): controler
     {
-        $this->seccion_titulo = 'SAT Formas de Pago';
         $this->titulo_lista = 'Registro de Formas de Pago';
 
         $this->lista_get_data = true;

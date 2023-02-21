@@ -68,7 +68,6 @@ class controlador_cat_sat_subsidio extends _cat_sat_base {
 
     private function init_configuraciones(): controler
     {
-        $this->seccion_titulo = 'SAT Subsidio';
         $this->titulo_lista = 'Registro de Subsidios';
 
         return $this;

@@ -61,7 +61,7 @@ class controlador_cat_sat_uso_cfdi extends _cat_sat_base {
 
     private function init_configuraciones(): controler
     {
-        $this->seccion_titulo = 'SAT Uso CFDI';
+       
         $this->titulo_lista = 'Registro de Uso CFDI';
 
         $this->lista_get_data = true;
