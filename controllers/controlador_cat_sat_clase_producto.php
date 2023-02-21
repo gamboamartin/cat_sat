@@ -141,6 +141,7 @@ class controlador_cat_sat_clase_producto extends _cat_sat_base {
     /**
      * Inicializa los elementos para lista de tipo datatable
      * @return stdClass
+     * @version 7.25.1
      */
     private function init_datatable(): stdClass
     {
