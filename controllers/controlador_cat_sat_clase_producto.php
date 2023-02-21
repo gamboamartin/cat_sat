@@ -139,6 +139,10 @@ class controlador_cat_sat_clase_producto extends _cat_sat_base {
         return $this;
     }
 
+    /**
+     * Inicializa los elementos para lista de tipo datatable
+     * @return stdClass
+     */
     private function init_datatable(): stdClass
     {
         $columns["cat_sat_clase_producto_id"]["titulo"] = "Id";
