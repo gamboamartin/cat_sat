@@ -10,4 +10,13 @@ namespace gamboamartin\cat_sat\controllers;
 
 
 
-class controlador_dp_estado extends \controllers\controlador_dp_estado {}
+use PDO;
+use stdClass;
+
+class controlador_dp_estado extends \controllers\controlador_dp_estado {
+    public function __construct(PDO $link, stdClass $paths_conf = new stdClass())
+    {
+        parent::__construct(link: $link,paths_conf:  $paths_conf);
+        $this->childrens_data = array();
+    }
+}
