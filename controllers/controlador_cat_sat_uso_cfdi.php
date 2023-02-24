@@ -41,6 +41,7 @@ class controlador_cat_sat_uso_cfdi extends _cat_sat_base {
             print_r($error);
             die('Error');
         }
+
     }
 
     protected function campos_view(): array
