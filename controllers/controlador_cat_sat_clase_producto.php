@@ -120,6 +120,10 @@ class controlador_cat_sat_clase_producto extends _cat_sat_base {
         return $contenido_table;
     }
 
+    /**
+     * Inicializa las configuraciones del controlador
+     * @return controler
+     */
     private function init_configuraciones(): controler
     {
         $this->titulo_lista = 'Registro de Clases';
