@@ -16,7 +16,6 @@ use gamboamartin\system\system;
 use gamboamartin\template\html;
 use html\cat_sat_isn_html;
 
-use JsonException;
 
 use PDO;
 use stdClass;
@@ -60,6 +59,7 @@ class controlador_cat_sat_isn extends system {
         $keys_selects = array();
         $keys_selects['dp_estado_id'] = new stdClass();
         $keys_selects['dp_estado_id']->label = 'Estado';
+        $keys_selects['dp_estado_id']->key_descripcion_select = 'dp_estado_descripcion';
 
         $keys_selects['porcentaje'] = new stdClass();
         $keys_selects['porcentaje']->place_holder = 'Porcentaje';

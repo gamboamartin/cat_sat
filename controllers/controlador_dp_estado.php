@@ -18,5 +18,6 @@ class controlador_dp_estado extends \controllers\controlador_dp_estado {
     {
         parent::__construct(link: $link,paths_conf:  $paths_conf);
         $this->childrens_data = array();
+        $this->childrens_data['cat_sat_isn']['title'] = 'ISN';
     }
 }
