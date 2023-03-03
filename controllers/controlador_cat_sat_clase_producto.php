@@ -12,7 +12,6 @@ use base\controller\controler;
 use gamboamartin\cat_sat\models\cat_sat_clase_producto;
 use gamboamartin\cat_sat\models\cat_sat_grupo_producto;
 use gamboamartin\errores\errores;
-use gamboamartin\system\links_menu;
 use gamboamartin\template\html;
 use html\cat_sat_clase_producto_html;
 use PDO;

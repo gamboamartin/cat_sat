@@ -80,6 +80,7 @@ class _cat_sat_productos extends _cat_sat_base{
      * inicializa los elementos del controlador
      * @param PDO $link Conexion a la base de datos
      * @return array|stdClass
+     * @version 7.45.2
      */
     final protected function init_parent(PDO $link): array|stdClass
     {
