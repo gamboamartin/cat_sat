@@ -41,6 +41,11 @@ class controlador_cat_sat_tipo_impuesto extends _ctl_parent_sin_codigo {
         $this->lista_get_data = true;
     }
 
+    /**
+     * Inicializa los parametros para mostrado en alta y modifica
+     * @param array $keys_selects
+     * @return array
+     */
     protected function key_selects_txt(array $keys_selects): array
     {
 
