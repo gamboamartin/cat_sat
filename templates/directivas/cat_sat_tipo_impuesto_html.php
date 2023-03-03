@@ -14,9 +14,10 @@ class cat_sat_tipo_impuesto_html extends html_controler {
     /**
      * Asigna los valores de los inputs
      * @param controlador_cat_sat_tipo_impuesto $controler
+     * @param stdClass $inputs
      * @return array|stdClass
      */
-    private function asigna_inputs(controlador_cat_sat_tipo_impuesto $controler): array|stdClass
+    protected function asigna_inputs(controlador_cat_sat_tipo_impuesto $controler, stdClass $inputs): array|stdClass
     {
         $controler->inputs->select = new stdClass();
 
@@ -29,7 +30,7 @@ class cat_sat_tipo_impuesto_html extends html_controler {
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
         }
-        $inputs_asignados = $this->asigna_inputs(controler:$controler);
+        $inputs_asignados = $this->asigna_inputs(controler:$controler, inputs: $inputs);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al asignar inputs',data:  $inputs_asignados);
         }
@@ -44,7 +45,7 @@ class cat_sat_tipo_impuesto_html extends html_controler {
             return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
         }
 
-        $inputs_asignados = $this->asigna_inputs(controler:$controler);
+        $inputs_asignados = $this->asigna_inputs(controler:$controler, inputs: $inputs);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al asignar inputs',data:  $inputs_asignados);
         }
