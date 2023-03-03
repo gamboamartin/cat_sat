@@ -70,6 +70,10 @@ class controlador_cat_sat_uso_cfdi extends _cat_sat_base {
         return $this;
     }
 
+    /**
+     * Inicializa los elementos para datatables
+     * @return stdClass
+     */
     private function init_datatable(): stdClass
     {
         $columns["cat_sat_uso_cfdi_id"]["titulo"] = "Id";
