@@ -13,8 +13,8 @@ class cat_sat_tipo_impuesto_html extends html_controler {
 
     /**
      * Asigna los valores de los inputs
-     * @param controlador_cat_sat_tipo_impuesto $controler
-     * @param stdClass $inputs
+     * @param controlador_cat_sat_tipo_impuesto $controler Controlador en ejecucion
+     * @param stdClass $inputs Inputs a integrar
      * @return array|stdClass
      */
     protected function asigna_inputs(controlador_cat_sat_tipo_impuesto $controler, stdClass $inputs): array|stdClass
