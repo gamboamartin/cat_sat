@@ -72,6 +72,7 @@ class controlador_cat_sat_metodo_pago extends _cat_sat_base {
     /**
      * Inicializa los elementos para datatable
      * @return stdClass
+     * @version 7.32.1
      */
     private function init_datatable(): stdClass
     {
