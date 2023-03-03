@@ -77,10 +77,11 @@ class _cat_sat_productos extends _cat_sat_base{
     }
 
     /**
-     * @param PDO $link
+     * inicializa los elementos del controlador
+     * @param PDO $link Conexion a la base de datos
      * @return array|stdClass
      */
-    protected function init_parent(PDO $link): array|stdClass
+    final protected function init_parent(PDO $link): array|stdClass
     {
         $obj_link = new links_menu(link: $link, registro_id: $this->registro_id);
 
