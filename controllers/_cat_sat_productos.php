@@ -69,7 +69,7 @@ class _cat_sat_productos extends _cat_sat_base{
     /**
      * Inicializa los elementos de tipo datatable esta funcion debe ser declarada en los childs
      * @return stdClass
-     *
+     * @version 7.40.1
      */
     private function init_datatable(): stdClass
     {
