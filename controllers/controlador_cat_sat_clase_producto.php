@@ -50,6 +50,8 @@ class controlador_cat_sat_clase_producto extends _cat_sat_productos {
 
         $this->parents_verifica[] = new cat_sat_grupo_producto(link: $this->link);
         $this->verifica_parents_alta = true;
+
+        $this->childrens_data['cat_sat_producto']['title'] = 'Producto';
     }
 
 
