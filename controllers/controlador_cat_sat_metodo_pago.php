@@ -69,6 +69,10 @@ class controlador_cat_sat_metodo_pago extends _cat_sat_base {
         return $this;
     }
 
+    /**
+     * Inicializa los elementos para datatable
+     * @return stdClass
+     */
     private function init_datatable(): stdClass
     {
         $columns["cat_sat_metodo_pago_id"]["titulo"] = "Id";
