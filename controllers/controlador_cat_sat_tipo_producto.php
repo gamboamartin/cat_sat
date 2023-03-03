@@ -45,6 +45,7 @@ class controlador_cat_sat_tipo_producto extends _cat_sat_productos
             die('Error');
         }
 
+        $this->childrens_data['cat_sat_division_producto']['title'] = 'Division';
 
 
     }
