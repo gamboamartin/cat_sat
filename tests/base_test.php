@@ -596,6 +596,16 @@ class base_test{
         return $del;
     }
 
+    public function del_cat_sat_forma_pago(PDO $link): array
+    {
+
+        $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_forma_pago');
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+        return $del;
+    }
+
     public function del_cat_sat_isn(PDO $link): array
     {
 

@@ -19,7 +19,7 @@ use html\cat_sat_tipo_producto_html;
 use PDO;
 use stdClass;
 
-class controlador_cat_sat_tipo_producto extends _ctl_base
+class controlador_cat_sat_tipo_producto extends _cat_sat_productos
 {
     public controlador_cat_sat_division_producto $controlador_cat_sat_division_producto;
     public string $link_cat_sat_division_producto_alta_bd = '';
@@ -29,39 +29,24 @@ class controlador_cat_sat_tipo_producto extends _ctl_base
     {
         $modelo = new cat_sat_tipo_producto(link: $link);
         $html_ = new cat_sat_tipo_producto_html(html: $html);
-        $obj_link = new links_menu(link: $link, registro_id: $this->registro_id);
 
-        $datatables = $this->init_datatable();
+        $init_parent = $this->init_parent(link: $link);
         if (errores::$error) {
-            $error = $this->errores->error(mensaje: 'Error al inicializar datatable', data: $datatables);
+            $error = $this->errores->error(mensaje: 'Error al inicializar datos', data: $init_parent);
             print_r($error);
             die('Error');
         }
 
-        parent::__construct(html: $html_, link: $link, modelo: $modelo, obj_link: $obj_link, datatables: $datatables,
+        parent::__construct(html: $html_, link: $link, modelo: $modelo, obj_link: $init_parent->obj_link, datatables: $init_parent->datatables,
             paths_conf: $paths_conf);
 
-        $configuraciones = $this->init_configuraciones();
+        $init = $this->init(paths_conf: $paths_conf);
         if (errores::$error) {
-            $error = $this->errores->error(mensaje: 'Error al inicializar configuraciones', data: $configuraciones);
+            $error = $this->errores->error(mensaje: 'Error al inicializar configuraciones', data: $init);
             print_r($error);
             die('Error');
         }
 
-        $init_controladores = $this->init_controladores(paths_conf: $paths_conf);
-        if (errores::$error) {
-            $error = $this->errores->error(mensaje: 'Error al inicializar controladores', data: $init_controladores);
-            print_r($error);
-            die('Error');
-        }
-
-        $init_links = $this->init_links();
-        if (errores::$error) {
-            $error = $this->errores->error(mensaje: 'Error al inicializar links', data: $init_links);
-            print_r($error);
-            die('Error');
-        }
-        $this->lista_get_data = true;
     }
 
     public function alta(bool $header, bool $ws = false): array|string
