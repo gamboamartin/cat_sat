@@ -48,8 +48,6 @@ class controlador_cat_sat_division_producto extends _cat_sat_productos
         }
 
 
-
-
         $this->parents_verifica[] = new cat_sat_tipo_producto(link: $this->link);
         $this->verifica_parents_alta = true;
     }

@@ -25,6 +25,8 @@ class cat_sat_clase_producto extends _modelo_parent{
         $this->NAMESPACE = __NAMESPACE__;
 
         $this->etiqueta = 'Clase Producto';
+
+
     }
 
     public function alta_bd( array $keys_integra_ds = array()): array|stdClass

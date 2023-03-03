@@ -12,8 +12,6 @@ namespace gamboamartin\cat_sat\controllers;
 use base\controller\controler;
 use gamboamartin\cat_sat\models\cat_sat_tipo_producto;
 use gamboamartin\errores\errores;
-use gamboamartin\system\_ctl_base;
-use gamboamartin\system\links_menu;
 use gamboamartin\template\html;
 use html\cat_sat_tipo_producto_html;
 use PDO;
@@ -46,6 +44,8 @@ class controlador_cat_sat_tipo_producto extends _cat_sat_productos
             print_r($error);
             die('Error');
         }
+
+
 
     }
 

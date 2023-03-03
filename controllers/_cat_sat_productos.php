@@ -76,6 +76,10 @@ class _cat_sat_productos extends _cat_sat_base{
         return new stdClass();
     }
 
+    /**
+     * @param PDO $link
+     * @return array|stdClass
+     */
     protected function init_parent(PDO $link): array|stdClass
     {
         $obj_link = new links_menu(link: $link, registro_id: $this->registro_id);
