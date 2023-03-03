@@ -111,6 +111,17 @@ class controlador_cat_sat_producto extends _cat_sat_base {
         return $datatables;
     }
 
+    /**
+     * Inicializa los selects de productos
+     * @param array $keys_selects
+     * @param string $key
+     * @param string $label
+     * @param int $id_selected
+     * @param int $cols
+     * @param bool $con_registros
+     * @param array $filtro
+     * @return array
+     */
     private function init_selects(array $keys_selects, string $key, string $label, int $id_selected = -1, int $cols = 6,
                                   bool  $con_registros = true, array $filtro = array()): array
     {
