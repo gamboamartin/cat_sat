@@ -47,6 +47,8 @@ class controlador_cat_sat_producto extends _cat_sat_base {
 
         $this->parents_verifica[] = new cat_sat_clase_producto(link: $this->link);
         $this->verifica_parents_alta = true;
+
+        $this->childrens_data['cat_sat_producto']['title'] = 'Producto';
     }
 
     protected function campos_view(): array
