@@ -1,5 +1,6 @@
 <?php
 namespace gamboamartin\cat_sat\models;
+use base\orm\_defaults;
 use base\orm\_modelo_children;
 
 use gamboamartin\direccion_postal\models\dp_pais;
@@ -35,6 +36,33 @@ class cat_sat_moneda extends _modelo_children{
         $this->NAMESPACE = __NAMESPACE__;
 
         $this->etiqueta = 'Moneda';
+
+        if(!isset($_SESSION['init'][$tabla])) {
+            $codigo = 'MEX';
+            if(isset($_SESSION['init']['dp_pais'])){
+                unset($_SESSION['init']['dp_pais']);
+            }
+
+            $dp_pais = (new dp_pais(link: $this->link))->registro_by_codigo(codigo: $codigo);
+            if (errores::$error) {
+                $error = $this->error->error(mensaje: 'Error al obtener pais', data: $dp_pais);
+                print_r($error);
+                exit;
+            }
+
+            $catalago = array();
+            $catalago[] = array('codigo' => 'MXN', 'descripcion' => 'Peso mexicano', 'dp_pais_id' => $dp_pais['dp_pais_id']);
+
+
+            $r_alta_bd = (new _defaults())->alta_defaults(catalago: $catalago, entidad: $this);
+            if (errores::$error) {
+                $error = $this->error->error(mensaje: 'Error al insertar', data: $r_alta_bd);
+                print_r($error);
+                exit;
+            }
+            $_SESSION['init'][$tabla] = true;
+        }
+
     }
 
 
