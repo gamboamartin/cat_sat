@@ -52,7 +52,7 @@ class cat_sat_producto extends _modelo_parent
                 exit;
             }
             $_SESSION['init'][$tabla] = true;
-        }
+        } 
 
     }
 
