@@ -20,7 +20,7 @@ class cat_sat_forma_pago extends _modelo_parent{
 
         $this->etiqueta = 'Forma Pago';
 
-        $catalago = array();
+        /*$catalago = array();
         $catalago[] = array('codigo' =>'01', 'descripcion' => 'Efectivo');
         $catalago[] = array('codigo' =>'02', 'descripcion' => 'Cheque nominativo');
         $catalago[] = array('codigo' =>'03', 'descripcion' => 'Transferencia electrónica de fondos');
@@ -52,7 +52,7 @@ class cat_sat_forma_pago extends _modelo_parent{
             $error = $this->error->error(mensaje: 'Error al insertar', data: $r_alta_bd);
             print_r($error);
             exit;
-        }
+        }*/
 
     }
 }
