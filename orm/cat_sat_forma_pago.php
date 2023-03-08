@@ -45,10 +45,9 @@ class cat_sat_forma_pago extends _modelo_parent{
             $catalago[] = array('codigo' => '31', 'descripcion' => 'Intermediario pagos');
             $catalago[] = array('codigo' => '99', 'descripcion' => 'Por definir');
 
-            $entidad = new cat_sat_forma_pago(link: $this->link);
 
 
-            $r_alta_bd = (new _defaults())->alta_defaults(catalago: $catalago, entidad: $entidad);
+            $r_alta_bd = (new _defaults())->alta_defaults(catalago: $catalago, entidad: $this);
             if (errores::$error) {
                 $error = $this->error->error(mensaje: 'Error al insertar', data: $r_alta_bd);
                 print_r($error);
