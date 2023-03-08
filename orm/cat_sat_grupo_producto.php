@@ -2,6 +2,7 @@
 
 namespace gamboamartin\cat_sat\models;
 
+use base\orm\_defaults;
 use base\orm\_modelo_parent;
 use gamboamartin\errores\errores;
 use PDO;
@@ -28,6 +29,33 @@ class cat_sat_grupo_producto extends _modelo_parent
         $this->NAMESPACE = __NAMESPACE__;
 
         $this->etiqueta = 'Grupo Producto';
+
+        if(!isset($_SESSION['init'][$tabla])) {
+
+            $codigo = '81';
+            if(isset($_SESSION['init']['cat_sat_division_producto'])){
+                unset($_SESSION['init']['cat_sat_division_producto']);
+            }
+
+            $cat_sat_division_producto = (new cat_sat_division_producto(link: $this->link))->registro_by_codigo(codigo: $codigo);
+            if (errores::$error) {
+                $error = $this->error->error(mensaje: 'Error al obtener cat_sat_division_producto', data: $cat_sat_division_producto);
+                print_r($error);
+                exit;
+            }
+
+            $catalago = array();
+            $catalago[] = array('codigo' => '8111', 'descripcion' => 'Servicios informáticos', 'cat_sat_division_producto_id'=>$cat_sat_division_producto['cat_sat_division_producto_id']);
+
+            $r_alta_bd = (new _defaults())->alta_defaults(catalago: $catalago, entidad: $this);
+            if (errores::$error) {
+                $error = $this->error->error(mensaje: 'Error al insertar', data: $r_alta_bd);
+                print_r($error);
+                exit;
+            }
+            $_SESSION['init'][$tabla] = true;
+        }
+
     }
 
     public function alta_bd(array $keys_integra_ds = array()): array|stdClass
