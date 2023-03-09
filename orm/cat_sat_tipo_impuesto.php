@@ -18,14 +18,14 @@ class cat_sat_tipo_impuesto  extends _modelo_parent_sin_codigo {
         $this->etiqueta = 'Tipo Impuesto';
         $this->NAMESPACE = __NAMESPACE__;
 
-        /*
+
         if(!isset($_SESSION['init'][$tabla])) {
 
 
             $catalago = array();
-            $catalago[] = array('codigo' => '001', 'descripcion' => 'ISR');
-            $catalago[] = array('codigo' => '002', 'descripcion' => 'IVA');
-            $catalago[] = array('codigo' => '003', 'descripcion' => 'IEPS');
+            $catalago[] = array('id'=>1,'codigo' => '001', 'descripcion' => 'ISR');
+            $catalago[] = array('id'=>2,'codigo' => '002', 'descripcion' => 'IVA');
+            $catalago[] = array('id'=>3,'codigo' => '003', 'descripcion' => 'IEPS');
 
 
             $r_alta_bd = (new _defaults())->alta_defaults(catalago: $catalago, entidad: $this);
@@ -36,6 +36,6 @@ class cat_sat_tipo_impuesto  extends _modelo_parent_sin_codigo {
             }
             $_SESSION['init'][$tabla] = true;
         }
-        */
+
     }
 }

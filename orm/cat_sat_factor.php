@@ -1,5 +1,6 @@
 <?php
 namespace gamboamartin\cat_sat\models;
+use base\orm\_defaults;
 use base\orm\modelo;
 use gamboamartin\errores\errores;
 use PDO;
@@ -16,6 +17,24 @@ class cat_sat_factor  extends modelo {
         $this->NAMESPACE = __NAMESPACE__;
 
         $this->etiqueta = 'Factor';
+
+        if(!isset($_SESSION['init'][$tabla])) {
+
+
+            $catalago = array();
+            $catalago[] = array('id'=>1,'codigo' => '16%', 'factor' => '.16');
+            $catalago[] = array('id'=>2,'codigo' => '8%', 'factor' => '.08');
+            $catalago[] = array('id'=>3,'codigo' => '1.25%', 'factor' => '.0125');
+
+            $r_alta_bd = (new _defaults())->alta_defaults(catalago: $catalago, entidad: $this);
+            if (errores::$error) {
+                $error = $this->error->error(mensaje: 'Error al insertar', data: $r_alta_bd);
+                print_r($error);
+                exit;
+            }
+            $_SESSION['init'][$tabla] = true;
+        }
+
     }
 
     public function alta_bd(array $keys_integra_ds = array('codigo', 'factor')): array|stdClass

@@ -596,10 +596,54 @@ class base_test{
         return $del;
     }
 
+    public function del_cat_sat_clase_producto(PDO $link): array
+    {
+        $del = $this->del_cat_sat_producto($link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
+        }
+
+        $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_clase_producto');
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+        return $del;
+    }
+
+    public function del_cat_sat_division_producto(PDO $link): array
+    {
+
+        $del = $this->del_cat_sat_grupo_producto($link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
+        }
+
+        $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_division_producto');
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+        return $del;
+    }
+
     public function del_cat_sat_forma_pago(PDO $link): array
     {
 
         $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_forma_pago');
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+        return $del;
+    }
+
+    public function del_cat_sat_grupo_producto(PDO $link): array
+    {
+
+        $del = $this->del_cat_sat_clase_producto($link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
+        }
+
+        $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_grupo_producto');
         if(errores::$error){
             return (new errores())->error('Error al eliminar', $del);
         }
@@ -702,6 +746,21 @@ class base_test{
         return $del;
     }
 
+    public function del_cat_sat_tipo_producto(PDO $link): array
+    {
+
+        $del = $this->del_cat_sat_division_producto($link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
+        }
+
+        $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_tipo_producto');
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+        return $del;
+    }
+
     public function del_cat_sat_unidad(PDO $link): array
     {
 
@@ -709,6 +768,16 @@ class base_test{
         $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_unidad');
         if(errores::$error){
             return (new errores())->error('Error al eliminar', $del);
+        }
+        return $del;
+    }
+
+    public function del_dp_colonia(PDO $link): array
+    {
+
+        $del = (new \gamboamartin\direccion_postal\tests\base_test())->del_dp_colonia(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
         }
         return $del;
     }

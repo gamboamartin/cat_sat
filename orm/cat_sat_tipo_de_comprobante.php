@@ -21,14 +21,14 @@ class cat_sat_tipo_de_comprobante extends _modelo_parent{
 
         $this->etiqueta = 'Tipo de comprobante';
 
-        /*
+
         if(!isset($_SESSION['init'][$tabla])) {
             $catalago = array();
-            $catalago[] = array('codigo' => 'I', 'descripcion' => 'Ingreso');
-            $catalago[] = array('codigo' => 'E', 'descripcion' => 'Egreso');
-            $catalago[] = array('codigo' => 'T', 'descripcion' => 'Traslado');
-            $catalago[] = array('codigo' => 'N', 'descripcion' => 'Nómina');
-            $catalago[] = array('codigo' => 'P', 'descripcion' => 'Pago');
+            $catalago[] = array('id'=>1,'codigo' => 'I', 'descripcion' => 'Ingreso');
+            $catalago[] = array('id'=>2,'codigo' => 'E', 'descripcion' => 'Egreso');
+            $catalago[] = array('id'=>3,'codigo' => 'T', 'descripcion' => 'Traslado');
+            $catalago[] = array('id'=>4,'codigo' => 'N', 'descripcion' => 'Nómina');
+            $catalago[] = array('id'=>5,'codigo' => 'P', 'descripcion' => 'Pago');
 
 
             $r_alta_bd = (new _defaults())->alta_defaults(catalago: $catalago, entidad: $this);
@@ -39,7 +39,7 @@ class cat_sat_tipo_de_comprobante extends _modelo_parent{
             }
             $_SESSION['init'][$tabla] = true;
         }
-        */
+
     }
 
     public function get_tipo_comprobante_predeterminado(): array|stdClass

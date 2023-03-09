@@ -27,32 +27,31 @@ class cat_sat_clase_producto extends _modelo_parent{
 
         $this->etiqueta = 'Clase Producto';
 
-        /*
+
         if(!isset($_SESSION['init'][$tabla])) {
 
-            $codigo = '8111';
             if(isset($_SESSION['init']['cat_sat_grupo_producto'])){
                 unset($_SESSION['init']['cat_sat_grupo_producto']);
             }
+            new cat_sat_grupo_producto(link: $this->link);
 
-            $cat_sat_grupo_producto = (new cat_sat_grupo_producto(link: $this->link))->registro_by_codigo(codigo: $codigo);
-            if (errores::$error) {
-                $error = $this->error->error(mensaje: 'Error al obtener cat_sat_grupo_producto', data: $cat_sat_grupo_producto);
-                print_r($error);
-                exit;
+            $catalogo = array();
+            $catalogo[] = array('codigo' => '501516', 'descripcion' => 'Grasas y aceites animales comestibles', 'cat_sat_grupo_producto_id'=>5015);
+            $catalogo[] = array('codigo' => '501515', 'descripcion' => 'Grasas y aceites vegetales comestibles', 'cat_sat_grupo_producto_id'=>5015);
+
+            foreach ($catalogo as $key=>$row){
+                $catalogo[$key]['id'] = (int)$row['codigo'];
             }
 
-            $catalago = array();
-            $catalago[] = array('codigo' => '811115', 'descripcion' => 'Ingeniería de software o hardware', 'cat_sat_grupo_producto_id'=>$cat_sat_grupo_producto['cat_sat_grupo_producto_id']);
-
-            $r_alta_bd = (new _defaults())->alta_defaults(catalago: $catalago, entidad: $this);
+            $r_alta_bd = (new _defaults())->alta_defaults(catalogo: $catalogo, entidad: $this);
             if (errores::$error) {
                 $error = $this->error->error(mensaje: 'Error al insertar', data: $r_alta_bd);
                 print_r($error);
                 exit;
             }
             $_SESSION['init'][$tabla] = true;
-        }*/
+        }
+
 
 
     }

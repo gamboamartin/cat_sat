@@ -37,6 +37,13 @@ class _cat_sat_productosTest extends test {
         $_SESSION['usuario_id'] = 2;
         $_GET['session_id'] = '1';
 
+        $del = (new base_test())->del_cat_sat_tipo_producto(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al eliminar', data: $del);
+            print_r($error);
+            exit;
+        }
+
         $del = (new base_test())->del_adm_usuario(link: $this->link);
         if(errores::$error){
             $error = (new errores())->error(mensaje: 'Error al eliminar', data: $del);
