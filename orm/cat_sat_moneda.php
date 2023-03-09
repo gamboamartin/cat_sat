@@ -37,25 +37,17 @@ class cat_sat_moneda extends _modelo_children{
 
         $this->etiqueta = 'Moneda';
 
-        /*
+
         if(!isset($_SESSION['init'][$tabla])) {
-            $codigo = 'MEX';
             if(isset($_SESSION['init']['dp_pais'])){
                 unset($_SESSION['init']['dp_pais']);
             }
+            new dp_pais(link: $this->link);
 
-            $dp_pais = (new dp_pais(link: $this->link))->registro_by_codigo(codigo: $codigo);
-            if (errores::$error) {
-                $error = $this->error->error(mensaje: 'Error al obtener pais', data: $dp_pais);
-                print_r($error);
-                exit;
-            }
+            $catalogo = array();
+            $catalogo[] = array('id'=>1,'codigo' => 'MXN', 'descripcion' => 'Peso mexicano', 'dp_pais_id' => '151');
 
-            $catalago = array();
-            $catalago[] = array('codigo' => 'MXN', 'descripcion' => 'Peso mexicano', 'dp_pais_id' => $dp_pais['dp_pais_id']);
-
-
-            $r_alta_bd = (new _defaults())->alta_defaults(catalago: $catalago, entidad: $this);
+            $r_alta_bd = (new _defaults())->alta_defaults(catalogo: $catalogo, entidad: $this);
             if (errores::$error) {
                 $error = $this->error->error(mensaje: 'Error al insertar', data: $r_alta_bd);
                 print_r($error);
@@ -63,7 +55,7 @@ class cat_sat_moneda extends _modelo_children{
             }
             $_SESSION['init'][$tabla] = true;
         }
-        */
+
 
     }
 
