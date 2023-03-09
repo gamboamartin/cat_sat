@@ -23,15 +23,15 @@ class cat_sat_tipo_de_comprobante extends _modelo_parent{
 
 
         if(!isset($_SESSION['init'][$tabla])) {
-            $catalago = array();
-            $catalago[] = array('id'=>1,'codigo' => 'I', 'descripcion' => 'Ingreso');
-            $catalago[] = array('id'=>2,'codigo' => 'E', 'descripcion' => 'Egreso');
-            $catalago[] = array('id'=>3,'codigo' => 'T', 'descripcion' => 'Traslado');
-            $catalago[] = array('id'=>4,'codigo' => 'N', 'descripcion' => 'Nómina');
-            $catalago[] = array('id'=>5,'codigo' => 'P', 'descripcion' => 'Pago');
+            $catalogo = array();
+            $catalogo[] = array('id'=>1,'codigo' => 'I', 'descripcion' => 'Ingreso');
+            $catalogo[] = array('id'=>2,'codigo' => 'E', 'descripcion' => 'Egreso');
+            $catalogo[] = array('id'=>3,'codigo' => 'T', 'descripcion' => 'Traslado');
+            $catalogo[] = array('id'=>4,'codigo' => 'N', 'descripcion' => 'Nómina');
+            $catalogo[] = array('id'=>5,'codigo' => 'P', 'descripcion' => 'Pago');
 
 
-            $r_alta_bd = (new _defaults())->alta_defaults(catalago: $catalago, entidad: $this);
+            $r_alta_bd = (new _defaults())->alta_defaults(catalogo: $catalogo, entidad: $this);
             if (errores::$error) {
                 $error = $this->error->error(mensaje: 'Error al insertar', data: $r_alta_bd);
                 print_r($error);

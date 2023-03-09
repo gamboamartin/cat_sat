@@ -18,14 +18,14 @@ class cat_sat_tipo_factor extends _modelo_parent{
         $this->etiqueta = 'Tipo Factor';
 
         if(!isset($_SESSION['init'][$tabla])) {
-            $catalago = array();
-            $catalago[] = array('id'=>1,'codigo' => 'Tasa', 'descripcion' => 'Tasa');
-            $catalago[] = array('id'=>2,'codigo' => 'Cuota', 'descripcion' => 'Cuota');
-            $catalago[] = array('id'=>3,'codigo' => 'Exento', 'descripcion' => 'Exento');
+            $catalogo = array();
+            $catalogo[] = array('id'=>1,'codigo' => 'Tasa', 'descripcion' => 'Tasa');
+            $catalogo[] = array('id'=>2,'codigo' => 'Cuota', 'descripcion' => 'Cuota');
+            $catalogo[] = array('id'=>3,'codigo' => 'Exento', 'descripcion' => 'Exento');
 
 
 
-            $r_alta_bd = (new _defaults())->alta_defaults(catalago: $catalago, entidad: $this);
+            $r_alta_bd = (new _defaults())->alta_defaults(catalogo: $catalogo, entidad: $this);
             if (errores::$error) {
                 $error = $this->error->error(mensaje: 'Error al insertar', data: $r_alta_bd);
                 print_r($error);

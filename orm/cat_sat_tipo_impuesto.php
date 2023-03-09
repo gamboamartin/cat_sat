@@ -22,13 +22,13 @@ class cat_sat_tipo_impuesto  extends _modelo_parent_sin_codigo {
         if(!isset($_SESSION['init'][$tabla])) {
 
 
-            $catalago = array();
-            $catalago[] = array('id'=>1,'codigo' => '001', 'descripcion' => 'ISR');
-            $catalago[] = array('id'=>2,'codigo' => '002', 'descripcion' => 'IVA');
-            $catalago[] = array('id'=>3,'codigo' => '003', 'descripcion' => 'IEPS');
+            $catalogo = array();
+            $catalogo[] = array('id'=>1,'codigo' => '001', 'descripcion' => 'ISR');
+            $catalogo[] = array('id'=>2,'codigo' => '002', 'descripcion' => 'IVA');
+            $catalogo[] = array('id'=>3,'codigo' => '003', 'descripcion' => 'IEPS');
 
 
-            $r_alta_bd = (new _defaults())->alta_defaults(catalago: $catalago, entidad: $this);
+            $r_alta_bd = (new _defaults())->alta_defaults(catalogo: $catalogo, entidad: $this);
             if (errores::$error) {
                 $error = $this->error->error(mensaje: 'Error al insertar', data: $r_alta_bd);
                 print_r($error);
