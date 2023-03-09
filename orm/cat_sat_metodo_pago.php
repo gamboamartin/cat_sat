@@ -21,6 +21,7 @@ class cat_sat_metodo_pago extends _modelo_parent {
 
         $this->etiqueta = 'Metodo de Pago';
 
+        /*
         if(!isset($_SESSION['init'][$tabla])) {
             $catalago = array();
             $catalago[] = array('codigo' => 'PPD', 'descripcion' => 'Pago en parcialidades o diferido');
@@ -34,5 +35,6 @@ class cat_sat_metodo_pago extends _modelo_parent {
             }
             $_SESSION['init'][$tabla] = true;
         }
+        */
     }
 }

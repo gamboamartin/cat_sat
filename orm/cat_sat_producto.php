@@ -27,6 +27,7 @@ class cat_sat_producto extends _modelo_parent
 
         $this->etiqueta = 'Producto SAT';
 
+        /*
         if(!isset($_SESSION['init'][$tabla])) {
 
             $codigo = '811115';
@@ -53,6 +54,7 @@ class cat_sat_producto extends _modelo_parent
             }
             $_SESSION['init'][$tabla] = true;
         }
+        */
 
     }
 

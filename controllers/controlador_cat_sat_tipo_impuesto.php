@@ -41,7 +41,7 @@ class controlador_cat_sat_tipo_impuesto extends _ctl_parent {
 
         $this->titulo_lista = 'Tipo Impuesto';
         $this->lista_get_data = true;
-        
+
     }
 
     public function alta(bool $header, bool $ws = false): array|string

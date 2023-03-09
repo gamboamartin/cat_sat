@@ -20,6 +20,7 @@ class cat_sat_forma_pago extends _modelo_parent{
 
         $this->etiqueta = 'Forma Pago';
 
+        /*
         if(!isset($_SESSION['init'][$tabla])) {
             $catalago = array();
             $catalago[] = array('codigo' => '01', 'descripcion' => 'Efectivo');
@@ -55,6 +56,7 @@ class cat_sat_forma_pago extends _modelo_parent{
             }
             $_SESSION['init'][$tabla] = true;
         }
+        */
 
     }
 }

@@ -27,6 +27,7 @@ class cat_sat_clase_producto extends _modelo_parent{
 
         $this->etiqueta = 'Clase Producto';
 
+        /*
         if(!isset($_SESSION['init'][$tabla])) {
 
             $codigo = '8111';
@@ -51,7 +52,7 @@ class cat_sat_clase_producto extends _modelo_parent{
                 exit;
             }
             $_SESSION['init'][$tabla] = true;
-        }
+        }*/
 
 
     }

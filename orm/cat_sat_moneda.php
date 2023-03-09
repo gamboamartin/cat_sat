@@ -37,6 +37,7 @@ class cat_sat_moneda extends _modelo_children{
 
         $this->etiqueta = 'Moneda';
 
+        /*
         if(!isset($_SESSION['init'][$tabla])) {
             $codigo = 'MEX';
             if(isset($_SESSION['init']['dp_pais'])){
@@ -62,6 +63,7 @@ class cat_sat_moneda extends _modelo_children{
             }
             $_SESSION['init'][$tabla] = true;
         }
+        */
 
     }
 
