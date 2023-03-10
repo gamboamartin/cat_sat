@@ -38,23 +38,6 @@ class cat_sat_moneda extends _modelo_children{
         $this->etiqueta = 'Moneda';
 
 
-        if(!isset($_SESSION['init'][$tabla])) {
-            if(isset($_SESSION['init']['dp_pais'])){
-                unset($_SESSION['init']['dp_pais']);
-            }
-            new dp_pais(link: $this->link);
-
-            $catalogo = array();
-            $catalogo[] = array('id'=>1,'codigo' => 'MXN', 'descripcion' => 'Peso mexicano', 'dp_pais_id' => '151');
-
-            $r_alta_bd = (new _defaults())->alta_defaults(catalogo: $catalogo, entidad: $this);
-            if (errores::$error) {
-                $error = $this->error->error(mensaje: 'Error al insertar', data: $r_alta_bd);
-                print_r($error);
-                exit;
-            }
-            $_SESSION['init'][$tabla] = true;
-        }
 
 
     }

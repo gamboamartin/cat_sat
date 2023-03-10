@@ -28,29 +28,7 @@ class cat_sat_clase_producto extends _modelo_parent{
         $this->etiqueta = 'Clase Producto';
 
 
-        if(!isset($_SESSION['init'][$tabla])) {
 
-            if(isset($_SESSION['init']['cat_sat_grupo_producto'])){
-                unset($_SESSION['init']['cat_sat_grupo_producto']);
-            }
-            new cat_sat_grupo_producto(link: $this->link);
-
-            $catalogo = array();
-            $catalogo[] = array('codigo' => '501516', 'descripcion' => 'Grasas y aceites animales comestibles', 'cat_sat_grupo_producto_id'=>5015);
-            $catalogo[] = array('codigo' => '501515', 'descripcion' => 'Grasas y aceites vegetales comestibles', 'cat_sat_grupo_producto_id'=>5015);
-
-            foreach ($catalogo as $key=>$row){
-                $catalogo[$key]['id'] = (int)$row['codigo'];
-            }
-
-            $r_alta_bd = (new _defaults())->alta_defaults(catalogo: $catalogo, entidad: $this);
-            if (errores::$error) {
-                $error = $this->error->error(mensaje: 'Error al insertar', data: $r_alta_bd);
-                print_r($error);
-                exit;
-            }
-            $_SESSION['init'][$tabla] = true;
-        }
 
 
 

@@ -28,29 +28,7 @@ class cat_sat_producto extends _modelo_parent
         $this->etiqueta = 'Producto SAT';
 
 
-        if(!isset($_SESSION['init'][$tabla])) {
 
-            if(isset($_SESSION['init']['cat_sat_clase_producto'])){
-                unset($_SESSION['init']['cat_sat_clase_producto']);
-            }
-            new cat_sat_clase_producto(link: $this->link);
-
-            $catalogo = array();
-            $catalogo[] = array('codigo' => '50151604', 'descripcion' => 'Aceites animal comestibles (Animales marinos, Hígado de bacalao)', 'cat_sat_clase_producto_id'=>501516);
-            $catalogo[] = array('codigo' => '50151605', 'descripcion' => 'Grasa saturada animal comestibles (Manteca, Sebo)', 'cat_sat_clase_producto_id'=>501516);
-
-            foreach ($catalogo as $key=>$row){
-                $catalogo[$key]['id'] = (int)$row['codigo'];
-            }
-
-            $r_alta_bd = (new _defaults())->alta_defaults(catalogo: $catalogo, entidad: $this);
-            if (errores::$error) {
-                $error = $this->error->error(mensaje: 'Error al insertar', data: $r_alta_bd);
-                print_r($error);
-                exit;
-            }
-            $_SESSION['init'][$tabla] = true;
-        }
 
 
     }
