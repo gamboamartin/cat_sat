@@ -22,7 +22,7 @@ class cat_sat_regimen_fiscal extends _modelo_parent{
 
         $this->etiqueta = 'Regimen Fiscal';
 
-
+        /*
         if(!isset($_SESSION['init'][$tabla])) {
             $catalogo = array();
             $catalogo[] = array('id'=>601,'codigo' => '601', 'descripcion' => 'General de Ley Personas Morales');
@@ -53,7 +53,7 @@ class cat_sat_regimen_fiscal extends _modelo_parent{
                 exit;
             }
             $_SESSION['init'][$tabla] = true;
-        }
+        }*/
         
     }
 }

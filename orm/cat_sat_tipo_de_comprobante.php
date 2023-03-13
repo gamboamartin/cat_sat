@@ -21,6 +21,7 @@ class cat_sat_tipo_de_comprobante extends _modelo_parent{
 
         $this->etiqueta = 'Tipo de comprobante';
 
+        /*
 
         if(!isset($_SESSION['init'][$tabla])) {
             $catalogo = array();
@@ -39,6 +40,7 @@ class cat_sat_tipo_de_comprobante extends _modelo_parent{
             }
             $_SESSION['init'][$tabla] = true;
         }
+        */
 
     }
 

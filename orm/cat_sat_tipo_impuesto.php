@@ -18,6 +18,7 @@ class cat_sat_tipo_impuesto  extends _modelo_parent_sin_codigo {
         $this->etiqueta = 'Tipo Impuesto';
         $this->NAMESPACE = __NAMESPACE__;
 
+        /*
 
         if(!isset($_SESSION['init'][$tabla])) {
 
@@ -36,6 +37,7 @@ class cat_sat_tipo_impuesto  extends _modelo_parent_sin_codigo {
             }
             $_SESSION['init'][$tabla] = true;
         }
+        */
 
     }
 }

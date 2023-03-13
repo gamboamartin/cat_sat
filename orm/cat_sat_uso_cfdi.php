@@ -18,7 +18,7 @@ class cat_sat_uso_cfdi extends _modelo_parent{
 
         $this->etiqueta = 'Uso CFDI';
 
-        
+        /*
         if(!isset($_SESSION['init'][$tabla])) {
             $catalogo = array();
             $catalogo[] = array('id'=>1,'codigo' => 'G01', 'descripcion' => 'Adquisición de mercacías');
@@ -54,6 +54,7 @@ class cat_sat_uso_cfdi extends _modelo_parent{
             }
             $_SESSION['init'][$tabla] = true;
         }
+        */
         
     }
 }

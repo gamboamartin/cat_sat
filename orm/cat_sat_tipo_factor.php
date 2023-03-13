@@ -17,6 +17,7 @@ class cat_sat_tipo_factor extends _modelo_parent{
 
         $this->etiqueta = 'Tipo Factor';
 
+        /*
         if(!isset($_SESSION['init'][$tabla])) {
             $catalogo = array();
             $catalogo[] = array('id'=>1,'codigo' => 'Tasa', 'descripcion' => 'Tasa');
@@ -33,6 +34,7 @@ class cat_sat_tipo_factor extends _modelo_parent{
             }
             $_SESSION['init'][$tabla] = true;
         }
+        */
 
     }
 }

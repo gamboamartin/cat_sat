@@ -27,6 +27,7 @@ class cat_sat_tipo_producto extends _modelo_parent
 
         $this->etiqueta = 'Tipo Producto';
 
+        /*
 
         if(!isset($_SESSION['init'][$tabla])) {
 
@@ -43,6 +44,7 @@ class cat_sat_tipo_producto extends _modelo_parent
             }
             $_SESSION['init'][$tabla] = true;
         }
+        */
 
 
     }

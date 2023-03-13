@@ -26,6 +26,7 @@ class cat_sat_division_producto extends _modelo_parent{
         $this->etiqueta = 'Division Producto';
 
 
+        /*
         if(!isset($_SESSION['init'][$tabla])) {
 
             if(isset($_SESSION['init']['cat_sat_tipo_producto'])){
@@ -108,6 +109,7 @@ class cat_sat_division_producto extends _modelo_parent{
             }
             $_SESSION['init'][$tabla] = true;
         }
+        */
 
 
     }

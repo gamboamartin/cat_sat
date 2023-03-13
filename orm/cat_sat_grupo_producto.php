@@ -30,7 +30,7 @@ class cat_sat_grupo_producto extends _modelo_parent
 
         $this->etiqueta = 'Grupo Producto';
 
-
+        /*
         if(!isset($_SESSION['init'][$tabla])) {
 
             if(isset($_SESSION['init']['cat_sat_division_producto'])){
@@ -80,7 +80,7 @@ class cat_sat_grupo_producto extends _modelo_parent
                 exit;
             }
             $_SESSION['init'][$tabla] = true;
-        }
+        }*/
 
 
     }

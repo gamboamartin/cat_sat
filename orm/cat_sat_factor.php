@@ -18,6 +18,7 @@ class cat_sat_factor  extends modelo {
 
         $this->etiqueta = 'Factor';
 
+        /*
         if(!isset($_SESSION['init'][$tabla])) {
 
 
@@ -34,6 +35,7 @@ class cat_sat_factor  extends modelo {
             }
             $_SESSION['init'][$tabla] = true;
         }
+        */
 
     }
 
