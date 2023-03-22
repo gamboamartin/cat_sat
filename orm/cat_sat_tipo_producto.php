@@ -27,24 +27,7 @@ class cat_sat_tipo_producto extends _modelo_parent
 
         $this->etiqueta = 'Tipo Producto';
 
-        /*
-
-        if(!isset($_SESSION['init'][$tabla])) {
-
-            $catalogo = array();
-            $catalogo[] = array('id'=>1,'codigo' => '01', 'descripcion' => 'Productos');
-            $catalogo[] = array('id'=>2,'codigo' => '02', 'descripcion' => 'Servicios');
-
-
-            $r_alta_bd = (new _defaults())->alta_defaults(catalogo: $catalogo, entidad: $this);
-            if (errores::$error) {
-                $error = $this->error->error(mensaje: 'Error al insertar', data: $r_alta_bd);
-                print_r($error);
-                exit;
-            }
-            $_SESSION['init'][$tabla] = true;
-        }
-        */
+        $this->id_code = true;
 
 
     }

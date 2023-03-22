@@ -27,6 +27,8 @@ class cat_sat_producto extends _modelo_parent
 
         $this->etiqueta = 'Producto SAT';
 
+        $this->id_code = true;
+
 
 
 

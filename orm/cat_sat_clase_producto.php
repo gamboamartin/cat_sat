@@ -26,6 +26,7 @@ class cat_sat_clase_producto extends _modelo_parent{
         $this->NAMESPACE = __NAMESPACE__;
 
         $this->etiqueta = 'Clase Producto';
+        $this->id_code = true;
 
 
 

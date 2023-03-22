@@ -2,7 +2,6 @@
 
 namespace gamboamartin\cat_sat\models;
 
-use base\orm\_defaults;
 use base\orm\_modelo_parent;
 use gamboamartin\errores\errores;
 use PDO;
@@ -29,59 +28,7 @@ class cat_sat_grupo_producto extends _modelo_parent
         $this->NAMESPACE = __NAMESPACE__;
 
         $this->etiqueta = 'Grupo Producto';
-
-        /*
-        if(!isset($_SESSION['init'][$tabla])) {
-
-            if(isset($_SESSION['init']['cat_sat_division_producto'])){
-                unset($_SESSION['init']['cat_sat_division_producto']);
-            }
-
-            new cat_sat_division_producto(link: $this->link);
-
-            $catalogo[] = array('codigo'=>"5015", 'descripcion'=>'Aceites y grasas comestibles', 'cat_sat_division_producto_id'=>50);
-            $catalogo[] = array('codigo'=>"5019", 'descripcion'=>'Alimentos preparados y conservados', 'cat_sat_division_producto_id'=>50);
-            $catalogo[] = array('codigo'=>"5020", 'descripcion'=>'Bebidas', 'cat_sat_division_producto_id'=>50);
-            $catalogo[] = array('codigo'=>"5016", 'descripcion'=>'Chocolates, azúcares, edulcorantes y productos de confitería', 'cat_sat_division_producto_id'=>50);
-            $catalogo[] = array('codigo'=>"5017", 'descripcion'=>'Condimentos y conservantes', 'cat_sat_division_producto_id'=>50);
-            $catalogo[] = array('codigo'=>"5034", 'descripcion'=>'Fruta congelada', 'cat_sat_division_producto_id'=>50);
-            $catalogo[] = array('codigo'=>"5036", 'descripcion'=>'Fruta en lata o en frasco', 'cat_sat_division_producto_id'=>50);
-	        $catalogo[] = array('codigo'=>"5030", 'descripcion'=>'Fruta fresca', 'cat_sat_division_producto_id'=>50);
-            $catalogo[] = array('codigo'=>"5035", 'descripcion'=>'Fruta orgánica congelada', 'cat_sat_division_producto_id'=>50);
-            $catalogo[] = array('codigo'=>"5037", 'descripcion'=>'Fruta orgánica en lata o en frasco', 'cat_sat_division_producto_id'=>50);
-            $catalogo[] = array('codigo'=>"5031", 'descripcion'=>'Fruta orgánica fresca', 'cat_sat_division_producto_id'=>50);
-            $catalogo[] = array('codigo'=>"5033", 'descripcion'=>'Fruta orgánica seca', 'cat_sat_division_producto_id'=>50);
-            $catalogo[] = array('codigo'=>"5032", 'descripcion'=>'Fruta seca', 'cat_sat_division_producto_id'=>50);
-            $catalogo[] = array('codigo'=>"5010", 'descripcion'=>'Frutos secos', 'cat_sat_division_producto_id'=>50);
-            $catalogo[] = array('codigo'=>"5012", 'descripcion'=>'Pescados y mariscos', 'cat_sat_division_producto_id'=>50);
-            $catalogo[] = array('codigo'=>"5011", 'descripcion'=>'Productos de carne y aves de corral', 'cat_sat_division_producto_id'=>50);
-            $catalogo[] = array('codigo'=>"5022", 'descripcion'=>'Productos de cereales y legumbres', 'cat_sat_division_producto_id'=>50);
-            $catalogo[] = array('codigo'=>"5018", 'descripcion'=>'Productos de panadería', 'cat_sat_division_producto_id'=>50);
-            $catalogo[] = array('codigo'=>"5013", 'descripcion'=>'Productos lácteos y huevos', 'cat_sat_division_producto_id'=>50);
-            $catalogo[] = array('codigo'=>"5038", 'descripcion'=>'Puré de frutas', 'cat_sat_division_producto_id'=>50);
-            $catalogo[] = array('codigo'=>"5021", 'descripcion'=>'Tabaco y productos de fumar y substitutos', 'cat_sat_division_producto_id'=>50);
-            $catalogo[] = array('codigo'=>"5044", 'descripcion'=>'Vegetales congelados', 'cat_sat_division_producto_id'=>50);
-            $catalogo[] = array('codigo'=>"5046", 'descripcion'=>'Vegetales en lata o en frasco', 'cat_sat_division_producto_id'=>50);
-            $catalogo[] = array('codigo'=>"5040", 'descripcion'=>'Vegetales frescos', 'cat_sat_division_producto_id'=>50);
-            $catalogo[] = array('codigo'=>"5045", 'descripcion'=>'Vegetales orgánicos congelados', 'cat_sat_division_producto_id'=>50);
-            $catalogo[] = array('codigo'=>"5047", 'descripcion'=>'Vegetales orgánicos en lata o en frasco', 'cat_sat_division_producto_id'=>50);
-            $catalogo[] = array('codigo'=>"5041", 'descripcion'=>'Vegetales orgánicos frescos', 'cat_sat_division_producto_id'=>50);
-            $catalogo[] = array('codigo'=>"5043", 'descripcion'=>'Vegetales orgánicos secos', 'cat_sat_division_producto_id'=>50);
-            $catalogo[] = array('codigo'=>"5042", 'descripcion'=>'Vegetales secos', 'cat_sat_division_producto_id'=>50);
-
-            foreach ($catalogo as $key=>$row){
-                $catalogo[$key]['id'] = (int)$row['codigo'];
-            }
-
-            $r_alta_bd = (new _defaults())->alta_defaults(catalogo: $catalogo, entidad: $this);
-            if (errores::$error) {
-                $error = $this->error->error(mensaje: 'Error al insertar', data: $r_alta_bd);
-                print_r($error);
-                exit;
-            }
-            $_SESSION['init'][$tabla] = true;
-        }*/
-
+        $this->id_code = true;
 
     }
 
