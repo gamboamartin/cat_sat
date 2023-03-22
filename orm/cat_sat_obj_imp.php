@@ -14,6 +14,8 @@ class cat_sat_obj_imp extends _modelo_parent{
         $this->NAMESPACE = __NAMESPACE__;
 
         $this->etiqueta = 'Obj de impuesto';
+
+        $this->id_code = true;
     }
 
 }
