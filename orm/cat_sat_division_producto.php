@@ -18,8 +18,15 @@ class cat_sat_division_producto extends _modelo_parent{
 
         $tipo_campos['codigo'] = 'cod_int_0_2_numbers';
 
+        $parents_data['cat_sat_tipo_producto'] = array();
+        $parents_data['cat_sat_tipo_producto']['namespace'] = 'gamboamartin\\cat_sat\\models';
+        $parents_data['cat_sat_tipo_producto']['registro_id'] = -1;
+        $parents_data['cat_sat_tipo_producto']['keys_parents'] = array('cat_sat_tipo_producto_descripcion');
+        $parents_data['cat_sat_tipo_producto']['key_id'] = 'cat_sat_tipo_producto_id';
+
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
-            columnas: $columnas, columnas_extra: $columnas_extra, tipo_campos: $tipo_campos);
+            columnas: $columnas, columnas_extra: $columnas_extra, tipo_campos: $tipo_campos,
+            parents_data: $parents_data);
 
         $this->NAMESPACE = __NAMESPACE__;
 

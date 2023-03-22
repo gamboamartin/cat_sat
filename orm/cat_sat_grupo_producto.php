@@ -22,8 +22,15 @@ class cat_sat_grupo_producto extends _modelo_parent
 
         $tipo_campos['codigo'] = 'cod_int_0_4_numbers';
 
+        $parents_data['cat_sat_division_producto'] = array();
+        $parents_data['cat_sat_division_producto']['namespace'] = 'gamboamartin\\cat_sat\\models';
+        $parents_data['cat_sat_division_producto']['registro_id'] = -1;
+        $parents_data['cat_sat_division_producto']['keys_parents'] = array('cat_sat_division_producto_descripcion');
+        $parents_data['cat_sat_division_producto']['key_id'] = 'cat_sat_division_producto_id';
+
         parent::__construct(link: $link, tabla: $tabla, campos_obligatorios: $campos_obligatorios,
-            columnas: $columnas, columnas_extra: $columnas_extra, tipo_campos: $tipo_campos);
+            columnas: $columnas, columnas_extra: $columnas_extra, tipo_campos: $tipo_campos,
+            parents_data: $parents_data);
 
         $this->NAMESPACE = __NAMESPACE__;
 
