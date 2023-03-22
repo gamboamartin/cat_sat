@@ -1,50 +1,7 @@
 let sl_cat_sat_tipo_producto = $("#cat_sat_tipo_producto_id");
 let sl_cat_sat_division_producto = $("#cat_sat_division_producto_id");
+let text_codigo = $("#codigo");
 
-const mask_formato = (cadena) => {
-    let salida = "";
-    let aux = '';
-
-    for (var i = 0; i < cadena.length; i++) {
-        let value = cadena.substring(i, i + 1);
-        if (cadena.substring(i, i + 1) === '0'){
-            aux = '\\'
-        }
-        salida += `${aux}${value}`
-    }
-    return salida;
-}
-
-var mask = IMask(
-    document.getElementById('codigo'),
-    {
-        mask: `0000`,
-        lazy: false,
-        placeholderChar: '#'
-    }
-);
-
-$( ".form-additional" ).validate({
-    errorLabelContainer: $("div.error"),
-    submitHandler: function(form) {
-        form.submit();
-    },
-    rules: {
-        codigo: {
-            required: true,
-            digits: true
-        },
-        descripcion: {
-            required: true
-        }
-    },
-    messages: {
-        cat_sat_tipo_producto_id: "* Seleccione un tipo de producto",
-        cat_sat_division_producto_id: "* Seleccione un división de producto",
-        codigo: "* Ingrese un código valido",
-        descripcion: "* Ingrese una descripción valida"
-    }
-});
 
 let asigna_divisiones = (cat_sat_tipo_producto_id = '') => {
     let url = get_url("cat_sat_division_producto","get_divisiones", {cat_sat_tipo_producto_id: cat_sat_tipo_producto_id});
@@ -57,7 +14,7 @@ let asigna_divisiones = (cat_sat_tipo_producto_id = '') => {
 
         $.each(data.registros, function( index, division ) {
             integra_new_option(sl_cat_sat_division_producto,division.cat_sat_division_producto_descripcion_select,
-                division.cat_sat_division_producto_id,"data-cat_sat_division_producto_codigo",division.cat_sat_division_producto_codigo);
+                division.cat_sat_division_producto_id,"data-cat_sat_division_codigo",division.cat_sat_division_producto_codigo);
         });
         sl_cat_sat_division_producto.selectpicker('refresh');
     });
@@ -66,23 +23,11 @@ let asigna_divisiones = (cat_sat_tipo_producto_id = '') => {
 sl_cat_sat_tipo_producto.change(function () {
     let selected = $(this).find('option:selected');
     asigna_divisiones(selected.val());
-
-    mask.Value = ``;
-    mask.updateOptions({mask: `0000`});
 });
 
 sl_cat_sat_division_producto.change(function () {
     let selected = $(this).find('option:selected');
-    let codigo = selected.data(`cat_sat_division_producto_codigo`);
-    let mascara = ``;
+    let codigo = selected.data(`cat_sat_division_codigo`);
 
-    mask.Value = "";
-
-    if (codigo === undefined) {
-        mascara = `00`;
-    } else {
-        mascara = mask_formato(`${codigo}`);
-    }
-
-    mask.updateOptions({mask: `${mascara}00`});
+    text_codigo.val(`${codigo}NN`);
 });
