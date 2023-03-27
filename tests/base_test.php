@@ -3,6 +3,7 @@ namespace gamboamartin\cat_sat\tests;
 use base\orm\modelo_base;
 use gamboamartin\cat_sat\models\cat_sat_clase_producto;
 use gamboamartin\cat_sat\models\cat_sat_division_producto;
+use gamboamartin\cat_sat\models\cat_sat_factor;
 use gamboamartin\cat_sat\models\cat_sat_forma_pago;
 use gamboamartin\cat_sat\models\cat_sat_grupo_producto;
 use gamboamartin\cat_sat\models\cat_sat_isn;
@@ -15,6 +16,7 @@ use gamboamartin\cat_sat\models\cat_sat_producto;
 use gamboamartin\cat_sat\models\cat_sat_regimen_fiscal;
 use gamboamartin\cat_sat\models\cat_sat_subsidio;
 use gamboamartin\cat_sat\models\cat_sat_tipo_de_comprobante;
+use gamboamartin\cat_sat\models\cat_sat_tipo_factor;
 use gamboamartin\cat_sat\models\cat_sat_tipo_nomina;
 use gamboamartin\cat_sat\models\cat_sat_tipo_persona;
 use gamboamartin\cat_sat\models\cat_sat_tipo_producto;
@@ -111,6 +113,19 @@ class base_test{
         $registro['cat_sat_tipo_producto_id'] = $cat_sat_tipo_producto_id;
 
         $alta = (new cat_sat_division_producto($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+
+        }
+        return $alta;
+    }
+
+    public function alta_cat_sat_factor(PDO $link, string $codigo = '16', float $factor = .16, int $id = 1): array|stdClass
+    {
+        $registro['codigo'] = $codigo;
+        $registro['id'] = $id;
+        $registro['factor'] = $factor;
+        $alta = (new cat_sat_factor($link))->alta_registro($registro);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
 
@@ -450,6 +465,20 @@ class base_test{
         return $alta;
     }
 
+    public function alta_cat_sat_tipo_factor(PDO $link, string $descripcion = 'Tasa', int $id = 1): array|stdClass
+    {
+
+        $registro['id'] = $id;
+        $registro['descripcion'] = $descripcion;
+
+        $alta = (new cat_sat_tipo_factor($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+
+        }
+        return $alta;
+    }
+
     public function alta_cat_sat_tipo_nomina(PDO $link, string $codigo = 'A', $descripcion = '1', int $id = 1): array|stdClass
     {
         $registro = (new test())->registro(
@@ -625,6 +654,16 @@ class base_test{
         return $del;
     }
 
+    public function del_cat_sat_factor(PDO $link): array
+    {
+
+        $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_factor');
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+        return $del;
+    }
+
     public function del_cat_sat_forma_pago(PDO $link): array
     {
 
@@ -718,6 +757,16 @@ class base_test{
     public function del_cat_sat_tipo_de_comprobante(PDO $link): array
     {
         $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_tipo_de_comprobante');
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+        return $del;
+    }
+
+    public function del_cat_sat_tipo_factor(PDO $link): array
+    {
+
+        $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_tipo_factor');
         if(errores::$error){
             return (new errores())->error('Error al eliminar', $del);
         }
