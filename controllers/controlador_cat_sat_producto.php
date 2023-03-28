@@ -86,6 +86,7 @@ class controlador_cat_sat_producto extends _cat_sat_base {
     /**
      * Inicializa las configuraciones base de un controller
      * @return controler
+     * @version 8.15.0
      */
     private function init_configuraciones(): controler
     {

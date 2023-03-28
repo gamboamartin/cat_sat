@@ -87,6 +87,52 @@ class controlador_cat_sat_productoTest extends test {
         errores::$error = false;
     }
 
+    public function test_init_configuraciones(): void
+    {
+        errores::$error = false;
+
+        $_GET['seccion'] = 'cat_sat_clase_producto';
+        $_GET['accion'] = 'lista';
+        $_SESSION['grupo_id'] = 2;
+        $_SESSION['usuario_id'] = 2;
+        $_GET['session_id'] = '1';
+
+        $del = (new base_test())->del_adm_usuario(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al eliminar', data: $del);
+            print_r($error);
+            exit;
+        }
+
+        $del = (new base_test())->del_adm_seccion(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al del', data: $del);
+            print_r($error);
+            exit;
+        }
+
+        $alta = (new base_test())->alta_adm_usuario(link: $this->link, id: 2);
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+            print_r($error);
+            exit;
+        }
+
+        $alta = (new base_test())->alta_adm_seccion(link: $this->link, descripcion: 'cat_sat_clase_producto', id: 2);
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+            print_r($error);
+            exit;
+        }
+
+        $ctl = (new controlador_cat_sat_producto(link: $this->link,paths_conf: $this->paths_conf));
+        $ctl = new liberator($ctl);
+
+        $resultado = $ctl->init_configuraciones();
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
+    }
+
 
 
 
