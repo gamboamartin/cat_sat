@@ -83,6 +83,10 @@ class controlador_cat_sat_producto extends _cat_sat_base {
         return $salida;
     }
 
+    /**
+     * Inicializa las configuraciones base de un controller
+     * @return controler
+     */
     private function init_configuraciones(): controler
     {
         $this->titulo_lista = 'Registro de Productos';
