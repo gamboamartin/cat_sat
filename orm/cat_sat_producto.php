@@ -2,7 +2,6 @@
 
 namespace gamboamartin\cat_sat\models;
 
-use base\orm\_defaults;
 use base\orm\_modelo_parent;
 use gamboamartin\errores\errores;
 use PDO;
@@ -34,9 +33,6 @@ class cat_sat_producto extends _modelo_parent
         $this->etiqueta = 'Producto SAT';
 
         $this->id_code = true;
-
-
-
 
 
     }
