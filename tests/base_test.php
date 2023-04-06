@@ -20,6 +20,7 @@ use gamboamartin\cat_sat\models\cat_sat_tipo_factor;
 use gamboamartin\cat_sat\models\cat_sat_tipo_nomina;
 use gamboamartin\cat_sat\models\cat_sat_tipo_persona;
 use gamboamartin\cat_sat\models\cat_sat_tipo_producto;
+use gamboamartin\cat_sat\models\cat_sat_tipo_relacion;
 use gamboamartin\cat_sat\models\cat_sat_unidad;
 use gamboamartin\cat_sat\models\cat_sat_uso_cfdi;
 use gamboamartin\direccion_postal\models\dp_estado;
@@ -525,6 +526,19 @@ class base_test{
         $registro['codigo'] = $codigo;
 
         $alta = (new cat_sat_tipo_producto($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+
+        }
+        return $alta;
+    }
+
+    public function alta_cat_sat_tipo_relacion(PDO $link, int $id = 1): array|stdClass
+    {
+
+        $registro['id'] = $id;
+
+        $alta = (new cat_sat_tipo_relacion($link))->alta_registro($registro);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
 
