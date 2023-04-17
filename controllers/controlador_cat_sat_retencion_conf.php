@@ -9,21 +9,21 @@
 namespace gamboamartin\cat_sat\controllers;
 
 use base\controller\controler;
-use gamboamartin\cat_sat\models\cat_sat_traslado_conf;
+use gamboamartin\cat_sat\models\cat_sat_retencion_conf;
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\template\html;
-use html\cat_sat_traslado_conf_html;
+use html\cat_sat_retencion_conf_html;
 use PDO;
 use stdClass;
 
-class controlador_cat_sat_traslado_conf extends _cat_sat_impuestos {
+class controlador_cat_sat_retencion_conf extends _cat_sat_impuestos {
 
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass()){
 
-        $modelo = new cat_sat_traslado_conf(link: $link);
-        $html_ = new cat_sat_traslado_conf_html(html: $html);
+        $modelo = new cat_sat_retencion_conf(link: $link);
+        $html_ = new cat_sat_retencion_conf_html(html: $html);
         $obj_link = new links_menu(link: $link, registro_id:$this->registro_id);
 
         $datatables = $this->init_datatable();
@@ -45,9 +45,11 @@ class controlador_cat_sat_traslado_conf extends _cat_sat_impuestos {
     }
 
 
+
+
     private function init_configuraciones(): controler
     {
-        $this->titulo_lista = 'Registro de Configuraciones de Traslados';
+        $this->titulo_lista = 'Registro de Configuraciones de Retenciones';
 
         $this->lista_get_data = true;
 
@@ -61,11 +63,11 @@ class controlador_cat_sat_traslado_conf extends _cat_sat_impuestos {
      */
     private function init_datatable(): stdClass
     {
-        $columns["cat_sat_traslado_conf_id"]["titulo"] = "Id";
-        $columns["cat_sat_traslado_conf_codigo"]["titulo"] = "Código";
-        $columns["cat_sat_traslado_conf_descripcion"]["titulo"] = "Configuraciones";
+        $columns["cat_sat_retencion_conf_id"]["titulo"] = "Id";
+        $columns["cat_sat_retencion_conf_codigo"]["titulo"] = "Código";
+        $columns["cat_sat_retencion_conf_descripcion"]["titulo"] = "Configuraciones";
 
-        $filtro = array("cat_sat_traslado_conf.id","cat_sat_traslado_conf.codigo","cat_sat_traslado_conf.descripcion");
+        $filtro = array("cat_sat_retencion_conf.id","cat_sat_retencion_conf.codigo","cat_sat_retencion_conf.descripcion");
 
         $datatables = new stdClass();
         $datatables->columns = $columns;
@@ -73,6 +75,8 @@ class controlador_cat_sat_traslado_conf extends _cat_sat_impuestos {
 
         return $datatables;
     }
+
+
 
 
 }

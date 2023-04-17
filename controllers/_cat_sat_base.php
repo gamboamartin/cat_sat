@@ -1,11 +1,18 @@
 <?php
 namespace gamboamartin\cat_sat\controllers;
+use base\orm\modelo;
 use gamboamartin\errores\errores;
 
 use gamboamartin\system\_ctl_base;
+use gamboamartin\system\html_controler;
+use gamboamartin\system\links_menu;
+use PDO;
 use stdClass;
 
 class _cat_sat_base extends _ctl_base {
+
+
+
     public function alta(bool $header, bool $ws = false): array|string
     {
         $r_alta = $this->init_alta();
