@@ -28,6 +28,22 @@ class _cat_sat_base extends _ctl_base {
         return $r_alta;
     }
 
+    protected function campos_view(): array
+    {
+        $keys = new stdClass();
+        $keys->inputs = array('codigo', 'descripcion');
+        $keys->selects = array();
+
+        $init_data = array();
+
+        $campos_view = $this->campos_view_base(init_data: $init_data, keys: $keys);
+        if (errores::$error) {
+            return $this->errores->error(mensaje: 'Error al inicializar campo view', data: $campos_view);
+        }
+
+        return $campos_view;
+    }
+
     /**
      * Funcion declarado y sobreescrita en cada controlador en uso
      * @return array
