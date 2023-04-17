@@ -4,6 +4,7 @@ use base\orm\_defaults;
 use base\orm\_modelo_parent;
 use gamboamartin\errores\errores;
 use PDO;
+use stdClass;
 
 class cat_sat_conf_imps extends _modelo_parent {
 
@@ -23,4 +24,43 @@ class cat_sat_conf_imps extends _modelo_parent {
         $this->id_code = true;
 
     }
+
+    final public function get_impuestos(int $cat_sat_conf_imps_id){
+
+        $retencion = $this->get_retenciones(cat_sat_conf_imps_id: $cat_sat_conf_imps_id);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener configuracion',data:  $retencion);
+        }
+        $traslado = $this->get_traslados(cat_sat_conf_imps_id: $cat_sat_conf_imps_id);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener configuracion',data:  $traslado);
+        }
+
+        $data = new stdClass();
+        $data->retenciones = $retencion;
+        $data->traslados = $traslado;
+
+        return $data;
+
+
+    }
+
+    final public function get_retenciones(int $cat_sat_conf_imps_id){
+        $filtro['cat_sat_conf_imps.id'] = $cat_sat_conf_imps_id;
+        $r_retencion_conf = (new cat_sat_retencion_conf(link: $this->link))->filtro_and(filtro: $filtro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener configuracion',data:  $r_retencion_conf);
+        }
+        return $r_retencion_conf->registros;
+    }
+    final public function get_traslados(int $cat_sat_conf_imps_id){
+        $filtro['cat_sat_conf_imps.id'] = $cat_sat_conf_imps_id;
+        $r_traslado_conf = (new cat_sat_traslado_conf(link: $this->link))->filtro_and(filtro: $filtro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener configuracion',data:  $r_traslado_conf);
+        }
+        return $r_traslado_conf->registros;
+
+    }
+
 }
