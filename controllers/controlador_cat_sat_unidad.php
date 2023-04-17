@@ -44,7 +44,7 @@ class controlador_cat_sat_unidad extends _cat_sat_base {
             die('Error');
         }
     }
-    
+
     private function init_configuraciones(): controler
     {
 
