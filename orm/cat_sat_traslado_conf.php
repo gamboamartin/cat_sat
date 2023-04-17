@@ -5,7 +5,7 @@ use PDO;
 
 class cat_sat_traslado_conf extends _impuestos {
 
-    public function __construct(PDO $link){
+    public function __construct(PDO $link){ 
         $tabla = 'cat_sat_traslado_conf';
         $columnas = array($tabla=>false,'cat_sat_factor'=>$tabla,'cat_sat_tipo_factor'=>$tabla,
             'cat_sat_tipo_impuesto'=>$tabla,'cat_sat_conf_imps'=>$tabla);
