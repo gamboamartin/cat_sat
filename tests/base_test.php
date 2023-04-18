@@ -560,6 +560,7 @@ class base_test{
         return $alta;
     }
 
+
     public function alta_cat_sat_uso_cfdi(PDO $link, string $codigo = '1', $descripcion = '1', int $id = 1,
                                              bool $predeterminado = false): array|stdClass
     {
@@ -685,6 +686,15 @@ class base_test{
     public function del_cat_sat_factor(PDO $link): array
     {
 
+        $del = $this->del_cat_sat_traslado_conf($link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
+        }
+        $del = $this->del_cat_sat_retencion_conf($link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
+        }
+
         $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_factor');
         if(errores::$error){
             return (new errores())->error('Error al eliminar', $del);
@@ -782,6 +792,17 @@ class base_test{
         return $del;
     }
 
+    public function del_cat_sat_retencion_conf(PDO $link): array
+    {
+
+
+        $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_retencion_conf');
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+        return $del;
+    }
+
     public function del_cat_sat_tipo_de_comprobante(PDO $link): array
     {
         $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_tipo_de_comprobante');
@@ -837,6 +858,18 @@ class base_test{
         }
         return $del;
     }
+
+    public function del_cat_sat_traslado_conf(PDO $link): array
+    {
+
+
+        $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_traslado_conf');
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+        return $del;
+    }
+
 
     public function del_cat_sat_unidad(PDO $link): array
     {
