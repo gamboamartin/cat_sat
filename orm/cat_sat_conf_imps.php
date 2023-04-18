@@ -65,7 +65,7 @@ class cat_sat_conf_imps extends _modelo_parent {
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener configuracion',data:  $r_traslado_conf);
         }
-        return $r_traslado_conf->registros;
+        return $r_traslado_conf->registros; 
 
     }
 
