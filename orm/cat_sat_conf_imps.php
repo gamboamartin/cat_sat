@@ -45,7 +45,13 @@ class cat_sat_conf_imps extends _modelo_parent {
 
     }
 
-    final public function get_retenciones(int $cat_sat_conf_imps_id){
+    /**
+     * Ontiene las configuraciones de retencion
+     * @param int $cat_sat_conf_imps_id
+     * @return array
+     */
+    final public function get_retenciones(int $cat_sat_conf_imps_id): array
+    {
         $filtro['cat_sat_conf_imps.id'] = $cat_sat_conf_imps_id;
         $r_retencion_conf = (new cat_sat_retencion_conf(link: $this->link))->filtro_and(filtro: $filtro);
         if(errores::$error){
