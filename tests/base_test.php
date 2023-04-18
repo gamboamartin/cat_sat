@@ -2,6 +2,7 @@
 namespace gamboamartin\cat_sat\tests;
 use base\orm\modelo_base;
 use gamboamartin\cat_sat\models\cat_sat_clase_producto;
+use gamboamartin\cat_sat\models\cat_sat_conf_imps;
 use gamboamartin\cat_sat\models\cat_sat_division_producto;
 use gamboamartin\cat_sat\models\cat_sat_factor;
 use gamboamartin\cat_sat\models\cat_sat_forma_pago;
@@ -82,6 +83,19 @@ class base_test{
         $registro['codigo'] = $codigo;
 
         $alta = (new cat_sat_clase_producto($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+
+        }
+        return $alta;
+    }
+
+    public function alta_cat_sat_conf_imps(PDO $link, int $id = 1): array|stdClass
+    {
+
+        $registro['id'] = $id;
+
+        $alta = (new cat_sat_conf_imps($link))->alta_registro($registro);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
 
