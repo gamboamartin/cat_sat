@@ -815,6 +815,11 @@ class base_test{
     public function del_cat_sat_tipo_factor(PDO $link): array
     {
 
+        $del = $this->del_cat_sat_retencion_conf($link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
+        }
+
         $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_tipo_factor');
         if(errores::$error){
             return (new errores())->error('Error al eliminar', $del);
