@@ -819,6 +819,11 @@ class base_test{
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
         }
+        $del = $this->del_cat_sat_traslado_conf($link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
+        }
+
 
         $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_tipo_factor');
         if(errores::$error){
