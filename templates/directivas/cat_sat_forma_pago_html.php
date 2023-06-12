@@ -107,12 +107,13 @@ class cat_sat_forma_pago_html extends html_controler {
         return $selects;
     }
 
-    public function select_cat_sat_forma_pago_id(int $cols, bool $con_registros, int $id_selected, PDO $link): array|string
+    public function select_cat_sat_forma_pago_id(int $cols, bool $con_registros, int $id_selected, PDO $link,
+                                                 string $label = 'Forma de Pago'): array|string
     {
         $modelo = new cat_sat_forma_pago(link: $link);
 
         $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
-            modelo: $modelo,label: 'forma_pago',required: true);
+            modelo: $modelo,label: $label,required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
