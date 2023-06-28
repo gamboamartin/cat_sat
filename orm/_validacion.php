@@ -18,6 +18,7 @@ class _validacion{
             '15','17','23','24','25','26','27','28','29','30','31');
 
         $this->metodo_pago_permitido['PPD'] = array('99');
+        $this->metodo_pago_permitido['PRED'] = array('PRED');
     }
 
     private function cat_sat_metodo_pago_codigo(stdClass $data): array|string
