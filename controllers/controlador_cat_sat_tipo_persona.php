@@ -55,14 +55,6 @@ class controlador_cat_sat_tipo_persona extends system {
                 header:  $header,ws:  $ws);
         }
 
-        $button_valida_persona_fisica = (new directivas(html: $this->html_base))->button_href_valida_persona_fisica(
-            registro_id:$this->registro_id,valida_persona_fisica: $this->row_upd->valida_persona_fisica);
-        if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al generar boton', data: $button_valida_persona_fisica,
-                header:  $header, ws: $ws);
-        }
-        $this->inputs->valida_persona_fisica = $button_valida_persona_fisica;
-
 
         $button_status = (new directivas(html: $this->html_base))->button_href_status(cols: 6, registro_id:$this->registro_id,
             seccion: $this->seccion,status: $this->row_upd->status);
