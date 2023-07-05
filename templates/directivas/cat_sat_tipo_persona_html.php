@@ -8,9 +8,14 @@ use PDO;
 
 class cat_sat_tipo_persona_html extends html_controler {
 
-    public function select_cat_sat_tipo_persona_id(int $cols,bool $con_registros,int $id_selected, PDO $link): array|string
+    public function select_cat_sat_tipo_persona_id(int $cols,bool $con_registros,int|null $id_selected,
+                                                   PDO $link): array|string
     {
         $modelo = new cat_sat_tipo_persona($link);
+
+        if(is_null($id_selected)){
+            $id_selected = -1;
+        }
 
         $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
             modelo: $modelo,label: 'Tipo Persona',required: true);
