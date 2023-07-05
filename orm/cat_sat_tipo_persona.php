@@ -1,7 +1,6 @@
 <?php
 namespace gamboamartin\cat_sat\models;
 use base\orm\_modelo_parent_sin_codigo;
-use base\orm\modelo;
 use PDO;
 
 class cat_sat_tipo_persona extends _modelo_parent_sin_codigo {
