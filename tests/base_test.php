@@ -843,9 +843,23 @@ class base_test{
         return $del;
     }
 
+    public function del_cat_sat_conf_reg_tp(PDO $link): array
+    {
+
+        $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_conf_reg_tp');
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+        }
+        return $del;
+    }
+
     public function del_cat_sat_tipo_persona(PDO $link): array
     {
 
+        $del = $this->del_cat_sat_conf_reg_tp($link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
+        }
 
         $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_tipo_persona');
         if(errores::$error){
