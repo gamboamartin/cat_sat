@@ -3,6 +3,7 @@ namespace gamboamartin\cat_sat\tests;
 use base\orm\modelo_base;
 use gamboamartin\cat_sat\models\cat_sat_clase_producto;
 use gamboamartin\cat_sat\models\cat_sat_conf_imps;
+use gamboamartin\cat_sat\models\cat_sat_conf_reg_tp;
 use gamboamartin\cat_sat\models\cat_sat_division_producto;
 use gamboamartin\cat_sat\models\cat_sat_factor;
 use gamboamartin\cat_sat\models\cat_sat_forma_pago;
@@ -830,6 +831,46 @@ class base_test{
             return (new errores())->error('Error al eliminar', $del);
         }
         return $del;
+    }
+
+    public function alta_cat_sat_conf_reg_tp(PDO $link, int $cat_sat_regimen_fiscal_id = 1,
+                                             int $cat_sat_tipo_persona_id = 1, int $id = 1): array|stdClass
+    {
+
+        $existe = (new cat_sat_regimen_fiscal($link))->existe_by_id(registro_id: $cat_sat_regimen_fiscal_id);
+        if(errores::$error){
+            return (new errores())->error('Error al verificar si existe', $existe);
+
+        }
+        if(!$existe) {
+            $alta = (new base_test())->alta_cat_sat_regimen_fiscal(link: $link, id: $cat_sat_regimen_fiscal_id);
+            if (errores::$error) {
+                return (new errores())->error('Error al dar de alta', $alta);
+            }
+        }
+
+        $existe = (new cat_sat_tipo_persona($link))->existe_by_id(registro_id: $cat_sat_tipo_persona_id);
+        if(errores::$error){
+            return (new errores())->error('Error al verificar si existe', $existe);
+
+        }
+        if(!$existe) {
+            $alta = (new base_test())->alta_cat_sat_tipo_persona(link: $link, id: $cat_sat_tipo_persona_id);
+            if (errores::$error) {
+                return (new errores())->error('Error al dar de alta', $alta);
+            }
+        }
+
+        $registro['id'] = $id;
+        $registro['cat_sat_regimen_fiscal_id'] = $cat_sat_regimen_fiscal_id;
+        $registro['cat_sat_tipo_persona_id'] = $cat_sat_tipo_persona_id;
+
+        $alta = (new cat_sat_conf_reg_tp($link))->alta_registro($registro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
+
+        }
+        return $alta;
     }
 
 
