@@ -21,6 +21,11 @@ class _validacion{
         $this->metodo_pago_permitido['PRED'] = array('PRED');
     }
 
+    /**
+     * Obtiene el codigo de un metodo de pago
+     * @param stdClass $data datos de obtencion de codigo
+     * @return array|string
+     */
     private function cat_sat_metodo_pago_codigo(stdClass $data): array|string
     {
         $cat_sat_metodo_pago_codigo = trim($data->cat_sat_metodo_pago->codigo);
@@ -101,6 +106,20 @@ class _validacion{
         $data->cat_sat_metodo_pago = $cat_sat_metodo_pago;
         $data->cat_sat_forma_pago = $cat_sat_forma_pago;
         return $data;
+    }
+
+    final public function valida_conf_tipo_persona(PDO $link, array $registro){
+        $filtro['cat_sat_regimen_fiscal.id'] = $registro['cat_sat_regimen_fiscal_id'];
+        $filtro['cat_sat_tipo_persona.id'] = $registro['cat_sat_tipo_persona_id'];
+
+        $existe_conf = (new cat_sat_conf_reg_tp(link: $link))->existe(filtro: $filtro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al verificar si existe configuracion de regimen', data: $existe_conf);
+        }
+        if(!$existe_conf){
+            return $this->error->error(mensaje: 'Error al no existe configuracion de regimen', data: $filtro);
+        }
+        return true;
     }
 
 
