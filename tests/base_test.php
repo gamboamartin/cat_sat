@@ -785,6 +785,10 @@ class base_test{
     public function del_cat_sat_regimen_fiscal(PDO $link): array
     {
 
+        $del = $this->del_cat_sat_conf_reg_tp($link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
+        }
 
         $del = $this->del($link, 'gamboamartin\\cat_sat\\models\\cat_sat_regimen_fiscal');
         if(errores::$error){
