@@ -16,13 +16,11 @@ class cat_sat_conf_reg_tp extends _modelo_parent{
         $campos_obligatorios[] = 'cat_sat_regimen_fiscal_id';
         $campos_obligatorios[] = 'cat_sat_tipo_persona_id';
 
-
-
         $parents_data['cat_sat_regimen_fiscal'] = array();
         $parents_data['cat_sat_regimen_fiscal']['namespace'] = 'gamboamartin\\cat_sat\\models';
         $parents_data['cat_sat_regimen_fiscal']['registro_id'] = -1;
         $parents_data['cat_sat_regimen_fiscal']['keys_parents'] = array('cat_sat_regimen_fiscal_descripcion');
-        $parents_data['cat_sat_regimen_fiscal']['key_id'] = 'cat_sat_grupo_producto_id';
+        $parents_data['cat_sat_regimen_fiscal']['key_id'] = 'cat_sat_regimen_fiscal_id';
 
         $parents_data['cat_sat_tipo_persona'] = array();
         $parents_data['cat_sat_tipo_persona']['namespace'] = 'gamboamartin\\cat_sat\\models';
