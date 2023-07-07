@@ -59,7 +59,7 @@ class cat_sat_conf_reg_tp extends _modelo_parent{
         }
 
         $filtro['cat_sat_regimen_fiscal_id'] = $data->cat_sat_regimen_fiscal['cat_sat_regimen_fiscal_id'];
-        $filtro['cat_sat_tipo_persona_id'] = $data->cat_sat_regimen_fiscal['cat_sat_tipo_persona_id'];
+        $filtro['cat_sat_tipo_persona_id'] = $data->cat_sat_tipo_persona['cat_sat_tipo_persona_id'];
 
         $existe = $this->existe(filtro: $filtro);
         if(errores::$error){
@@ -100,9 +100,16 @@ class cat_sat_conf_reg_tp extends _modelo_parent{
      * Obtiene los elementos base parents del row
      * @param array $registro Registro en proceso
      * @return array|stdClass
+     * @version 8.48.0
      */
-    private function datos_base_alta(array $registro): array|stdClass
+    PUBLIC function datos_base_alta(array $registro): array|stdClass
     {
+        $keys = array('cat_sat_regimen_fiscal_id','cat_sat_tipo_persona_id');
+        $valida = $this->validacion->valida_ids(keys: $keys,registro:  $registro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar registro',data: $valida);
+        }
+
         $cat_sat_regimen_fiscal = (new cat_sat_regimen_fiscal(link: $this->link))->registro(
             registro_id: $registro['cat_sat_regimen_fiscal_id']);
         if(errores::$error){
