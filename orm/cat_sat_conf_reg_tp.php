@@ -44,32 +44,91 @@ class cat_sat_conf_reg_tp extends _modelo_parent{
     public function alta_bd( array $keys_integra_ds = array()): array|stdClass
     {
 
-        $cat_sat_regimen_fiscal = (new cat_sat_regimen_fiscal(link: $this->link))->registro(registro_id: $this->registro['cat_sat_regimen_fiscal_id']);
+        $data = $this->datos_base_alta(registro: $this->registro);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al obtener cat_sat_regimen_fiscal',data: $cat_sat_regimen_fiscal);
+            return $this->error->error(mensaje: 'Error al obtener datos',data: $data);
+        }
+        $registro = $this->descripcion(data: $data,registro: $this->registro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener registro',data: $registro);
         }
 
-        $cat_sat_tipo_persona = (new cat_sat_tipo_persona(link: $this->link))->registro(registro_id: $this->registro['cat_sat_tipo_persona_id']);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al obtener cat_sat_tipo_persona',data: $cat_sat_tipo_persona);
-        }
-
-        if(!isset($this->registro['descripcion'])){
-            $this->registro['descripcion'] = $cat_sat_regimen_fiscal['cat_sat_regimen_fiscal_descripcion'];
-            $this->registro['descripcion'] .= ' '.$cat_sat_tipo_persona['cat_sat_tipo_persona_descripcion'];
-        }
-        $this->registro = $this->campos_base(data:$this->registro,modelo: $this);
+        $this->registro = $this->campos_base(data:$registro,modelo: $this);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al inicializar campo base',data: $this->registro);
         }
 
+        $filtro['cat_sat_regimen_fiscal_id'] = $data->cat_sat_regimen_fiscal['cat_sat_regimen_fiscal_id'];
+        $filtro['cat_sat_tipo_persona_id'] = $data->cat_sat_regimen_fiscal['cat_sat_tipo_persona_id'];
 
-        $r_alta_bd = parent::alta_bd();
+        $existe = $this->existe(filtro: $filtro);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al insertar clase producto',data:  $r_alta_bd);
+            return $this->error->error(mensaje: 'Error al verificar si existe',data: $existe);
+        }
+        if($existe){
+            $r_alta_bd = $this->alta_existente(filtro: $filtro);
+            if(errores::$error){
+                return $this->error->error(mensaje: 'Error al maquetar salida',data: $r_alta_bd);
+            }
+        }
+        else {
+            $r_alta_bd = parent::alta_bd();
+            if (errores::$error) {
+                return $this->error->error(mensaje: 'Error al insertar clase producto', data: $r_alta_bd);
+            }
         }
         return $r_alta_bd;
     }
+
+    private function alta_existente(array $filtro){
+        $r_cat_sat_conf_reg_tp = $this->filtro_and(filtro: $filtro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al verificar si existe',data: $r_cat_sat_conf_reg_tp);
+        }
+        $registro = $r_cat_sat_conf_reg_tp->registros[0];
+
+        $r_alta_bd = $this->data_result_transaccion(mensaje: "Registro existente",registro:  $registro,
+            registro_ejecutado:  $this->registro, registro_id: $registro['cat_sat_conf_reg_tp_id'],
+            sql: 'Sin ejecucion');
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al maquetar salida',data: $r_alta_bd);
+        }
+        return $r_alta_bd;
+    }
+
+    /**
+     * Obtiene los elementos base parents del row
+     * @param array $registro Registro en proceso
+     * @return array|stdClass
+     */
+    private function datos_base_alta(array $registro): array|stdClass
+    {
+        $cat_sat_regimen_fiscal = (new cat_sat_regimen_fiscal(link: $this->link))->registro(
+            registro_id: $registro['cat_sat_regimen_fiscal_id']);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener cat_sat_regimen_fiscal',data: $cat_sat_regimen_fiscal);
+        }
+
+        $cat_sat_tipo_persona = (new cat_sat_tipo_persona(link: $this->link))->registro(
+            registro_id: $registro['cat_sat_tipo_persona_id']);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener cat_sat_tipo_persona',data: $cat_sat_tipo_persona);
+        }
+        $data = new stdClass();
+        $data->cat_sat_regimen_fiscal = $cat_sat_regimen_fiscal;
+        $data->cat_sat_tipo_persona = $cat_sat_tipo_persona;
+        return $data;
+    }
+
+    private function descripcion(stdClass $data, array $registro): array
+    {
+        if(!isset($registro['descripcion'])){
+            $registro['descripcion'] = $data->cat_sat_regimen_fiscal['cat_sat_regimen_fiscal_descripcion'];
+            $registro['descripcion'] .= ' '.$data->cat_sat_tipo_persona['cat_sat_tipo_persona_descripcion'];
+        }
+        return $registro;
+    }
+
 
 
     public function modifica_bd(array $registro, int $id, bool $reactiva = false,
