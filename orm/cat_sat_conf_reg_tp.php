@@ -78,21 +78,7 @@ class cat_sat_conf_reg_tp extends _modelo_parent{
         return $r_alta_bd;
     }
 
-    private function alta_existente(array $filtro){
-        $r_cat_sat_conf_reg_tp = $this->filtro_and(filtro: $filtro);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al verificar si existe',data: $r_cat_sat_conf_reg_tp);
-        }
-        $registro = $r_cat_sat_conf_reg_tp->registros[0];
 
-        $r_alta_bd = $this->data_result_transaccion(mensaje: "Registro existente",registro:  $registro,
-            registro_ejecutado:  $this->registro, registro_id: $registro['cat_sat_conf_reg_tp_id'],
-            sql: 'Sin ejecucion');
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al maquetar salida',data: $r_alta_bd);
-        }
-        return $r_alta_bd;
-    }
 
     /**
      * Obtiene los elementos base parents del row
@@ -100,7 +86,7 @@ class cat_sat_conf_reg_tp extends _modelo_parent{
      * @return array|stdClass
      * @version 8.48.0
      */
-    PUBLIC function datos_base_alta(array $registro): array|stdClass
+    private function datos_base_alta(array $registro): array|stdClass
     {
         $keys = array('cat_sat_regimen_fiscal_id','cat_sat_tipo_persona_id');
         $valida = $this->validacion->valida_ids(keys: $keys,registro:  $registro);

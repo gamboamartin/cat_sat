@@ -9,6 +9,7 @@ use gamboamartin\cat_sat\models\cat_sat_producto;
 use gamboamartin\cat_sat\models\cat_sat_unidad;
 use gamboamartin\cat_sat\tests\base_test;
 use gamboamartin\errores\errores;
+use gamboamartin\test\liberator;
 use gamboamartin\test\test;
 use stdClass;
 
@@ -40,6 +41,7 @@ class cat_sat_conf_reg_tpTest extends test {
         $_SESSION['usuario_id'] = 1;
         $_GET['session_id'] = '1';
         $modelo = new cat_sat_conf_reg_tp(link: $this->link);
+        $modelo = new liberator($modelo);
 
 
         $del = (new \gamboamartin\cat_sat\tests\base_test())->del_cat_sat_regimen_fiscal(link: $this->link);
