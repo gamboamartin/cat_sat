@@ -2,12 +2,6 @@
 namespace gamboamartin\cat_sat\tests\orm;
 
 use gamboamartin\cat_sat\models\cat_sat_conf_reg_tp;
-use gamboamartin\cat_sat\models\cat_sat_metodo_pago;
-use gamboamartin\cat_sat\models\cat_sat_moneda;
-use gamboamartin\cat_sat\models\cat_sat_obj_imp;
-use gamboamartin\cat_sat\models\cat_sat_producto;
-use gamboamartin\cat_sat\models\cat_sat_unidad;
-use gamboamartin\cat_sat\tests\base_test;
 use gamboamartin\errores\errores;
 use gamboamartin\test\liberator;
 use gamboamartin\test\test;
