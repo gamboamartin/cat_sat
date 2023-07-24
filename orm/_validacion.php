@@ -81,6 +81,11 @@ class _validacion{
         return $data;
     }
 
+    /**
+     * asigna el codigo de un metodo de pago
+     * @param stdClass $data Datos
+     * @return array|stdClass
+     */
     private function init_codigo_metodo_pago(stdClass $data): array|stdClass
     {
         if(!isset($data->cat_sat_metodo_pago->codigo)){
@@ -93,6 +98,12 @@ class _validacion{
         return $data;
     }
 
+    /**
+     * Inicializa los datos para la validacion de un metodo de pago
+     * @param stdClass|array $cat_sat_forma_pago Forma de pago datos
+     * @param stdClass|array $cat_sat_metodo_pago Metodo de pago datos
+     * @return stdClass
+     */
     private function init_data(stdClass|array $cat_sat_forma_pago, stdClass|array $cat_sat_metodo_pago): stdClass
     {
         if(is_array($cat_sat_metodo_pago)){
