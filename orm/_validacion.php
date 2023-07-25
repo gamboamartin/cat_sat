@@ -103,6 +103,7 @@ class _validacion{
      * @param stdClass|array $cat_sat_forma_pago Forma de pago datos
      * @param stdClass|array $cat_sat_metodo_pago Metodo de pago datos
      * @return stdClass
+     * @version 8.53.0
      */
     private function init_data(stdClass|array $cat_sat_forma_pago, stdClass|array $cat_sat_metodo_pago): stdClass
     {

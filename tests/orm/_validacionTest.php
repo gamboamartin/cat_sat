@@ -23,6 +23,32 @@ class _validacionTest extends test {
         $this->paths_conf->views = '/var/www/html/cat_sat/config/views.php';
     }
 
+    public function test_init_data(): void
+    {
+        errores::$error = false;
+
+        $_GET['seccion'] = 'cat_sat_tipo_persona';
+        $_GET['accion'] = 'lista';
+        $_SESSION['grupo_id'] = 1;
+        $_SESSION['usuario_id'] = 1;
+        $_GET['session_id'] = '1';
+        $_validacion = new _validacion();
+        $_validacion = new liberator($_validacion);
+
+        $cat_sat_forma_pago = array();
+        $cat_sat_metodo_pago = new stdClass();
+
+        $resultado = $_validacion->init_data($cat_sat_forma_pago, $cat_sat_metodo_pago);
+        $this->assertIsObject($resultado);
+        $this->assertIsObject($resultado->cat_sat_metodo_pago);
+        $this->assertIsObject($resultado->cat_sat_forma_pago);
+        $this->assertNotTrue(errores::$error);
+
+
+
+        errores::$error = false;
+    }
+
     /**
      */
     public function test_verifica_forma_pago(): void
