@@ -145,6 +145,13 @@ class _validacion{
 
 
     final public function valida_metodo_pago(PDO $link, array $registro){
+
+        $keys = array('cat_sat_metodo_pago_id','cat_sat_forma_pago_id');
+        $valida = (new validacion())->valida_ids(keys: $keys, registro: $registro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al al validar registro', data: $valida);
+        }
+        
         $cat_sat_metodo_pago = (new cat_sat_metodo_pago(link: $link))->registro(
             registro_id: $registro['cat_sat_metodo_pago_id'], columnas_en_bruto: true,retorno_obj: true);
         if(errores::$error){
