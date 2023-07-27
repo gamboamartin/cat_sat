@@ -2,6 +2,7 @@
 namespace gamboamartin\cat_sat\models;
 
 use gamboamartin\errores\errores;
+use gamboamartin\validacion\validacion;
 use PDO;
 use stdClass;
 
@@ -121,6 +122,13 @@ class _validacion{
     }
 
     final public function valida_conf_tipo_persona(PDO $link, array $registro){
+
+        $keys = array('cat_sat_regimen_fiscal_id','cat_sat_tipo_persona_id');
+        $valida = (new validacion())->valida_ids(keys: $keys, registro: $registro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al al validar registro', data: $valida);
+        }
+
         $filtro['cat_sat_regimen_fiscal.id'] = $registro['cat_sat_regimen_fiscal_id'];
         $filtro['cat_sat_tipo_persona.id'] = $registro['cat_sat_tipo_persona_id'];
 
