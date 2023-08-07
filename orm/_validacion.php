@@ -121,7 +121,14 @@ class _validacion{
         return $data;
     }
 
-    final public function valida_conf_tipo_persona(PDO $link, array $registro){
+    /**
+     * Verifica si los datos del cliente van conforme al tipo de persona y regimen fiscal
+     * @param PDO $link Conexion a la base de datos
+     * @param array $registro Registro en proceso
+     * @return array|true
+     */
+    final public function valida_conf_tipo_persona(PDO $link, array $registro): bool|array
+    {
 
         $keys = array('cat_sat_regimen_fiscal_id','cat_sat_tipo_persona_id');
         $valida = (new validacion())->valida_ids(keys: $keys, registro: $registro);
@@ -151,7 +158,7 @@ class _validacion{
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al al validar registro', data: $valida);
         }
-        
+
         $cat_sat_metodo_pago = (new cat_sat_metodo_pago(link: $link))->registro(
             registro_id: $registro['cat_sat_metodo_pago_id'], columnas_en_bruto: true,retorno_obj: true);
         if(errores::$error){
