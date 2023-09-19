@@ -26,9 +26,16 @@ class _validacion{
      * Obtiene el codigo de un metodo de pago
      * @param stdClass $data datos de obtencion de codigo
      * @return array|string
+     * @version 12.2.0
      */
     private function cat_sat_metodo_pago_codigo(stdClass $data): array|string
     {
+        if(!isset($data->cat_sat_metodo_pago)){
+            return $this->error->error(mensaje: 'Error cat_sat_metodo_pago no existe', data: $data);
+        }
+        if(!isset($data->cat_sat_metodo_pago->codigo)){
+            return $this->error->error(mensaje: 'Error cat_sat_metodo_pago->codigo no existe', data: $data);
+        }
         $cat_sat_metodo_pago_codigo = trim($data->cat_sat_metodo_pago->codigo);
         if($cat_sat_metodo_pago_codigo === ''){
             return $this->error->error(mensaje: 'Error cat_sat_metodo_pago_codigo esta vacio',
@@ -70,6 +77,11 @@ class _validacion{
         return $data;
     }
 
+    /**
+     * Inicializa la forma de pago codigo
+     * @param stdClass $data datos de envio
+     * @return array|stdClass
+     */
     private function init_codigo_forma_pago(stdClass $data): array|stdClass
     {
         if(!isset($data->cat_sat_forma_pago->codigo)){
