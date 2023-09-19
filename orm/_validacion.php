@@ -183,8 +183,9 @@ class _validacion{
     }
 
     /**
-     * @param PDO $link
-     * @param array $registro
+     * Valida que un metodo de pago sea valido
+     * @param PDO $link Conexion a la base de datos
+     * @param array $registro Registro en proceso
      * @return array|bool
      */
     final public function valida_metodo_pago(PDO $link, array $registro): bool|array
@@ -243,10 +244,35 @@ class _validacion{
      * @param stdClass $data Datos cargados
      * @param array|stdClass $registro Registro en proceso
      * @return bool|array
+     * @version 12.8.0
      */
     private function valida_si_existe_en_array(string $cat_sat_metodo_pago_codigo, stdClass $data,
                                                array|stdClass $registro): bool|array
     {
+        $cat_sat_metodo_pago_codigo = trim($cat_sat_metodo_pago_codigo);
+        if($cat_sat_metodo_pago_codigo === ''){
+            return $this->error->error(mensaje: 'Error cat_sat_metodo_pago_codigo esta vacio',
+                data: $cat_sat_metodo_pago_codigo);
+        }
+        if(!isset($data->cat_sat_forma_pago)){
+            return $this->error->error(mensaje: 'Error data->cat_sat_forma_pago no existe', data: $data);
+        }
+        if(!is_object($data->cat_sat_forma_pago)){
+            return $this->error->error(mensaje: 'Error data->cat_sat_forma_pago debe ser un objeto', data: $data);
+        }
+        if(!isset($data->cat_sat_forma_pago->codigo)){
+            return $this->error->error(mensaje: 'Error data->cat_sat_forma_pago->codigo no existe', data: $data);
+        }
+        if(!isset($this->metodo_pago_permitido[$cat_sat_metodo_pago_codigo])){
+            return $this->error->error(
+                mensaje: 'Error $this->metodo_pago_permitido[$cat_sat_metodo_pago_codigo] no existe',
+                data: $this->metodo_pago_permitido);
+        }
+        if(!is_array($this->metodo_pago_permitido[$cat_sat_metodo_pago_codigo])){
+            return $this->error->error(
+                mensaje: 'Error $this->metodo_pago_permitido[$cat_sat_metodo_pago_codigo] debe ser una array',
+                data: $this->metodo_pago_permitido);
+        }
         if((!in_array($data->cat_sat_forma_pago->codigo, $this->metodo_pago_permitido[$cat_sat_metodo_pago_codigo]))){
             return $this->error->error(mensaje: 'Error al metodo o forma de pago incorrecto', data: $registro);
         }

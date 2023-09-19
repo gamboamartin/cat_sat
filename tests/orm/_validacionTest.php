@@ -232,6 +232,32 @@ class _validacionTest extends test {
         errores::$error = false;
     }
 
+    public function test_valida_si_existe_en_array(): void
+    {
+        errores::$error = false;
+
+        $_GET['seccion'] = 'cat_sat_tipo_persona';
+        $_GET['accion'] = 'lista';
+        $_SESSION['grupo_id'] = 1;
+        $_SESSION['usuario_id'] = 1;
+        $_GET['session_id'] = '1';
+        $_validacion = new _validacion();
+        $_validacion->metodo_pago_permitido['z'] = array('p');
+        $_validacion = new liberator($_validacion);
+        $cat_sat_metodo_pago_codigo = 'z';
+        $data = new stdClass();
+        $data->cat_sat_forma_pago = new stdClass();
+        $data->cat_sat_forma_pago->codigo = 'p';
+        $registro = array();
+
+
+        $resultado = $_validacion->valida_si_existe_en_array($cat_sat_metodo_pago_codigo, $data, $registro);
+        $this->assertTrue($resultado);
+        $this->assertNotTrue(errores::$error);
+
+        errores::$error = false;
+    }
+
     /**
      */
     public function test_verifica_forma_pago(): void
