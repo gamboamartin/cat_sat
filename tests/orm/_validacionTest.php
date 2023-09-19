@@ -210,6 +210,31 @@ class _validacionTest extends test {
         errores::$error = false;
     }
 
+    public function test_valida_metodo_pago(): void
+    {
+        errores::$error = false;
+
+        $_GET['seccion'] = 'cat_sat_tipo_persona';
+        $_GET['accion'] = 'lista';
+        $_SESSION['grupo_id'] = 1;
+        $_SESSION['usuario_id'] = 1;
+        $_GET['session_id'] = '1';
+        $_validacion = new _validacion();
+        $_validacion->metodo_pago_permitido['1'] = array('1');
+
+
+        $registro = array();
+        $registro['cat_sat_metodo_pago_id'] = 1;
+        $registro['cat_sat_forma_pago_id'] = 1;
+        $registro['cat_sat_metodo_pago_codigo'] = '1';
+        $resultado = $_validacion->valida_metodo_pago($this->link, $registro);
+        $this->assertTrue($resultado);
+        $this->assertNotTrue(errores::$error);
+
+        errores::$error = false;
+
+    }
+
     public function test_valida_si_existe(): void
     {
         errores::$error = false;

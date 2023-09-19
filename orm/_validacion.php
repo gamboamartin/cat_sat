@@ -187,6 +187,7 @@ class _validacion{
      * @param PDO $link Conexion a la base de datos
      * @param array $registro Registro en proceso
      * @return array|bool
+     * @version 12.9.0
      */
     final public function valida_metodo_pago(PDO $link, array $registro): bool|array
     {
@@ -194,7 +195,7 @@ class _validacion{
         $keys = array('cat_sat_metodo_pago_id','cat_sat_forma_pago_id');
         $valida = (new validacion())->valida_ids(keys: $keys, registro: $registro);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al al validar registro', data: $valida);
+            return $this->error->error(mensaje: 'Error al validar registro', data: $valida);
         }
 
         $cat_sat_metodo_pago = (new cat_sat_metodo_pago(link: $link))->registro(
@@ -285,6 +286,7 @@ class _validacion{
      * @param stdClass|array $cat_sat_metodo_pago Row de metodo de pago
      * @param array|stdClass $registro Registro en proceso
      * @return bool|array
+     * @version 12.9.0
      */
     private function verifica_forma_pago(stdClass|array $cat_sat_forma_pago, stdClass|array $cat_sat_metodo_pago,
                                          array|stdClass $registro): bool|array
