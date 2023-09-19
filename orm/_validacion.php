@@ -6,6 +6,9 @@ use gamboamartin\validacion\validacion;
 use PDO;
 use stdClass;
 
+/**
+ * PRUEBAS FINALIZADAS
+ */
 class _validacion{
     public array $metodo_pago_permitido = array();
     private errores $error;

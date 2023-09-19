@@ -5,6 +5,12 @@ use gamboamartin\system\_ctl_parent;
 
 class _base extends _ctl_parent {
 
+    /**
+     * Genera un formulario de alta
+     * @param bool $header si header muestra resultado en web
+     * @param bool $ws Si ws muestra resultado en json
+     * @return array|string
+     */
     public function alta(bool $header, bool $ws = false): array|string
     {
         $r_alta = $this->init_alta();
@@ -15,7 +21,8 @@ class _base extends _ctl_parent {
 
         $keys_selects = array('codigo','descripcion');
         if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
+            return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects,
+                header: $header,ws:  $ws);
         }
 
         $inputs = $this->inputs(keys_selects: $keys_selects);
