@@ -126,6 +126,7 @@ class _validacion{
      * @param PDO $link Conexion a la base de datos
      * @param array $registro Registro en proceso
      * @return array|true
+     * @version 12.1.0
      */
     final public function valida_conf_tipo_persona(PDO $link, array $registro): bool|array
     {
@@ -141,7 +142,8 @@ class _validacion{
 
         $existe_conf = (new cat_sat_conf_reg_tp(link: $link))->existe(filtro: $filtro);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al verificar si existe configuracion de regimen', data: $existe_conf);
+            return $this->error->error(mensaje: 'Error al verificar si existe configuracion de regimen',
+                data: $existe_conf);
         }
         if(!$existe_conf){
             return $this->error->error(mensaje: 'Error al no existe configuracion de regimen', data: $filtro);

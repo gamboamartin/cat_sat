@@ -3,6 +3,7 @@ namespace gamboamartin\cat_sat\tests;
 use base\orm\modelo_base;
 use gamboamartin\cat_sat\models\cat_sat_clase_producto;
 use gamboamartin\cat_sat\models\cat_sat_conf_imps;
+use gamboamartin\cat_sat\models\cat_sat_conf_imps_tipo_pers;
 use gamboamartin\cat_sat\models\cat_sat_conf_reg_tp;
 use gamboamartin\cat_sat\models\cat_sat_division_producto;
 use gamboamartin\cat_sat\models\cat_sat_factor;
@@ -103,6 +104,8 @@ class base_test{
         }
         return $alta;
     }
+
+
 
     public function alta_cat_sat_division_producto(PDO $link, int $cat_sat_tipo_producto_id = 1, string $codigo = '01',
                                                    $descripcion = '01', int $id = 1,
@@ -837,7 +840,9 @@ class base_test{
         return $del;
     }
 
-    public function alta_cat_sat_conf_reg_tp(PDO $link, int $cat_sat_regimen_fiscal_id = 1,
+    public function alta_cat_sat_conf_reg_tp(PDO $link, string $cat_sat_regimen_fiscal_codigo = '001',
+                                             int $cat_sat_regimen_fiscal_id = 1,
+                                             string $cat_sat_tipo_persona_codigo = '99',
                                              int $cat_sat_tipo_persona_id = 1, int $id = 1): array|stdClass
     {
 
@@ -847,7 +852,8 @@ class base_test{
 
         }
         if(!$existe) {
-            $alta = (new base_test())->alta_cat_sat_regimen_fiscal(link: $link, id: $cat_sat_regimen_fiscal_id);
+            $alta = (new base_test())->alta_cat_sat_regimen_fiscal(link: $link, codigo: $cat_sat_regimen_fiscal_codigo,
+                id: $cat_sat_regimen_fiscal_id);
             if (errores::$error) {
                 return (new errores())->error('Error al dar de alta', $alta);
             }
@@ -859,7 +865,8 @@ class base_test{
 
         }
         if(!$existe) {
-            $alta = (new base_test())->alta_cat_sat_tipo_persona(link: $link, id: $cat_sat_tipo_persona_id);
+            $alta = (new base_test())->alta_cat_sat_tipo_persona(link: $link, codigo: $cat_sat_tipo_persona_codigo,
+                id: $cat_sat_tipo_persona_id);
             if (errores::$error) {
                 return (new errores())->error('Error al dar de alta', $alta);
             }

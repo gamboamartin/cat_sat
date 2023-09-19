@@ -3,6 +3,7 @@ namespace gamboamartin\cat_sat\tests\orm;
 
 use gamboamartin\cat_sat\models\_validacion;
 use gamboamartin\cat_sat\models\cat_sat_moneda;
+use gamboamartin\cat_sat\tests\base;
 use gamboamartin\direccion_postal\tests\base_test;
 use gamboamartin\errores\errores;
 use gamboamartin\test\liberator;
@@ -45,6 +46,38 @@ class _validacionTest extends test {
         $this->assertNotTrue(errores::$error);
 
 
+
+        errores::$error = false;
+    }
+
+    public function test_valida_conf_tipo_persona(): void
+    {
+        errores::$error = false;
+
+        $_GET['seccion'] = 'cat_sat_tipo_persona';
+        $_GET['accion'] = 'lista';
+        $_SESSION['grupo_id'] = 1;
+        $_SESSION['usuario_id'] = 1;
+        $_GET['session_id'] = '1';
+        $_validacion = new _validacion();
+        //$_validacion = new liberator($_validacion);
+
+        $alta = (new \gamboamartin\cat_sat\tests\base_test())->alta_cat_sat_conf_reg_tp(link: $this->link,
+            cat_sat_regimen_fiscal_codigo: '601', cat_sat_regimen_fiscal_id: 601, cat_sat_tipo_persona_codigo: 'PM',
+            cat_sat_tipo_persona_id: 4);
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al insertar',data:  $alta);
+            print_r($error);
+            exit;
+        }
+
+        $registro = array();
+        $registro['cat_sat_regimen_fiscal_id'] = 601;
+        $registro['cat_sat_tipo_persona_id'] = 4;
+
+        $resultado = $_validacion->valida_conf_tipo_persona(link: $this->link,registro:  $registro);
+        $this->assertTrue($resultado);
+        $this->assertNotTrue(errores::$error);
 
         errores::$error = false;
     }
