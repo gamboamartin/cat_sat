@@ -44,7 +44,14 @@ class _validacion{
         return $cat_sat_metodo_pago_codigo;
     }
 
-    private function data(array|stdClass $cat_sat_forma_pago, array|stdClass $cat_sat_metodo_pago){
+    /**
+     * Inicializa los datos para validacion de facturas
+     * @param array|stdClass $cat_sat_forma_pago Forma de pago
+     * @param array|stdClass $cat_sat_metodo_pago Metodo de pago
+     * @return array|stdClass
+     */
+    private function data(array|stdClass $cat_sat_forma_pago, array|stdClass $cat_sat_metodo_pago): array|stdClass
+    {
         $data = $this->init_data(cat_sat_forma_pago: $cat_sat_forma_pago,cat_sat_metodo_pago:  $cat_sat_metodo_pago);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al inicializar datos registro', data: $data);
@@ -98,6 +105,7 @@ class _validacion{
      * asigna el codigo de un metodo de pago
      * @param stdClass $data Datos
      * @return array|stdClass
+     * @version 12.3.0
      */
     private function init_codigo_metodo_pago(stdClass $data): array|stdClass
     {
