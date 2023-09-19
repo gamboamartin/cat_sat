@@ -123,6 +123,35 @@ class _validacionTest extends test {
         errores::$error = false;
     }
 
+    public function test_get_data(): void
+    {
+        errores::$error = false;
+
+        $_GET['seccion'] = 'cat_sat_tipo_persona';
+        $_GET['accion'] = 'lista';
+        $_SESSION['grupo_id'] = 1;
+        $_SESSION['usuario_id'] = 1;
+        $_GET['session_id'] = '1';
+        $_validacion = new _validacion();
+        $_validacion = new liberator($_validacion);
+
+
+        $cat_sat_forma_pago = array();
+        $cat_sat_metodo_pago = array();
+
+        $cat_sat_metodo_pago['codigo'] = 'A';
+        $cat_sat_forma_pago['codigo'] = 'B';
+
+        $resultado = $_validacion->get_data($cat_sat_forma_pago, $cat_sat_metodo_pago);
+        $this->assertIsObject($resultado);
+        $this->assertIsObject($resultado->cat_sat_metodo_pago);
+        $this->assertIsObject($resultado->cat_sat_forma_pago);
+        $this->assertEquals('A',$resultado->cat_sat_metodo_pago->codigo);
+        $this->assertEquals('B',$resultado->cat_sat_forma_pago->codigo);
+        $this->assertNotTrue(errores::$error);
+        errores::$error = false;
+    }
+
     public function test_init_data(): void
     {
         errores::$error = false;

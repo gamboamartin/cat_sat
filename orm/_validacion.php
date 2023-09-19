@@ -76,6 +76,7 @@ class _validacion{
      * @param array|stdClass $cat_sat_forma_pago Forma de pago entidad
      * @param array|stdClass $cat_sat_metodo_pago Metodo de pago entidad
      * @return array|stdClass
+     * @version 17.12.0
      */
     private function get_data(array|stdClass $cat_sat_forma_pago, array|stdClass $cat_sat_metodo_pago): array|stdClass
     {
@@ -211,6 +212,11 @@ class _validacion{
         return $verifica;
     }
 
+    /**
+     * Verifica si existe o no un codigo de metodo de pago
+     * @param string $cat_sat_metodo_pago_codigo Codigo a validar
+     * @return bool|array
+     */
     private function valida_si_existe(string $cat_sat_metodo_pago_codigo): bool|array
     {
         if(!isset($this->metodo_pago_permitido[$cat_sat_metodo_pago_codigo])){
@@ -221,6 +227,12 @@ class _validacion{
         return true;
     }
 
+    /**
+     * @param string $cat_sat_metodo_pago_codigo
+     * @param stdClass $data
+     * @param array|stdClass $registro
+     * @return bool|array
+     */
     private function valida_si_existe_en_array(string $cat_sat_metodo_pago_codigo, stdClass $data, array|stdClass $registro): bool|array
     {
         if((!in_array($data->cat_sat_forma_pago->codigo, $this->metodo_pago_permitido[$cat_sat_metodo_pago_codigo]))){
