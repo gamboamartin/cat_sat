@@ -49,6 +49,7 @@ class _validacion{
      * @param array|stdClass $cat_sat_forma_pago Forma de pago
      * @param array|stdClass $cat_sat_metodo_pago Metodo de pago
      * @return array|stdClass
+     * @version 12.5.0
      *
      */
     private function data(array|stdClass $cat_sat_forma_pago, array|stdClass $cat_sat_metodo_pago): array|stdClass
@@ -71,8 +72,9 @@ class _validacion{
     }
 
     /**
-     * @param array|stdClass $cat_sat_forma_pago
-     * @param array|stdClass $cat_sat_metodo_pago
+     * Obtiene los datos para validacion
+     * @param array|stdClass $cat_sat_forma_pago Forma de pago entidad
+     * @param array|stdClass $cat_sat_metodo_pago Metodo de pago entidad
      * @return array|stdClass
      */
     private function get_data(array|stdClass $cat_sat_forma_pago, array|stdClass $cat_sat_metodo_pago): array|stdClass
