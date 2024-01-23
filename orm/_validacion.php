@@ -160,7 +160,6 @@ class _validacion{
      * @param PDO $link Conexion a la base de datos
      * @param array $registro Registro en proceso
      * @return array|true
-     * @version 12.1.0
      */
     final public function valida_conf_tipo_persona(PDO $link, array $registro): bool|array
     {
@@ -171,6 +170,10 @@ class _validacion{
             return $this->error->error(mensaje: 'Error al al validar registro', data: $valida);
         }
 
+        $valida = true;
+        if((int)$registro['cat_sat_regimen_fiscal_id'] === 999 || (int)$registro['cat_sat_tipo_persona_id'] === 6){
+            $valida = false;
+        }
         $filtro['cat_sat_regimen_fiscal.id'] = $registro['cat_sat_regimen_fiscal_id'];
         $filtro['cat_sat_tipo_persona.id'] = $registro['cat_sat_tipo_persona_id'];
 
@@ -179,7 +182,7 @@ class _validacion{
             return $this->error->error(mensaje: 'Error al verificar si existe configuracion de regimen',
                 data: $existe_conf);
         }
-        if(!$existe_conf){
+        if(!$existe_conf && $valida){
             return $this->error->error(mensaje: 'Error al no existe configuracion de regimen', data: $filtro);
         }
         return true;
