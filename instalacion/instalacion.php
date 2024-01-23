@@ -10,6 +10,7 @@ class instalacion
 {
 
 
+
     final public function instala(PDO $link): array|stdClass
     {
 
@@ -32,25 +33,17 @@ class instalacion
 
         $cat_sat_tipo_persona_modelo = new cat_sat_tipo_persona(link: $link);
 
+
         $out->cat_sat_tipo_persona = new stdClass();
-        $out->cat_sat_tipo_persona->alta = array();
 
-        foreach ($cat_sat_tipo_persona_data as $cat_sat_tipo_persona){
 
-            $existe = $cat_sat_tipo_persona_modelo->existe_by_id(registro_id: $cat_sat_tipo_persona['id']);
-            if(errores::$error){
-                return (new errores())->error(mensaje: 'Error al verificar si existe registro',data:  $existe);
-            }
-            $inserta = 'Id '.$cat_sat_tipo_persona['id'].' Ya existe';
-            if(!$existe) {
-                $inserta = $cat_sat_tipo_persona_modelo->alta_registro(registro: $cat_sat_tipo_persona);
-                if (errores::$error) {
-                    return (new errores())->error(mensaje: 'Error al insertar cat_sat_tipo_persona', data: $inserta);
-                }
-            }
-            $out->cat_sat_tipo_persona->alta[] = $inserta;
-
+        $cat_sat_tipo_persona_alta = $cat_sat_tipo_persona_modelo->inserta_registros_no_existentes_id(
+            registros: $cat_sat_tipo_persona_data);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_tipo_persona', data: $out);
         }
+        $out->cat_sat_tipo_persona->alta = $cat_sat_tipo_persona_alta;
+
 
         return $out;
 
