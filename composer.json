@@ -13,6 +13,7 @@
       "psr-4": {
         "gamboamartin\\cat_sat\\controllers\\": "controllers",
         "gamboamartin\\cat_sat\\models\\": "orm",
+        "gamboamartin\\cat_sat\\instalacion\\": "instalacion",
         "config\\": "config/",
         "gamboamartin\\cat_sat\\tests\\": "tests",
         "links\\": "links/",
