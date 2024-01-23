@@ -37,9 +37,16 @@ class instalacion
 
         foreach ($cat_sat_tipo_persona_data as $cat_sat_tipo_persona){
 
-            $inserta = $cat_sat_tipo_persona_modelo->alta_registro(registro: $cat_sat_tipo_persona);
+            $existe = $cat_sat_tipo_persona_modelo->existe_by_id(registro_id: $cat_sat_tipo_persona['id']);
             if(errores::$error){
-                return (new errores())->error(mensaje: 'Error al insertar cat_sat_tipo_persona',data:  $inserta);
+                return (new errores())->error(mensaje: 'Error al verificar si existe registro',data:  $existe);
+            }
+            $inserta = 'Id '.$cat_sat_tipo_persona['id'].' Ya existe';
+            if(!$existe) {
+                $inserta = $cat_sat_tipo_persona_modelo->alta_registro(registro: $cat_sat_tipo_persona);
+                if (errores::$error) {
+                    return (new errores())->error(mensaje: 'Error al insertar cat_sat_tipo_persona', data: $inserta);
+                }
             }
             $out->cat_sat_tipo_persona->alta[] = $inserta;
 
