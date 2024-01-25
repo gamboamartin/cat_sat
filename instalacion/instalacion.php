@@ -322,7 +322,7 @@ class instalacion
         $cat_sat_tipo_persona_alta = $cat_sat_tipo_persona_modelo->inserta_registros_no_existentes_id(
             registros: $this->data->cat_sat_tipo_persona);
         if (errores::$error) {
-            return (new errores())->error(mensaje: 'Error al insertar cat_sat_tipo_persona', data: $out);
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_tipo_persona', data: $cat_sat_tipo_persona_alta);
         }
         $out->cat_sat_tipo_persona->alta = $cat_sat_tipo_persona_alta;
 
@@ -330,7 +330,7 @@ class instalacion
         $cat_sat_regimen_fiscal = $cat_sat_tipo_persona_modelo->inserta_registros_no_existentes_id(
             registros: $this->data->cat_sat_regimen_fiscal);
         if (errores::$error) {
-            return (new errores())->error(mensaje: 'Error al insertar cat_sat_regimen_fiscal', data: $out);
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_regimen_fiscal', data: $cat_sat_regimen_fiscal);
         }
         $out->cat_sat_regimen_fiscal->alta = $cat_sat_regimen_fiscal;
 
