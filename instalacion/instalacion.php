@@ -1,10 +1,12 @@
 <?php
 namespace gamboamartin\cat_sat\instalacion;
 
+use gamboamartin\administrador\models\_instalacion;
 use gamboamartin\cat_sat\models\cat_sat_clase_producto;
 use gamboamartin\cat_sat\models\cat_sat_division_producto;
 use gamboamartin\cat_sat\models\cat_sat_grupo_producto;
 use gamboamartin\cat_sat\models\cat_sat_producto;
+use gamboamartin\cat_sat\models\cat_sat_regimen_fiscal;
 use gamboamartin\cat_sat\models\cat_sat_tipo_persona;
 use gamboamartin\cat_sat\models\cat_sat_tipo_producto;
 use gamboamartin\errores\errores;
@@ -123,6 +125,50 @@ class instalacion
         return $out;
 
     }
+
+   /* private function cat_sat_producto_del(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $ins = new _instalacion(link: $link);
+
+        $create_table = $ins->create_table_new(table: __FUNCTION__);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear table', data: $create_table);
+        }
+
+
+        //$cat_sat_producto_def_modelo = new cat_sat_producto_def(link: $link);
+
+        $cat_sat_productos = array();
+        $cat_sat_productos[0]['id'] = 84111506;
+        $cat_sat_productos[0]['descripcion'] = 'Servicios de facturación';
+        $cat_sat_productos[0]['codigo'] = '84111506';
+        $cat_sat_productos[0]['descripcion_select'] = '84111506 Servicios De Facturación';
+        $cat_sat_productos[0]['cat_sat_clase_producto_id'] = '841115';
+
+
+        $out->cat_sat_productos = $cat_sat_productos;
+
+        foreach ($cat_sat_productos as $cat_sat_producto){
+            $existe = $cat_sat_producto_modelo->existe_by_id(registro_id: $cat_sat_producto['id']);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al validar si existe producto', data: $existe);
+            }
+            $out->existe = $existe;
+            if(!$existe){
+                $alta = $cat_sat_producto_modelo->alta_registro(registro: $cat_sat_producto);
+                if(errores::$error){
+                    return (new errores())->error(mensaje: 'Error al insertar producto', data: $alta);
+                }
+                $out->altas[] = $alta;
+            }
+        }
+
+        return $out;
+
+    }
+
+   */
     private function cat_sat_grupo_producto(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -326,8 +372,9 @@ class instalacion
         }
         $out->cat_sat_tipo_persona->alta = $cat_sat_tipo_persona_alta;
 
+        $cat_sat_regimen_fiscal_modelo = new cat_sat_regimen_fiscal(link: $link);
         $out->cat_sat_regimen_fiscal = new stdClass();
-        $cat_sat_regimen_fiscal = $cat_sat_tipo_persona_modelo->inserta_registros_no_existentes_id(
+        $cat_sat_regimen_fiscal = $cat_sat_regimen_fiscal_modelo->inserta_registros_no_existentes_id(
             registros: $this->data->cat_sat_regimen_fiscal);
         if (errores::$error) {
             return (new errores())->error(mensaje: 'Error al insertar cat_sat_regimen_fiscal', data: $cat_sat_regimen_fiscal);
@@ -363,6 +410,12 @@ class instalacion
             return (new errores())->error(mensaje: 'Error al insertar cat_sat_producto', data: $cat_sat_producto);
         }
         $out->cat_sat_producto = $cat_sat_producto;
+
+        /*$cat_sat_producto_def = $this->cat_sat_producto_def(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_producto_def', data: $cat_sat_producto_def);
+        }
+        $out->cat_sat_producto_def = $cat_sat_producto_def;*/
 
 
         return $out;
