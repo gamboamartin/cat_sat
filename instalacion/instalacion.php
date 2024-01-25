@@ -69,37 +69,37 @@ class instalacion
         $cat_sat_conf_reg_tp_modelo = new cat_sat_conf_reg_tp(link: $link);
 
         $cat_sat_conf_reg_tps = array();
-        $cat_sat_conf_reg_tp[0]['id'] = 1;
-        $cat_sat_conf_reg_tp[0]['cat_sat_tipo_persona_id'] = '4';
-        $cat_sat_conf_reg_tp[0]['cat_sat_regimen_fiscal_id'] = '601';
+        $cat_sat_conf_reg_tps[0]['id'] = 1;
+        $cat_sat_conf_reg_tps[0]['cat_sat_tipo_persona_id'] = '4';
+        $cat_sat_conf_reg_tps[0]['cat_sat_regimen_fiscal_id'] = '601';
 
-        $cat_sat_conf_reg_tp[1]['id'] = 2;
-        $cat_sat_conf_reg_tp[1]['cat_sat_tipo_persona_id'] = '4';
-        $cat_sat_conf_reg_tp[1]['cat_sat_regimen_fiscal_id'] = '603';
+        $cat_sat_conf_reg_tps[1]['id'] = 2;
+        $cat_sat_conf_reg_tps[1]['cat_sat_tipo_persona_id'] = '4';
+        $cat_sat_conf_reg_tps[1]['cat_sat_regimen_fiscal_id'] = '603';
 
-        $cat_sat_conf_reg_tp[2]['id'] = 3;
-        $cat_sat_conf_reg_tp[2]['cat_sat_tipo_persona_id'] = '5';
-        $cat_sat_conf_reg_tp[2]['cat_sat_regimen_fiscal_id'] = '605';
+        $cat_sat_conf_reg_tps[2]['id'] = 3;
+        $cat_sat_conf_reg_tps[2]['cat_sat_tipo_persona_id'] = '5';
+        $cat_sat_conf_reg_tps[2]['cat_sat_regimen_fiscal_id'] = '605';
 
-        $cat_sat_conf_reg_tp[3]['id'] = 4;
-        $cat_sat_conf_reg_tp[3]['cat_sat_tipo_persona_id'] = '5';
-        $cat_sat_conf_reg_tp[3]['cat_sat_regimen_fiscal_id'] = '612';
+        $cat_sat_conf_reg_tps[3]['id'] = 4;
+        $cat_sat_conf_reg_tps[3]['cat_sat_tipo_persona_id'] = '5';
+        $cat_sat_conf_reg_tps[3]['cat_sat_regimen_fiscal_id'] = '612';
 
-        $cat_sat_conf_reg_tp[4]['id'] = 5;
-        $cat_sat_conf_reg_tp[4]['cat_sat_tipo_persona_id'] = '4';
-        $cat_sat_conf_reg_tp[4]['cat_sat_regimen_fiscal_id'] = '626';
+        $cat_sat_conf_reg_tps[4]['id'] = 5;
+        $cat_sat_conf_reg_tps[4]['cat_sat_tipo_persona_id'] = '4';
+        $cat_sat_conf_reg_tps[4]['cat_sat_regimen_fiscal_id'] = '626';
 
-        $cat_sat_conf_reg_tp[5]['id'] = 6;
-        $cat_sat_conf_reg_tp[5]['cat_sat_tipo_persona_id'] = '5';
-        $cat_sat_conf_reg_tp[5]['cat_sat_regimen_fiscal_id'] = '626';
+        $cat_sat_conf_reg_tps[5]['id'] = 6;
+        $cat_sat_conf_reg_tps[5]['cat_sat_tipo_persona_id'] = '5';
+        $cat_sat_conf_reg_tps[5]['cat_sat_regimen_fiscal_id'] = '626';
 
-        $cat_sat_conf_reg_tp[6]['id'] = 7;
-        $cat_sat_conf_reg_tp[6]['cat_sat_tipo_persona_id'] = '4';
-        $cat_sat_conf_reg_tp[6]['cat_sat_regimen_fiscal_id'] = '622';
+        $cat_sat_conf_reg_tps[6]['id'] = 7;
+        $cat_sat_conf_reg_tps[6]['cat_sat_tipo_persona_id'] = '4';
+        $cat_sat_conf_reg_tps[6]['cat_sat_regimen_fiscal_id'] = '622';
 
-        $cat_sat_conf_reg_tp[7]['id'] = 8;
-        $cat_sat_conf_reg_tp[7]['cat_sat_tipo_persona_id'] = '4';
-        $cat_sat_conf_reg_tp[7]['cat_sat_regimen_fiscal_id'] = '623';
+        $cat_sat_conf_reg_tps[7]['id'] = 8;
+        $cat_sat_conf_reg_tps[7]['cat_sat_tipo_persona_id'] = '4';
+        $cat_sat_conf_reg_tps[7]['cat_sat_regimen_fiscal_id'] = '623';
 
 
         $out->cat_sat_conf_reg_tps = $cat_sat_conf_reg_tps;
@@ -111,7 +111,7 @@ class instalacion
             }
             $out->existe = $existe;
             if(!$existe){
-                $alta = $cat_sat_conf_reg_tp_modelo->alta_registro(registro: $cat_sat_tipo_producto);
+                $alta = $cat_sat_conf_reg_tp_modelo->alta_registro(registro: $cat_sat_conf_reg_tp);
                 if(errores::$error){
                     return (new errores())->error(mensaje: 'Error al insertar cat_sat_conf_reg_tp', data: $alta);
                 }
