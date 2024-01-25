@@ -59,7 +59,6 @@ class instalacion
         return $out;
 
     }
-
     private function cat_sat_division_producto(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -91,7 +90,6 @@ class instalacion
         return $out;
 
     }
-
     private function cat_sat_producto(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -125,7 +123,6 @@ class instalacion
         return $out;
 
     }
-
     private function cat_sat_grupo_producto(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -234,8 +231,6 @@ class instalacion
         return $cat_sat_regimen_fiscal;
 
     }
-
-
     private function cat_sat_tipo_persona(): array
     {
         $cat_sat_tipo_persona = array();
@@ -258,7 +253,6 @@ class instalacion
         return $cat_sat_tipo_persona;
 
     }
-
     private function cat_sat_tipo_producto(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -295,8 +289,6 @@ class instalacion
         return $out;
 
     }
-
-
     private function data(): stdClass|array
     {
         $this->data = new stdClass();
@@ -319,10 +311,6 @@ class instalacion
         return $this->data;
 
     }
-
-
-
-
     final public function instala(PDO $link): array|stdClass
     {
 
