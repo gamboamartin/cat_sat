@@ -1,7 +1,12 @@
 <?php
 namespace gamboamartin\cat_sat\instalacion;
 
+use gamboamartin\cat_sat\models\cat_sat_clase_producto;
+use gamboamartin\cat_sat\models\cat_sat_division_producto;
+use gamboamartin\cat_sat\models\cat_sat_grupo_producto;
+use gamboamartin\cat_sat\models\cat_sat_producto;
 use gamboamartin\cat_sat\models\cat_sat_tipo_persona;
+use gamboamartin\cat_sat\models\cat_sat_tipo_producto;
 use gamboamartin\errores\errores;
 use PDO;
 use stdClass;
@@ -18,6 +23,138 @@ class instalacion
             print_r($error);
             exit;
         }
+
+    }
+
+    private function cat_sat_clase_producto(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $cat_sat_clase_producto_modelo = new cat_sat_clase_producto(link: $link);
+
+        $cat_sat_clase_productos = array();
+        $cat_sat_clase_productos[0]['id'] = 841115;
+        $cat_sat_clase_productos[0]['descripcion'] = 'Servicios contables (Honorarios contables)';
+        $cat_sat_clase_productos[0]['codigo'] = '841115';
+        $cat_sat_clase_productos[0]['descripcion_select'] = '841115 Servicios Contables (Honorarios Contables)';
+        $cat_sat_clase_productos[0]['cat_sat_grupo_producto_id'] = '8411';
+
+
+        $out->cat_sat_clase_productos = $cat_sat_clase_productos;
+
+        foreach ($cat_sat_clase_productos as $cat_sat_clase_producto){
+            $existe = $cat_sat_clase_producto_modelo->existe_by_id(registro_id: $cat_sat_clase_producto['id']);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al validar si existe clase de producto', data: $existe);
+            }
+            $out->existe = $existe;
+            if(!$existe){
+                $alta = $cat_sat_clase_producto_modelo->alta_registro(registro: $cat_sat_clase_producto);
+                if(errores::$error){
+                    return (new errores())->error(mensaje: 'Error al insertar clase de producto', data: $alta);
+                }
+                $out->altas[] = $alta;
+            }
+        }
+
+        return $out;
+
+    }
+
+    private function cat_sat_division_producto(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $cat_sat_division_producto_modelo = new cat_sat_division_producto(link: $link);
+
+        $cat_sat_division_productos = array();
+        $cat_sat_division_productos[0]['id'] = 84;
+        $cat_sat_division_productos[0]['descripcion'] = 'Servicios Financieros y de Seguros';
+        $cat_sat_division_productos[0]['codigo'] = '84';
+        $cat_sat_division_productos[0]['descripcion_select'] = '84 Servicios Financieros y de Seguros';
+        $cat_sat_division_productos[0]['cat_sat_tipo_producto_id'] = '2';
+
+
+        foreach ($cat_sat_division_productos as $cat_sat_division_producto){
+            $existe = $cat_sat_division_producto_modelo->existe_by_id(registro_id: $cat_sat_division_producto['id']);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al validar si existe cat_sat_division_producto', data: $existe);
+            }
+            $out->existe = $existe;
+            if(!$existe){
+                $alta = $cat_sat_division_producto_modelo->alta_registro(registro: $cat_sat_division_producto);
+                if(errores::$error){
+                    return (new errores())->error(mensaje: 'Error al insertar cat_sat_division_producto', data: $alta);
+                }
+                $out->altas[] = $alta;
+            }
+        }
+
+        return $out;
+
+    }
+
+    private function cat_sat_producto(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $cat_sat_producto_modelo = new cat_sat_producto(link: $link);
+
+        $cat_sat_productos = array();
+        $cat_sat_productos[0]['id'] = 84111506;
+        $cat_sat_productos[0]['descripcion'] = 'Servicios de facturación';
+        $cat_sat_productos[0]['codigo'] = '84111506';
+        $cat_sat_productos[0]['descripcion_select'] = '84111506 Servicios De Facturación';
+        $cat_sat_productos[0]['cat_sat_clase_producto_id'] = '841115';
+
+
+        $out->cat_sat_productos = $cat_sat_productos;
+
+        foreach ($cat_sat_productos as $cat_sat_producto){
+            $existe = $cat_sat_producto_modelo->existe_by_id(registro_id: $cat_sat_producto['id']);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al validar si existe producto', data: $existe);
+            }
+            $out->existe = $existe;
+            if(!$existe){
+                $alta = $cat_sat_producto_modelo->alta_registro(registro: $cat_sat_producto);
+                if(errores::$error){
+                    return (new errores())->error(mensaje: 'Error al insertar producto', data: $alta);
+                }
+                $out->altas[] = $alta;
+            }
+        }
+
+        return $out;
+
+    }
+
+    private function cat_sat_grupo_producto(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $cat_sat_grupo_producto_modelo = new cat_sat_grupo_producto(link: $link);
+
+        $cat_sat_grupo_productos = array();
+        $cat_sat_grupo_productos[0]['id'] = 8411;
+        $cat_sat_grupo_productos[0]['descripcion'] = 'Servicios de contabilidad y auditorias';
+        $cat_sat_grupo_productos[0]['codigo'] = '8411';
+        $cat_sat_grupo_productos[0]['descripcion_select'] = '8411 Servicios De Contabilidad Y Auditorias';
+        $cat_sat_grupo_productos[0]['cat_sat_division_producto_id'] = '84';
+
+
+        foreach ($cat_sat_grupo_productos as $cat_sat_grupo_producto){
+            $existe = $cat_sat_grupo_producto_modelo->existe_by_id(registro_id: $cat_sat_grupo_producto['id']);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al validar si existe cat_sat_grupo_producto', data: $existe);
+            }
+            $out->existe = $existe;
+            if(!$existe){
+                $alta = $cat_sat_grupo_producto_modelo->alta_registro(registro: $cat_sat_grupo_producto);
+                if(errores::$error){
+                    return (new errores())->error(mensaje: 'Error al insertar cat_sat_grupo_producto', data: $alta);
+                }
+                $out->altas[] = $alta;
+            }
+        }
+
+        return $out;
 
     }
     private function cat_sat_regimen_fiscal(): array
@@ -105,20 +242,57 @@ class instalacion
         $cat_sat_tipo_persona[0]['id'] = 4;
         $cat_sat_tipo_persona[0]['descripcion'] = 'PERSONA MORAL';
         $cat_sat_tipo_persona[0]['codigo'] = 'PM';
-        $cat_sat_tipo_persona[0]['PERSONA MORAL'] = 'PERSONA MORAL';
+
 
         $cat_sat_tipo_persona[1]['id'] = 5;
         $cat_sat_tipo_persona[1]['descripcion'] = 'PERSONA FISICA';
         $cat_sat_tipo_persona[1]['codigo'] = 'PF';
-        $cat_sat_tipo_persona[1]['PERSONA MORAL'] = 'PERSONA FISICA';
+
 
         $cat_sat_tipo_persona[2]['id'] = 6;
         $cat_sat_tipo_persona[2]['descripcion'] = 'POR DEFINIR';
         $cat_sat_tipo_persona[2]['codigo'] = 'PD';
-        $cat_sat_tipo_persona[2]['PERSONA MORAL'] = 'POR DEFINIR';
+
 
 
         return $cat_sat_tipo_persona;
+
+    }
+
+    private function cat_sat_tipo_producto(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $cat_sat_tipo_producto_modelo = new cat_sat_tipo_producto(link: $link);
+
+        $cat_sat_tipo_productos = array();
+        $cat_sat_tipo_productos[0]['id'] = 1;
+        $cat_sat_tipo_productos[0]['descripcion'] = 'Productos';
+        $cat_sat_tipo_productos[0]['codigo'] = 'Productos';
+        $cat_sat_tipo_productos[0]['descripcion_select'] = 'Productos';
+
+
+        $cat_sat_tipo_productos[1]['id'] = 2;
+        $cat_sat_tipo_productos[1]['descripcion'] = 'Servicios';
+        $cat_sat_tipo_productos[1]['codigo'] = 'Servicios';
+        $cat_sat_tipo_productos[1]['descripcion_select'] = 'Servicios';
+        $out->cat_sat_tipo_productos = $cat_sat_tipo_productos;
+
+        foreach ($cat_sat_tipo_productos as $cat_sat_tipo_producto){
+            $existe = $cat_sat_tipo_producto_modelo->existe_by_id(registro_id: $cat_sat_tipo_producto['id']);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al validar si existe tipo de producto', data: $existe);
+            }
+            $out->existe = $existe;
+            if(!$existe){
+                $alta = $cat_sat_tipo_producto_modelo->alta_registro(registro: $cat_sat_tipo_producto);
+                if(errores::$error){
+                    return (new errores())->error(mensaje: 'Error al insertar tipo de producto', data: $alta);
+                }
+                $out->altas[] = $alta;
+            }
+        }
+
+        return $out;
 
     }
 
@@ -141,9 +315,11 @@ class instalacion
 
         $this->data->cat_sat_regimen_fiscal = $cat_sat_regimen_fiscal;
 
+
         return $this->data;
 
     }
+
 
 
 
@@ -169,6 +345,36 @@ class instalacion
             return (new errores())->error(mensaje: 'Error al insertar cat_sat_regimen_fiscal', data: $out);
         }
         $out->cat_sat_regimen_fiscal->alta = $cat_sat_regimen_fiscal;
+
+        $cat_sat_tipo_producto = $this->cat_sat_tipo_producto(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_tipo_producto', data: $cat_sat_tipo_producto);
+        }
+        $out->cat_sat_tipo_producto = $cat_sat_tipo_producto;
+
+        $cat_sat_division_producto = $this->cat_sat_division_producto(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_division_producto', data: $cat_sat_division_producto);
+        }
+        $out->cat_sat_division_producto = $cat_sat_division_producto;
+
+        $cat_sat_grupo_producto = $this->cat_sat_grupo_producto(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_grupo_producto', data: $cat_sat_grupo_producto);
+        }
+        $out->cat_sat_grupo_producto = $cat_sat_grupo_producto;
+
+        $cat_sat_clase_producto = $this->cat_sat_clase_producto(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_clase_producto', data: $cat_sat_clase_producto);
+        }
+        $out->cat_sat_clase_producto = $cat_sat_clase_producto;
+
+        $cat_sat_producto = $this->cat_sat_producto(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_producto', data: $cat_sat_producto);
+        }
+        $out->cat_sat_producto = $cat_sat_producto;
 
 
         return $out;
