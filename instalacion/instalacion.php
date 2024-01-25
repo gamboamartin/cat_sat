@@ -3,6 +3,7 @@ namespace gamboamartin\cat_sat\instalacion;
 
 use gamboamartin\administrador\models\_instalacion;
 use gamboamartin\cat_sat\models\cat_sat_clase_producto;
+use gamboamartin\cat_sat\models\cat_sat_conf_reg_tp;
 use gamboamartin\cat_sat\models\cat_sat_division_producto;
 use gamboamartin\cat_sat\models\cat_sat_grupo_producto;
 use gamboamartin\cat_sat\models\cat_sat_producto;
@@ -53,6 +54,66 @@ class instalacion
                 $alta = $cat_sat_clase_producto_modelo->alta_registro(registro: $cat_sat_clase_producto);
                 if(errores::$error){
                     return (new errores())->error(mensaje: 'Error al insertar clase de producto', data: $alta);
+                }
+                $out->altas[] = $alta;
+            }
+        }
+
+        return $out;
+
+    }
+
+    private function cat_sat_conf_reg_tp(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $cat_sat_conf_reg_tp_modelo = new cat_sat_conf_reg_tp(link: $link);
+
+        $cat_sat_conf_reg_tps = array();
+        $cat_sat_conf_reg_tp[0]['id'] = 1;
+        $cat_sat_conf_reg_tp[0]['cat_sat_tipo_persona_id'] = '4';
+        $cat_sat_conf_reg_tp[0]['cat_sat_regimen_fiscal_id'] = '601';
+
+        $cat_sat_conf_reg_tp[1]['id'] = 2;
+        $cat_sat_conf_reg_tp[1]['cat_sat_tipo_persona_id'] = '4';
+        $cat_sat_conf_reg_tp[1]['cat_sat_regimen_fiscal_id'] = '603';
+
+        $cat_sat_conf_reg_tp[2]['id'] = 3;
+        $cat_sat_conf_reg_tp[2]['cat_sat_tipo_persona_id'] = '5';
+        $cat_sat_conf_reg_tp[2]['cat_sat_regimen_fiscal_id'] = '605';
+
+        $cat_sat_conf_reg_tp[3]['id'] = 4;
+        $cat_sat_conf_reg_tp[3]['cat_sat_tipo_persona_id'] = '5';
+        $cat_sat_conf_reg_tp[3]['cat_sat_regimen_fiscal_id'] = '612';
+
+        $cat_sat_conf_reg_tp[4]['id'] = 5;
+        $cat_sat_conf_reg_tp[4]['cat_sat_tipo_persona_id'] = '4';
+        $cat_sat_conf_reg_tp[4]['cat_sat_regimen_fiscal_id'] = '626';
+
+        $cat_sat_conf_reg_tp[5]['id'] = 6;
+        $cat_sat_conf_reg_tp[5]['cat_sat_tipo_persona_id'] = '5';
+        $cat_sat_conf_reg_tp[5]['cat_sat_regimen_fiscal_id'] = '626';
+
+        $cat_sat_conf_reg_tp[6]['id'] = 7;
+        $cat_sat_conf_reg_tp[6]['cat_sat_tipo_persona_id'] = '4';
+        $cat_sat_conf_reg_tp[6]['cat_sat_regimen_fiscal_id'] = '622';
+
+        $cat_sat_conf_reg_tp[7]['id'] = 8;
+        $cat_sat_conf_reg_tp[7]['cat_sat_tipo_persona_id'] = '4';
+        $cat_sat_conf_reg_tp[7]['cat_sat_regimen_fiscal_id'] = '623';
+
+
+        $out->cat_sat_conf_reg_tps = $cat_sat_conf_reg_tps;
+
+        foreach ($cat_sat_conf_reg_tps as $cat_sat_conf_reg_tp){
+            $existe = $cat_sat_conf_reg_tp_modelo->existe_by_id(registro_id: $cat_sat_conf_reg_tp['id']);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al validar si existe cat_sat_conf_reg_tp', data: $existe);
+            }
+            $out->existe = $existe;
+            if(!$existe){
+                $alta = $cat_sat_conf_reg_tp_modelo->alta_registro(registro: $cat_sat_tipo_producto);
+                if(errores::$error){
+                    return (new errores())->error(mensaje: 'Error al insertar cat_sat_conf_reg_tp', data: $alta);
                 }
                 $out->altas[] = $alta;
             }
@@ -410,6 +471,12 @@ class instalacion
             return (new errores())->error(mensaje: 'Error al insertar cat_sat_producto', data: $cat_sat_producto);
         }
         $out->cat_sat_producto = $cat_sat_producto;
+
+        $cat_sat_conf_reg_tp = $this->cat_sat_conf_reg_tp(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_conf_reg_tp', data: $cat_sat_conf_reg_tp);
+        }
+        $out->cat_sat_conf_reg_tp = $cat_sat_conf_reg_tp;
 
         /*$cat_sat_producto_def = $this->cat_sat_producto_def(link: $link);
         if (errores::$error) {
