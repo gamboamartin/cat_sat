@@ -6,6 +6,7 @@ use gamboamartin\cat_sat\models\cat_sat_clase_producto;
 use gamboamartin\cat_sat\models\cat_sat_conf_reg_tp;
 use gamboamartin\cat_sat\models\cat_sat_division_producto;
 use gamboamartin\cat_sat\models\cat_sat_grupo_producto;
+use gamboamartin\cat_sat\models\cat_sat_metodo_pago;
 use gamboamartin\cat_sat\models\cat_sat_producto;
 use gamboamartin\cat_sat\models\cat_sat_regimen_fiscal;
 use gamboamartin\cat_sat\models\cat_sat_tipo_persona;
@@ -261,6 +262,43 @@ class instalacion
         return $out;
 
     }
+
+    private function cat_sat_tipo_producto(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $cat_sat_tipo_producto_modelo = new cat_sat_tipo_producto(link: $link);
+
+        $cat_sat_tipo_productos = array();
+        $cat_sat_tipo_productos[0]['id'] = 1;
+        $cat_sat_tipo_productos[0]['descripcion'] = 'Productos';
+        $cat_sat_tipo_productos[0]['codigo'] = 'Productos';
+        $cat_sat_tipo_productos[0]['descripcion_select'] = 'Productos';
+
+
+        $cat_sat_tipo_productos[1]['id'] = 2;
+        $cat_sat_tipo_productos[1]['descripcion'] = 'Servicios';
+        $cat_sat_tipo_productos[1]['codigo'] = 'Servicios';
+        $cat_sat_tipo_productos[1]['descripcion_select'] = 'Servicios';
+        $out->cat_sat_tipo_productos = $cat_sat_tipo_productos;
+
+        foreach ($cat_sat_tipo_productos as $cat_sat_tipo_producto){
+            $existe = $cat_sat_tipo_producto_modelo->existe_by_id(registro_id: $cat_sat_tipo_producto['id']);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al validar si existe tipo de producto', data: $existe);
+            }
+            $out->existe = $existe;
+            if(!$existe){
+                $alta = $cat_sat_tipo_producto_modelo->alta_registro(registro: $cat_sat_tipo_producto);
+                if(errores::$error){
+                    return (new errores())->error(mensaje: 'Error al insertar tipo de producto', data: $alta);
+                }
+                $out->altas[] = $alta;
+            }
+        }
+
+        return $out;
+
+    }
     private function cat_sat_regimen_fiscal(): array
     {
         $cat_sat_regimen_fiscal = array();
@@ -360,37 +398,32 @@ class instalacion
         return $cat_sat_tipo_persona;
 
     }
-    private function cat_sat_tipo_producto(PDO $link): array|stdClass
+    private function cat_sat_metodo_pago(PDO $link): array|stdClass
     {
         $out = new stdClass();
-        $cat_sat_tipo_producto_modelo = new cat_sat_tipo_producto(link: $link);
+        $cat_sat_metodo_modelo = new cat_sat_metodo_pago(link: $link);
 
-        $cat_sat_tipo_productos = array();
-        $cat_sat_tipo_productos[0]['id'] = 1;
-        $cat_sat_tipo_productos[0]['descripcion'] = 'Productos';
-        $cat_sat_tipo_productos[0]['codigo'] = 'Productos';
-        $cat_sat_tipo_productos[0]['descripcion_select'] = 'Productos';
+        $cat_sat_metodos_pago = array();
+        $cat_sat_metodos_pago[0]['id'] = 1;
+        $cat_sat_metodos_pago[0]['descripcion'] = 'Pago en una sola exhibición';
+        $cat_sat_metodos_pago[0]['codigo'] = 'PUE';
+        $cat_sat_metodos_pago[0]['descripcion_select'] = 'PUE Pago en una sola exhibición';
 
 
-        $cat_sat_tipo_productos[1]['id'] = 2;
-        $cat_sat_tipo_productos[1]['descripcion'] = 'Servicios';
-        $cat_sat_tipo_productos[1]['codigo'] = 'Servicios';
-        $cat_sat_tipo_productos[1]['descripcion_select'] = 'Servicios';
-        $out->cat_sat_tipo_productos = $cat_sat_tipo_productos;
+        $cat_sat_metodos_pago[1]['id'] = 2;
+        $cat_sat_metodos_pago[1]['descripcion'] = 'Pago en parcialidades o diferido';
+        $cat_sat_metodos_pago[1]['codigo'] = 'PPD';
+        $cat_sat_metodos_pago[1]['descripcion_select'] = 'PPD Pago en parcialidades o diferido';
+        $out->cat_sat_metodos_pago = $cat_sat_metodos_pago;
 
-        foreach ($cat_sat_tipo_productos as $cat_sat_tipo_producto){
-            $existe = $cat_sat_tipo_producto_modelo->existe_by_id(registro_id: $cat_sat_tipo_producto['id']);
+        foreach ($cat_sat_metodos_pago as $cat_sat_metodo_pago){
+
+            $alta = $cat_sat_metodo_modelo->inserta_registro_si_no_existe(registro: $cat_sat_metodo_pago);
             if(errores::$error){
-                return (new errores())->error(mensaje: 'Error al validar si existe tipo de producto', data: $existe);
+                return (new errores())->error(mensaje: 'Error al insertar cat_sat_metodo_pago', data: $alta);
             }
-            $out->existe = $existe;
-            if(!$existe){
-                $alta = $cat_sat_tipo_producto_modelo->alta_registro(registro: $cat_sat_tipo_producto);
-                if(errores::$error){
-                    return (new errores())->error(mensaje: 'Error al insertar tipo de producto', data: $alta);
-                }
-                $out->altas[] = $alta;
-            }
+            $out->alta[] = $alta;
+
         }
 
         return $out;
@@ -422,6 +455,13 @@ class instalacion
     {
 
         $out = new stdClass();
+
+
+        $cat_sat_metodo_pago = $this->cat_sat_metodo_pago(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al integrar cat_sat_metodo_pago', data: $cat_sat_metodo_pago);
+        }
+        $out->cat_sat_metodo_pago = $cat_sat_metodo_pago;
 
         $cat_sat_tipo_persona_modelo = new cat_sat_tipo_persona(link: $link);
 
@@ -478,11 +518,7 @@ class instalacion
         }
         $out->cat_sat_conf_reg_tp = $cat_sat_conf_reg_tp;
 
-        /*$cat_sat_producto_def = $this->cat_sat_producto_def(link: $link);
-        if (errores::$error) {
-            return (new errores())->error(mensaje: 'Error al insertar cat_sat_producto_def', data: $cat_sat_producto_def);
-        }
-        $out->cat_sat_producto_def = $cat_sat_producto_def;*/
+
 
 
         return $out;
