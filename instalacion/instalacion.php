@@ -156,25 +156,34 @@ class instalacion
             $ruta .= "vendor/gamboa.martin/cat_sat/instalacion/cat_sat_cve_prod.ods";
         }
 
-        $data = $importador->leer_registros(ruta_absoluta: $ruta, columnas: $columnas);
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al leer cat_sat_cve_prod', data: $data);
-        }
 
         $cat_sat_cve_prod_modelo = new cat_sat_cve_prod(link: $link);
+
+        $n_prods = $cat_sat_cve_prod_modelo->cuenta();
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al contar cat_sat_cve_prod', data: $n_prods);
+        }
         $altas = array();
-        foreach ($data as $row){
-            $row = (array)$row;
-            $cat_sat_cve_prod_ins['id'] = trim($row['c_ClaveProdServ']);
-            $cat_sat_cve_prod_ins['codigo'] = trim($row['c_ClaveProdServ']);
-            $cat_sat_cve_prod_ins['descripcion'] = trim($row['Descripción']);
-            $cat_sat_cve_prod_ins['descripcion_select'] = trim($row['c_ClaveProdServ']).' '.trim($row['Descripción']);
-            $cat_sat_cve_prod_ins['predeterminado'] = 'inactivo';
-            $alta = $cat_sat_cve_prod_modelo->inserta_registro_si_no_existe(registro: $cat_sat_cve_prod_ins);
-            if(errores::$error){
-                return (new errores())->error(mensaje: 'Error al insertar cat_sat_cve_prod', data: $alta);
+        if($n_prods !== 52512) {
+
+            $data = $importador->leer_registros(ruta_absoluta: $ruta, columnas: $columnas);
+            if (errores::$error) {
+                return (new errores())->error(mensaje: 'Error al leer cat_sat_cve_prod', data: $data);
             }
-            $altas[] = $alta;
+
+            foreach ($data as $row) {
+                $row = (array)$row;
+                $cat_sat_cve_prod_ins['id'] = trim($row['c_ClaveProdServ']);
+                $cat_sat_cve_prod_ins['codigo'] = trim($row['c_ClaveProdServ']);
+                $cat_sat_cve_prod_ins['descripcion'] = trim($row['Descripción']);
+                $cat_sat_cve_prod_ins['descripcion_select'] = trim($row['c_ClaveProdServ']) . ' ' . trim($row['Descripción']);
+                $cat_sat_cve_prod_ins['predeterminado'] = 'inactivo';
+                $alta = $cat_sat_cve_prod_modelo->inserta_registro_si_no_existe(registro: $cat_sat_cve_prod_ins);
+                if (errores::$error) {
+                    return (new errores())->error(mensaje: 'Error al insertar cat_sat_cve_prod', data: $alta);
+                }
+                $altas[] = $alta;
+            }
         }
         $out->altas = $altas;
 
