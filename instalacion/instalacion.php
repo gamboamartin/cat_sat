@@ -1,6 +1,7 @@
 <?php
 namespace gamboamartin\cat_sat\instalacion;
 
+use config\generales;
 use gamboamartin\administrador\models\_instalacion;
 use gamboamartin\cat_sat\models\cat_sat_clase_producto;
 use gamboamartin\cat_sat\models\cat_sat_conf_reg_tp;
@@ -13,7 +14,7 @@ use gamboamartin\cat_sat\models\cat_sat_regimen_fiscal;
 use gamboamartin\cat_sat\models\cat_sat_tipo_persona;
 use gamboamartin\cat_sat\models\cat_sat_tipo_producto;
 use gamboamartin\errores\errores;
-use gamboamartin\system\table;
+use gamboamartin\plugins\Importador;
 use PDO;
 use stdClass;
 
@@ -129,14 +130,46 @@ class instalacion
     private function cat_sat_cve_prod(PDO $link): array|stdClass
     {
         $out = new stdClass();
-        $cat_sat_cve_prod_modelo = new cat_sat_cve_prod(link: $link);
-
         $create = (NEW _instalacion($link))->create_table_new(table:__FUNCTION__);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al crear cat_sat_cve_prod', data: $create);
         }
 
         $out->create = $create;
+
+        $importador = new Importador();
+        $columnas = array();
+        $columnas[] = 'c_ClaveProdServ';
+        $columnas[] = 'Descripción';
+        $columnas[] = 'Incluir IVA trasladado';
+        $columnas[] = 'Incluir IEPS trasladado';
+        $columnas[] = 'Complemento que debe incluir';
+        $columnas[] = 'FechaInicioVigencia';
+        $columnas[] = 'FechaFinVigencia';
+        $columnas[] = 'Estímulo Franja Fronteriza';
+        $columnas[] = 'Palabras similares';
+        $ruta = (new generales())->path_base."instalacion/".__FUNCTION__.'.ods';
+        $data = $importador->leer_registros(ruta_absoluta: $ruta, columnas: $columnas);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al leer cat_sat_cve_prod', data: $data);
+        }
+
+        $cat_sat_cve_prod_modelo = new cat_sat_cve_prod(link: $link);
+        $altas = array();
+        foreach ($data as $row){
+            $row = (array)$row;
+            $cat_sat_cve_prod_ins['id'] = trim($row['c_ClaveProdServ']);
+            $cat_sat_cve_prod_ins['codigo'] = trim($row['c_ClaveProdServ']);
+            $cat_sat_cve_prod_ins['descripcion'] = trim($row['Descripción']);
+            $cat_sat_cve_prod_ins['descripcion_select'] = trim($row['c_ClaveProdServ']).' '.trim($row['Descripción']);
+            $cat_sat_cve_prod_ins['predeterminado'] = 'inactivo';
+            $alta = $cat_sat_cve_prod_modelo->inserta_registro_si_no_existe(registro: $cat_sat_cve_prod_ins);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al insertar cat_sat_cve_prod', data: $alta);
+            }
+            $altas[] = $alta;
+        }
+        $out->altas = $altas;
 
         return $out;
 
@@ -433,6 +466,12 @@ class instalacion
     {
 
         $out = new stdClass();
+
+        $cat_sat_cve_prod = $this->cat_sat_cve_prod(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_cve_prod', data: $cat_sat_cve_prod);
+        }
+        $out->cat_sat_cve_prod = $cat_sat_cve_prod;
 
 
         $cat_sat_metodo_pago = $this->cat_sat_metodo_pago(link: $link);
