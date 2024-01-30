@@ -148,7 +148,14 @@ class instalacion
         $columnas[] = 'FechaFinVigencia';
         $columnas[] = 'Estímulo Franja Fronteriza';
         $columnas[] = 'Palabras similares';
+
         $ruta = (new generales())->path_base."instalacion/".__FUNCTION__.'.ods';
+
+        if((new generales())->sistema !== 'cat_sat'){
+            $ruta = (new generales())->path_base;
+            $ruta .= "vendor/gamboa.martin/cat_sat/instalacion/cat_sat_cve_prod.ods";
+        }
+
         $data = $importador->leer_registros(ruta_absoluta: $ruta, columnas: $columnas);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al leer cat_sat_cve_prod', data: $data);
@@ -466,6 +473,7 @@ class instalacion
     {
 
         $out = new stdClass();
+
 
         $cat_sat_cve_prod = $this->cat_sat_cve_prod(link: $link);
         if (errores::$error) {
