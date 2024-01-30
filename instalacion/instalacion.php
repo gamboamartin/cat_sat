@@ -182,7 +182,7 @@ class instalacion
                 if (errores::$error) {
                     return (new errores())->error(mensaje: 'Error al insertar cat_sat_cve_prod', data: $alta);
                 }
-                $altas[] = $alta;
+                $altas[] = $alta->registro_id;
             }
         }
         $out->altas = $altas;
