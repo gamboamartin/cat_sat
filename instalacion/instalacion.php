@@ -215,6 +215,26 @@ class instalacion
     private function cat_sat_division_producto(PDO $link): array|stdClass
     {
         $out = new stdClass();
+
+        $create = (NEW _instalacion($link))->create_table_new(table:__FUNCTION__);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_division_producto', data: $create);
+        }
+
+        $out->create = $create;
+
+
+        $foraneas = array();
+        $foraneas['cat_sat_tipo_producto_id'] = new stdClass();
+
+        $foraneas_r = (new _instalacion(link: $link))->foraneas(foraneas: $foraneas,table:  __FUNCTION__);
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $foraneas_r);
+        }
+
+        $out->foraneas_r = $foraneas_r;
+
         $cat_sat_division_producto_modelo = new cat_sat_division_producto(link: $link);
 
         $cat_sat_division_productos = array();
