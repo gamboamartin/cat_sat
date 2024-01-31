@@ -21,4 +21,8 @@ class cat_sat_cve_prod extends _modelo_parent
 
         $this->etiqueta = 'Productos y Servicios';
     }
+
+
+
+
 }
