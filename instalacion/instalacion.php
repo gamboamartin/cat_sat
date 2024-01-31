@@ -233,6 +233,25 @@ class instalacion
             return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $foraneas_r);
         }
 
+
+        $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_grupo_producto');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_grupo_producto', data: $create);
+        }
+
+        $out->create = $create;
+
+
+        $foraneas = array();
+        $foraneas['cat_sat_division_producto_id'] = new stdClass();
+
+        $foraneas_r = (new _instalacion(link: $link))->foraneas(foraneas: $foraneas,table:  'cat_sat_grupo_producto');
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $foraneas_r);
+        }
+
+
         $out->foraneas_r = $foraneas_r;
 
         $cat_sat_division_producto_modelo = new cat_sat_division_producto(link: $link);
@@ -263,39 +282,7 @@ class instalacion
         return $out;
 
     }
-    private function cat_sat_producto(PDO $link): array|stdClass
-    {
-        $out = new stdClass();
-        $cat_sat_producto_modelo = new cat_sat_producto(link: $link);
 
-        $cat_sat_productos = array();
-        $cat_sat_productos[0]['id'] = 84111506;
-        $cat_sat_productos[0]['descripcion'] = 'Servicios de facturación';
-        $cat_sat_productos[0]['codigo'] = '84111506';
-        $cat_sat_productos[0]['descripcion_select'] = '84111506 Servicios De Facturación';
-        $cat_sat_productos[0]['cat_sat_clase_producto_id'] = '841115';
-
-
-        $out->cat_sat_productos = $cat_sat_productos;
-
-        foreach ($cat_sat_productos as $cat_sat_producto){
-            $existe = $cat_sat_producto_modelo->existe_by_id(registro_id: $cat_sat_producto['id']);
-            if(errores::$error){
-                return (new errores())->error(mensaje: 'Error al validar si existe producto', data: $existe);
-            }
-            $out->existe = $existe;
-            if(!$existe){
-                $alta = $cat_sat_producto_modelo->alta_registro(registro: $cat_sat_producto);
-                if(errores::$error){
-                    return (new errores())->error(mensaje: 'Error al insertar producto', data: $alta);
-                }
-                $out->altas[] = $alta;
-            }
-        }
-
-        return $out;
-
-    }
     private function cat_sat_grupo_producto(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -346,6 +333,40 @@ class instalacion
         return $out;
 
     }
+    private function cat_sat_producto(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $cat_sat_producto_modelo = new cat_sat_producto(link: $link);
+
+        $cat_sat_productos = array();
+        $cat_sat_productos[0]['id'] = 84111506;
+        $cat_sat_productos[0]['descripcion'] = 'Servicios de facturación';
+        $cat_sat_productos[0]['codigo'] = '84111506';
+        $cat_sat_productos[0]['descripcion_select'] = '84111506 Servicios De Facturación';
+        $cat_sat_productos[0]['cat_sat_clase_producto_id'] = '841115';
+
+
+        $out->cat_sat_productos = $cat_sat_productos;
+
+        foreach ($cat_sat_productos as $cat_sat_producto){
+            $existe = $cat_sat_producto_modelo->existe_by_id(registro_id: $cat_sat_producto['id']);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al validar si existe producto', data: $existe);
+            }
+            $out->existe = $existe;
+            if(!$existe){
+                $alta = $cat_sat_producto_modelo->alta_registro(registro: $cat_sat_producto);
+                if(errores::$error){
+                    return (new errores())->error(mensaje: 'Error al insertar producto', data: $alta);
+                }
+                $out->altas[] = $alta;
+            }
+        }
+
+        return $out;
+
+    }
+
     private function cat_sat_tipo_producto(PDO $link): array|stdClass
     {
         $out = new stdClass();
