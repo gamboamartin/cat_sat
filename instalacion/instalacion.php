@@ -2,6 +2,7 @@
 namespace gamboamartin\cat_sat\instalacion;
 
 use config\generales;
+use gamboamartin\administrador\instalacion\_adm;
 use gamboamartin\administrador\models\_instalacion;
 use gamboamartin\cat_sat\models\cat_sat_clase_producto;
 use gamboamartin\cat_sat\models\cat_sat_conf_reg_tp;
@@ -186,6 +187,25 @@ class instalacion
             }
         }
         $out->altas = $altas;
+
+
+        $adm_menu_descripcion = 'Productos';
+        $adm_sistema_descripcion = 'comercial';
+        $etiqueta_label = 'Productos';
+        $adm_seccion_pertenece_descripcion = 'comercial';
+        $adm_namespace_name = 'gamboamartin/cat_sat';
+        $adm_namespace_descripcion = 'gamboa.martin/cat_sat';
+
+        $acl = (new _adm())->integra_acl(adm_menu_descripcion: $adm_menu_descripcion,
+            adm_namespace_name: $adm_namespace_name, adm_namespace_descripcion: $adm_namespace_descripcion,
+            adm_seccion_descripcion: __FUNCTION__,
+            adm_seccion_pertenece_descripcion: $adm_seccion_pertenece_descripcion,
+            adm_sistema_descripcion: $adm_sistema_descripcion,
+            etiqueta_label: $etiqueta_label, link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al obtener acl', data:  $acl);
+        }
+
 
         return $out;
 
