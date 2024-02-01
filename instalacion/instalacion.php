@@ -5,6 +5,7 @@ use config\generales;
 use gamboamartin\administrador\instalacion\_adm;
 use gamboamartin\administrador\models\_instalacion;
 use gamboamartin\cat_sat\models\cat_sat_clase_producto;
+use gamboamartin\cat_sat\models\cat_sat_conf_imps;
 use gamboamartin\cat_sat\models\cat_sat_conf_reg_tp;
 use gamboamartin\cat_sat\models\cat_sat_cve_prod;
 use gamboamartin\cat_sat\models\cat_sat_division_producto;
@@ -32,6 +33,19 @@ class instalacion
             exit;
         }
 
+    }
+
+    private function _add_cat_sat_conf_imps(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_conf_imps');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_cve_prod', data: $create);
+        }
+
+        $out->create = $create;
+
+        return $out;
     }
 
     private function cat_sat_clase_producto(PDO $link): array|stdClass
@@ -68,6 +82,107 @@ class instalacion
 
     }
 
+    private function cat_sat_conf_imps(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = $this->_add_cat_sat_conf_imps(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_cve_prod', data: $create);
+        }
+
+        $out->create = $create;
+
+        $cat_sat_conf_imps = array();
+
+        $cat_sat_conf_imp['id'] = 1;
+        $cat_sat_conf_imp['descripcion'] = 'PESONA MORAL IVA 16';
+        $cat_sat_conf_imp['codigo'] = '001';
+        $cat_sat_conf_imp['descripcion_select'] = '001 PESONA MORAL IVA 16';
+
+        $cat_sat_conf_imps[0] = $cat_sat_conf_imp;
+
+        $cat_sat_conf_imp['id'] = 2;
+        $cat_sat_conf_imp['descripcion'] = 'RESICO PERSONA FISICA IVA 16';
+        $cat_sat_conf_imp['codigo'] = '002';
+        $cat_sat_conf_imp['descripcion_select'] = '002 RESICO PERSONA FISICA IVA 16';
+
+        $cat_sat_conf_imps[1] = $cat_sat_conf_imp;
+
+        $cat_sat_conf_imp['id'] = 3;
+        $cat_sat_conf_imp['descripcion'] = 'INMOBILIARIA EXENTO';
+        $cat_sat_conf_imp['codigo'] = '003';
+        $cat_sat_conf_imp['descripcion_select'] = '003 INMOBILIARIA EXENTO';
+
+        $cat_sat_conf_imps[2] = $cat_sat_conf_imp;
+
+        $cat_sat_conf_imp['id'] = 4;
+        $cat_sat_conf_imp['descripcion'] = 'RESICO PERSONAL MORAL CON RETENCION MAS IVA';
+        $cat_sat_conf_imp['codigo'] = '004';
+        $cat_sat_conf_imp['descripcion_select'] = '004 RESICO PERSONAL MORAL CON RETENCION MAS IVA';
+
+        $cat_sat_conf_imps[3] = $cat_sat_conf_imp;
+
+        $cat_sat_conf_imp['id'] = 5;
+        $cat_sat_conf_imp['descripcion'] = 'CONF ARRENADAMIENTO PERSONA FISICA A PERSONA MORAL';
+        $cat_sat_conf_imp['codigo'] = '005';
+        $cat_sat_conf_imp['descripcion_select'] = '005 CONF ARRENADAMIENTO PERSONA FISICA A PERSONA MORAL';
+
+        $cat_sat_conf_imps[4] = $cat_sat_conf_imp;
+
+        $cat_sat_conf_imp['id'] = 998;
+        $cat_sat_conf_imp['descripcion'] = 'RET PROFESIONALES RESICO';
+        $cat_sat_conf_imp['codigo'] = '998';
+        $cat_sat_conf_imp['descripcion_select'] = '998 RET PROFESIONALES RESICO';
+
+        $cat_sat_conf_imps[5] = $cat_sat_conf_imp;
+
+        $cat_sat_conf_imp['id'] = 999;
+        $cat_sat_conf_imp['descripcion'] = 'SIN CONFIGURACIONES';
+        $cat_sat_conf_imp['codigo'] = '999';
+        $cat_sat_conf_imp['descripcion_select'] = '999 SIN CONFIGURACIONES';
+
+        $cat_sat_conf_imps[6] = $cat_sat_conf_imp;
+
+
+        $cat_sat_conf_imps_modelo = new cat_sat_conf_imps(link: $link);
+
+
+        $altas = array();
+
+        foreach ($cat_sat_conf_imps as $cat_sat_conf_imp) {
+
+
+            $alta = $cat_sat_conf_imps_modelo->inserta_registro_si_no_existe(registro: $cat_sat_conf_imp);
+            if (errores::$error) {
+                return (new errores())->error(mensaje: 'Error al insertar cat_sat_conf_imp', data: $alta);
+            }
+            $altas[] = $alta;
+        }
+        $out->altas = $altas;
+
+        $adm_menu_descripcion = 'Configuraciones';
+        $adm_sistema_descripcion = 'cat_sat';
+        $etiqueta_label = 'Configuraciones';
+        $adm_seccion_pertenece_descripcion = 'cat_sat';
+        $adm_namespace_name = 'gamboamartin/cat_sat';
+        $adm_namespace_descripcion = 'gamboa.martin/cat_sat';
+
+        $acl = (new _adm())->integra_acl(adm_menu_descripcion: $adm_menu_descripcion,
+            adm_namespace_name: $adm_namespace_name, adm_namespace_descripcion: $adm_namespace_descripcion,
+            adm_seccion_descripcion: __FUNCTION__,
+            adm_seccion_pertenece_descripcion: $adm_seccion_pertenece_descripcion,
+            adm_sistema_descripcion: $adm_sistema_descripcion,
+            etiqueta_label: $etiqueta_label, link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al obtener acl', data:  $acl);
+        }
+
+
+        return $out;
+
+
+
+    }
     private function cat_sat_conf_reg_tp(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -127,7 +242,6 @@ class instalacion
         return $out;
 
     }
-
     private function cat_sat_cve_prod(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -282,7 +396,6 @@ class instalacion
         return $out;
 
     }
-
     private function cat_sat_grupo_producto(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -366,7 +479,6 @@ class instalacion
         return $out;
 
     }
-
     private function cat_sat_tipo_producto(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -580,6 +692,11 @@ class instalacion
 
         $out = new stdClass();
 
+        $cat_sat_cve_prod = $this->cat_sat_conf_imps(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_cve_prod', data: $cat_sat_cve_prod);
+        }
+        $out->cat_sat_cve_prod = $cat_sat_cve_prod;
 
         $cat_sat_cve_prod = $this->cat_sat_cve_prod(link: $link);
         if (errores::$error) {
