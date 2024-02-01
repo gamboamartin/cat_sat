@@ -15,6 +15,7 @@ use gamboamartin\cat_sat\models\cat_sat_producto;
 use gamboamartin\cat_sat\models\cat_sat_regimen_fiscal;
 use gamboamartin\cat_sat\models\cat_sat_tipo_persona;
 use gamboamartin\cat_sat\models\cat_sat_tipo_producto;
+use gamboamartin\cat_sat\models\cat_sat_unidad;
 use gamboamartin\errores\errores;
 use gamboamartin\plugins\Importador;
 use PDO;
@@ -34,7 +35,6 @@ class instalacion
         }
 
     }
-
     private function _add_cat_sat_conf_imps(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -47,7 +47,6 @@ class instalacion
 
         return $out;
     }
-
     private function cat_sat_clase_producto(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -81,7 +80,6 @@ class instalacion
         return $out;
 
     }
-
     private function cat_sat_conf_imps(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -665,6 +663,32 @@ class instalacion
         return $out;
 
     }
+
+    private function cat_sat_unidad(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $cat_sat_unidad_modelo = new cat_sat_unidad(link: $link);
+
+        $cat_sat_unidades = array();
+        $cat_sat_unidades[0]['id'] = 241;
+        $cat_sat_unidades[0]['descripcion'] = 'Actividad';
+        $cat_sat_unidades[0]['codigo'] = 'ACT';
+        $cat_sat_unidades[0]['descripcion_select'] = 'ACT Actividad';
+
+
+        foreach ($cat_sat_unidades as $cat_sat_unidad){
+
+            $alta = $cat_sat_unidad_modelo->inserta_registro_si_no_existe(registro: $cat_sat_unidad);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al insertar cat_sat_unidad', data: $alta);
+            }
+            $out->alta[] = $alta;
+
+        }
+
+        return $out;
+
+    }
     private function data(): stdClass|array
     {
         $this->data = new stdClass();
@@ -691,6 +715,12 @@ class instalacion
     {
 
         $out = new stdClass();
+
+        $cat_sat_unidad = $this->cat_sat_unidad(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_unidad', data: $cat_sat_unidad);
+        }
+        $out->cat_sat_unidad = $cat_sat_unidad;
 
         $cat_sat_cve_prod = $this->cat_sat_conf_imps(link: $link);
         if (errores::$error) {
