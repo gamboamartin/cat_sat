@@ -11,6 +11,7 @@ use gamboamartin\cat_sat\models\cat_sat_cve_prod;
 use gamboamartin\cat_sat\models\cat_sat_division_producto;
 use gamboamartin\cat_sat\models\cat_sat_grupo_producto;
 use gamboamartin\cat_sat\models\cat_sat_metodo_pago;
+use gamboamartin\cat_sat\models\cat_sat_motivo_cancelacion;
 use gamboamartin\cat_sat\models\cat_sat_producto;
 use gamboamartin\cat_sat\models\cat_sat_regimen_fiscal;
 use gamboamartin\cat_sat\models\cat_sat_tipo_persona;
@@ -41,6 +42,19 @@ class instalacion
         $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_conf_imps');
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al crear cat_sat_cve_prod', data: $create);
+        }
+
+        $out->create = $create;
+
+        return $out;
+    }
+
+    private function _add_cat_sat_motivo_cancelacion(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_motivo_cancelacion');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_motivo_cancelacion', data: $create);
         }
 
         $out->create = $create;
@@ -444,6 +458,96 @@ class instalacion
         return $out;
 
     }
+
+    private function cat_sat_metodo_pago(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $cat_sat_metodo_modelo = new cat_sat_metodo_pago(link: $link);
+
+        $cat_sat_metodos_pago = array();
+        $cat_sat_metodos_pago[0]['id'] = 1;
+        $cat_sat_metodos_pago[0]['descripcion'] = 'Pago en una sola exhibición';
+        $cat_sat_metodos_pago[0]['codigo'] = 'PUE';
+        $cat_sat_metodos_pago[0]['descripcion_select'] = 'PUE Pago en una sola exhibición';
+
+
+        $cat_sat_metodos_pago[1]['id'] = 2;
+        $cat_sat_metodos_pago[1]['descripcion'] = 'Pago en parcialidades o diferido';
+        $cat_sat_metodos_pago[1]['codigo'] = 'PPD';
+        $cat_sat_metodos_pago[1]['descripcion_select'] = 'PPD Pago en parcialidades o diferido';
+        $out->cat_sat_metodos_pago = $cat_sat_metodos_pago;
+
+        foreach ($cat_sat_metodos_pago as $cat_sat_metodo_pago){
+
+            $alta = $cat_sat_metodo_modelo->inserta_registro_si_no_existe(registro: $cat_sat_metodo_pago);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al insertar cat_sat_metodo_pago', data: $alta);
+            }
+            $out->alta[] = $alta;
+
+        }
+
+        return $out;
+
+    }
+    private function cat_sat_motivo_cancelacion(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = $this->_add_cat_sat_motivo_cancelacion(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar create', data: $create);
+        }
+        $out->create = $create;
+
+        $importador = new Importador();
+        $columnas = array();
+        $columnas[] = 'id';
+        $columnas[] = 'descripcion';
+        $columnas[] = 'codigo';
+        $columnas[] = 'status';
+
+        $ruta = (new generales())->path_base."instalacion/".__FUNCTION__.'.ods';
+
+        if((new generales())->sistema !== 'cat_sat'){
+            $ruta = (new generales())->path_base;
+            $ruta .= "vendor/gamboa.martin/cat_sat/instalacion/".__FUNCTION__.".ods";
+        }
+
+
+        $cat_sat_motivo_cancelacion_modelo = new cat_sat_motivo_cancelacion(link: $link);
+
+        $n_motivos = $cat_sat_motivo_cancelacion_modelo->cuenta();
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al contar n_motivos', data: $n_motivos);
+        }
+        $altas = array();
+        if($n_motivos !== 4) {
+
+            $data = $importador->leer_registros(ruta_absoluta: $ruta, columnas: $columnas);
+            if (errores::$error) {
+                return (new errores())->error(mensaje: 'Error al leer cat_sat_cve_prod', data: $data);
+            }
+
+            foreach ($data as $row) {
+                $row = (array)$row;
+                $cat_sat_motivo_cancelacion_ins['id'] = trim($row['id']);
+                $cat_sat_motivo_cancelacion_ins['codigo'] = trim($row['codigo']);
+                $cat_sat_motivo_cancelacion_ins['descripcion'] = trim($row['descripcion']);
+                $cat_sat_motivo_cancelacion_ins['descripcion_select'] = trim($row['codigo']) . ' ' . trim($row['descripcion']);
+                $cat_sat_motivo_cancelacion_ins['predeterminado'] = 'inactivo';
+                $alta = $cat_sat_motivo_cancelacion_modelo->inserta_registro_si_no_existe(registro: $cat_sat_motivo_cancelacion_ins);
+                if (errores::$error) {
+                    return (new errores())->error(mensaje: 'Error al insertar cat_sat_cve_prod', data: $alta);
+                }
+                $altas[] = $alta;
+            }
+        }
+        $out->altas = $altas;
+
+
+        return $out;
+
+    }
     private function cat_sat_producto(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -632,37 +736,7 @@ class instalacion
         return $cat_sat_tipo_persona;
 
     }
-    private function cat_sat_metodo_pago(PDO $link): array|stdClass
-    {
-        $out = new stdClass();
-        $cat_sat_metodo_modelo = new cat_sat_metodo_pago(link: $link);
 
-        $cat_sat_metodos_pago = array();
-        $cat_sat_metodos_pago[0]['id'] = 1;
-        $cat_sat_metodos_pago[0]['descripcion'] = 'Pago en una sola exhibición';
-        $cat_sat_metodos_pago[0]['codigo'] = 'PUE';
-        $cat_sat_metodos_pago[0]['descripcion_select'] = 'PUE Pago en una sola exhibición';
-
-
-        $cat_sat_metodos_pago[1]['id'] = 2;
-        $cat_sat_metodos_pago[1]['descripcion'] = 'Pago en parcialidades o diferido';
-        $cat_sat_metodos_pago[1]['codigo'] = 'PPD';
-        $cat_sat_metodos_pago[1]['descripcion_select'] = 'PPD Pago en parcialidades o diferido';
-        $out->cat_sat_metodos_pago = $cat_sat_metodos_pago;
-
-        foreach ($cat_sat_metodos_pago as $cat_sat_metodo_pago){
-
-            $alta = $cat_sat_metodo_modelo->inserta_registro_si_no_existe(registro: $cat_sat_metodo_pago);
-            if(errores::$error){
-                return (new errores())->error(mensaje: 'Error al insertar cat_sat_metodo_pago', data: $alta);
-            }
-            $out->alta[] = $alta;
-
-        }
-
-        return $out;
-
-    }
 
     private function cat_sat_unidad(PDO $link): array|stdClass
     {
@@ -715,6 +789,13 @@ class instalacion
     {
 
         $out = new stdClass();
+
+        $cat_sat_motivo_cancelacion = $this->cat_sat_motivo_cancelacion(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_motivo_cancelacion',
+                data: $cat_sat_motivo_cancelacion);
+        }
+        $out->cat_sat_motivo_cancelacion = $cat_sat_motivo_cancelacion;
 
         $cat_sat_unidad = $this->cat_sat_unidad(link: $link);
         if (errores::$error) {
