@@ -765,7 +765,6 @@ class instalacion
         $columnas[] = 'id';
         $columnas[] = 'descripcion';
         $columnas[] = 'codigo';
-        $columnas[] = 'status';
 
         $ruta = (new generales())->path_base."instalacion/".__FUNCTION__.'.ods';
 
