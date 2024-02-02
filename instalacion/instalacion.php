@@ -61,6 +61,19 @@ class instalacion
 
         return $out;
     }
+    private function _add_cat_sat_retencion_conf(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_retencion_conf');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_retencion_conf', data: $create);
+        }
+
+        $out->create = $create;
+
+        return $out;
+    }
+
     private function _add_cat_sat_tipo_relacion(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -808,6 +821,77 @@ class instalacion
         return $out;
 
     }
+
+    private function cat_sat_retencion_conf(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = $this->_add_cat_sat_retencion_conf(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar create', data: $create);
+        }
+        $out->create = $create;
+
+        $foraneas = array();
+        $foraneas['cat_sat_factor_id'] = new stdClass();
+        $foraneas['cat_sat_tipo_factor_id'] = new stdClass();
+        $foraneas['cat_sat_tipo_impuesto_id'] = new stdClass();
+        $foraneas['cat_sat_conf_imps_id'] = new stdClass();
+
+        $foraneas_r = (new _instalacion(link:$link))->foraneas(foraneas: $foraneas,table:  'cat_sat_retencion_conf');
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $foraneas_r);
+        }
+        $out->foraneas_r = $foraneas_r;
+
+        /*$importador = new Importador();
+        $columnas = array();
+        $columnas[] = 'id';
+        $columnas[] = 'descripcion';
+        $columnas[] = 'codigo';
+
+        $ruta = (new generales())->path_base."instalacion/".__FUNCTION__.'.ods';
+
+        if((new generales())->sistema !== 'cat_sat'){
+            $ruta = (new generales())->path_base;
+            $ruta .= "vendor/gamboa.martin/cat_sat/instalacion/".__FUNCTION__.".ods";
+        }
+
+
+        $cat_sat_tipo_relacion_modelo = new cat_sat_tipo_relacion(link: $link);
+
+        $n_motivos = $cat_sat_tipo_relacion_modelo->cuenta();
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al contar n_motivos', data: $n_motivos);
+        }
+        $altas = array();
+        if($n_motivos !== 9) {
+
+            $data = $importador->leer_registros(ruta_absoluta: $ruta, columnas: $columnas);
+            if (errores::$error) {
+                return (new errores())->error(mensaje: 'Error al leer cat_sat_cve_prod', data: $data);
+            }
+
+            foreach ($data as $row) {
+                $row = (array)$row;
+                $cat_sat_tipo_relacion_ins['id'] = trim($row['id']);
+                $cat_sat_tipo_relacion_ins['codigo'] = trim($row['codigo']);
+                $cat_sat_tipo_relacion_ins['descripcion'] = trim($row['descripcion']);
+                $cat_sat_tipo_relacion_ins['descripcion_select'] = trim($row['codigo']) . ' ' . trim($row['descripcion']);
+                $cat_sat_tipo_relacion_ins['predeterminado'] = 'inactivo';
+                $alta = $cat_sat_tipo_relacion_modelo->inserta_registro_si_no_existe(registro: $cat_sat_tipo_relacion_ins);
+                if (errores::$error) {
+                    return (new errores())->error(mensaje: 'Error al insertar cat_sat_cve_prod', data: $alta);
+                }
+                $altas[] = $alta;
+            }
+        }
+        $out->altas = $altas;*/
+
+
+        return $out;
+
+    }
     private function cat_sat_unidad(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -953,6 +1037,12 @@ class instalacion
             return (new errores())->error(mensaje: 'Error al insertar cat_sat_conf_reg_tp', data: $cat_sat_conf_reg_tp);
         }
         $out->cat_sat_conf_reg_tp = $cat_sat_conf_reg_tp;
+
+        $cat_sat_retencion_conf = $this->cat_sat_retencion_conf(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_retencion_conf', data: $cat_sat_retencion_conf);
+        }
+        $out->cat_sat_retencion_conf = $cat_sat_retencion_conf;
 
 
 
