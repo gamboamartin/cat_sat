@@ -15,6 +15,7 @@ use gamboamartin\cat_sat\models\cat_sat_metodo_pago;
 use gamboamartin\cat_sat\models\cat_sat_motivo_cancelacion;
 use gamboamartin\cat_sat\models\cat_sat_producto;
 use gamboamartin\cat_sat\models\cat_sat_regimen_fiscal;
+use gamboamartin\cat_sat\models\cat_sat_tipo_impuesto;
 use gamboamartin\cat_sat\models\cat_sat_tipo_persona;
 use gamboamartin\cat_sat\models\cat_sat_tipo_producto;
 use gamboamartin\cat_sat\models\cat_sat_tipo_relacion;
@@ -105,6 +106,19 @@ class instalacion
         $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_tipo_contrato_nom');
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al crear cat_sat_retencion_conf', data: $create);
+        }
+
+        $out->create = $create;
+
+        return $out;
+    }
+
+    private function _add_cat_sat_tipo_impuesto(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_tipo_impuesto');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_tipo_impuesto', data: $create);
         }
 
         $out->create = $create;
@@ -886,6 +900,67 @@ class instalacion
         return $out;
 
     }
+
+    private function cat_sat_tipo_impuesto(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = $this->_add_cat_sat_tipo_impuesto(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar create', data: $create);
+        }
+        $out->create = $create;
+
+
+        $importador = new Importador();
+        $columnas = array();
+        $columnas[] = 'id';
+        $columnas[] = 'descripcion';
+        $columnas[] = 'codigo';
+
+        $ruta = (new generales())->path_base."instalacion/".__FUNCTION__.'.ods';
+
+        if((new generales())->sistema !== 'cat_sat'){
+            $ruta = (new generales())->path_base;
+            $ruta .= "vendor/gamboa.martin/cat_sat/instalacion/".__FUNCTION__.".ods";
+        }
+
+
+        $modelo = new cat_sat_tipo_impuesto(link: $link);
+
+        $n_rows = $modelo->cuenta();
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al contar n_rows', data: $n_rows);
+        }
+        $altas = array();
+        if($n_rows !== 8) {
+
+            $data = $importador->leer_registros(ruta_absoluta: $ruta, columnas: $columnas);
+            if (errores::$error) {
+                return (new errores())->error(mensaje: 'Error al leer cat_sat_cve_prod', data: $data);
+            }
+
+            foreach ($data as $row) {
+                $row = (array)$row;
+                $ins['id'] = trim($row['id']);
+                $ins['codigo'] = trim($row['codigo']);
+                $ins['descripcion'] = trim($row['descripcion']);
+                $ins['descripcion_select'] = trim($row['codigo']) . ' ' . trim($row['descripcion']);
+                $ins['predeterminado'] = 'inactivo';
+                $alta = $modelo->inserta_registro_si_no_existe(registro: $ins);
+                if (errores::$error) {
+                    return (new errores())->error(mensaje: 'Error al insertar cat_sat_cve_prod', data: $alta);
+                }
+                $altas[] = $alta;
+            }
+        }
+        $create->altas = $altas;
+
+
+
+
+        return $out;
+
+    }
     private function cat_sat_retencion_conf(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -1153,6 +1228,13 @@ class instalacion
                 data: $cat_sat_tipo_contrato_nom);
         }
         $out->cat_sat_motivo_cancelacion = $cat_sat_motivo_cancelacion;
+
+        $cat_sat_tipo_impuesto = $this->cat_sat_tipo_impuesto(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_tipo_impuesto',
+                data: $cat_sat_tipo_impuesto);
+        }
+        $out->cat_sat_tipo_impuesto = $cat_sat_tipo_impuesto;
 
         $cat_sat_tipo_relacion = $this->cat_sat_tipo_relacion(link: $link);
         if (errores::$error) {
