@@ -323,7 +323,7 @@ class instalacion
         $cat_sat_conf_reg_tps[7]['cat_sat_tipo_persona_id'] = '4';
         $cat_sat_conf_reg_tps[7]['cat_sat_regimen_fiscal_id'] = '623';
 
-        $cat_sat_conf_reg_tps[8]['id'] = 8;
+        $cat_sat_conf_reg_tps[8]['id'] = 9;
         $cat_sat_conf_reg_tps[8]['cat_sat_tipo_persona_id'] = '5';
         $cat_sat_conf_reg_tps[8]['cat_sat_regimen_fiscal_id'] = '616';
 
@@ -1058,49 +1058,7 @@ class instalacion
         }
         $out->foraneas_r = $foraneas_r;
 
-        /*$importador = new Importador();
-        $columnas = array();
-        $columnas[] = 'id';
-        $columnas[] = 'descripcion';
-        $columnas[] = 'codigo';
 
-        $ruta = (new generales())->path_base."instalacion/".__FUNCTION__.'.ods';
-
-        if((new generales())->sistema !== 'cat_sat'){
-            $ruta = (new generales())->path_base;
-            $ruta .= "vendor/gamboa.martin/cat_sat/instalacion/".__FUNCTION__.".ods";
-        }
-
-
-        $cat_sat_tipo_relacion_modelo = new cat_sat_tipo_relacion(link: $link);
-
-        $n_motivos = $cat_sat_tipo_relacion_modelo->cuenta();
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al contar n_motivos', data: $n_motivos);
-        }
-        $altas = array();
-        if($n_motivos !== 9) {
-
-            $data = $importador->leer_registros(ruta_absoluta: $ruta, columnas: $columnas);
-            if (errores::$error) {
-                return (new errores())->error(mensaje: 'Error al leer cat_sat_cve_prod', data: $data);
-            }
-
-            foreach ($data as $row) {
-                $row = (array)$row;
-                $cat_sat_tipo_relacion_ins['id'] = trim($row['id']);
-                $cat_sat_tipo_relacion_ins['codigo'] = trim($row['codigo']);
-                $cat_sat_tipo_relacion_ins['descripcion'] = trim($row['descripcion']);
-                $cat_sat_tipo_relacion_ins['descripcion_select'] = trim($row['codigo']) . ' ' . trim($row['descripcion']);
-                $cat_sat_tipo_relacion_ins['predeterminado'] = 'inactivo';
-                $alta = $cat_sat_tipo_relacion_modelo->inserta_registro_si_no_existe(registro: $cat_sat_tipo_relacion_ins);
-                if (errores::$error) {
-                    return (new errores())->error(mensaje: 'Error al insertar cat_sat_cve_prod', data: $alta);
-                }
-                $altas[] = $alta;
-            }
-        }
-        $out->altas = $altas;*/
 
 
         return $out;
