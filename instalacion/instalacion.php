@@ -323,6 +323,10 @@ class instalacion
         $cat_sat_conf_reg_tps[7]['cat_sat_tipo_persona_id'] = '4';
         $cat_sat_conf_reg_tps[7]['cat_sat_regimen_fiscal_id'] = '623';
 
+        $cat_sat_conf_reg_tps[8]['id'] = 8;
+        $cat_sat_conf_reg_tps[8]['cat_sat_tipo_persona_id'] = '5';
+        $cat_sat_conf_reg_tps[8]['cat_sat_regimen_fiscal_id'] = '616';
+
 
         $out->cat_sat_conf_reg_tps = $cat_sat_conf_reg_tps;
 
