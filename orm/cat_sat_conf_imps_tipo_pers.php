@@ -7,7 +7,7 @@ use stdClass;
 
 class cat_sat_conf_imps_tipo_pers extends _modelo_parent {
 
-    public function __construct(PDO $link){
+    public function __construct(PDO $link, bool $aplica_transacciones_base = false){
         $tabla = 'cat_sat_conf_imps_tipo_pers';
         $columnas = array($tabla=>false,'cat_sat_conf_imps'=>$tabla,'cat_sat_conf_reg_tp'=>$tabla);
         $campos_obligatorios[] = 'cat_sat_conf_imps_id';
@@ -15,8 +15,8 @@ class cat_sat_conf_imps_tipo_pers extends _modelo_parent {
 
         $tipo_campos = array();
 
-        parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
-            columnas: $columnas, tipo_campos: $tipo_campos);
+        parent::__construct(link: $link, tabla: $tabla, aplica_transacciones_base: $aplica_transacciones_base,
+            campos_obligatorios: $campos_obligatorios, columnas: $columnas, tipo_campos: $tipo_campos);
 
         $this->NAMESPACE = __NAMESPACE__;
 

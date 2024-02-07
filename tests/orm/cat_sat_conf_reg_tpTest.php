@@ -38,29 +38,17 @@ class cat_sat_conf_reg_tpTest extends test {
         $modelo = new liberator($modelo);
 
 
-        $del = (new \gamboamartin\cat_sat\tests\base_test())->del_cat_sat_regimen_fiscal(link: $this->link);
-        if(errores::$error){
-            $error = (new errores())->error('Error al del', $del);
-            print_r($error);
-            exit;
-        }
 
-        $alta = (new \gamboamartin\cat_sat\tests\base_test())->alta_cat_sat_regimen_fiscal(link: $this->link);
-        if(errores::$error){
-            $error = (new errores())->error('Error al alta', $alta);
-            print_r($error);
-            exit;
-        }
 
         $registro = array();
-        $registro['cat_sat_regimen_fiscal_id'] = 1;
-        $registro['cat_sat_tipo_persona_id'] = 1;
+        $registro['cat_sat_regimen_fiscal_id'] = 601;
+        $registro['cat_sat_tipo_persona_id'] = 4;
         $resultado = $modelo->datos_base_alta($registro);
  
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
-        $this->assertEquals(1,$resultado->cat_sat_regimen_fiscal['cat_sat_regimen_fiscal_id']);
-        $this->assertEquals(1,$resultado->cat_sat_tipo_persona['cat_sat_tipo_persona_id']);
+        $this->assertEquals(601,$resultado->cat_sat_regimen_fiscal['cat_sat_regimen_fiscal_id']);
+        $this->assertEquals(4,$resultado->cat_sat_tipo_persona['cat_sat_tipo_persona_id']);
 
         errores::$error = false;
 

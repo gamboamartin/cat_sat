@@ -190,14 +190,7 @@ class _validacionTest extends test {
         $_validacion = new _validacion();
         //$_validacion = new liberator($_validacion);
 
-        $alta = (new \gamboamartin\cat_sat\tests\base_test())->alta_cat_sat_conf_reg_tp(link: $this->link,
-            cat_sat_regimen_fiscal_codigo: '601', cat_sat_regimen_fiscal_id: 601, cat_sat_tipo_persona_codigo: 'PM',
-            cat_sat_tipo_persona_id: 4);
-        if(errores::$error){
-            $error = (new errores())->error(mensaje: 'Error al insertar',data:  $alta);
-            print_r($error);
-            exit;
-        }
+
 
         $registro = array();
         $registro['cat_sat_regimen_fiscal_id'] = 601;

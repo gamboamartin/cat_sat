@@ -66,19 +66,7 @@ class controlador_cat_sat_tipo_personaTest extends test {
         $controler = new controlador_cat_sat_tipo_persona(link: $this->link, paths_conf: $this->paths_conf);
         //$inicializacion = new liberator($inicializacion);
 
-        $del = (new base_test())->del_cat_sat_tipo_persona(link: $this->link);
-        if(errores::$error){
-            $error = (new errores())->error(mensaje: 'Error al eliminar', data: $del);
-            print_r($error);
-            exit;
-        }
-        
-        $alta = (new base_test())->alta_cat_sat_tipo_persona(link: $this->link);
-        if(errores::$error){
-            $error = (new errores())->error(mensaje: 'Error al insertar', data: $alta);
-            print_r($error);
-            exit;
-        }
+
         $resultado = $controler->lista(header: false, ws: false);
 
 

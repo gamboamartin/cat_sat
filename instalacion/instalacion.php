@@ -288,7 +288,7 @@ class instalacion
     private function cat_sat_conf_reg_tp(PDO $link): array|stdClass
     {
         $out = new stdClass();
-        $cat_sat_conf_reg_tp_modelo = new cat_sat_conf_reg_tp(link: $link);
+        $cat_sat_conf_reg_tp_modelo = new cat_sat_conf_reg_tp(link: $link, aplica_transacciones_base: true);
 
         $cat_sat_conf_reg_tps = array();
         $cat_sat_conf_reg_tps[0]['id'] = 1;
@@ -1173,7 +1173,7 @@ class instalacion
         }
 
 
-        $modelo = new cat_sat_conf_imps_tipo_pers(link: $link);
+        $modelo = new cat_sat_conf_imps_tipo_pers(link: $link,aplica_transacciones_base: true);
 
         $n_rows = $modelo->cuenta();
         if(errores::$error){
@@ -1278,7 +1278,7 @@ class instalacion
         }
         $out->cat_sat_tipo_persona->alta = $cat_sat_tipo_persona_alta;
 
-        $cat_sat_regimen_fiscal_modelo = new cat_sat_regimen_fiscal(link: $link);
+        $cat_sat_regimen_fiscal_modelo = new cat_sat_regimen_fiscal(link: $link,aplica_transacciones_base: true);
         $out->cat_sat_regimen_fiscal = new stdClass();
         $cat_sat_regimen_fiscal = $cat_sat_regimen_fiscal_modelo->inserta_registros_no_existentes_id(
             registros: $this->data->cat_sat_regimen_fiscal);

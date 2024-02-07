@@ -6,7 +6,7 @@ use PDO;
 use stdClass;
 
 class cat_sat_conf_reg_tp extends _modelo_parent{
-    public function __construct(PDO $link){
+    public function __construct(PDO $link, bool $aplica_transacciones_base = false){
         $tabla = 'cat_sat_conf_reg_tp';
 
         $columnas = array($tabla=>false,"cat_sat_regimen_fiscal" => $tabla,
@@ -29,8 +29,9 @@ class cat_sat_conf_reg_tp extends _modelo_parent{
         $parents_data['cat_sat_tipo_persona']['key_id'] = 'cat_sat_tipo_persona_id';
 
 
-        parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios, columnas: $columnas,
-            columnas_extra: array(), tipo_campos: array(), parents_data: $parents_data);
+        parent::__construct(link: $link, tabla: $tabla, aplica_transacciones_base: $aplica_transacciones_base,
+            campos_obligatorios: $campos_obligatorios, columnas: $columnas, columnas_extra: array(),
+            tipo_campos: array(), parents_data: $parents_data);
 
         $this->NAMESPACE = __NAMESPACE__;
 
