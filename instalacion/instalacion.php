@@ -556,7 +556,7 @@ class instalacion
     private function cat_sat_metodo_pago(PDO $link): array|stdClass
     {
         $out = new stdClass();
-        $cat_sat_metodo_modelo = new cat_sat_metodo_pago(link: $link);
+        $cat_sat_metodo_modelo = new cat_sat_metodo_pago(link: $link,aplica_transacciones_base: true);
 
         $cat_sat_metodos_pago = array();
         $cat_sat_metodos_pago[0]['id'] = 1;

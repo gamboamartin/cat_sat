@@ -37,19 +37,7 @@ class cat_sat_metodo_pagoTest extends test {
         $_GET['session_id'] = '1';
         $modelo = new cat_sat_metodo_pago(link: $this->link);
 
-        $del = (new \gamboamartin\cat_sat\tests\base_test())->del_cat_sat_metodo_pago($this->link);
-        if(errores::$error){
-            $error = (new errores())->error('Error al eliminar', $del);
-            print_r($error);
-            exit;
-        }
 
-        $alta = (new \gamboamartin\cat_sat\tests\base_test())->alta_cat_sat_metodo_pago(link: $this->link);
-        if(errores::$error){
-            $error = (new errores())->error('Error al eliminar', $del);
-            print_r($error);
-            exit;
-        }
 
         $resultado = $modelo->existe_predeterminado();
 
