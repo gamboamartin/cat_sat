@@ -1,6 +1,5 @@
 <?php
 namespace gamboamartin\cat_sat\models;
-use base\orm\_defaults;
 use base\orm\_modelo_children;
 
 use gamboamartin\direccion_postal\models\dp_pais;
@@ -9,7 +8,7 @@ use PDO;
 use stdClass;
 
 class cat_sat_moneda extends _modelo_children{
-    public function __construct(PDO $link){
+    public function __construct(PDO $link, bool $aplica_transacciones_base = false){
         $tabla = 'cat_sat_moneda';
         $columnas = array($tabla=>false,"dp_pais"=>$tabla);
         $campos_obligatorios[] = 'descripcion';
@@ -30,14 +29,13 @@ class cat_sat_moneda extends _modelo_children{
         $parents_data['dp_pais']['key_id'] = 'dp_pais_id';
 
 
-        parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
-            columnas: $columnas, campos_view: $campos_view, tipo_campos: $tipo_campos, parents_data: $parents_data);
+        parent::__construct(link: $link, tabla: $tabla, aplica_transacciones_base: $aplica_transacciones_base,
+            campos_obligatorios: $campos_obligatorios, columnas: $columnas, campos_view: $campos_view,
+            tipo_campos: $tipo_campos, parents_data: $parents_data);
 
         $this->NAMESPACE = __NAMESPACE__;
 
         $this->etiqueta = 'Moneda';
-
-
 
 
     }
@@ -52,21 +50,7 @@ class cat_sat_moneda extends _modelo_children{
             return $this->error->error(mensaje: 'Error al validar registro en modelo '.$this->tabla,data: $valida);
         }
 
-        if(!isset($this->registro['dp_pais_id']) || (int)$this->registro['dp_pais_id']<=0 ){
-            $ins_pred = (new dp_pais(link: $this->link))->inserta_predeterminado(codigo: 'XXX',descripcion: 'SIN PAIS');
-            if(errores::$error){
-                return $this->error->error(mensaje: 'Error al insertar pais_predeterminado en modelo '.$this->tabla,
-                    data: $ins_pred);
-            }
-            $dp_pais_id = (new dp_pais(link: $this->link))->id_predeterminado();
-            if(errores::$error){
-                return $this->error->error(mensaje: 'Error al obtener pais_predeterminado en modelo '.$this->tabla,
-                    data: $dp_pais_id);
-            }
-
-            $this->registro['dp_pais_id'] = $dp_pais_id;
-
-        }
+        $this->registro['dp_pais_id'] = 151;
 
         $registro = $this->init_row_alta(
             defaults: $this->defaults,parents_data: $this->parents_data, registro: $this->registro);

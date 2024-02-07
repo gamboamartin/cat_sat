@@ -12,6 +12,7 @@ use gamboamartin\cat_sat\models\cat_sat_cve_prod;
 use gamboamartin\cat_sat\models\cat_sat_division_producto;
 use gamboamartin\cat_sat\models\cat_sat_grupo_producto;
 use gamboamartin\cat_sat\models\cat_sat_metodo_pago;
+use gamboamartin\cat_sat\models\cat_sat_moneda;
 use gamboamartin\cat_sat\models\cat_sat_motivo_cancelacion;
 use gamboamartin\cat_sat\models\cat_sat_producto;
 use gamboamartin\cat_sat\models\cat_sat_regimen_fiscal;
@@ -109,6 +110,29 @@ class instalacion
         }
 
         $out->create = $create;
+
+        return $out;
+    }
+
+    private function _add_cat_sat_moneda(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_moneda');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_moneda', data: $create);
+        }
+
+        $out->create = $create;
+
+        $foraneas = array();
+        $foraneas['dp_pais_id'] = new stdClass();
+
+        $foraneas_r = (new _instalacion(link:$link))->foraneas(foraneas: $foraneas,table:  'cat_sat_moneda');
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $foraneas_r);
+        }
+        $out->foraneas_r = $foraneas_r;
 
         return $out;
     }
@@ -1172,6 +1196,53 @@ class instalacion
         return $create;
 
     }
+
+    private function cat_sat_moneda(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = $this->_add_cat_sat_moneda(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar create', data:  $create);
+        }
+        $out->create = $create;
+
+        $cat_sat_monedas = array();
+
+        $cat_sat_monedas[0]['id'] = 161;
+        $cat_sat_monedas[0]['descripcion'] = 'PESO MEXICANO';
+        $cat_sat_monedas[0]['codigo'] = 'MXN';
+        $cat_sat_monedas[0]['descripcion_select'] = 'MXN PESO MEXICANO';
+        $cat_sat_monedas[0]['dp_pais_id'] = 151;
+
+        $cat_sat_monedas[1]['id'] = 163;
+        $cat_sat_monedas[1]['descripcion'] = 'Los códigos asignados para las transacciones en que intervenga ninguna moneda';
+        $cat_sat_monedas[1]['codigo'] = 'XXX';
+        $cat_sat_monedas[1]['descripcion_select'] = 'LOS CóDIGOS ASIGNADOS PARA LAS TRANSACCIONES EN QUE INTERVENGA NINGUNA MONEDA SIN PAIS';
+        $cat_sat_monedas[1]['predeterminado'] = 'activo';
+        $cat_sat_monedas[1]['dp_pais_id'] = 253;
+
+        $cat_sat_monedas[2]['id'] = 164;
+        $cat_sat_monedas[2]['descripcion'] = 'Dolar americano';
+        $cat_sat_monedas[2]['codigo'] = 'USD';
+        $cat_sat_monedas[2]['descripcion_select'] = 'Dolar americano';
+        $cat_sat_monedas[2]['dp_pais_id'] = 66;
+
+        $modelo = new cat_sat_moneda(link: $link,aplica_transacciones_base: true);
+        foreach ($cat_sat_monedas as $cat_sat_moneda){
+
+            $alta = $modelo->inserta_registro_si_no_existe(registro: $cat_sat_moneda);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al insertar cat_sat_unidad', data: $alta);
+            }
+            $out->alta[] = $alta;
+
+        }
+
+
+
+        return $out;
+
+    }
     final public function instala(PDO $link): array|stdClass
     {
 
@@ -1305,11 +1376,11 @@ class instalacion
         }
         $out->cat_sat_traslado_conf = $cat_sat_traslado_conf;
 
-
-
-
-
-
+        $cat_sat_moneda = $this->cat_sat_moneda(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_moneda', data: $cat_sat_moneda);
+        }
+        $out->cat_sat_moneda = $cat_sat_moneda;
 
         return $out;
 

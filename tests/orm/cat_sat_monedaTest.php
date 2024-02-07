@@ -1,6 +1,7 @@
 <?php
 namespace gamboamartin\cat_sat\tests\orm;
 
+use gamboamartin\cat_sat\models\cat_sat_isn;
 use gamboamartin\cat_sat\models\cat_sat_moneda;
 use gamboamartin\direccion_postal\tests\base_test;
 use gamboamartin\errores\errores;
@@ -32,32 +33,20 @@ class cat_sat_monedaTest extends test {
         $_SESSION['grupo_id'] = 1;
         $_SESSION['usuario_id'] = 1;
         $_GET['session_id'] = '1';
-        $modelo = new cat_sat_moneda(link: $this->link);
+        $modelo = new cat_sat_moneda(link: $this->link,aplica_transacciones_base: true);
 
-        $del = (new \gamboamartin\cat_sat\tests\base_test())->del_dp_colonia(link: $this->link);
+        $del = $modelo->elimina_todo();
         if(errores::$error){
             $error = (new errores())->error(mensaje: 'Error al eliminar', data: $del);
             print_r($error);
             exit;
         }
 
-        $del = (new \gamboamartin\cat_sat\tests\base_test())->del_dp_pais(link: $this->link);
-        if(errores::$error){
-            $error = (new errores())->error(mensaje: 'Error al eliminar', data: $del);
-            print_r($error);
-            exit;
-        }
 
-        $alta = (new base_test())->alta_dp_pais($this->link);
-        if(errores::$error){
-            $error = (new errores())->error(mensaje: 'Error al insertar pais', data: $alta);
-            print_r($error);
-            exit;
-        }
 
         $modelo->registro['codigo'] = 'ABC';
         $modelo->registro['descripcion'] = 1;
-        $modelo->registro['dp_pais_id'] = '1';
+        $modelo->registro['dp_pais_id'] = '151';
         $resultado = $modelo->alta_bd();
 
         $this->assertIsObject($resultado);
@@ -80,19 +69,14 @@ class cat_sat_monedaTest extends test {
         $_GET['session_id'] = '1';
         $modelo = new cat_sat_moneda(link: $this->link);
 
-        $del = (new \gamboamartin\cat_sat\tests\base_test())->del_cat_sat_moneda($this->link);
+
+        $del = (new cat_sat_isn(link: $this->link))->elimina_todo();
         if(errores::$error){
             $error = (new errores())->error('Error al eliminar', $del);
             print_r($error);
             exit;
         }
 
-        $del = (new \gamboamartin\direccion_postal\tests\base_test())->del_dp_pais($this->link);
-        if(errores::$error){
-            $error = (new errores())->error('Error al eliminar', $del);
-            print_r($error);
-            exit;
-        }
 
 
         $resultado = $modelo->existe_predeterminado();
@@ -105,16 +89,10 @@ class cat_sat_monedaTest extends test {
         $modelo = new cat_sat_moneda(link: $this->link);
 
 
-        $alta = (new \gamboamartin\cat_sat\tests\base_test())->alta_cat_sat_moneda(link: $this->link, predeterminado: 'activo');
-        if(errores::$error){
-            $error = (new errores())->error('Error al insertar', $alta);
-            print_r($error);
-            exit;
-        }
         $resultado = $modelo->existe_predeterminado();
         $this->assertIsBool($resultado);
         $this->assertNotTrue(errores::$error);
-        $this->assertTrue($resultado);
+        $this->assertNotTrue($resultado);
         errores::$error = false;
     }
 

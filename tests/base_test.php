@@ -984,10 +984,7 @@ class base_test{
 
     public function del_dp_pais(PDO $link): array
     {
-        $del = $this->del_cat_sat_moneda($link);
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al eliminar ', data: $del);
-        }
+
 
         $del = $this->del_cat_sat_isn($link);
         if(errores::$error){
