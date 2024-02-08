@@ -10,6 +10,7 @@ use gamboamartin\cat_sat\models\cat_sat_conf_imps_tipo_pers;
 use gamboamartin\cat_sat\models\cat_sat_conf_reg_tp;
 use gamboamartin\cat_sat\models\cat_sat_cve_prod;
 use gamboamartin\cat_sat\models\cat_sat_division_producto;
+use gamboamartin\cat_sat\models\cat_sat_forma_pago;
 use gamboamartin\cat_sat\models\cat_sat_grupo_producto;
 use gamboamartin\cat_sat\models\cat_sat_metodo_pago;
 use gamboamartin\cat_sat\models\cat_sat_moneda;
@@ -82,6 +83,19 @@ class instalacion
         $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_motivo_cancelacion');
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al crear cat_sat_motivo_cancelacion', data: $create);
+        }
+
+        $out->create = $create;
+
+        return $out;
+    }
+
+    private function _add_cat_sat_forma_pago(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_forma_pago');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_forma_pago', data: $create);
         }
 
         $out->create = $create;
@@ -657,6 +671,66 @@ class instalacion
                 $alta = $cat_sat_motivo_cancelacion_modelo->inserta_registro_si_no_existe(registro: $cat_sat_motivo_cancelacion_ins);
                 if (errores::$error) {
                     return (new errores())->error(mensaje: 'Error al insertar cat_sat_cve_prod', data: $alta);
+                }
+                $altas[] = $alta;
+            }
+        }
+        $out->altas = $altas;
+
+
+        return $out;
+
+    }
+
+    private function cat_sat_forma_pago(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = $this->_add_cat_sat_forma_pago(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar create', data: $create);
+        }
+        $out->create = $create;
+
+        $importador = new Importador();
+        $columnas = array();
+        $columnas[] = 'id';
+        $columnas[] = 'descripcion';
+        $columnas[] = 'codigo';
+        $columnas[] = 'descripcion_select';
+        $columnas[] = 'predeterminado';
+
+        $ruta = (new generales())->path_base."instalacion/".__FUNCTION__.'.ods';
+
+        if((new generales())->sistema !== 'cat_sat'){
+            $ruta = (new generales())->path_base;
+            $ruta .= "vendor/gamboa.martin/cat_sat/instalacion/".__FUNCTION__.".ods";
+        }
+
+
+        $modelo = new cat_sat_forma_pago(link: $link,aplica_transacciones_base: true);
+
+        $n_rows = $modelo->cuenta();
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al contar n_rows', data: $n_rows);
+        }
+        $altas = array();
+        if($n_rows !== 4) {
+
+            $data = $importador->leer_registros(ruta_absoluta: $ruta, columnas: $columnas);
+            if (errores::$error) {
+                return (new errores())->error(mensaje: 'Error al leer cat_sat_cve_prod', data: $data);
+            }
+
+            foreach ($data as $row) {
+                $row = (array)$row;
+                $ins['id'] = trim($row['id']);
+                $ins['codigo'] = trim($row['codigo']);
+                $ins['descripcion'] = trim($row['descripcion']);
+                $ins['descripcion_select'] = trim($row['descripcion_select']);
+                $ins['predeterminado'] = $row['predeterminado'];
+                $alta = $modelo->inserta_registro_si_no_existe(registro: $ins);
+                if (errores::$error) {
+                    return (new errores())->error(mensaje: 'Error al insertar row', data: $alta);
                 }
                 $altas[] = $alta;
             }
@@ -1252,6 +1326,13 @@ class instalacion
         if (errores::$error) {
             return (new errores())->error(mensaje: 'Error al insertar cat_sat_motivo_cancelacion',
                 data: $cat_sat_motivo_cancelacion);
+        }
+        $out->cat_sat_motivo_cancelacion = $cat_sat_motivo_cancelacion;
+
+        $cat_sat_forma_pago = $this->cat_sat_forma_pago(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_forma_pago',
+                data: $cat_sat_forma_pago);
         }
         $out->cat_sat_motivo_cancelacion = $cat_sat_motivo_cancelacion;
 
