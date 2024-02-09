@@ -728,9 +728,36 @@ class instalacion
                 $ins['descripcion'] = trim($row['descripcion']);
                 $ins['descripcion_select'] = trim($row['descripcion_select']);
                 $ins['predeterminado'] = $row['predeterminado'];
-                $alta = $modelo->inserta_registro_si_no_existe(registro: $ins);
+
+                $existe_code = $modelo->existe_by_codigo(codigo: trim($row['codigo']) );
                 if (errores::$error) {
-                    return (new errores())->error(mensaje: 'Error al insertar row', data: $alta);
+                    return (new errores())->error(mensaje: 'Error al insertar get_row', data: $existe_code);
+                }
+
+                $alta = array();
+                if($existe_code ){
+                    $get = $modelo->get_data_by_code(codigo: trim($row['codigo']));
+                    if(errores::$error){
+                        return (new errores())->error(mensaje: 'Error al obtener registro', data: $get);
+                    }
+                    if((int)$get->cat_sat_forma_pago_id !== (int)$get->cat_sat_forma_pago_codigo){
+                        $ins = array();
+                        $ins['codigo'] = trim($row['codigo']);
+                        $ins['descripcion'] = trim($row['descripcion']);
+                        $ins['descripcion_select'] = trim($row['descripcion_select']);
+                        $ins['predeterminado'] = $row['predeterminado'];
+                        $alta = $modelo->modifica_bd(registro: $ins, id: $row['id']);
+                        if (errores::$error) {
+                            return (new errores())->error(mensaje: 'Error al modificar row', data: $alta);
+                        }
+                    }
+
+                }
+                else {
+                    $alta = $modelo->inserta_registro_si_no_existe(registro: $ins);
+                    if (errores::$error) {
+                        return (new errores())->error(mensaje: 'Error al insertar row', data: $alta);
+                    }
                 }
                 $altas[] = $alta;
             }
