@@ -90,6 +90,24 @@ class instalacion
         return $out;
     }
 
+    /**
+     * POR DOCUMENTAR WN WIKI
+     * Esta función es responsable de agregar el catálogo SAT de formas de pago en la base de datos.
+     *
+     * @param PDO $link es la conexión PDO a la base de datos.
+     * @return array|stdClass Este es el resultado del método. Devuelve un objeto si el método tiene éxito,
+     *                        o un array con los detalles del error si ocurre algún problema.
+     *                        Dentro de los resultados exitosos, devuelve un objeto que contiene:
+     *                        - create: este miembro almacena el estado de la creación de la tabla.
+     *
+     *  La metodología específica de la función es la siguiente:
+     *  - Crea una nueva tabla en la base de datos llamada 'cat_sat_forma_pago'. Si hay algún error al
+     *    crear la tabla, devuelve un objeto estándar que contiene detalles sobre los errores encontrados.
+     *  - Al final, la función devuelve un objeto con la respuesta de la creación de la tabla.
+     *
+     * @throws errores en caso de que no se pueda crear la tabla correctamente.
+     * @version 18.29.0
+     */
     private function _add_cat_sat_forma_pago(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -746,7 +764,7 @@ class instalacion
                         $ins['descripcion'] = trim($row['descripcion']);
                         $ins['descripcion_select'] = trim($row['descripcion_select']);
                         $ins['predeterminado'] = $row['predeterminado'];
-                        $alta = $modelo->modifica_bd(registro: $ins, id: $row['id']);
+                        $alta = $modelo->modifica_bd(registro: $ins, id: $get->cat_sat_forma_pago_id);
                         if (errores::$error) {
                             return (new errores())->error(mensaje: 'Error al modificar row', data: $alta);
                         }
