@@ -1333,6 +1333,7 @@ class instalacion
         $cat_sat_monedas[0]['descripcion_select'] = 'MXN PESO MEXICANO';
         $cat_sat_monedas[0]['dp_pais_id'] = 151;
 
+
         $cat_sat_monedas[1]['id'] = 163;
         $cat_sat_monedas[1]['descripcion'] = 'Los códigos asignados para las transacciones en que intervenga ninguna moneda';
         $cat_sat_monedas[1]['codigo'] = 'XXX';
@@ -1365,6 +1366,7 @@ class instalacion
                     $code .= $modelo->letras[mt_rand(0,24)];
 
                     $upd_moneda['codigo'] = $code;
+                    $upd_moneda['predeterminado'] = 'inactivo';
                     $upd = $modelo->modifica_bd(registro: $upd_moneda,id:  $cat_sat_moneda_id_existente);
                     if(errores::$error){
                         return (new errores())->error(mensaje: 'Error al actualizar registro', data: $upd);
@@ -1381,6 +1383,31 @@ class instalacion
             }
             $out->alta[] = $alta;
 
+        }
+        $filtro = array();
+        $filtro['cat_sat_moneda.predeterminado'] = 'activo';
+        $cuenta = $modelo->cuenta(filtro: $filtro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al contar predeterminados', data: $cuenta);
+        }
+
+        if($cuenta > 1){
+            $cat_sat_monedas_actuales = $modelo->registros();
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al obtener monedas', data: $cat_sat_monedas_actuales);
+            }
+
+            foreach ($cat_sat_monedas_actuales as $cat_sat_moneda_actual){
+                if((int)$cat_sat_moneda_actual['cat_sat_moneda_id'] !== 163){
+                    $upd_moneda = array();
+                    $upd_moneda['predeterminado'] = 'inactivo';
+                    $upd = $modelo->modifica_bd(registro: $upd_moneda,id:  $cat_sat_moneda_actual['cat_sat_moneda_id']);
+                    if(errores::$error){
+                        return (new errores())->error(mensaje: 'Error al actualizar registro', data: $upd);
+                    }
+                }
+
+            }
         }
 
 
