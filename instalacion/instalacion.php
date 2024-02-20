@@ -1347,6 +1347,32 @@ class instalacion
         $cat_sat_monedas[2]['dp_pais_id'] = 66;
 
         $modelo = new cat_sat_moneda(link: $link,aplica_transacciones_base: true);
+
+
+        foreach ($cat_sat_monedas as $cat_sat_moneda){
+            $existe = $modelo->existe_by_codigo(codigo: $cat_sat_moneda['codigo']);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al validar si existe codigo', data: $existe);
+            }
+            if($existe){
+                $cat_sat_moneda_id_existente = $modelo->get_id_by_codigo(codigo: $cat_sat_moneda['codigo']);
+                if(errores::$error){
+                    return (new errores())->error(mensaje: 'Error al obtener registro', data: $cat_sat_moneda_id_existente);
+                }
+                if((int)$cat_sat_moneda_id_existente !== (int)$cat_sat_moneda['id']){
+                    $code = $modelo->letras[mt_rand(0,24)];
+                    $code .= $modelo->letras[mt_rand(0,24)];
+                    $code .= $modelo->letras[mt_rand(0,24)];
+
+                    $upd_moneda['codigo'] = $code;
+                    $upd = $modelo->modifica_bd(registro: $upd_moneda,id:  $cat_sat_moneda_id_existente);
+                    if(errores::$error){
+                        return (new errores())->error(mensaje: 'Error al actualizar registro', data: $upd);
+                    }
+                }
+            }
+        }
+
         foreach ($cat_sat_monedas as $cat_sat_moneda){
 
             $alta = $modelo->inserta_registro_si_no_existe(registro: $cat_sat_moneda);

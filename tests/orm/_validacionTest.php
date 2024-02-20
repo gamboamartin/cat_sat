@@ -217,7 +217,7 @@ class _validacionTest extends test {
 
 
         $registro = array();
-        $registro['cat_sat_metodo_pago_id'] = 1;
+        $registro['cat_sat_metodo_pago_id'] = 2;
         $registro['cat_sat_forma_pago_id'] = 1;
         $registro['cat_sat_metodo_pago_codigo'] = '1';
         $resultado = $_validacion->valida_metodo_pago($this->link, $registro);
