@@ -193,7 +193,6 @@ class _validacion{
      * @param PDO $link Conexion a la base de datos
      * @param array $registro Registro en proceso
      * @return array|bool
-     * @version 12.9.0
      */
     final public function valida_metodo_pago(PDO $link, array $registro): bool|array
     {

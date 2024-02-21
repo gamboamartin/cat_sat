@@ -1,6 +1,7 @@
 <?php
 namespace gamboamartin\cat_sat\instalacion;
 
+use base\orm\modelo;
 use config\generales;
 use gamboamartin\administrador\instalacion\_adm;
 use gamboamartin\administrador\models\_instalacion;
@@ -23,6 +24,7 @@ use gamboamartin\cat_sat\models\cat_sat_tipo_producto;
 use gamboamartin\cat_sat\models\cat_sat_tipo_relacion;
 use gamboamartin\cat_sat\models\cat_sat_unidad;
 use gamboamartin\errores\errores;
+use gamboamartin\js_base\valida;
 use gamboamartin\plugins\Importador;
 use PDO;
 use stdClass;
@@ -42,6 +44,19 @@ class instalacion
 
     }
 
+
+    private function _add_cat_sat_conf_imps(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_conf_imps');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_cve_prod', data: $create);
+        }
+
+        $out->create = $create;
+
+        return $out;
+    }
     private function _add_cat_sat_conf_imps_tipo_pers(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -64,30 +79,6 @@ class instalacion
 
         return $out;
 
-    }
-    private function _add_cat_sat_conf_imps(PDO $link): array|stdClass
-    {
-        $out = new stdClass();
-        $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_conf_imps');
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al crear cat_sat_cve_prod', data: $create);
-        }
-
-        $out->create = $create;
-
-        return $out;
-    }
-    private function _add_cat_sat_motivo_cancelacion(PDO $link): array|stdClass
-    {
-        $out = new stdClass();
-        $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_motivo_cancelacion');
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al crear cat_sat_motivo_cancelacion', data: $create);
-        }
-
-        $out->create = $create;
-
-        return $out;
     }
 
     /**
@@ -120,6 +111,41 @@ class instalacion
 
         return $out;
     }
+
+    private function _add_cat_sat_moneda(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_moneda');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_moneda', data: $create);
+        }
+
+        $out->create = $create;
+
+        $foraneas = array();
+        $foraneas['dp_pais_id'] = new stdClass();
+
+        $foraneas_r = (new _instalacion(link:$link))->foraneas(foraneas: $foraneas,table:  'cat_sat_moneda');
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $foraneas_r);
+        }
+        $out->foraneas_r = $foraneas_r;
+
+        return $out;
+    }
+    private function _add_cat_sat_motivo_cancelacion(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_motivo_cancelacion');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_motivo_cancelacion', data: $create);
+        }
+
+        $out->create = $create;
+
+        return $out;
+    }
     private function _add_cat_sat_retencion_conf(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -145,30 +171,6 @@ class instalacion
 
         return $out;
     }
-
-    private function _add_cat_sat_moneda(PDO $link): array|stdClass
-    {
-        $out = new stdClass();
-        $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_moneda');
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al crear cat_sat_moneda', data: $create);
-        }
-
-        $out->create = $create;
-
-        $foraneas = array();
-        $foraneas['dp_pais_id'] = new stdClass();
-
-        $foraneas_r = (new _instalacion(link:$link))->foraneas(foraneas: $foraneas,table:  'cat_sat_moneda');
-
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $foraneas_r);
-        }
-        $out->foraneas_r = $foraneas_r;
-
-        return $out;
-    }
-
     private function _add_cat_sat_tipo_impuesto(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -206,6 +208,20 @@ class instalacion
         $out->create = $create;
 
         return $out;
+    }
+
+    private function actualiza_datos_predeterminadas(int $id_compare, modelo $modelo, bool $valida_alfa_code): array
+    {
+        $registros_actuales = $modelo->registros();
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al obtener monedas', data: $registros_actuales);
+        }
+
+        $upds = $this->upd_registros(id_compare: $id_compare, registros_actuales: $registros_actuales, modelo: $modelo, valida_alfa_code: $valida_alfa_code);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al actualizar registros', data: $upds);
+        }
+        return $upds;
     }
     private function cat_sat_clase_producto(PDO $link): array|stdClass
     {
@@ -558,148 +574,6 @@ class instalacion
         return $out;
 
     }
-    private function cat_sat_grupo_producto(PDO $link): array|stdClass
-    {
-        $out = new stdClass();
-
-        $create = (NEW _instalacion($link))->create_table_new(table:__FUNCTION__);
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al crear cat_sat_grupo_producto', data: $create);
-        }
-
-        $out->create = $create;
-
-
-        $foraneas = array();
-        $foraneas['cat_sat_division_producto_id'] = new stdClass();
-
-        $foraneas_r = (new _instalacion(link: $link))->foraneas(foraneas: $foraneas,table:  __FUNCTION__);
-
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $foraneas_r);
-        }
-
-
-        $cat_sat_grupo_producto_modelo = new cat_sat_grupo_producto(link: $link);
-
-        $cat_sat_grupo_productos = array();
-        $cat_sat_grupo_productos[0]['id'] = 8411;
-        $cat_sat_grupo_productos[0]['descripcion'] = 'Servicios de contabilidad y auditorias';
-        $cat_sat_grupo_productos[0]['codigo'] = '8411';
-        $cat_sat_grupo_productos[0]['descripcion_select'] = '8411 Servicios De Contabilidad Y Auditorias';
-        $cat_sat_grupo_productos[0]['cat_sat_division_producto_id'] = '84';
-
-
-        foreach ($cat_sat_grupo_productos as $cat_sat_grupo_producto){
-            $existe = $cat_sat_grupo_producto_modelo->existe_by_id(registro_id: $cat_sat_grupo_producto['id']);
-            if(errores::$error){
-                return (new errores())->error(mensaje: 'Error al validar si existe cat_sat_grupo_producto', data: $existe);
-            }
-            $out->existe = $existe;
-            if(!$existe){
-                $alta = $cat_sat_grupo_producto_modelo->alta_registro(registro: $cat_sat_grupo_producto);
-                if(errores::$error){
-                    return (new errores())->error(mensaje: 'Error al insertar cat_sat_grupo_producto', data: $alta);
-                }
-                $out->altas[] = $alta;
-            }
-        }
-
-        return $out;
-
-    }
-
-    private function cat_sat_metodo_pago(PDO $link): array|stdClass
-    {
-        $out = new stdClass();
-        $cat_sat_metodo_modelo = new cat_sat_metodo_pago(link: $link,aplica_transacciones_base: true);
-
-        $cat_sat_metodos_pago = array();
-        $cat_sat_metodos_pago[0]['id'] = 1;
-        $cat_sat_metodos_pago[0]['descripcion'] = 'Pago en una sola exhibición';
-        $cat_sat_metodos_pago[0]['codigo'] = 'PUE';
-        $cat_sat_metodos_pago[0]['descripcion_select'] = 'PUE Pago en una sola exhibición';
-
-
-        $cat_sat_metodos_pago[1]['id'] = 2;
-        $cat_sat_metodos_pago[1]['descripcion'] = 'Pago en parcialidades o diferido';
-        $cat_sat_metodos_pago[1]['codigo'] = 'PPD';
-        $cat_sat_metodos_pago[1]['descripcion_select'] = 'PPD Pago en parcialidades o diferido';
-        $out->cat_sat_metodos_pago = $cat_sat_metodos_pago;
-
-        foreach ($cat_sat_metodos_pago as $cat_sat_metodo_pago){
-
-            $alta = $cat_sat_metodo_modelo->inserta_registro_si_no_existe(registro: $cat_sat_metodo_pago);
-            if(errores::$error){
-                return (new errores())->error(mensaje: 'Error al insertar cat_sat_metodo_pago', data: $alta);
-            }
-            $out->alta[] = $alta;
-
-        }
-
-
-        return $out;
-
-    }
-    private function cat_sat_motivo_cancelacion(PDO $link): array|stdClass
-    {
-        $out = new stdClass();
-        $create = $this->_add_cat_sat_motivo_cancelacion(link: $link);
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al insertar create', data: $create);
-        }
-        $out->create = $create;
-
-        $importador = new Importador();
-        $columnas = array();
-        $columnas[] = 'id';
-        $columnas[] = 'descripcion';
-        $columnas[] = 'codigo';
-        $columnas[] = 'status';
-
-        $ruta = (new generales())->path_base."instalacion/".__FUNCTION__.'.ods';
-
-        if((new generales())->sistema !== 'cat_sat'){
-            $ruta = (new generales())->path_base;
-            $ruta .= "vendor/gamboa.martin/cat_sat/instalacion/".__FUNCTION__.".ods";
-        }
-
-
-        $cat_sat_motivo_cancelacion_modelo = new cat_sat_motivo_cancelacion(link: $link);
-
-        $n_motivos = $cat_sat_motivo_cancelacion_modelo->cuenta();
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al contar n_motivos', data: $n_motivos);
-        }
-        $altas = array();
-        if($n_motivos !== 4) {
-
-            $data = $importador->leer_registros(ruta_absoluta: $ruta, columnas: $columnas);
-            if (errores::$error) {
-                return (new errores())->error(mensaje: 'Error al leer cat_sat_cve_prod', data: $data);
-            }
-
-            foreach ($data as $row) {
-                $row = (array)$row;
-                $cat_sat_motivo_cancelacion_ins['id'] = trim($row['id']);
-                $cat_sat_motivo_cancelacion_ins['codigo'] = trim($row['codigo']);
-                $cat_sat_motivo_cancelacion_ins['descripcion'] = trim($row['descripcion']);
-                $cat_sat_motivo_cancelacion_ins['descripcion_select'] = trim($row['codigo']) . ' ' . trim($row['descripcion']);
-                $cat_sat_motivo_cancelacion_ins['predeterminado'] = 'inactivo';
-                $alta = $cat_sat_motivo_cancelacion_modelo->inserta_registro_si_no_existe(registro: $cat_sat_motivo_cancelacion_ins);
-                if (errores::$error) {
-                    return (new errores())->error(mensaje: 'Error al insertar cat_sat_cve_prod', data: $alta);
-                }
-                $altas[] = $alta;
-            }
-        }
-        $out->altas = $altas;
-
-
-        return $out;
-
-    }
-
     private function cat_sat_forma_pago(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -776,6 +650,233 @@ class instalacion
                     if (errores::$error) {
                         return (new errores())->error(mensaje: 'Error al insertar row', data: $alta);
                     }
+                }
+                $altas[] = $alta;
+            }
+        }
+
+        $upds = $this->integra_datos_predeterminadas(id_compare: 99, modelo: $modelo, valida_alfa_code: false);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al actualizar registros', data: $upds);
+        }
+
+
+        $out->altas = $altas;
+
+
+        return $out;
+
+    }
+    private function cat_sat_grupo_producto(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+
+        $create = (NEW _instalacion($link))->create_table_new(table:__FUNCTION__);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_grupo_producto', data: $create);
+        }
+
+        $out->create = $create;
+
+
+        $foraneas = array();
+        $foraneas['cat_sat_division_producto_id'] = new stdClass();
+
+        $foraneas_r = (new _instalacion(link: $link))->foraneas(foraneas: $foraneas,table:  __FUNCTION__);
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $foraneas_r);
+        }
+
+
+        $cat_sat_grupo_producto_modelo = new cat_sat_grupo_producto(link: $link);
+
+        $cat_sat_grupo_productos = array();
+        $cat_sat_grupo_productos[0]['id'] = 8411;
+        $cat_sat_grupo_productos[0]['descripcion'] = 'Servicios de contabilidad y auditorias';
+        $cat_sat_grupo_productos[0]['codigo'] = '8411';
+        $cat_sat_grupo_productos[0]['descripcion_select'] = '8411 Servicios De Contabilidad Y Auditorias';
+        $cat_sat_grupo_productos[0]['cat_sat_division_producto_id'] = '84';
+
+
+        foreach ($cat_sat_grupo_productos as $cat_sat_grupo_producto){
+            $existe = $cat_sat_grupo_producto_modelo->existe_by_id(registro_id: $cat_sat_grupo_producto['id']);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al validar si existe cat_sat_grupo_producto', data: $existe);
+            }
+            $out->existe = $existe;
+            if(!$existe){
+                $alta = $cat_sat_grupo_producto_modelo->alta_registro(registro: $cat_sat_grupo_producto);
+                if(errores::$error){
+                    return (new errores())->error(mensaje: 'Error al insertar cat_sat_grupo_producto', data: $alta);
+                }
+                $out->altas[] = $alta;
+            }
+        }
+
+        return $out;
+
+    }
+    private function cat_sat_metodo_pago(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $cat_sat_metodo_modelo = new cat_sat_metodo_pago(link: $link,aplica_transacciones_base: true);
+
+        $cat_sat_metodos_pago = array();
+        $cat_sat_metodos_pago[0]['id'] = 1;
+        $cat_sat_metodos_pago[0]['descripcion'] = 'Pago en una sola exhibición';
+        $cat_sat_metodos_pago[0]['codigo'] = 'PUE';
+        $cat_sat_metodos_pago[0]['descripcion_select'] = 'PUE Pago en una sola exhibición';
+
+
+        $cat_sat_metodos_pago[1]['id'] = 2;
+        $cat_sat_metodos_pago[1]['descripcion'] = 'Pago en parcialidades o diferido';
+        $cat_sat_metodos_pago[1]['codigo'] = 'PPD';
+        $cat_sat_metodos_pago[1]['descripcion_select'] = 'PPD Pago en parcialidades o diferido';
+        $out->cat_sat_metodos_pago = $cat_sat_metodos_pago;
+
+        foreach ($cat_sat_metodos_pago as $cat_sat_metodo_pago){
+
+            $alta = $cat_sat_metodo_modelo->inserta_registro_si_no_existe(registro: $cat_sat_metodo_pago);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al insertar cat_sat_metodo_pago', data: $alta);
+            }
+            $out->alta[] = $alta;
+
+        }
+
+
+        return $out;
+
+    }
+
+    private function cat_sat_moneda(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = $this->_add_cat_sat_moneda(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar create', data:  $create);
+        }
+        $out->create = $create;
+
+        $cat_sat_monedas = array();
+
+        $cat_sat_monedas[0]['id'] = 161;
+        $cat_sat_monedas[0]['descripcion'] = 'PESO MEXICANO';
+        $cat_sat_monedas[0]['codigo'] = 'MXN';
+        $cat_sat_monedas[0]['descripcion_select'] = 'MXN PESO MEXICANO';
+        $cat_sat_monedas[0]['dp_pais_id'] = 151;
+
+
+        $cat_sat_monedas[1]['id'] = 163;
+        $cat_sat_monedas[1]['descripcion'] = 'Los códigos asignados para las transacciones en que intervenga ninguna moneda';
+        $cat_sat_monedas[1]['codigo'] = 'XXX';
+        $cat_sat_monedas[1]['descripcion_select'] = 'LOS CóDIGOS ASIGNADOS PARA LAS TRANSACCIONES EN QUE INTERVENGA NINGUNA MONEDA SIN PAIS';
+        $cat_sat_monedas[1]['predeterminado'] = 'activo';
+        $cat_sat_monedas[1]['dp_pais_id'] = 253;
+
+        $cat_sat_monedas[2]['id'] = 164;
+        $cat_sat_monedas[2]['descripcion'] = 'Dolar americano';
+        $cat_sat_monedas[2]['codigo'] = 'USD';
+        $cat_sat_monedas[2]['descripcion_select'] = 'Dolar americano';
+        $cat_sat_monedas[2]['dp_pais_id'] = 66;
+
+        $modelo = new cat_sat_moneda(link: $link,aplica_transacciones_base: true);
+
+
+        foreach ($cat_sat_monedas as $cat_sat_moneda){
+            $existe = $modelo->existe_by_codigo(codigo: $cat_sat_moneda['codigo']);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al validar si existe codigo', data: $existe);
+            }
+            if($existe){
+                $cat_sat_moneda_id_existente = $modelo->get_id_by_codigo(codigo: $cat_sat_moneda['codigo']);
+                if(errores::$error){
+                    return (new errores())->error(mensaje: 'Error al obtener registro', data: $cat_sat_moneda_id_existente);
+                }
+                if((int)$cat_sat_moneda_id_existente !== (int)$cat_sat_moneda['id']){
+                    $code = $modelo->letras[mt_rand(0,24)];
+                    $code .= $modelo->letras[mt_rand(0,24)];
+                    $code .= $modelo->letras[mt_rand(0,24)];
+
+                    $upd_moneda['codigo'] = $code;
+                    $upd_moneda['predeterminado'] = 'inactivo';
+                    $upd = $modelo->modifica_bd(registro: $upd_moneda,id:  $cat_sat_moneda_id_existente);
+                    if(errores::$error){
+                        return (new errores())->error(mensaje: 'Error al actualizar registro', data: $upd);
+                    }
+                }
+            }
+        }
+
+        foreach ($cat_sat_monedas as $cat_sat_moneda){
+
+            $alta = $modelo->inserta_registro_si_no_existe(registro: $cat_sat_moneda);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al insertar cat_sat_unidad', data: $alta);
+            }
+            $out->alta[] = $alta;
+
+        }
+
+        $upds = $this->integra_datos_predeterminadas(id_compare: 163, modelo: $modelo, valida_alfa_code: true);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al actualizar registros', data: $upds);
+        }
+
+        $out->pred = $upds;
+
+        return $out;
+
+    }
+    private function cat_sat_motivo_cancelacion(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = $this->_add_cat_sat_motivo_cancelacion(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar create', data: $create);
+        }
+        $out->create = $create;
+
+        $importador = new Importador();
+        $columnas = array();
+        $columnas[] = 'id';
+        $columnas[] = 'descripcion';
+        $columnas[] = 'codigo';
+        $columnas[] = 'status';
+
+        $ruta = (new generales())->path_base."instalacion/".__FUNCTION__.'.ods';
+
+        if((new generales())->sistema !== 'cat_sat'){
+            $ruta = (new generales())->path_base;
+            $ruta .= "vendor/gamboa.martin/cat_sat/instalacion/".__FUNCTION__.".ods";
+        }
+
+
+        $cat_sat_motivo_cancelacion_modelo = new cat_sat_motivo_cancelacion(link: $link);
+
+        $n_motivos = $cat_sat_motivo_cancelacion_modelo->cuenta();
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al contar n_motivos', data: $n_motivos);
+        }
+        $altas = array();
+        if($n_motivos !== 4) {
+
+            $data = $importador->leer_registros(ruta_absoluta: $ruta, columnas: $columnas);
+            if (errores::$error) {
+                return (new errores())->error(mensaje: 'Error al leer cat_sat_cve_prod', data: $data);
+            }
+
+            foreach ($data as $row) {
+                $row = (array)$row;
+                $cat_sat_motivo_cancelacion_ins['id'] = trim($row['id']);
+                $cat_sat_motivo_cancelacion_ins['codigo'] = trim($row['codigo']);
+                $cat_sat_motivo_cancelacion_ins['descripcion'] = trim($row['descripcion']);
+                $cat_sat_motivo_cancelacion_ins['descripcion_select'] = trim($row['codigo']) . ' ' . trim($row['descripcion']);
+                $cat_sat_motivo_cancelacion_ins['predeterminado'] = 'inactivo';
+                $alta = $cat_sat_motivo_cancelacion_modelo->inserta_registro_si_no_existe(registro: $cat_sat_motivo_cancelacion_ins);
+                if (errores::$error) {
+                    return (new errores())->error(mensaje: 'Error al insertar cat_sat_cve_prod', data: $alta);
                 }
                 $altas[] = $alta;
             }
@@ -1316,112 +1417,15 @@ class instalacion
 
     }
 
-    private function cat_sat_moneda(PDO $link): array|stdClass
+    private function code_3_letras(modelo $modelo): string
     {
-        $out = new stdClass();
-        $create = $this->_add_cat_sat_moneda(link: $link);
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al ajustar create', data:  $create);
-        }
-        $out->create = $create;
-
-        $cat_sat_monedas = array();
-
-        $cat_sat_monedas[0]['id'] = 161;
-        $cat_sat_monedas[0]['descripcion'] = 'PESO MEXICANO';
-        $cat_sat_monedas[0]['codigo'] = 'MXN';
-        $cat_sat_monedas[0]['descripcion_select'] = 'MXN PESO MEXICANO';
-        $cat_sat_monedas[0]['dp_pais_id'] = 151;
-
-
-        $cat_sat_monedas[1]['id'] = 163;
-        $cat_sat_monedas[1]['descripcion'] = 'Los códigos asignados para las transacciones en que intervenga ninguna moneda';
-        $cat_sat_monedas[1]['codigo'] = 'XXX';
-        $cat_sat_monedas[1]['descripcion_select'] = 'LOS CóDIGOS ASIGNADOS PARA LAS TRANSACCIONES EN QUE INTERVENGA NINGUNA MONEDA SIN PAIS';
-        $cat_sat_monedas[1]['predeterminado'] = 'activo';
-        $cat_sat_monedas[1]['dp_pais_id'] = 253;
-
-        $cat_sat_monedas[2]['id'] = 164;
-        $cat_sat_monedas[2]['descripcion'] = 'Dolar americano';
-        $cat_sat_monedas[2]['codigo'] = 'USD';
-        $cat_sat_monedas[2]['descripcion_select'] = 'Dolar americano';
-        $cat_sat_monedas[2]['dp_pais_id'] = 66;
-
-        $modelo = new cat_sat_moneda(link: $link,aplica_transacciones_base: true);
-
-
-        foreach ($cat_sat_monedas as $cat_sat_moneda){
-            $existe = $modelo->existe_by_codigo(codigo: $cat_sat_moneda['codigo']);
-            if(errores::$error){
-                return (new errores())->error(mensaje: 'Error al validar si existe codigo', data: $existe);
-            }
-            if($existe){
-                $cat_sat_moneda_id_existente = $modelo->get_id_by_codigo(codigo: $cat_sat_moneda['codigo']);
-                if(errores::$error){
-                    return (new errores())->error(mensaje: 'Error al obtener registro', data: $cat_sat_moneda_id_existente);
-                }
-                if((int)$cat_sat_moneda_id_existente !== (int)$cat_sat_moneda['id']){
-                    $code = $modelo->letras[mt_rand(0,24)];
-                    $code .= $modelo->letras[mt_rand(0,24)];
-                    $code .= $modelo->letras[mt_rand(0,24)];
-
-                    $upd_moneda['codigo'] = $code;
-                    $upd_moneda['predeterminado'] = 'inactivo';
-                    $upd = $modelo->modifica_bd(registro: $upd_moneda,id:  $cat_sat_moneda_id_existente);
-                    if(errores::$error){
-                        return (new errores())->error(mensaje: 'Error al actualizar registro', data: $upd);
-                    }
-                }
-            }
-        }
-
-        foreach ($cat_sat_monedas as $cat_sat_moneda){
-
-            $alta = $modelo->inserta_registro_si_no_existe(registro: $cat_sat_moneda);
-            if(errores::$error){
-                return (new errores())->error(mensaje: 'Error al insertar cat_sat_unidad', data: $alta);
-            }
-            $out->alta[] = $alta;
-
-        }
-        $filtro = array();
-        $filtro['cat_sat_moneda.predeterminado'] = 'activo';
-        $cuenta = $modelo->cuenta(filtro: $filtro);
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al contar predeterminados', data: $cuenta);
-        }
-
-        if($cuenta > 1){
-            $cat_sat_monedas_actuales = $modelo->registros();
-            if(errores::$error){
-                return (new errores())->error(mensaje: 'Error al obtener monedas', data: $cat_sat_monedas_actuales);
-            }
-
-            foreach ($cat_sat_monedas_actuales as $cat_sat_moneda_actual){
-                if((int)$cat_sat_moneda_actual['cat_sat_moneda_id'] !== 163){
-                    $upd_moneda = array();
-                    if(is_numeric($cat_sat_moneda_actual['cat_sat_moneda_codigo'])){
-                        $code = $modelo->letras[mt_rand(0,24)];
-                        $code .= $modelo->letras[mt_rand(0,24)];
-                        $code .= $modelo->letras[mt_rand(0,24)];
-                        $upd_moneda['codigo'] = $code;
-                    }
-
-                    $upd_moneda['predeterminado'] = 'inactivo';
-                    $upd = $modelo->modifica_bd(registro: $upd_moneda,id:  $cat_sat_moneda_actual['cat_sat_moneda_id']);
-                    if(errores::$error){
-                        return (new errores())->error(mensaje: 'Error al actualizar registro', data: $upd);
-                    }
-                }
-
-            }
-        }
-
-
-
-        return $out;
+        $code = $modelo->letras[mt_rand(0,24)];
+        $code .= $modelo->letras[mt_rand(0,24)];
+        $code .= $modelo->letras[mt_rand(0,24)];
+        return $code;
 
     }
+
     final public function instala(PDO $link): array|stdClass
     {
 
@@ -1569,6 +1573,94 @@ class instalacion
         $out->cat_sat_moneda = $cat_sat_moneda;
 
         return $out;
+
+    }
+
+    private function integra_datos_predeterminadas(int $id_compare, modelo $modelo, bool $valida_alfa_code): array
+    {
+        $upds = array();
+        $filtro = array();
+        $filtro[$modelo->tabla.'.predeterminado'] = 'activo';
+        $cuenta = $modelo->cuenta(filtro: $filtro);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al contar predeterminados', data: $cuenta);
+        }
+
+        if($cuenta > 1){
+            $upds = $this->actualiza_datos_predeterminadas(id_compare: $id_compare, modelo: $modelo, valida_alfa_code: $valida_alfa_code);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al actualizar registros', data: $upds);
+            }
+        }
+        if($cuenta === 0){
+
+            $upd_row['predeterminado'] = 'activo';
+            $upd = $modelo->modifica_bd(registro: $upd_row,id:  $id_compare);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al actualizar registros', data: $upds);
+            }
+            $upds[] = $upd;
+
+        }
+        return $upds;
+
+    }
+
+    private function upd_row(array $registro_actual, modelo $modelo, bool $valida_alfa_code): array|stdClass
+    {
+        $upd_row = $this->upd_row_code(registro_actual: $registro_actual,modelo:  $modelo, valida_alfa_code: $valida_alfa_code);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error maquetar upd_row code', data: $upd_row);
+        }
+
+        $upd_row['predeterminado'] = 'inactivo';
+        $upd = $modelo->modifica_bd(registro: $upd_row,id:  $registro_actual[$modelo->key_id]);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al actualizar registro', data: $upd);
+        }
+        return $upd;
+
+    }
+
+    private function upd_row_code(array $registro_actual, modelo $modelo, bool $valida_alfa_code): array
+    {
+        $upd_row = array();
+        if(is_numeric($registro_actual[$modelo->tabla.'_codigo']) && $valida_alfa_code){
+            $code = $this->code_3_letras(modelo: $modelo);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al generar code', data: $code);
+            }
+            $upd_row['codigo'] = $code;
+        }
+        return $upd_row;
+
+    }
+
+    private function upd_registro_predeterminado(int $id_compare, array $registro_actual, modelo $modelo, bool $valida_alfa_code): array|stdClass
+    {
+        $upd = new stdClass();
+        if((int)$registro_actual[$modelo->key_id] !== $id_compare){
+
+            $upd = $this->upd_row(registro_actual: $registro_actual,modelo:  $modelo, valida_alfa_code: $valida_alfa_code);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al actualizar registro', data: $upd);
+            }
+        }
+        return $upd;
+
+    }
+
+    private function upd_registros(int $id_compare, array $registros_actuales, modelo $modelo, bool $valida_alfa_code): array
+    {
+        $upds = array();
+        foreach ($registros_actuales as $registro_actual){
+            $upd = $this->upd_registro_predeterminado(id_compare: $id_compare, registro_actual: $registro_actual, modelo: $modelo, valida_alfa_code: $valida_alfa_code);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al actualizar registro', data: $upd);
+            }
+            $upds[] = $upd;
+        }
+        return $upds;
 
     }
 
