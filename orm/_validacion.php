@@ -52,7 +52,6 @@ class _validacion{
      * @param array|stdClass $cat_sat_forma_pago Forma de pago
      * @param array|stdClass $cat_sat_metodo_pago Metodo de pago
      * @return array|stdClass
-     * @version 12.5.0
      *
      */
     private function data(array|stdClass $cat_sat_forma_pago, array|stdClass $cat_sat_metodo_pago): array|stdClass
@@ -79,7 +78,6 @@ class _validacion{
      * @param array|stdClass $cat_sat_forma_pago Forma de pago entidad
      * @param array|stdClass $cat_sat_metodo_pago Metodo de pago entidad
      * @return array|stdClass
-     * @version 17.12.0
      */
     private function get_data(array|stdClass $cat_sat_forma_pago, array|stdClass $cat_sat_metodo_pago): array|stdClass
     {
@@ -138,7 +136,6 @@ class _validacion{
      * @param stdClass|array $cat_sat_forma_pago Forma de pago datos
      * @param stdClass|array $cat_sat_metodo_pago Metodo de pago datos
      * @return stdClass
-     * @version 8.53.0
      */
     private function init_data(stdClass|array $cat_sat_forma_pago, stdClass|array $cat_sat_metodo_pago): stdClass
     {
@@ -215,10 +212,21 @@ class _validacion{
             return $this->error->error(mensaje: 'Error al obtener cat_sat_forma_pago', data: $cat_sat_forma_pago);
         }
 
-        $verifica = $this->verifica_forma_pago(cat_sat_forma_pago: $cat_sat_forma_pago,
-            cat_sat_metodo_pago:  $cat_sat_metodo_pago,registro:  $registro);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al verifica registro', data: $verifica);
+        $es_predeterminado = false;
+
+        if($cat_sat_forma_pago->predeterminado === 'activo'){
+            $es_predeterminado = true;
+        }
+        elseif($cat_sat_metodo_pago->predeterminado === 'activo'){
+            $es_predeterminado = true;
+        }
+        $verifica = true;
+        if(!$es_predeterminado) {
+            $verifica = $this->verifica_forma_pago(cat_sat_forma_pago: $cat_sat_forma_pago,
+                cat_sat_metodo_pago: $cat_sat_metodo_pago, registro: $registro);
+            if (errores::$error) {
+                return $this->error->error(mensaje: 'Error al verifica registro', data: $verifica);
+            }
         }
         return $verifica;
     }
@@ -250,7 +258,6 @@ class _validacion{
      * @param stdClass $data Datos cargados
      * @param array|stdClass $registro Registro en proceso
      * @return bool|array
-     * @version 12.8.0
      */
     private function valida_si_existe_en_array(string $cat_sat_metodo_pago_codigo, stdClass $data,
                                                array|stdClass $registro): bool|array
@@ -290,11 +297,10 @@ class _validacion{
      * @param stdClass|array $cat_sat_forma_pago Row de forma de pago
      * @param stdClass|array $cat_sat_metodo_pago Row de metodo de pago
      * @param array|stdClass $registro Registro en proceso
-     * @return bool|array
-     * @version 12.9.0
+     * @return true|array
      */
     private function verifica_forma_pago(stdClass|array $cat_sat_forma_pago, stdClass|array $cat_sat_metodo_pago,
-                                         array|stdClass $registro): bool|array
+                                         array|stdClass $registro): true|array
     {
 
         $data = $this->get_data(cat_sat_forma_pago: $cat_sat_forma_pago,cat_sat_metodo_pago:  $cat_sat_metodo_pago);
