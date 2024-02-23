@@ -146,6 +146,44 @@ class instalacion
 
         return $out;
     }
+
+    private function _add_cat_sat_periodo(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_periodo');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_moneda', data: $create);
+        }
+
+        $out->create = $create;
+
+        $foraneas = array();
+        $foraneas['cat_sat_periodicidad_id'] = new stdClass();
+
+        $foraneas_r = (new _instalacion(link:$link))->foraneas(foraneas: $foraneas,table:  'cat_sat_periodo');
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $foraneas_r);
+        }
+        $out->foraneas_r = $foraneas_r;
+
+        $campos = new stdClass();
+        $campos->fecha_inicio = new stdClass();
+        $campos->fecha_inicio->tipo_dato = 'DATETIME';
+
+        $campos->fecha_fin = new stdClass();
+        $campos->fecha_fin->tipo_dato = 'DATETIME';
+
+
+        $result = (new _instalacion(link: $link))->add_columns(campos: $campos,table:  'cat_sat_periodo');
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar campos', data:  $result);
+        }
+        $out->columnas = $result;
+
+        return $out;
+    }
     private function _add_cat_sat_retencion_conf(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -887,6 +925,38 @@ class instalacion
         return $out;
 
     }
+
+    private function cat_sat_periodo(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = $this->_add_cat_sat_periodo(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar create', data:  $create);
+        }
+        $out->create = $create;
+
+
+        $adm_menu_descripcion = 'Periodos';
+        $adm_sistema_descripcion = 'cat_sat';
+        $etiqueta_label = 'Periodos';
+        $adm_seccion_pertenece_descripcion = 'cat_sat';
+        $adm_namespace_name = 'gamboamartin/cat_sat';
+        $adm_namespace_descripcion = 'gamboa.martin/cat_sat';
+
+        $acl = (new _adm())->integra_acl(adm_menu_descripcion: $adm_menu_descripcion,
+            adm_namespace_name: $adm_namespace_name, adm_namespace_descripcion: $adm_namespace_descripcion,
+            adm_seccion_descripcion: __FUNCTION__,
+            adm_seccion_pertenece_descripcion: $adm_seccion_pertenece_descripcion,
+            adm_sistema_descripcion: $adm_sistema_descripcion,
+            etiqueta_label: $etiqueta_label, link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al obtener acl', data:  $acl);
+        }
+
+
+        return $out;
+
+    }
     private function cat_sat_producto(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -1571,6 +1641,14 @@ class instalacion
             return (new errores())->error(mensaje: 'Error al insertar cat_sat_moneda', data: $cat_sat_moneda);
         }
         $out->cat_sat_moneda = $cat_sat_moneda;
+
+        $cat_sat_periodo = $this->cat_sat_periodo(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_periodo', data: $cat_sat_periodo);
+        }
+        $out->cat_sat_periodo = $cat_sat_periodo;
+
+
 
         return $out;
 
