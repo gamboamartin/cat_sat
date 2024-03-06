@@ -52,9 +52,9 @@
         "gamboa.martin/validacion": "^3.0.0",
         "gamboa.martin/services": "^13.0.0",
         "gamboa.martin/template": "^16.0.0",
-        "gamboa.martin/template_1": "^19.0.0",
+        "gamboa.martin/template_1": "^20.0.0",
         "gamboa.martin/system": "^18.0.0",
-        "gamboa.martin/direccion_postal": "^20.0.0",
+        "gamboa.martin/direccion_postal": "^21.0.0",
         "gamboa.martin/js_base": "^3.0.0"
     },
     "require-dev": {
