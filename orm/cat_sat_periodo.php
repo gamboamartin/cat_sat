@@ -7,7 +7,7 @@ use PDO;
 class cat_sat_periodo extends _modelo_parent{
     public function __construct(PDO $link, bool $aplica_transacciones_base = false){
         $tabla = 'cat_sat_periodo';
-        $columnas = array($tabla=>false,'cat_sat_periodicidad');
+        $columnas = array($tabla=>false,'cat_sat_periodicidad' => $tabla);
         $campos_obligatorios[] = 'descripcion';
         $campos_obligatorios[] = 'descripcion_select';
 
