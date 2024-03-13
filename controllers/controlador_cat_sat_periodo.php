@@ -9,6 +9,7 @@
 namespace gamboamartin\cat_sat\controllers;
 
 use base\controller\controler;
+use base\controller\init;
 use gamboamartin\cat_sat\models\cat_sat_periodo;
 use gamboamartin\errores\errores;
 
@@ -45,6 +46,33 @@ class controlador_cat_sat_periodo extends _cat_sat_base {
         }
     }
 
+    public function alta(bool $header, bool $ws = false): array|string
+    {
+        $r_alta = $this->init_alta();
+        if (errores::$error) {
+            return $this->retorno_error(mensaje: 'Error al inicializar alta', data: $r_alta, header: $header, ws: $ws);
+        }
+
+        $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'cat_sat_periodicidad',
+            keys_selects: array(), id_selected: -1, label: 'Periodicidad');
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
+        }
+
+        $keys_selects = $this->key_selects_txt(keys_selects: $keys_selects);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
+        }
+
+        $inputs = $this->inputs(keys_selects: $keys_selects);
+        if (errores::$error) {
+            return $this->retorno_error(
+                mensaje: 'Error al obtener inputs', data: $inputs, header: $header, ws: $ws);
+        }
+
+        return $r_alta;
+    }
+
 
     private function init_configuraciones(): controler
     {
@@ -59,9 +87,12 @@ class controlador_cat_sat_periodo extends _cat_sat_base {
     {
         $columns["cat_sat_periodo_id"]["titulo"] = "Id";
         $columns["cat_sat_periodo_codigo"]["titulo"] = "Código";
-        $columns["cat_sat_periodo_descripcion"]["titulo"] = "Periodo";
+        $columns["cat_sat_periodo_fecha_inicio"]["titulo"] = "Inicio";
+        $columns["cat_sat_periodo_fecha_fin"]["titulo"] = "Fin";
+        $columns["cat_sat_periodicidad_descripcion"]["titulo"] = "Periodicidad";
 
-        $filtro = array("cat_sat_periodo.id","cat_sat_periodo.codigo","cat_sat_periodo.descripcion");
+        $filtro = array("cat_sat_periodo.id","cat_sat_periodo.codigo","cat_sat_periodo.fecha_inicio",
+            "cat_sat_periodo.fecha_fin", "cat_sat_periodicidad.descripcion");
 
         $datatables = new stdClass();
         $datatables->columns = $columns;
@@ -72,18 +103,17 @@ class controlador_cat_sat_periodo extends _cat_sat_base {
 
     protected function key_selects_txt(array $keys_selects): array
     {
-        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 4, key: 'codigo',
-            keys_selects: $keys_selects, place_holder: 'Código');
-        if (errores::$error) {
-            return $this->errores->error(mensaje: 'Error al maquetar key_selects', data: $keys_selects);
+        $keys_selects = (new init())->key_select_txt(cols: 6, key: 'fecha_inicio',
+            keys_selects: $keys_selects, place_holder: 'Fecha Inicial');
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
 
-        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 8, key: 'descripcion',
-            keys_selects: $keys_selects, place_holder: 'Régimen Fiscal');
-        if (errores::$error) {
-            return $this->errores->error(mensaje: 'Error al maquetar key_selects', data: $keys_selects);
+        $keys_selects = (new init())->key_select_txt(cols: 6, key: 'fecha_fin',
+            keys_selects: $keys_selects, place_holder: 'Fecha Final');
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
-
         return $keys_selects;
     }
 
