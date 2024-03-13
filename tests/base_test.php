@@ -218,7 +218,7 @@ class base_test{
             }
         }
 
-        $registro = (new test())->registro(
+        $registro = (new test(''))->registro(
             codigo:$codigo,descripcion: $descripcion,id: $id, predeterminado: false);
         if (errores::$error) {
             return (new errores())->error('Error al integrar predeterminado si existe', $registro);
