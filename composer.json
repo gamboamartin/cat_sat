@@ -54,7 +54,7 @@
         "gamboa.martin/template": "^17.0.0",
         "gamboa.martin/template_1": "^21.0.0",
         "gamboa.martin/system": "^19.0.0",
-        "gamboa.martin/direccion_postal": "^22.0.0",
+        "gamboa.martin/direccion_postal": "^23.0.0",
         "gamboa.martin/js_base": "^4.0.0",
       "phpunit/phpunit": "^10.0.0"
     },
