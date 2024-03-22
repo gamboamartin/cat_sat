@@ -143,11 +143,18 @@ class controlador_cat_sat_periodo extends _cat_sat_base {
                 mensaje: 'Error al generar salida de template', data: $r_modifica, header: $header, ws: $ws);
         }
 
-        $base = $this->base_upd(keys_selects: array(), params: array(), params_ajustados: array());
+        $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'cat_sat_periodicidad_id',
+            keys_selects: array(), id_selected: $this->row_upd->cat_sat_periodicidad_id, label: 'Periodicidad');
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
+        }
+
+        $base = $this->base_upd(keys_selects: $keys_selects, params: array(), params_ajustados: array());
         if (errores::$error) {
             return $this->retorno_error(mensaje: 'Error al integrar base', data: $base, header: $header, ws: $ws);
         }
 
         return $r_modifica;
     }
+
 }
