@@ -169,10 +169,10 @@ class instalacion
 
         $campos = new stdClass();
         $campos->fecha_inicio = new stdClass();
-        $campos->fecha_inicio->tipo_dato = 'DATETIME';
+        $campos->fecha_inicio->tipo_dato = 'DATE';
 
         $campos->fecha_fin = new stdClass();
-        $campos->fecha_fin->tipo_dato = 'DATETIME';
+        $campos->fecha_fin->tipo_dato = 'DATE';
 
 
         $result = (new _instalacion(link: $link))->add_columns(campos: $campos,table:  'cat_sat_periodo');
