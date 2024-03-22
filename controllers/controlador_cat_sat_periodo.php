@@ -53,7 +53,7 @@ class controlador_cat_sat_periodo extends _cat_sat_base {
             return $this->retorno_error(mensaje: 'Error al inicializar alta', data: $r_alta, header: $header, ws: $ws);
         }
 
-        $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'cat_sat_periodicidad',
+        $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'cat_sat_periodicidad_id',
             keys_selects: array(), id_selected: -1, label: 'Periodicidad');
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
@@ -73,6 +73,24 @@ class controlador_cat_sat_periodo extends _cat_sat_base {
         return $r_alta;
     }
 
+    protected function campos_view(array $inputs = array()): array
+    {
+        $keys = new stdClass();
+        $keys->inputs = array();
+        $keys->telefonos = array();
+        $keys->fechas = array('fecha_inicio','fecha_fin');
+        $keys->selects = array();
+
+        $init_data = array();
+        $init_data['cat_sat_periodicidad'] = "gamboamartin\\cat_sat";
+
+        $campos_view = $this->campos_view_base(init_data: $init_data, keys: $keys);
+        if (errores::$error) {
+            return $this->errores->error(mensaje: 'Error al inicializar campo view', data: $campos_view);
+        }
+
+        return $campos_view;
+    }
 
     private function init_configuraciones(): controler
     {
