@@ -60,4 +60,41 @@ class cat_sat_periodo extends _modelo_parent{
         return $r_alta_bd;
 
     }
+
+    public function modifica_bd(array $registro, int $id, bool $reactiva = false,
+                                array $keys_integra_ds = array('codigo', 'descripcion')): array|stdClass
+    {
+        $r_periodicidad = (new cat_sat_periodicidad(link: $this->link))->registro(
+            registro_id: $registro['cat_sat_periodicidad_id']);
+        if (errores::$error) {
+            return $this->error->error(mensaje: 'Error al insertar com tipo periodicidad', data: $r_periodicidad);
+        }
+
+        if(!isset($registro['codigo'])){
+            $registro['codigo'] = $registro['fecha_inicio'].$registro['fecha_fin'].rand();
+        }
+
+        if(!isset($registro['descripcion'])){
+            $registro['descripcion'] = $r_periodicidad['cat_sat_periodicidad_descripcion']." - ".
+                $registro['fecha_inicio']." al ".$registro['fecha_fin'];
+        }
+
+        if(!isset($registro['descripcion_select'])){
+            $registro['descripcion_select'] = $registro['descripcion'];
+        }
+
+        $_POST['fecha_inicial'] = $registro['fecha_inicio'];
+        $_POST['fecha_final'] = $registro['fecha_fin'];
+
+        $fechas = $this->fechas_in();
+        if (errores::$error) {
+            return $this->error->error(mensaje: 'Error al validar fechas', data: $fechas);
+        }
+
+        $r_modifica_bd = parent::modifica_bd($registro, $id, $reactiva);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al modificar clase producto',data:  $r_modifica_bd);
+        }
+        return $r_modifica_bd;
+    }
 }
