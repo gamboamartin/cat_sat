@@ -53,7 +53,7 @@ class controlador_cat_sat_periodo extends _cat_sat_base {
             return $this->retorno_error(mensaje: 'Error al inicializar alta', data: $r_alta, header: $header, ws: $ws);
         }
 
-        $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'cat_sat_periodicidad_id',
+        $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'cat_sat_periodicidad_pago_nom_id',
             keys_selects: array(), id_selected: -1, label: 'Periodicidad');
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
@@ -82,7 +82,7 @@ class controlador_cat_sat_periodo extends _cat_sat_base {
         $keys->selects = array();
 
         $init_data = array();
-        $init_data['cat_sat_periodicidad'] = "gamboamartin\\cat_sat";
+        $init_data['cat_sat_periodicidad_pago_nom'] = "gamboamartin\\cat_sat";
 
         $campos_view = $this->campos_view_base(init_data: $init_data, keys: $keys);
         if (errores::$error) {
@@ -107,10 +107,10 @@ class controlador_cat_sat_periodo extends _cat_sat_base {
         $columns["cat_sat_periodo_codigo"]["titulo"] = "Código";
         $columns["cat_sat_periodo_fecha_inicio"]["titulo"] = "Inicio";
         $columns["cat_sat_periodo_fecha_fin"]["titulo"] = "Fin";
-        $columns["cat_sat_periodicidad_descripcion"]["titulo"] = "Periodicidad";
+        $columns["cat_sat_periodicidad_pago_nom_descripcion"]["titulo"] = "Periodicidad";
 
         $filtro = array("cat_sat_periodo.id","cat_sat_periodo.codigo","cat_sat_periodo.fecha_inicio",
-            "cat_sat_periodo.fecha_fin", "cat_sat_periodicidad.descripcion");
+            "cat_sat_periodo.fecha_fin", "cat_sat_periodicidad_pago_nom.descripcion");
 
         $datatables = new stdClass();
         $datatables->columns = $columns;
@@ -143,12 +143,13 @@ class controlador_cat_sat_periodo extends _cat_sat_base {
                 mensaje: 'Error al generar salida de template', data: $r_modifica, header: $header, ws: $ws);
         }
 
-        $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'cat_sat_periodicidad_id',
-            keys_selects: array(), id_selected: $this->row_upd->cat_sat_periodicidad_id, label: 'Periodicidad');
+        $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'cat_sat_periodicidad_pago_nom_id',
+            keys_selects: array(), id_selected: $this->row_upd->cat_sat_periodicidad_pago_nom_id, label: 'Periodicidad');
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
         }
 
+        $base = $this->base_upd(keys_selects: $keys_selects, params: array(), params_ajustados: array());
         $base = $this->base_upd(keys_selects: $keys_selects, params: array(), params_ajustados: array());
         if (errores::$error) {
             return $this->retorno_error(mensaje: 'Error al integrar base', data: $base, header: $header, ws: $ws);
