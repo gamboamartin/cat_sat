@@ -3,6 +3,7 @@ namespace gamboamartin\cat_sat\models;
 use base\orm\_modelo_parent;
 use gamboamartin\errores\errores;
 use PDO;
+use stdClass;
 
 class cat_sat_periodo extends _modelo_parent{
     public function __construct(PDO $link){
@@ -41,6 +42,14 @@ class cat_sat_periodo extends _modelo_parent{
 
         if(!isset($this->registro['descripcion_select'])){
             $this->registro['descripcion_select'] = $this->registro['descripcion'];
+        }
+
+        $_POST['fecha_inicial'] = $this->registro['fecha_inicio'];
+        $_POST['fecha_final'] = $this->registro['fecha_fin'];
+
+        $fechas = $this->fechas_in();
+        if (errores::$error) {
+            return $this->error->error(mensaje: 'Error al validar fechas', data: $fechas);
         }
 
         $r_alta_bd = parent::alta_bd(keys_integra_ds: $keys_integra_ds);
