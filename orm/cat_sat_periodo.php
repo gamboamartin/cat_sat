@@ -8,7 +8,7 @@ use stdClass;
 class cat_sat_periodo extends _modelo_parent{
     public function __construct(PDO $link){
         $tabla = 'cat_sat_periodo';
-        $columnas = array($tabla=>false,'cat_sat_periodicidad' => $tabla);
+        $columnas = array($tabla=>false,'cat_sat_periodicidad_pago_nom' => $tabla);
         $campos_obligatorios[] = 'descripcion';
         $campos_obligatorios[] = 'descripcion_select';
 
@@ -25,8 +25,8 @@ class cat_sat_periodo extends _modelo_parent{
 
     public function alta_bd(array $keys_integra_ds = array('codigo', 'descripcion')): array|\stdClass
     {
-        $r_periodicidad = (new cat_sat_periodicidad(link: $this->link))->registro(
-            registro_id: $this->registro['cat_sat_periodicidad_id']);
+        $r_periodicidad = (new cat_sat_periodicidad_pago_nom(link: $this->link))->registro(
+            registro_id: $this->registro['cat_sat_periodicidad_pago_nom_id']);
         if (errores::$error) {
             return $this->error->error(mensaje: 'Error al insertar com tipo periodicidad', data: $r_periodicidad);
         }
@@ -36,7 +36,7 @@ class cat_sat_periodo extends _modelo_parent{
         }
 
         if(!isset($this->registro['descripcion'])){
-            $this->registro['descripcion'] = $r_periodicidad['cat_sat_periodicidad_descripcion']." - ".
+            $this->registro['descripcion'] = $r_periodicidad['cat_sat_periodicidad_pago_nom_descripcion']." - ".
                 $this->registro['fecha_inicio']." al ".$this->registro['fecha_fin'];
         }
 
@@ -64,8 +64,8 @@ class cat_sat_periodo extends _modelo_parent{
     public function modifica_bd(array $registro, int $id, bool $reactiva = false,
                                 array $keys_integra_ds = array('codigo', 'descripcion')): array|stdClass
     {
-        $r_periodicidad = (new cat_sat_periodicidad(link: $this->link))->registro(
-            registro_id: $registro['cat_sat_periodicidad_id']);
+        $r_periodicidad = (new cat_sat_periodicidad_pago_nom(link: $this->link))->registro(
+            registro_id: $registro['cat_sat_periodicidad_pago_nom_id']);
         if (errores::$error) {
             return $this->error->error(mensaje: 'Error al insertar com tipo periodicidad', data: $r_periodicidad);
         }
@@ -75,7 +75,7 @@ class cat_sat_periodo extends _modelo_parent{
         }
 
         if(!isset($registro['descripcion'])){
-            $registro['descripcion'] = $r_periodicidad['cat_sat_periodicidad_descripcion']." - ".
+            $registro['descripcion'] = $r_periodicidad['cat_sat_periodicidad_pago_nom_descripcion']." - ".
                 $registro['fecha_inicio']." al ".$registro['fecha_fin'];
         }
 
