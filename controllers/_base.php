@@ -9,7 +9,7 @@ class _base extends _ctl_parent {
      * Genera un formulario de alta
      * @param bool $header si header muestra resultado en web
      * @param bool $ws Si ws muestra resultado en json
-     * @return array|string
+     * @return array|string 
      */
     public function alta(bool $header, bool $ws = false): array|string
     {
