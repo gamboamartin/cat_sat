@@ -44,6 +44,8 @@ class instalacion
 
     }
 
+
+
     private function _add_cat_sat_tipo_persona(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -1107,8 +1109,25 @@ class instalacion
 
     }
 
-    private function cat_sat_regimen_fiscal(): array
+    private function _add_cat_sat_regimen_fiscal(PDO $link): array|stdClass
     {
+        $out = new stdClass();
+        $create = (new _instalacion(link: $link))->create_table_new(table: 'cat_sat_regimen_fiscal');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al create table', data:  $create);
+        }
+
+
+        return $out;
+
+    }
+    private function cat_sat_regimen_fiscal(PDO $link): array
+    {
+        $create = $this->_add_cat_sat_regimen_fiscal(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar create', data:  $create);
+        }
+
         $cat_sat_regimen_fiscal = array();
         $cat_sat_regimen_fiscal[] = array('id'=>"601",'descripcion'=>"General de Ley Personas Morales",
             'codigo'=>"601", 'status'=>"activo",'descripcion_select'=>"601 General de Ley Personas Morales",
@@ -1482,7 +1501,7 @@ class instalacion
 
         $this->data->cat_sat_tipo_persona = $cat_sat_tipo_persona;
 
-        $cat_sat_regimen_fiscal = $this->cat_sat_regimen_fiscal();
+        $cat_sat_regimen_fiscal = $this->cat_sat_regimen_fiscal(link: $link);
         if (errores::$error) {
             return (new errores())->error(mensaje: 'Error al obtener cat_sat_regimen_fiscal', data: $cat_sat_regimen_fiscal);
         }
