@@ -302,8 +302,37 @@ class instalacion
         }
         return $upds;
     }
+
+    private function _add_cat_sat_clase_producto(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_clase_producto');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_cve_prod', data: $create);
+        }
+
+        $out->create = $create;
+
+        $foraneas = array();
+        $foraneas['cat_sat_grupo_producto_id'] = new stdClass();
+
+        $foraneas_r = (new _instalacion(link:$link))->foraneas(foraneas: $foraneas,table:  'cat_sat_clase_producto');
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $foraneas_r);
+        }
+
+        return $out;
+    }
+
     private function cat_sat_clase_producto(PDO $link): array|stdClass
     {
+
+        $create = $this->_add_cat_sat_clase_producto(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al actualizar cat_sat_clase_producto', data: $create);
+        }
+
         $out = new stdClass();
         $cat_sat_clase_producto_modelo = new cat_sat_clase_producto(link: $link);
 
@@ -433,8 +462,37 @@ class instalacion
         return $out;
 
     }
+
+    private function _add_cat_sat_conf_reg_tp(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_conf_reg_tp');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_conf_reg_tp', data: $create);
+        }
+
+        $out->create = $create;
+
+        $foraneas = array();
+        $foraneas['cat_sat_tipo_persona_id'] = new stdClass();
+        $foraneas['cat_sat_regimen_fiscal_id'] = new stdClass();
+
+        $foraneas_r = (new _instalacion(link:$link))->foraneas(foraneas: $foraneas,table:  'cat_sat_conf_reg_tp');
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $foraneas_r);
+        }
+
+        return $out;
+    }
     private function cat_sat_conf_reg_tp(PDO $link): array|stdClass
     {
+
+        $create = $this->_add_cat_sat_conf_reg_tp(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_conf_reg_tp', data: $create);
+        }
+
         $out = new stdClass();
         $cat_sat_conf_reg_tp_modelo = new cat_sat_conf_reg_tp(link: $link, aplica_transacciones_base: true);
 
@@ -1590,6 +1648,130 @@ class instalacion
 
     }
 
+    private function _add_cat_sat_factor(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_factor');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_factor', data: $create);
+        }
+
+        $campos = new stdClass();
+        $campos->factor = new stdClass();
+        $campos->factor->tipo_dato = 'DOUBLE';
+
+        $result = (new _instalacion(link: $link))->add_columns(campos: $campos,table:  'cat_sat_factor');
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar campos', data:  $result);
+        }
+
+        return $out;
+    }
+
+    private function cat_sat_factor(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = $this->_add_cat_sat_factor(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_factor', data: $create);
+        }
+
+        $out->create = $create;
+        return $out;
+
+    }
+
+    private function _add_cat_sat_tipo_factor(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_tipo_factor');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_tipo_factor', data: $create);
+        }
+
+        $out->create = $create;
+
+        return $out;
+    }
+
+    private function cat_sat_tipo_factor(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = $this->_add_cat_sat_tipo_factor(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar create', data: $create);
+        }
+        $out->create = $create;
+
+
+        return $out;
+
+    }
+
+    private function _add_cat_sat_periodicidad(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_periodicidad');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_motivo_cancelacion', data: $create);
+        }
+
+        $out->create = $create;
+
+        return $out;
+    }
+
+    private function cat_sat_periodicidad(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = $this->_add_cat_sat_periodicidad(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar create', data:  $create);
+        }
+        $out->create = $create;
+
+        return $out;
+
+    }
+
+    private function _add_cat_sat_obj_imp(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_obj_imp');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_factor', data: $create);
+        }
+
+        $campos = new stdClass();
+        $campos->exento = new stdClass();
+        $campos->exento->default = 'inactivo';
+
+        $result = (new _instalacion(link: $link))->add_columns(campos: $campos,table:  'cat_sat_obj_imp');
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar campos', data:  $result);
+        }
+
+        return $out;
+    }
+
+    private function cat_sat_obj_imp(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = $this->_add_cat_sat_obj_imp(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_obj_imp', data: $create);
+        }
+
+        $out->create = $create;
+        return $out;
+
+    }
+
+
+
+
     final public function instala(PDO $link): array|stdClass
     {
 
@@ -1601,6 +1783,20 @@ class instalacion
                 data: $cat_sat_motivo_cancelacion);
         }
         $out->cat_sat_motivo_cancelacion = $cat_sat_motivo_cancelacion;
+
+        $cat_sat_tipo_factor = $this->cat_sat_tipo_factor(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_tipo_factor',
+                data: $cat_sat_motivo_cancelacion);
+        }
+        $out->cat_sat_tipo_factor = $cat_sat_tipo_factor;
+
+
+        $cat_sat_periodicidad = $this->cat_sat_periodicidad(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_periodicidad', data: $cat_sat_periodicidad);
+        }
+        $out->cat_sat_periodicidad = $cat_sat_periodicidad;
 
         $cat_sat_forma_pago = $this->cat_sat_forma_pago(link: $link);
         if (errores::$error) {
@@ -1647,6 +1843,21 @@ class instalacion
             return (new errores())->error(mensaje: 'Error al insertar cat_sat_cve_prod', data: $cat_sat_cve_prod);
         }
         $out->cat_sat_cve_prod = $cat_sat_cve_prod;
+
+
+        $cat_sat_factor = $this->cat_sat_factor(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_factor',
+                data: $cat_sat_factor);
+        }
+
+
+        $cat_sat_obj_imp = $this->cat_sat_obj_imp(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_obj_imp',
+                data: $cat_sat_obj_imp);
+        }
+        $out->cat_sat_obj_imp = $cat_sat_obj_imp;
 
 
         $cat_sat_metodo_pago = $this->cat_sat_metodo_pago(link: $link);
