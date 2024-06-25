@@ -44,6 +44,19 @@ class instalacion
 
     }
 
+    private function _add_cat_sat_unidad(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (new _instalacion(link: $link))->create_table_new(table: 'cat_sat_unidad');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al create table', data:  $create);
+        }
+
+
+        return $out;
+
+    }
+
 
     private function _add_cat_sat_conf_imps(PDO $link): array|stdClass
     {
@@ -1396,6 +1409,10 @@ class instalacion
     }
     private function cat_sat_unidad(PDO $link): array|stdClass
     {
+        $create = $this->_add_cat_sat_unidad(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar create', data:  $create);
+        }
         $out = new stdClass();
         $cat_sat_unidad_modelo = new cat_sat_unidad(link: $link);
 
