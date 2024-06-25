@@ -101,7 +101,7 @@ class cat_sat_regimen_fiscalTest extends test {
 
         errores::$error = false;
 
-        $instala = (new instalacion())->instala(link: $this->link);
+        $instala = (new instalacion(link: $this->link))->instala(link: $this->link);
         if(errores::$error){
             $error = (new errores())->error(mensaje:'Error al reinstalar',data:  $instala);
             print_r($error);

@@ -33,14 +33,40 @@ class instalacion
 {
     private stdClass $data;
 
-    public function __construct()
+    public function __construct(PDO $link)
     {
-        $data = $this->data();
+        $data = $this->data(link: $link);
         if(errores::$error){
             $error = (new errores())->error(mensaje: 'Error al incializar',data:  $data);
             print_r($error);
             exit;
         }
+
+    }
+
+    private function _add_cat_sat_tipo_persona(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (new _instalacion(link: $link))->create_table_new(table: 'cat_sat_tipo_persona');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al create table', data:  $create);
+        }
+
+
+        return $out;
+
+    }
+
+    private function _add_cat_sat_metodo_pago(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (new _instalacion(link: $link))->create_table_new(table: 'cat_sat_metodo_pago');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al create table', data:  $create);
+        }
+
+
+        return $out;
 
     }
 
@@ -771,6 +797,11 @@ class instalacion
     }
     private function cat_sat_metodo_pago(PDO $link): array|stdClass
     {
+        $create = $this->_add_cat_sat_metodo_pago(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar create', data:  $create);
+        }
+
         $out = new stdClass();
         $cat_sat_metodo_modelo = new cat_sat_metodo_pago(link: $link,aplica_transacciones_base: true);
 
@@ -1153,8 +1184,12 @@ class instalacion
         return $cat_sat_regimen_fiscal;
 
     }
-    private function cat_sat_tipo_persona(): array
+    private function cat_sat_tipo_persona(PDO $link): array
     {
+        $create = $this->_add_cat_sat_tipo_persona(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar create', data:  $create);
+        }
         $cat_sat_tipo_persona = array();
         $cat_sat_tipo_persona[0]['id'] = 4;
         $cat_sat_tipo_persona[0]['descripcion'] = 'PERSONA MORAL';
@@ -1436,11 +1471,11 @@ class instalacion
         return $out;
 
     }
-    private function data(): stdClass|array
+    private function data(PDO $link): stdClass|array
     {
         $this->data = new stdClass();
 
-        $cat_sat_tipo_persona = $this->cat_sat_tipo_persona();
+        $cat_sat_tipo_persona = $this->cat_sat_tipo_persona(link: $link);
         if (errores::$error) {
             return (new errores())->error(mensaje: 'Error al obtener cat_sat_tipo_persona', data: $cat_sat_tipo_persona);
         }

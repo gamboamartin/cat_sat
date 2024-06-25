@@ -37,7 +37,7 @@ if(errores::$error){
 
 print_r($instala);
 
-$cat_sat = new gamboamartin\cat_sat\instalacion\instalacion();
+$cat_sat = new gamboamartin\cat_sat\instalacion\instalacion(link: $link);
 
 $instala = $cat_sat->instala(link: $link);
 

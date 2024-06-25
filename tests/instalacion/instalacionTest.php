@@ -34,7 +34,7 @@ class instalacionTest extends test {
         $_SESSION['grupo_id'] = 1;
         $_SESSION['usuario_id'] = 1;
         $_GET['session_id'] = '1';
-        $ins = new instalacion();
+        $ins = new instalacion(link: $this->link);
         $ins = new liberator($ins);
 
 
@@ -71,7 +71,7 @@ class instalacionTest extends test {
         $_SESSION['grupo_id'] = 1;
         $_SESSION['usuario_id'] = 1;
         $_GET['session_id'] = '1';
-        $ins = new instalacion();
+        $ins = new instalacion(link: $this->link);
         $ins = new liberator($ins);
 
 
@@ -90,7 +90,7 @@ class instalacionTest extends test {
         $_SESSION['grupo_id'] = 2;
         $_SESSION['usuario_id'] = 2;
         $_GET['session_id'] = '1';
-        $ins = new instalacion();
+        $ins = new instalacion(link: $this->link);
 
 
         $resultado = $ins->instala(link: $this->link);
