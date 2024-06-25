@@ -1056,8 +1056,15 @@ class instalacion
     {
         $out = new stdClass();
 
+        $create = (new _instalacion($link))->create_table_new(table: 'cat_sat_tipo_producto');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_tipo_producto', data: $create);
+        }
 
-        $create = (NEW _instalacion($link))->create_table_new(table: 'cat_sat_division_producto');
+        $out->create = $create;
+
+
+        $create = (new _instalacion($link))->create_table_new(table: 'cat_sat_division_producto');
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al crear cat_sat_division_producto', data: $create);
         }
