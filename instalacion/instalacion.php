@@ -1783,6 +1783,8 @@ class instalacion
     }
 
 
+
+
     private function cat_sat_uso_cfdi(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -1795,6 +1797,31 @@ class instalacion
 
     }
 
+    private function cat_sat_tipo_de_comprobante(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = $this->_add_cat_sat_tipo_de_comprobante(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar create', data: $create);
+        }
+        $out->create = $create;
+        return $out;
+
+    }
+
+    private function _add_cat_sat_tipo_de_comprobante(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_tipo_de_comprobante');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_tipo_de_comprobante', data: $create);
+        }
+
+        $out->create = $create;
+
+        return $out;
+    }
+
     final public function instala(PDO $link): array|stdClass
     {
 
@@ -1805,6 +1832,12 @@ class instalacion
             return (new errores())->error(mensaje: 'Error al insertar cat_sat_uso_cfdi', data: $cat_sat_uso_cfdi);
         }
         $out->cat_sat_uso_cfdi = $cat_sat_uso_cfdi;
+
+        $cat_sat_tipo_de_comprobante = $this->cat_sat_tipo_de_comprobante(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_tipo_de_comprobante', data: $cat_sat_tipo_de_comprobante);
+        }
+        $out->cat_sat_tipo_de_comprobante = $cat_sat_tipo_de_comprobante;
 
         $cat_sat_motivo_cancelacion = $this->cat_sat_motivo_cancelacion(link: $link);
         if (errores::$error) {
