@@ -9,6 +9,7 @@
 namespace gamboamartin\cat_sat\controllers;
 
 use gamboamartin\cat_sat\models\cat_sat_actividad_economica;
+use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use gamboamartin\template\html;
@@ -31,6 +32,56 @@ class controlador_cat_sat_actividad_economica extends system {
         $this->lista_get_data = true;
 
     }
+
+    public function alta(bool $header, bool $ws = false): array|string
+    {
+        $alta = parent::alta(header: $header, ws: $ws);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar template', data: $alta,
+                header: $header, ws: $ws, class: __CLASS__, file: __FILE__, function: __FUNCTION__, line: __LINE__);
+        }
+
+        $codigo = $this->inputs->codigo;
+
+        $descripcion = $this->html->input_descripcion(cols: 6,row_upd: new stdClass(), value_vacio: true);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar descripcion', data: $descripcion,
+                header: $header, ws: $ws, class: __CLASS__, file: __FILE__, function: __FUNCTION__, line: __LINE__);
+        }
+
+
+        $this->inputs->codigo = $codigo;
+        $this->inputs->descripcion = $descripcion;
+
+        return $alta;
+
+    }
+
+    public function modifica(bool $header, bool $ws = false): stdClass|array
+    {
+        $modifica = parent::modifica(header: $header, ws: $ws);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar template', data: $modifica,
+                header: $header, ws: $ws, class: __CLASS__, file: __FILE__, function: __FUNCTION__, line: __LINE__);
+        }
+
+        $codigo = $this->inputs->codigo;
+
+
+        $descripcion = $this->html->input_descripcion(cols: 6,row_upd: $this->row_upd, value_vacio: false);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar descripcion', data: $descripcion,
+                header: $header, ws: $ws, class: __CLASS__, file: __FILE__, function: __FUNCTION__, line: __LINE__);
+        }
+
+
+        $this->inputs->codigo = $codigo;
+        $this->inputs->descripcion = $descripcion;
+
+        return $modifica;
+
+    }
+
 
 
 
