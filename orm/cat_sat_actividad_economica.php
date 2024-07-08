@@ -13,5 +13,6 @@ class cat_sat_actividad_economica extends modelo{
             columnas: $columnas);
 
         $this->etiqueta = 'Actividad Economica';
+        $this->NAMESPACE = __NAMESPACE__;
     }
 }
