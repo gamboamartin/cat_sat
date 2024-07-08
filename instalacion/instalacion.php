@@ -290,6 +290,19 @@ class instalacion
         return $out;
     }
 
+    private function _add_cat_sat_actividad_economica(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_actividad_economica');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_motivo_cancelacion', data: $create);
+        }
+
+        $out->create = $create;
+
+        return $out;
+    }
+
     private function actualiza_datos_predeterminadas(int $id_compare, modelo $modelo, bool $valida_alfa_code): array
     {
         $registros_actuales = $modelo->registros();
@@ -1354,6 +1367,35 @@ class instalacion
 
     }
 
+    private function cat_sat_actividad_economica(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = $this->_add_cat_sat_actividad_economica(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar create', data: $create);
+        }
+        $out->create = $create;
+
+        $adm_menu_descripcion = 'Generales';
+        $adm_sistema_descripcion = 'cat_sat';
+        $etiqueta_label = 'Actividades Economicas';
+        $adm_seccion_pertenece_descripcion = 'cat_sat';
+        $adm_namespace_descripcion = 'gamboa.martin/cat_sat';
+        $adm_namespace_name = 'gamboamartin/cat_sat';
+
+        $acl = (new _adm())->integra_acl(adm_menu_descripcion: $adm_menu_descripcion,
+            adm_namespace_name: $adm_namespace_name, adm_namespace_descripcion: $adm_namespace_descripcion,
+            adm_seccion_descripcion: __FUNCTION__, adm_seccion_pertenece_descripcion: $adm_seccion_pertenece_descripcion,
+            adm_sistema_descripcion: $adm_sistema_descripcion, etiqueta_label: $etiqueta_label, link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al obtener acl', data:  $acl);
+        }
+
+
+        return $out;
+
+    }
+
     private function cat_sat_tipo_contrato_nom(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -1827,9 +1869,6 @@ class instalacion
         return $out;
     }
 
-
-
-
     private function cat_sat_uso_cfdi(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -1877,6 +1916,13 @@ class instalacion
             return (new errores())->error(mensaje: 'Error al insertar cat_sat_uso_cfdi', data: $cat_sat_uso_cfdi);
         }
         $out->cat_sat_uso_cfdi = $cat_sat_uso_cfdi;
+
+        $cat_sat_actividad_economica = $this->cat_sat_actividad_economica(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_actividad_economica',
+                data: $cat_sat_actividad_economica);
+        }
+        $out->cat_sat_actividad_economica = $cat_sat_actividad_economica;
 
         $cat_sat_tipo_de_comprobante = $this->cat_sat_tipo_de_comprobante(link: $link);
         if (errores::$error) {
@@ -2060,8 +2106,6 @@ class instalacion
         }
         $out->cat_sat_periodo = $cat_sat_periodo;
 
-
-
         return $out;
 
     }
@@ -2144,7 +2188,8 @@ class instalacion
     {
         $upds = array();
         foreach ($registros_actuales as $registro_actual){
-            $upd = $this->upd_registro_predeterminado(id_compare: $id_compare, registro_actual: $registro_actual, modelo: $modelo, valida_alfa_code: $valida_alfa_code);
+            $upd = $this->upd_registro_predeterminado(id_compare: $id_compare, registro_actual: $registro_actual,
+                modelo: $modelo, valida_alfa_code: $valida_alfa_code);
             if(errores::$error){
                 return (new errores())->error(mensaje: 'Error al actualizar registro', data: $upd);
             }
