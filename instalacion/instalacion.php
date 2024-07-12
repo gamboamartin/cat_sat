@@ -1292,16 +1292,19 @@ class instalacion
         $cat_sat_tipo_persona[0]['id'] = 4;
         $cat_sat_tipo_persona[0]['descripcion'] = 'PERSONA MORAL';
         $cat_sat_tipo_persona[0]['codigo'] = 'PM';
+        $cat_sat_tipo_persona[0]['predeterminado'] = 'inactivo';
 
 
         $cat_sat_tipo_persona[1]['id'] = 5;
         $cat_sat_tipo_persona[1]['descripcion'] = 'PERSONA FISICA';
         $cat_sat_tipo_persona[1]['codigo'] = 'PF';
+        $cat_sat_tipo_persona[1]['predeterminado'] = 'inactivo';
 
 
         $cat_sat_tipo_persona[2]['id'] = 6;
         $cat_sat_tipo_persona[2]['descripcion'] = 'POR DEFINIR';
         $cat_sat_tipo_persona[2]['codigo'] = 'PD';
+        $cat_sat_tipo_persona[2]['predeterminado'] = 'activo';
 
 
 
