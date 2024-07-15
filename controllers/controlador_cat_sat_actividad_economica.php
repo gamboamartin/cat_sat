@@ -24,6 +24,17 @@ class controlador_cat_sat_actividad_economica extends system {
         $modelo = new cat_sat_actividad_economica(link: $link);
         $html_ = new cat_sat_actividad_economica_html(html: $html);
         $obj_link = new links_menu(link: $link, registro_id: $this->registro_id);
+
+        $datatables = $this->init_datatable();
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al inicializar datatable', data: $datatables);
+            print_r($error);
+            die('Error');
+        }
+
+        parent::__construct(html: $html_, link: $link, modelo: $modelo, obj_link: $obj_link, datatables: $datatables,
+            paths_conf: $paths_conf);
+
         parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Actividad Economica';
@@ -56,6 +67,24 @@ class controlador_cat_sat_actividad_economica extends system {
         return $alta;
 
     }
+
+    protected function init_datatable(): stdClass
+    {
+        $columns["cat_sat_actividad_economica_id"]["titulo"] = "Id";
+        $columns["cat_sat_actividad_economica_codigo"]["titulo"] = "Código";
+        $columns["cat_sat_actividad_economica_descripcion"]["titulo"] = "Descripcion";
+
+        $filtro = array("cat_sat_actividad_economica.id", "cat_sat_actividad_economica.codigo", "
+        cat_sat_actividad_economica.descripcion");
+
+        $datatables = new stdClass();
+        $datatables->columns = $columns;
+        $datatables->filtro = $filtro;
+
+        return $datatables;
+    }
+
+
 
     public function modifica(bool $header, bool $ws = false): stdClass|array
     {
