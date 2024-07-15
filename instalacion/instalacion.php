@@ -24,6 +24,7 @@ use gamboamartin\cat_sat\models\cat_sat_tipo_persona;
 use gamboamartin\cat_sat\models\cat_sat_tipo_producto;
 use gamboamartin\cat_sat\models\cat_sat_tipo_relacion;
 use gamboamartin\cat_sat\models\cat_sat_unidad;
+use gamboamartin\cat_sat\models\cat_sat_uso_cfdi;
 use gamboamartin\errores\errores;
 use gamboamartin\js_base\valida;
 use gamboamartin\plugins\Importador;
@@ -1880,6 +1881,27 @@ class instalacion
             return (new errores())->error(mensaje: 'Error al insertar create', data: $create);
         }
         $out->create = $create;
+
+
+        $cat_sat_uso_cfdi = array();
+        $cat_sat_uso_cfdi['id'] = '22';
+        $cat_sat_uso_cfdi['codigo'] = 'S01';
+        $cat_sat_uso_cfdi['descripcion_select'] = 'S01 Sin efectos fiscales.';
+        $cat_sat_uso_cfdi['descripcion'] = 'Sin efectos fiscales.  ';
+        $cat_sat_uso_cfdi['predeterminado'] = 'activo';
+
+        $cat_sat_usos_cfdi[0] = $cat_sat_uso_cfdi;
+
+
+        foreach ($cat_sat_usos_cfdi as $cat_sat_uso_cfdi){
+            $alta = (new cat_sat_uso_cfdi(link: $link))->inserta_registro_si_no_existe(registro: $cat_sat_uso_cfdi);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al insertar',data:  $alta);
+            }
+            $out->altas[] = $alta;
+
+        }
+
         return $out;
 
     }
