@@ -19,6 +19,7 @@ use gamboamartin\cat_sat\models\cat_sat_motivo_cancelacion;
 use gamboamartin\cat_sat\models\cat_sat_obj_imp;
 use gamboamartin\cat_sat\models\cat_sat_producto;
 use gamboamartin\cat_sat\models\cat_sat_regimen_fiscal;
+use gamboamartin\cat_sat\models\cat_sat_tipo_de_comprobante;
 use gamboamartin\cat_sat\models\cat_sat_tipo_impuesto;
 use gamboamartin\cat_sat\models\cat_sat_tipo_persona;
 use gamboamartin\cat_sat\models\cat_sat_tipo_producto;
@@ -1914,6 +1915,27 @@ class instalacion
             return (new errores())->error(mensaje: 'Error al insertar create', data: $create);
         }
         $out->create = $create;
+
+        $cat_sat_tipo_de_comprobante = array();
+        $cat_sat_tipo_de_comprobante['id'] = '1';
+        $cat_sat_tipo_de_comprobante['codigo'] = 'I';
+        $cat_sat_tipo_de_comprobante['descripcion_select'] = 'I Ingreso';
+        $cat_sat_tipo_de_comprobante['descripcion'] = 'Ingreso';
+        $cat_sat_tipo_de_comprobante['predeterminado'] = 'activo';
+
+        $cat_sat_tipos_de_comprobante[0] = $cat_sat_tipo_de_comprobante;
+
+
+        foreach ($cat_sat_tipos_de_comprobante as $cat_sat_tipo_de_comprobante){
+            $alta = (new cat_sat_tipo_de_comprobante(link: $link))->inserta_registro_si_no_existe(
+                registro: $cat_sat_tipo_de_comprobante);
+            if(errores::$error){
+                return (new errores())->error(mensaje: 'Error al insertar',data:  $alta);
+            }
+            $out->altas[] = $alta;
+
+        }
+
         return $out;
 
     }
