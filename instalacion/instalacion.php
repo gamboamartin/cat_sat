@@ -886,6 +886,7 @@ class instalacion
         $cat_sat_metodos_pago[0]['descripcion'] = 'Pago en una sola exhibición';
         $cat_sat_metodos_pago[0]['codigo'] = 'PUE';
         $cat_sat_metodos_pago[0]['descripcion_select'] = 'PUE Pago en una sola exhibición';
+        $cat_sat_metodos_pago[0]['predeterminado'] = 'activo';
 
 
         $cat_sat_metodos_pago[1]['id'] = 2;
