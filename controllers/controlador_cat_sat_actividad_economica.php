@@ -35,8 +35,6 @@ class controlador_cat_sat_actividad_economica extends system {
         parent::__construct(html: $html_, link: $link, modelo: $modelo, obj_link: $obj_link, datatables: $datatables,
             paths_conf: $paths_conf);
 
-        parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
-
         $this->titulo_lista = 'Actividad Economica';
 
         $this->path_vendor_views = 'gamboa.martin/cat_sat';
@@ -68,6 +66,9 @@ class controlador_cat_sat_actividad_economica extends system {
 
     }
 
+    /**
+     * @return stdClass
+     */
     protected function init_datatable(): stdClass
     {
         $columns["cat_sat_actividad_economica_id"]["titulo"] = "Id";
