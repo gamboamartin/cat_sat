@@ -35,10 +35,11 @@ class cat_sat_isrTest extends test {
 
         $del = (new base_test())->del_cat_sat_isr(link: $this->link);
         if(errores::$error){
-            $error = (new errores())->error('Error al del',$del);
+            $error = (new errores())->error(mensaje: 'Error al del',data: $del,file: __FILE__);
             print_r($error);
             exit;
         }
+
 
         $alta = (new base_test())->alta_cat_sat_isr(link: $this->link);
         if(errores::$error){

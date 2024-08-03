@@ -17,6 +17,7 @@ use gamboamartin\cat_sat\models\cat_sat_metodo_pago;
 use gamboamartin\cat_sat\models\cat_sat_moneda;
 use gamboamartin\cat_sat\models\cat_sat_motivo_cancelacion;
 use gamboamartin\cat_sat\models\cat_sat_obj_imp;
+use gamboamartin\cat_sat\models\cat_sat_periodicidad;
 use gamboamartin\cat_sat\models\cat_sat_producto;
 use gamboamartin\cat_sat\models\cat_sat_regimen_fiscal;
 use gamboamartin\cat_sat\models\cat_sat_tipo_de_comprobante;
@@ -228,6 +229,94 @@ class instalacion
 
         return $out;
     }
+
+    private function _add_cat_sat_isn(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_isn');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_isn', data: $create);
+        }
+
+        $out->create = $create;
+
+        $foraneas = array();
+        $foraneas['dp_estado_id'] = new stdClass();
+
+        $foraneas_r = (new _instalacion(link:$link))->foraneas(foraneas: $foraneas,table:  'cat_sat_isn');
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $foraneas_r);
+        }
+        $out->foraneas_r = $foraneas_r;
+
+        $campos = new stdClass();
+        $campos->porcentaje_isn = new stdClass();
+        $campos->porcentaje_isn->tipo_dato = 'DOUBLE';
+
+        $campos->factor_isn_adicional = new stdClass();
+        $campos->factor_isn_adicional->tipo_dato = 'DOUBLE';
+
+
+
+        $result = (new _instalacion(link: $link))->add_columns(campos: $campos,table:  'cat_sat_periodo');
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar campos', data:  $result);
+        }
+        $out->columnas = $result;
+
+        return $out;
+    }
+
+    private function _add_cat_sat_isr(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_isr');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_isr', data: $create);
+        }
+
+        $out->create = $create;
+
+        $foraneas = array();
+        $foraneas['cat_sat_periodicidad_pago_nom_id'] = new stdClass();
+
+        $foraneas_r = (new _instalacion(link:$link))->foraneas(foraneas: $foraneas,table:  'cat_sat_isr');
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $foraneas_r);
+        }
+        $out->foraneas_r = $foraneas_r;
+
+        $campos = new stdClass();
+        $campos->limite_inferior = new stdClass();
+        $campos->limite_inferior->tipo_dato = 'DOUBLE';
+
+        $campos->limite_superior = new stdClass();
+        $campos->limite_superior->tipo_dato = 'DOUBLE';
+
+        $campos->cuota_fija = new stdClass();
+        $campos->cuota_fija->tipo_dato = 'DOUBLE';
+
+        $campos->porcentaje_excedente = new stdClass();
+        $campos->porcentaje_excedente->tipo_dato = 'DOUBLE';
+
+        $campos->fecha_inicio = new stdClass();
+        $campos->fecha_inicio->tipo_dato = 'DATE';
+
+        $campos->fecha_fin = new stdClass();
+        $campos->fecha_fin->tipo_dato = 'DATE';
+
+        $result = (new _instalacion(link: $link))->add_columns(campos: $campos,table:  'cat_sat_isr');
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar campos', data:  $result);
+        }
+        $out->columnas = $result;
+
+        return $out;
+    }
     private function _add_cat_sat_retencion_conf(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -247,6 +336,19 @@ class instalacion
         $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_tipo_contrato_nom');
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al crear cat_sat_retencion_conf', data: $create);
+        }
+
+        $out->create = $create;
+
+        return $out;
+    }
+
+    private function _add_cat_sat_tipo_nomina(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_tipo_nomina');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_tipo_nomina', data: $create);
         }
 
         $out->create = $create;
@@ -1079,6 +1181,32 @@ class instalacion
         return $out;
 
     }
+
+    private function cat_sat_isn(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = $this->_add_cat_sat_isn(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar create', data:  $create);
+        }
+        $out->create = $create;
+
+        return $out;
+
+    }
+
+    private function cat_sat_isr(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = $this->_add_cat_sat_isr(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar create', data:  $create);
+        }
+        $out->create = $create;
+
+        return $out;
+
+    }
     private function cat_sat_producto(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -1396,6 +1524,20 @@ class instalacion
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al obtener acl', data:  $acl);
         }
+
+
+        return $out;
+
+    }
+
+    private function cat_sat_tipo_nomina(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = $this->_add_cat_sat_tipo_nomina(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar create', data: $create);
+        }
+        $out->create = $create;
 
 
         return $out;
@@ -1771,6 +1913,19 @@ class instalacion
         return $out;
     }
 
+    private function _add_cat_sat_periodicidad_pago_nom(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_periodicidad_pago_nom');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_periodicidad_pago_nom', data: $create);
+        }
+
+        $out->create = $create;
+
+        return $out;
+    }
+
     private function cat_sat_periodicidad(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -1779,6 +1934,72 @@ class instalacion
             return (new errores())->error(mensaje: 'Error al ajustar create', data:  $create);
         }
         $out->create = $create;
+
+        $importador = new Importador();
+        $columnas = array();
+        $columnas[] = 'id';
+        $columnas[] = 'codigo';
+        $columnas[] = 'descripcion';
+        $columnas[] = 'status';
+        $columnas[] = 'descripcion_select';
+        $columnas[] = 'alias';
+        $columnas[] = 'codigo_bis';
+        $columnas[] = 'predeterminado';
+
+        $ruta = (new generales())->path_base."instalacion/".__FUNCTION__.'.ods';
+
+        if((new generales())->sistema !== 'cat_sat'){
+            $ruta = (new generales())->path_base;
+            $ruta .= "vendor/gamboa.martin/cat_sat/instalacion/".__FUNCTION__.".ods";
+        }
+
+
+        $modelo = new cat_sat_periodicidad(link: $link);
+
+        $n_rows = $modelo->cuenta();
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al contar n_rows', data: $n_rows);
+        }
+        $altas = array();
+        if($n_rows !== 11) {
+
+            $data = $importador->leer_registros(ruta_absoluta: $ruta, columnas: $columnas);
+            if (errores::$error) {
+                return (new errores())->error(mensaje: 'Error al leer cat_sat_cve_prod', data: $data);
+            }
+
+            foreach ($data as $row) {
+                $row = (array)$row;
+                $ins['id'] = trim($row['id']);
+                $ins['codigo'] = trim($row['codigo']);
+                $ins['descripcion'] = trim($row['descripcion']);
+                $ins['status'] = 'activo';
+                $ins['descripcion_select'] = trim($row['descripcion_select']) ;
+                $ins['alias'] = trim($row['alias']) ;
+                $ins['predeterminado'] = 'inactivo';
+
+                $ins['codigo_bis'] = trim($row['codigo_bis']) ;
+                $alta = $modelo->inserta_registro_si_no_existe(registro: $ins);
+                if (errores::$error) {
+                    return (new errores())->error(mensaje: 'Error al insertar cat_sat_cve_prod', data: $alta);
+                }
+            }
+        }
+
+
+        return $out;
+
+    }
+
+    private function cat_sat_periodicidad_pago_nom(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = $this->_add_cat_sat_periodicidad_pago_nom(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar create', data:  $create);
+        }
+        $out->create = $create;
+
 
         return $out;
 
@@ -1972,6 +2193,13 @@ class instalacion
         }
         $out->cat_sat_actividad_economica = $cat_sat_actividad_economica;
 
+        $cat_sat_tipo_nomina = $this->cat_sat_tipo_nomina(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_tipo_nomina',
+                data: $cat_sat_tipo_nomina);
+        }
+        $out->cat_sat_tipo_nomina = $cat_sat_tipo_nomina;
+
         $cat_sat_tipo_de_comprobante = $this->cat_sat_tipo_de_comprobante(link: $link);
         if (errores::$error) {
             return (new errores())->error(mensaje: 'Error al insertar cat_sat_tipo_de_comprobante', data: $cat_sat_tipo_de_comprobante);
@@ -1998,6 +2226,14 @@ class instalacion
             return (new errores())->error(mensaje: 'Error al insertar cat_sat_periodicidad', data: $cat_sat_periodicidad);
         }
         $out->cat_sat_periodicidad = $cat_sat_periodicidad;
+
+        $cat_sat_periodicidad_pago_nom = $this->cat_sat_periodicidad_pago_nom(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar $cat_sat_periodicidad_pago_nom', data: $cat_sat_periodicidad_pago_nom);
+        }
+        $out->cat_sat_periodicidad_pago_nom = $cat_sat_periodicidad_pago_nom;
+
+
 
         $cat_sat_forma_pago = $this->cat_sat_forma_pago(link: $link);
         if (errores::$error) {
@@ -2153,6 +2389,18 @@ class instalacion
             return (new errores())->error(mensaje: 'Error al insertar cat_sat_periodo', data: $cat_sat_periodo);
         }
         $out->cat_sat_periodo = $cat_sat_periodo;
+
+        $cat_sat_isn = $this->cat_sat_isn(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_isn', data: $cat_sat_isn);
+        }
+        $out->cat_sat_isn = $cat_sat_isn;
+
+        $cat_sat_isr = $this->cat_sat_isr(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_isr', data: $cat_sat_isr);
+        }
+        $out->cat_sat_isr = $cat_sat_isr;
 
         return $out;
 
