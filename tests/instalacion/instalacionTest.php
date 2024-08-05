@@ -48,8 +48,8 @@ class instalacionTest extends test {
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
         $this->assertEquals('id',$resultado->registros[0]['Field']);
-        $this->assertEquals('codigo',$resultado->registros[1]['Field']);
-        $this->assertEquals('descripcion',$resultado->registros[2]['Field']);
+        $this->assertEquals('descripcion',$resultado->registros[1]['Field']);
+        $this->assertEquals('codigo',$resultado->registros[2]['Field']);
         $this->assertEquals('status',$resultado->registros[3]['Field']);
         $this->assertEquals('usuario_alta_id',$resultado->registros[4]['Field']);
         $this->assertEquals('usuario_update_id',$resultado->registros[5]['Field']);

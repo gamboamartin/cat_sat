@@ -1910,6 +1910,17 @@ class instalacion
 
         $out->create = $create;
 
+        $columnas = new stdClass();
+
+        $columnas->predeterminado = new stdClass();
+        $columnas->predeterminado->default =  'inactivo';
+
+        $add_colums = (new _instalacion(link: $link))->add_columns(campos: $columnas,table:  'cat_sat_periodicidad');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al agregar columnas', data:  $add_colums);
+        }
+        $out->add_colums_base = $add_colums;
+
         return $out;
     }
 
@@ -2129,6 +2140,21 @@ class instalacion
 
     }
 
+    private function cat_sat_tipo_regimen_nom(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = $this->_add_cat_sat_tipo_regimen_nom(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar create', data: $create);
+        }
+        $out->create = $create;
+
+
+
+        return $out;
+
+    }
+
     private function cat_sat_tipo_de_comprobante(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -2175,10 +2201,29 @@ class instalacion
         return $out;
     }
 
+    private function _add_cat_sat_tipo_regimen_nom(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_tipo_regimen_nom');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_tipo_de_comprobante', data: $create);
+        }
+
+        $out->create = $create;
+
+        return $out;
+    }
+
     final public function instala(PDO $link): array|stdClass
     {
 
         $out = new stdClass();
+
+        $cat_sat_tipo_regimen_nom = $this->cat_sat_tipo_regimen_nom(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_tipo_regimen_nom', data: $cat_sat_tipo_regimen_nom);
+        }
+        $out->cat_sat_isr = $cat_sat_tipo_regimen_nom;
 
         $cat_sat_uso_cfdi = $this->cat_sat_uso_cfdi(link: $link);
         if (errores::$error) {
