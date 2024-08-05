@@ -2155,6 +2155,21 @@ class instalacion
 
     }
 
+    private function cat_sat_tipo_jornada_nom(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = $this->_add_cat_sat_tipo_jornada_nom(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al insertar create', data: $create);
+        }
+        $out->create = $create;
+
+
+
+        return $out;
+
+    }
+
     private function cat_sat_tipo_de_comprobante(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -2214,6 +2229,19 @@ class instalacion
         return $out;
     }
 
+    private function _add_cat_sat_tipo_jornada_nom(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $create = (NEW _instalacion($link))->create_table_new(table:'cat_sat_tipo_jornada_nom');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al crear cat_sat_tipo_jornada_nom', data: $create);
+        }
+
+        $out->create = $create;
+
+        return $out;
+    }
+
     final public function instala(PDO $link): array|stdClass
     {
 
@@ -2223,7 +2251,13 @@ class instalacion
         if (errores::$error) {
             return (new errores())->error(mensaje: 'Error al insertar cat_sat_tipo_regimen_nom', data: $cat_sat_tipo_regimen_nom);
         }
-        $out->cat_sat_isr = $cat_sat_tipo_regimen_nom;
+        $out->cat_sat_tipo_regimen_nom = $cat_sat_tipo_regimen_nom;
+
+        $cat_sat_tipo_jornada_nom = $this->cat_sat_tipo_jornada_nom(link: $link);
+        if (errores::$error) {
+            return (new errores())->error(mensaje: 'Error al insertar cat_sat_tipo_jornada_nom', data: $cat_sat_tipo_jornada_nom);
+        }
+        $out->cat_sat_tipo_jornada_nom = $cat_sat_tipo_jornada_nom;
 
         $cat_sat_uso_cfdi = $this->cat_sat_uso_cfdi(link: $link);
         if (errores::$error) {
