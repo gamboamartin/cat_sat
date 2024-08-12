@@ -1007,6 +1007,22 @@ class instalacion
 
         }
 
+        $adm_menu_descripcion = 'SAT';
+        $adm_sistema_descripcion = 'cat_sat';
+        $etiqueta_label = 'Metodo de Pago';
+        $adm_seccion_pertenece_descripcion = __FUNCTION__;
+        $adm_namespace_name = 'gamboamartin/cat_sat';
+        $adm_namespace_descripcion = 'gamboa.martin/cat_sat';
+
+        $adm_acciones_basicas = (new _adm())->acl_base(adm_menu_descripcion: $adm_menu_descripcion,
+            adm_namespace_descripcion:  $adm_namespace_descripcion,adm_namespace_name:  $adm_namespace_name,
+            adm_seccion_descripcion: __FUNCTION__,
+            adm_seccion_pertenece_descripcion:  $adm_seccion_pertenece_descripcion,
+            adm_sistema_descripcion:  $adm_sistema_descripcion, etiqueta_label: $etiqueta_label,link:  $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al obtener acciones basicas', data:  $adm_acciones_basicas);
+        }
+
 
         return $out;
 
@@ -1088,6 +1104,23 @@ class instalacion
 
         $out->pred = $upds;
 
+
+        $adm_menu_descripcion = 'SAT';
+        $adm_sistema_descripcion = 'cat_sat';
+        $etiqueta_label = 'Monedas';
+        $adm_seccion_pertenece_descripcion = __FUNCTION__;
+        $adm_namespace_name = 'gamboamartin/cat_sat';
+        $adm_namespace_descripcion = 'gamboa.martin/cat_sat';
+
+        $adm_acciones_basicas = (new _adm())->acl_base(adm_menu_descripcion: $adm_menu_descripcion,
+            adm_namespace_descripcion:  $adm_namespace_descripcion,adm_namespace_name:  $adm_namespace_name,
+            adm_seccion_descripcion: __FUNCTION__,
+            adm_seccion_pertenece_descripcion:  $adm_seccion_pertenece_descripcion,
+            adm_sistema_descripcion:  $adm_sistema_descripcion, etiqueta_label: $etiqueta_label,link:  $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al obtener acciones basicas', data:  $adm_acciones_basicas);
+        }
+
         return $out;
 
     }
@@ -1144,6 +1177,23 @@ class instalacion
             }
         }
         $out->altas = $altas;
+
+
+        $adm_menu_descripcion = 'SAT';
+        $adm_sistema_descripcion = 'cat_sat';
+        $etiqueta_label = 'Motivo Cancelacion';
+        $adm_seccion_pertenece_descripcion = __FUNCTION__;
+        $adm_namespace_name = 'gamboamartin/cat_sat';
+        $adm_namespace_descripcion = 'gamboa.martin/cat_sat';
+
+        $adm_acciones_basicas = (new _adm())->acl_base(adm_menu_descripcion: $adm_menu_descripcion,
+            adm_namespace_descripcion:  $adm_namespace_descripcion,adm_namespace_name:  $adm_namespace_name,
+            adm_seccion_descripcion: __FUNCTION__,
+            adm_seccion_pertenece_descripcion:  $adm_seccion_pertenece_descripcion,
+            adm_sistema_descripcion:  $adm_sistema_descripcion, etiqueta_label: $etiqueta_label,link:  $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al obtener acciones basicas', data:  $adm_acciones_basicas);
+        }
 
 
         return $out;
