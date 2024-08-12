@@ -827,6 +827,23 @@ class instalacion
             }
         }
 
+        $adm_menu_descripcion = 'SAT';
+        $adm_sistema_descripcion = 'cat_sat';
+        $etiqueta_label = 'Division de Producto';
+        $adm_seccion_pertenece_descripcion = 'cat_sat';
+        $adm_namespace_name = 'gamboamartin/cat_sat';
+        $adm_namespace_descripcion = 'gamboa.martin/cat_sat';
+
+        $acl = (new _adm())->integra_acl(adm_menu_descripcion: $adm_menu_descripcion,
+            adm_namespace_name: $adm_namespace_name, adm_namespace_descripcion: $adm_namespace_descripcion,
+            adm_seccion_descripcion: __FUNCTION__,
+            adm_seccion_pertenece_descripcion: $adm_seccion_pertenece_descripcion,
+            adm_sistema_descripcion: $adm_sistema_descripcion,
+            etiqueta_label: $etiqueta_label, link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al obtener acl', data:  $acl);
+        }
+
         return $out;
 
     }
@@ -919,6 +936,23 @@ class instalacion
 
         $out->altas = $altas;
 
+        $adm_menu_descripcion = 'SAT';
+        $adm_sistema_descripcion = 'cat_sat';
+        $etiqueta_label = 'Forma Pago';
+        $adm_seccion_pertenece_descripcion = 'cat_sat';
+        $adm_namespace_name = 'gamboamartin/cat_sat';
+        $adm_namespace_descripcion = 'gamboa.martin/cat_sat';
+
+        $acl = (new _adm())->integra_acl(adm_menu_descripcion: $adm_menu_descripcion,
+            adm_namespace_name: $adm_namespace_name, adm_namespace_descripcion: $adm_namespace_descripcion,
+            adm_seccion_descripcion: __FUNCTION__,
+            adm_seccion_pertenece_descripcion: $adm_seccion_pertenece_descripcion,
+            adm_sistema_descripcion: $adm_sistema_descripcion,
+            etiqueta_label: $etiqueta_label, link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al obtener acl', data:  $acl);
+        }
+
 
         return $out;
 
@@ -968,6 +1002,23 @@ class instalacion
                 }
                 $out->altas[] = $alta;
             }
+        }
+
+        $adm_menu_descripcion = 'SAT';
+        $adm_sistema_descripcion = 'cat_sat';
+        $etiqueta_label = 'Grupos de Producto';
+        $adm_seccion_pertenece_descripcion = 'cat_sat';
+        $adm_namespace_name = 'gamboamartin/cat_sat';
+        $adm_namespace_descripcion = 'gamboa.martin/cat_sat';
+
+        $acl = (new _adm())->integra_acl(adm_menu_descripcion: $adm_menu_descripcion,
+            adm_namespace_name: $adm_namespace_name, adm_namespace_descripcion: $adm_namespace_descripcion,
+            adm_seccion_descripcion: __FUNCTION__,
+            adm_seccion_pertenece_descripcion: $adm_seccion_pertenece_descripcion,
+            adm_sistema_descripcion: $adm_sistema_descripcion,
+            etiqueta_label: $etiqueta_label, link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al obtener acl', data:  $acl);
         }
 
         return $out;
