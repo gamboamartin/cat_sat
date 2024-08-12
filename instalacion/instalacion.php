@@ -1409,6 +1409,22 @@ class instalacion
         $cat_sat_regimen_fiscal[] = array('id'=>"999",'descripcion'=>"POR DEFINIR", 'codigo'=>"999",
             'status'=>	"activo",'descripcion_select'=>"999 POR DEFINIR", 'predeterminado'=>"inactivo");
 
+        $adm_menu_descripcion = 'SAT';
+        $adm_sistema_descripcion = 'cat_sat';
+        $etiqueta_label = 'Regimen Fiscal';
+        $adm_seccion_pertenece_descripcion = __FUNCTION__;
+        $adm_namespace_name = 'gamboamartin/cat_sat';
+        $adm_namespace_descripcion = 'gamboa.martin/cat_sat';
+
+        $adm_acciones_basicas = (new _adm())->acl_base(adm_menu_descripcion: $adm_menu_descripcion,
+            adm_namespace_descripcion:  $adm_namespace_descripcion,adm_namespace_name:  $adm_namespace_name,
+            adm_seccion_descripcion: __FUNCTION__,
+            adm_seccion_pertenece_descripcion:  $adm_seccion_pertenece_descripcion,
+            adm_sistema_descripcion:  $adm_sistema_descripcion, etiqueta_label: $etiqueta_label,link:  $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al obtener acciones basicas', data:  $adm_acciones_basicas);
+        }
+
 
         return $cat_sat_regimen_fiscal;
 
@@ -1437,6 +1453,21 @@ class instalacion
         $cat_sat_tipo_persona[2]['codigo'] = 'PD';
         $cat_sat_tipo_persona[2]['predeterminado'] = 'activo';
 
+        $adm_menu_descripcion = 'SAT';
+        $adm_sistema_descripcion = 'cat_sat';
+        $etiqueta_label = 'Tipo Persona';
+        $adm_seccion_pertenece_descripcion = __FUNCTION__;
+        $adm_namespace_name = 'gamboamartin/cat_sat';
+        $adm_namespace_descripcion = 'gamboa.martin/cat_sat';
+
+        $adm_acciones_basicas = (new _adm())->acl_base(adm_menu_descripcion: $adm_menu_descripcion,
+            adm_namespace_descripcion:  $adm_namespace_descripcion,adm_namespace_name:  $adm_namespace_name,
+            adm_seccion_descripcion: __FUNCTION__,
+            adm_seccion_pertenece_descripcion:  $adm_seccion_pertenece_descripcion,
+            adm_sistema_descripcion:  $adm_sistema_descripcion, etiqueta_label: $etiqueta_label,link:  $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al obtener acciones basicas', data:  $adm_acciones_basicas);
+        }
 
 
         return $cat_sat_tipo_persona;
@@ -1524,6 +1555,8 @@ class instalacion
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al obtener acl', data:  $acl);
         }
+
+
 
 
         return $out;
@@ -1640,49 +1673,7 @@ class instalacion
         }
         $out->foraneas_r = $foraneas_r;
 
-        /*$importador = new Importador();
-        $columnas = array();
-        $columnas[] = 'id';
-        $columnas[] = 'descripcion';
-        $columnas[] = 'codigo';
 
-        $ruta = (new generales())->path_base."instalacion/".__FUNCTION__.'.ods';
-
-        if((new generales())->sistema !== 'cat_sat'){
-            $ruta = (new generales())->path_base;
-            $ruta .= "vendor/gamboa.martin/cat_sat/instalacion/".__FUNCTION__.".ods";
-        }
-
-
-        $cat_sat_tipo_relacion_modelo = new cat_sat_tipo_relacion(link: $link);
-
-        $n_motivos = $cat_sat_tipo_relacion_modelo->cuenta();
-        if(errores::$error){
-            return (new errores())->error(mensaje: 'Error al contar n_motivos', data: $n_motivos);
-        }
-        $altas = array();
-        if($n_motivos !== 9) {
-
-            $data = $importador->leer_registros(ruta_absoluta: $ruta, columnas: $columnas);
-            if (errores::$error) {
-                return (new errores())->error(mensaje: 'Error al leer cat_sat_cve_prod', data: $data);
-            }
-
-            foreach ($data as $row) {
-                $row = (array)$row;
-                $cat_sat_tipo_relacion_ins['id'] = trim($row['id']);
-                $cat_sat_tipo_relacion_ins['codigo'] = trim($row['codigo']);
-                $cat_sat_tipo_relacion_ins['descripcion'] = trim($row['descripcion']);
-                $cat_sat_tipo_relacion_ins['descripcion_select'] = trim($row['codigo']) . ' ' . trim($row['descripcion']);
-                $cat_sat_tipo_relacion_ins['predeterminado'] = 'inactivo';
-                $alta = $cat_sat_tipo_relacion_modelo->inserta_registro_si_no_existe(registro: $cat_sat_tipo_relacion_ins);
-                if (errores::$error) {
-                    return (new errores())->error(mensaje: 'Error al insertar cat_sat_cve_prod', data: $alta);
-                }
-                $altas[] = $alta;
-            }
-        }
-        $out->altas = $altas;*/
 
 
         return $out;
@@ -1921,6 +1912,8 @@ class instalacion
         }
         $out->add_colums_base = $add_colums;
 
+
+
         return $out;
     }
 
@@ -1995,6 +1988,22 @@ class instalacion
                     return (new errores())->error(mensaje: 'Error al insertar cat_sat_cve_prod', data: $alta);
                 }
             }
+        }
+
+        $adm_menu_descripcion = 'SAT';
+        $adm_sistema_descripcion = 'cat_sat';
+        $etiqueta_label = 'Periodicidad';
+        $adm_seccion_pertenece_descripcion = __FUNCTION__;
+        $adm_namespace_name = 'gamboamartin/cat_sat';
+        $adm_namespace_descripcion = 'gamboa.martin/cat_sat';
+
+        $adm_acciones_basicas = (new _adm())->acl_base(adm_menu_descripcion: $adm_menu_descripcion,
+            adm_namespace_descripcion:  $adm_namespace_descripcion,adm_namespace_name:  $adm_namespace_name,
+            adm_seccion_descripcion: __FUNCTION__,
+            adm_seccion_pertenece_descripcion:  $adm_seccion_pertenece_descripcion,
+            adm_sistema_descripcion:  $adm_sistema_descripcion, etiqueta_label: $etiqueta_label,link:  $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al obtener acciones basicas', data:  $adm_acciones_basicas);
         }
 
 
@@ -2136,6 +2145,22 @@ class instalacion
 
         }
 
+        $adm_menu_descripcion = 'SAT';
+        $adm_sistema_descripcion = 'cat_sat';
+        $etiqueta_label = 'Uso de CFDI';
+        $adm_seccion_pertenece_descripcion = __FUNCTION__;
+        $adm_namespace_name = 'gamboamartin/cat_sat';
+        $adm_namespace_descripcion = 'gamboa.martin/cat_sat';
+
+        $adm_acciones_basicas = (new _adm())->acl_base(adm_menu_descripcion: $adm_menu_descripcion,
+            adm_namespace_descripcion:  $adm_namespace_descripcion,adm_namespace_name:  $adm_namespace_name,
+            adm_seccion_descripcion: __FUNCTION__,
+            adm_seccion_pertenece_descripcion:  $adm_seccion_pertenece_descripcion,
+            adm_sistema_descripcion:  $adm_sistema_descripcion, etiqueta_label: $etiqueta_label,link:  $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al obtener acciones basicas', data:  $adm_acciones_basicas);
+        }
+
         return $out;
 
     }
@@ -2197,6 +2222,22 @@ class instalacion
             }
             $out->altas[] = $alta;
 
+        }
+
+        $adm_menu_descripcion = 'SAT';
+        $adm_sistema_descripcion = 'cat_sat';
+        $etiqueta_label = 'Tipo de Comprobante';
+        $adm_seccion_pertenece_descripcion = __FUNCTION__;
+        $adm_namespace_name = 'gamboamartin/cat_sat';
+        $adm_namespace_descripcion = 'gamboa.martin/cat_sat';
+
+        $adm_acciones_basicas = (new _adm())->acl_base(adm_menu_descripcion: $adm_menu_descripcion,
+            adm_namespace_descripcion:  $adm_namespace_descripcion,adm_namespace_name:  $adm_namespace_name,
+            adm_seccion_descripcion: __FUNCTION__,
+            adm_seccion_pertenece_descripcion:  $adm_seccion_pertenece_descripcion,
+            adm_sistema_descripcion:  $adm_sistema_descripcion, etiqueta_label: $etiqueta_label,link:  $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al obtener acciones basicas', data:  $adm_acciones_basicas);
         }
 
         return $out;
