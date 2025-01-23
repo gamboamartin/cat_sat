@@ -8,11 +8,12 @@
  */
 namespace gamboamartin\cat_sat\controllers;
 
+use base\controller\controler;
 use gamboamartin\cat_sat\models\cat_sat_tipo_persona;
 use gamboamartin\errores\errores;
 use gamboamartin\system\system;
 use gamboamartin\template\directivas;
-use gamboamartin\template_1\html;
+use gamboamartin\template\html;
 use html\cat_sat_tipo_persona_html;
 
 use JsonException;
@@ -21,24 +22,62 @@ use links\secciones\link_cat_sat_tipo_persona;
 use PDO;
 use stdClass;
 
-class controlador_cat_sat_tipo_persona extends system {
+class controlador_cat_sat_tipo_persona extends _cat_sat_base {
 
-    public function __construct(PDO $link, stdClass $paths_conf = new stdClass()){
+    public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
+                                stdClass $paths_conf = new stdClass()){
         $modelo = new cat_sat_tipo_persona(link: $link);
-        $html_base = new html();
-        $html = new cat_sat_tipo_persona_html(html: $html_base);
+        $html_ = new cat_sat_tipo_persona_html(html: $html);
         $obj_link = new link_cat_sat_tipo_persona(link: $link, registro_id: $this->registro_id);
         $this->rows_lista[] = 'valida_persona_fisica';
-        parent::__construct(html:$html, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
-        $this->titulo_lista = 'Tipos de Persona';
+        $datatables = $this->init_datatable();
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al inicializar datatable', data: $datatables);
+            print_r($error);
+            die('Error');
+        }
+
+        parent::__construct(html: $html_, link: $link, modelo: $modelo, obj_link: $obj_link, datatables: $datatables,
+            paths_conf: $paths_conf);
+
+        $configuraciones = $this->init_configuraciones();
+        if (errores::$error) {
+            $error = $this->errores->error(mensaje: 'Error al inicializar configuraciones', data: $configuraciones);
+            print_r($error);
+            die('Error');
+        }
         $this->acciones->valida_persona_fisica = new stdClass();
         $this->acciones->valida_persona_fisica->style = '';
         $this->acciones->valida_persona_fisica->style_status = true;
-        $this->lista_get_data = true;
 
     }
 
+    private function init_configuraciones(): controler
+    {
+        $this->titulo_lista = 'Tipos de Persona';
+
+        $this->lista_get_data = true;
+
+        return $this;
+    }
+
+    private function init_datatable(): stdClass
+    {
+        $columns["cat_sat_tipo_persona_id"]["titulo"] = "Id";
+        $columns["cat_sat_tipo_persona_codigo"]["titulo"] = "Código";
+        $columns["cat_sat_tipo_persona_descripcion"]["titulo"] = "Forma Pago";
+
+        $filtro = array("cat_sat_tipo_persona.id","cat_sat_tipo_persona.codigo","cat_sat_tipo_persona.descripcion");
+
+        $datatables = new stdClass();
+        $datatables->columns = $columns;
+        $datatables->filtro = $filtro;
+
+        return $datatables;
+    }
+
+    
     /**
      * @param bool $header
      * @param bool $ws
