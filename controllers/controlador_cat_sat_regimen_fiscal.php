@@ -9,6 +9,7 @@
 namespace gamboamartin\cat_sat\controllers;
 
 use base\controller\controler;
+use base\controller\salida_data;
 use gamboamartin\cat_sat\models\cat_sat_regimen_fiscal;
 use gamboamartin\errores\errores;
 
@@ -43,6 +44,20 @@ class controlador_cat_sat_regimen_fiscal extends _cat_sat_base {
             print_r($error);
             die('Error');
         }
+    }
+
+    public function get_regimen_fiscal(bool $header, bool $ws = true): array|stdClass
+    {
+
+        $filtro['cat_sat_regimen_fiscal.descripcion'] = $_GET['regimen_fiscal'];
+        $not_in = array();
+        $salida = (new salida_data())->salida_get(controler: $this,filtro:  $filtro,header:  $header, not_in: $not_in,
+            ws:  $ws);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar salida',data:  $salida,header: $header,ws: $ws);
+        }
+
+        return $salida;
     }
 
 

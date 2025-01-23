@@ -9,6 +9,7 @@
 namespace gamboamartin\cat_sat\controllers;
 
 use base\controller\controler;
+use base\controller\salida_data;
 use gamboamartin\cat_sat\models\cat_sat_tipo_persona;
 use gamboamartin\errores\errores;
 use gamboamartin\system\system;
@@ -52,6 +53,21 @@ class controlador_cat_sat_tipo_persona extends _cat_sat_base {
         $this->acciones->valida_persona_fisica->style_status = true;
 
     }
+
+    public function get_tipo_persona(bool $header, bool $ws = true): array|stdClass
+    {
+
+        $filtro['cat_sat_tipo_persona.descripcion'] = $_GET['tipo_persona'];
+        $not_in = array();
+        $salida = (new salida_data())->salida_get(controler: $this,filtro:  $filtro,header:  $header, not_in: $not_in,
+            ws:  $ws);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar salida',data:  $salida,header: $header,ws: $ws);
+        }
+
+        return $salida;
+    }
+
 
     private function init_configuraciones(): controler
     {
