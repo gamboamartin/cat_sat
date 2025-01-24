@@ -22,6 +22,7 @@ use links\secciones\link_cat_sat_tipo_persona;
 
 use PDO;
 use stdClass;
+use Throwable;
 
 class controlador_cat_sat_tipo_persona extends _cat_sat_base {
 
@@ -56,16 +57,34 @@ class controlador_cat_sat_tipo_persona extends _cat_sat_base {
 
     public function get_tipo_persona(bool $header, bool $ws = true): array|stdClass
     {
-
         $filtro['cat_sat_tipo_persona.descripcion'] = $_GET['tipo_persona'];
-        $not_in = array();
-        $salida = (new salida_data())->salida_get(controler: $this,filtro:  $filtro,header:  $header, not_in: $not_in,
-            ws:  $ws);
+        $r_modelo = $this->modelo->filtro_and(filtro: $filtro);
         if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al generar salida',data:  $salida,header: $header,ws: $ws);
+            return $this->retorno_error(mensaje: 'Error al obtener datos',data:  $r_modelo,header: $header,ws: $ws);
         }
 
-        return $salida;
+        if($r_modelo->n_registros <= 0){
+            return $this->retorno_error(mensaje: 'Error no hay tipo persona',data:  $r_modelo,
+                header:  $header,ws:  $ws);
+        }
+
+        if($header){
+            $retorno = $_SERVER['HTTP_REFERER'];
+            header('Location:'.$retorno);
+            exit;
+        }
+        if($ws){
+            header('Content-Type: application/json');
+            try {
+                echo json_encode($r_modelo->registros[0], JSON_THROW_ON_ERROR);
+            }
+            catch (Throwable $e){
+                return $this->errores->error(mensaje: 'Error al maquetar estados',data:  $e);
+            }
+            exit;
+        }
+
+        return $r_modelo;
     }
 
 
